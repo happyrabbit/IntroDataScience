@@ -17,7 +17,7 @@ out pitfalls data science practitioners should avoid. It also covers big data cl
 
 Our target audiences are graduate students in STEM and statisticians, operation researchers or economists currently working at various industries, and anyone who want to apply data science.
 
-**Key features of the book**
+**Key Features**
 
 - Comprehensive: covers not only technical skills, but also soft skills and big data environment in
 industry
