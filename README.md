@@ -2,7 +2,7 @@ This is a draft of the book [**Introduction to Data Science**](http://scientistc
 
 [![Travis-CI Build Status](https://travis-ci.org/dgrtwo/tidy-text-mining.svg?branch=master)](https://travis-ci.org/dgrtwo/tidy-text-mining)
 
-Please note that this work is being written under a [Contributor Code of Conduct](CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms.
+Please note that this work is being written under a [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms.
 
 
 **Goals of the Book**

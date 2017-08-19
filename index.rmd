@@ -50,11 +50,9 @@ options(formatR.indent = 2, width = 55)
 
 # Copyright Statement {-}
 
-This work is released under a [CC-BY-NC-SA license] (https://creativecommons.org/licenses/by-nc-sa/3.0/us/)
+This work by Hui Lin and Ming Li is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License](https://creativecommons.org/licenses/by-nc-sa/3.0/us/).
 
-Copyright is retained by Hui Lin and Ming Li in all non-U.S. jurisdictions, but permission to use these materials in teaching is still granted, provided the authorship and licensing information here is displayed.
-
-The authors have striven to minimize the number of errors, but no guarantee is made as to the accuracy of the contents of this book.
+Please note that this work is being written under a [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms.
 
 
 # About the Authors {-}
