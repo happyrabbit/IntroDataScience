@@ -1,0 +1,1208 @@
+# Dynamic/Reproducible Report
+
+## What is R Markdown?
+
+Let's start from markdown. Markdown is a lightweight markup language designed to make authoring content easy for everyone. Here is a definition of markup language:
+
+> Markup languages are designed for the processing, definition, and presentation of text. The language specifies code for formatting, both the layout and style, within a text file. The code used to specify the format are called tags.
+
+HTML is an example of a widely known and used markup language.
+
+Rather than writing complex markup code (e.g. LyX, XML, HTML or LaTeX), Markdown enables the use of a syntax much more like plain-text email. It is young compared to the other markup languages. What makes markdown distinct is that it is both machine-readable and human-readable.
+
+R Markdown combines the core syntax of Markdown and embedded R code chunks that are run so their output can be included in the final document. Consider how people typically create an analytical report. The author makes the graph/table, saves it as a file, and then copy and pastes it into the final report. This process relies on manual labor. The author may take a deep breath when the report is finally well-shaped. If the data changes, the author must repeat the entire process to update the graph.  
+
+<center>
+![](http://linhui.org/images/Jokes/DoProgrammingRight.png)
+</center>
+
+
+R Markdown comes to rescue! It provides an authoring framework for data science. You can use a single R Markdown file to do both:
+
+- save and execute code
+- generate high-quality reports that can be shared with an audience
+
+R Markdown documents are fully reproducible and the most important and it is simple!
+
+
+## How to Start?
+
+### How It Works? 
+
+When you run `render`, R Markdown feeds the `.rmd` file to `knitr`.`knitr` is an R package that will execute all of the code chunks and creates a new markdown  (.md) document which includes the code and its output. The markdown file is then processed by `pandoc` which is responsible for creating the finished format. `pandoc` is a swiss-knife to convert files from one markup format into another. 
+
+![](http://scientistcafe.com/CE_JSM2017/images/RMarkdownFlow.png)
+
+R Markdown encapsulates all of the above processing into a single render function.
+
+### Get Started
+
+Install R and RStudio. If you have RStudio installed ready, We suggest you make sure it is in the latest version. You can install the `rmarkdown` package from CRAN with:
+
+```r
+install.packages("rmarkdown")
+```
+
+R Markdown file is a plain text file that has the extension `.Rmd`. You can create a sample `.Rmd` file in R Studio:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/newmd1.PNG)
+</center>
+
+Input your document title and author name and click "OK":
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/newmd2.PNG)
+</center>
+
+The file contains three types of content:
+
+- An (optional) YAML header surrounded by `---`
+- R code chunks surrounded by ` ```{r} ` and ` ``` `
+- text mixed with simple text formatting
+
+R Markdown generates a new file that contains selected text, code, and results from the `.Rmd` file. The new file can be in the following formats:
+
+- HTML
+- PDF
+- MS Word document
+- slide show
+- book
+- dashboard
+- package vignette
+- Others
+
+### Markdown Basic
+
+Don't worry if you are new to Markdown. You can quickly pick up only by looking at a few examples of it in action. We will show some examples in a before/after style. You will see example syntax and the HTML output in R Studio. The [webpage](https://daringfireball.net/projects/markdown/syntax) provides complete, detailed documentation for every markdown feature.  
+
+#### Paragraphs, Headers
+
+A paragraph is simply one or more consecutive lines of text, separated by one or more blank lines. Standard paragraphs **should not** be indented with spaces or tabs. 
+
+You can put 1-6 hash marks (#) at the beginning of the line - the number of hashes equals the resulting HTML header level.
+
+```pre
+# H1
+## H2
+### H3
+#### H4
+##### H5
+###### H6
+
+Alternatively, for H1 and H2, an underline-ish style:
+
+A First Level Header
+=====================
+
+A Second Level Header
+---------------------
+```
+
+Output:
+
+![](http://scientistcafe.com/CE_JSM2017/images/headermd.PNG)
+
+#### Blockquotes
+
+Blockquotes are indicated using email-style '>' angle brackets.
+
+
+```pre
+A statistician gave birth to twins, but only had one of them baptised. She kept the other as a control.
+
+News bulletin: A local Physicist declared that he has figured out the ingredients in McDonald’s secret sauce: protons, nuetrons, and electrons.
+
+> All you need in this life is ignorance and confidence, and then success is sure. [Mark Twain]
+> 
+> A bartender says, “We don’t serve faster than light particles in here.” A tachyon walks into a bar. [A joke from Prof. Bill Rand]
+```
+
+Output:
+
+A statistician gave birth to twins, but only had one of them baptised. She kept the other as a control.
+
+News bulletin: A local Physicist declared that he has figured out the ingredients in McDonald’s secret sauce: protons, nuetrons, and electrons.
+
+> All you need in this life is ignorance and confidence, and then success is sure. [Mark Twain]
+> 
+> A bartender says, “We don’t serve faster than light particles in here.” A tachyon walks into a bar. [A joke from Prof. Bill Rand]
+
+#### Phrase Emphasis
+
+Markdown uses asterisks and underscores to indicate spans of emphasis.
+
+```pre
+
+Some of these words *are italic*.
+Some of these words _are italic also_.
+
+Use two asterisks for **bold**.
+Or, if you prefer, __use two underscores instead__.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+
+```
+
+Output:
+
+Some of these words *are italic*.   
+Some of these words _are italic also_.  
+
+Use two asterisks for **bold**.  
+Or, if you prefer, __use two underscores instead__.
+
+Strikethrough uses two tildes. ~~Scratch this.~~
+
+
+###### Lists
+
+Unordered (bulleted) lists use asterisks, pluses, and hyphens (*, +, and -) as list markers. These three markers are interchangeable; this:
+
+
+```pre
+* If it’s green and wiggles, it’s biology.
+* If it stinks, it’s chemistry.
+* If it doesn’t work, it’s Physics.
+```
+
+Output:
+
+* If it’s green and wiggles, it’s biology.
+* If it stinks, it’s chemistry.
+* If it doesn’t work, it’s Physics.
+
+this:
+
+```pre
++ Engineers think that equations approximate the real world.
++ Scientists think that the real world approximates equations.
++ Mathematicians don’t care.
+```
+
+Output:
+
++ Engineers think that equations approximate the real world.
++ Scientists think that the real world approximates equations.
++ Mathematicians don’t care.
+
+and this:
+
+```pre
+An engineer, a physicist, and a mathematician were on a train heading north, and had just crossed the border into Scotland.
+
+- The engineer looked out of the window and said “Look! Scottish sheep are black!”
+- The physicist said, “No, no. Some Scottish sheep are black.”
+- The mathematician looked irritated. “There is at least one field, containing at least one sheep, of - which at least one side is black.”
+- The statistician : “It’s not significant. We only know there’s one black sheep”
+- The computer scientist : “Oh, no! A special case!”
+```
+
+Output:
+
+An engineer, a physicist, and a mathematician were on a train heading north, and had just crossed the border into Scotland.
+
+- The engineer looked out of the window and said “Look! Scottish sheep are black!”
+- The physicist said, “No, no. Some Scottish sheep are black.”
+- The mathematician looked irritated. “There is at least one field, containing at least one sheep, of - which at least one side is black.”
+- The statistician : “It’s not significant. We only know there’s one black sheep”
+- The computer scientist : “Oh, no! A special case!”
+
+Next, we will show how to build HTML report and dashboard in more detail.
+
+## HTML
+
+### Create an HTML document
+
+To create an HTML document from R Markdown you specify the html_document output format in the front-matter of your document:
+
+```pre
+---
+title: "Tidy and Reshape Data"
+author: Hui Lin
+date: May 11, 2017
+output: html_document
+---
+```
+
+You can add a table of contents using the toc option and specify the depth of headers that it applies to using the toc_depth option. For example:
+
+```pre
+---
+title: "Tidy and Reshape Data"
+author: Hui Lin
+date: May 11, 2017
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+---
+```
+
+### Floating TOC
+
+You can specify the toc_float option to float the table of contents to the left of the main document content. The floating table of contents will always be visible even when the document is scrolled. For example:
+
+```pre
+---
+title: "Tidy and Reshape Data"
+author: Hui Lin
+date: May 11, 2017
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float: true
+---
+```
+
+There are some options for `toc_float` parameter:
+
+- `collapsed` (defaults to `TRUE`) controls whether the table of contents appears with only the top-level (e.g. H2) headers. When collapsed the table of contents is automatically expanded in line when necessary.
+
+- `smooth_scroll` (defaults to `TRUE`) controls whether page scrolls are animated when the table of contents items are navigated to via mouse clicks.
+
+For example:
+
+```pre
+---
+title: "Tidy and Reshape Data"
+author: Hui Lin
+date: May 11, 2017
+output:
+  html_document:
+    toc: true
+    toc_depth: 3
+    toc_float:
+      collapsed: false
+      smooth_scroll: false
+---
+```
+
+### Code Chunks
+
+Every code chunk will start with ` ```{r} ` and end with ` ``` `. You can type the chunk delimiters. Or there are two quick ways to insert chunks to you file:
+
+(1) the keyboard shortcut Ctrl + Alt + I (OS X: Cmd + Option + I)
+(2) the Add Chunk  command in the editor toolbar
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/codechunk.PNG)
+</center>
+
+
+When you render your `.Rmd` file, R Markdown will run each code chunk and embed the results beneath the code chunk in your final report.
+
+- Customize Chunks
+
+    Chunk output can be customized with options which are arguments in the {} of a chunk header. Here are some of the most common arguments:
+    - `include = FALSE` prevents code and results from appearing in the finished file. R Markdown still runs the code in the chunk, and the results can be used by other chunks.
+    - `echo = FALSE` prevents code, but not the results from appearing in the finished file. This is a useful way to embed figures.
+    - `message = FALSE` prevents messages that are generated by code from appearing in the finished file.
+    - `warning = FALSE` prevents warnings that are generated by code from appearing in the finished.
+    - `fig.height`, `fig.width` The width and height to use in R for plots created by the chunk (in inches).
+    
+    See the [R Markdown Reference Guide](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf) for a complete list of knitr chunk options.
+
+- Global Options
+
+    To set global options that apply to every chunk in your file, call `knitr::opts_chunk$set` in a code chunk. Knitr will treat each option that you pass to `knitr::opts_chunk$set` as a global default that can be overwritten in individual chunk headers. For example, you can put the following after front-matter of your document:
+    
+    <center>
+    ![](http://scientistcafe.com/CE_JSM2017/images/globalsetting.PNG)
+    </center>
+
+    If you set global option as above, r markdown will prevent code for all chunks unless you overwrite in individual chunk header.
+
+- Caching
+
+    If the computations are long and document rendering becomes time consuming, you can use knitr caching to improve performance. You can use the chunk option `cache=TRUE` to enable cache, and `cache.path` to set the cache directory. 
+
+
+- Inline Code
+
+    Code results can be inserted directly into the text of a `.Rmd` file by enclosing the code with ``r ``. In this way, R Markdown will display the results of inline code, but not the code. For example:
+
+    <center>
+    ![](http://scientistcafe.com/CE_JSM2017/images/inlinecode.PNG)
+    </center>
+
+    Output:
+
+    <pre>
+    The current time is `r Sys.time()`
+    </pre>
+  
+  
+   As a result, an inline output is indistinguishable from the surrounding text. Inline expressions do not take knitr options.
+
+
+This is an R Markdown file. You can download a copy: [EX1_Markdown.Rmd](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/EX1_Markdown.Rmd)([output](http://scientistcafe.com/CE_JSM2017/Examples/EX1_Markdown.html)).
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/rm_ex1.PNG)
+</center>
+
+## HTML5 Slides
+
+R Markdown supports several HTML presentation (slide show) formats.
+
+- `ioslides_presentation` - HTML presentations with ioslides
+- `slidy_presentation` - HTML presentations with slidy
+- `revealjs::revealjs_presentation` - HTML presentations with reveal.js
+
+### `ioslides` presentation
+
+To create an ioslides presentation from R Markdown you specify the `ioslides_presentation` output format in the front-matter of your document. You can use # and ## to create a new slide. You can also use a horizontal rule (----) to create slide without a header. For example here's a simple slide show. You can download a copy: [Ex_ioslide.Rmd](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/Ex_ioslide.Rmd)([output](http://scientistcafe.com/CE_JSM2017/Examples/Ex_ioslide.html)).
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/Ex_ioslide.png)
+</center>
+
+You can add a subtitle to a slide or section by including text after the pipe (|) character. For example:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/Ex_ioslide2.png)
+</center>
+
+There are different display modes. The following are keyboard shortcuts for each:
+
+- 'f': fullscreen mode
+
+- 'w': toggle widescreen mode
+
+- 'o': overview mode
+
+- 'h': code highlight mode
+
+- 'p': show presenter notes
+
+Press `Esc` to exit any mode. The code highlight mode enables to select subsets of code for additional emphasis by adding a special “highlight” comment around the code. For example:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/Ex_ioslide3.png)
+</center>
+
+When you press `h` key, the highlighted region will be displayed with a bold font and the rest of the code will fade away. So you can help the audience focus exclusively on the highlighted region.
+
+### `slidy` presentation
+
+Creating `slidy` presentation is very similar to that of `ioslides` presentation. You specify the `slidy_presentation` output format in the front-matter of your document instead of `ioslides_presentation`. The way you break up slides is the same with `ioslides`. For example here's a simple slide show. You can download a copy: [Ex_slidy.Rmd](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/Ex_slidy.Rmd)([output](http://scientistcafe.com/CE_JSM2017/Examples/Ex_slidy.html)).
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/Ex_slidy.png)
+</center>
+
+
+Like before, there are different display modes. The following are keyboard shortcuts for each:
+
+- `C` Show table of contents
+- `F` Toggles the display of the footer
+- `A` Toggles display of current vs. all slides (useful for printing handouts)
+- `S` Make fonts smaller
+- `B` Make fonts larger
+
+For more information about other adjustments, such as appearance text style, CSS, footer elements, etc. please refer to "[Presentations with Slidy](http://rmarkdown.rstudio.com/slidy_presentation_format.html#display_modes)"
+
+
+##  Dashboards
+
+Use R Markdown and `felxdashboard` package to build flexible, attractive, interactive dashboards. Some features of `flexdashboard` + `R Markdown` are: 
+
+- Reproducible and highly flexible to specify the row and column-based layouts.
+
+- Nice display: components are intelligently re-sized to fill the browser and adapted for display on mobile devices.
+
+- Support for a wide variety of components including htmlwidgets; base, lattice, and grid graphics; tabular data; gauges and value boxes; and text annotations.
+
+- Extensive support for text annotations to include assumptions, contextual narrative, and analysis within dashboards.
+
+- Storyboard layouts for presenting sequences of visualizations and related commentary.
+
+- By default, dashboards are standard HTML documents that can be deployed on any web server or even attached to an email message. You can optionally add Shiny components for additional interactivity and then deploy on your server or Shiny Server
+
+Install `flexdashboard` package using:
+
+```r
+install.packages("flexdashboard")
+```
+
+Then you can create an R Markdown document with the `flexdashboard::flex_dashboard` output format within RStudio using the New R Markdown dialog:
+
+```{r RR_fig1, fig.retina=NULL, out.width=400, echo=FALSE, fig.align='center'}
+knitr::include_graphics("http://scientistcafe.com/CE_JSM2017/Examples/createdashboard.PNG")
+```
+
+### Layouts
+
+#### Layout by Column
+
+There is no better way to illustrate the syntax of latout than using example. Here is an example of two-column dashboard:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode.PNG){
+width=100% }
+</center>
+
+</br>
+The `------------------` defines columns with individual charts stacked vertically within each column. The above document defines a two-column dashboard with one chart on the left and two charts on the right. The output layout is:
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput.PNG){
+width=100% }
+</center>
+
+</br>
+
+
+#### Layout by Row
+
+You can similarly define row orientation by setting `orientation: rows`. Here is an example of two-row dashboard:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode2.PNG){
+width=100% }
+</center>
+
+</br>
+The `------------------` here defines rows. The dashboard has two rows, the first of which has one chart and the second of which has two charts:
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput2.PNG){
+width=100% }
+</center>
+</br>
+
+#### Scrolling Layout
+
+You may want to scroll rather than fit all the charts onto the page when there are lots of charts. You can set the scrolling function using the `vertical_layout` option. The default setting for `vertical_layout` is `fill`. You can use scrolling layout to demonstrate more charts. However, we recommend you consider using multiple pages instead which we will introduce later.
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode3.PNG){
+width=100% }
+</center>
+
+</br>
+The dashboard has one column with two charts:
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput3.PNG){
+width=100% }
+</center>
+</br>
+
+#### Focal Chart
+
+This layout fills the page completely and gives prominence to a single chart at the top or on the left. For example:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode4.PNG){
+width=100%}
+</center>
+
+</br>
+You can download the source code [here](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/FocalChartTop.Rmd). The resulted dashboard includes 3 charts. You can specify `data-height` attributes on each row to establish their relative sizes.
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput4.PNG){
+width=100% }
+</center>
+</br>
+
+You can also give prominence to a single chart on the left such as: 
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode5.PNG){
+width=100%}
+</center>
+
+</br>
+The resulted dashboard includes 3 charts:
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput5.PNG){
+width=100% }
+</center>
+</br>
+
+#### Tabset 
+
+This layout displays column or row as a set of tabs. It is an alternative to scrolling layout when you have more charts. For example:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode6.PNG){
+width=100%}
+</center>
+
+</br>
+You can download the source code [here](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/TabsetCol.Rmd). The dashboard displays the right column as a set of two tabs:
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput6.PNG){
+width=100% }
+</center>
+</br>
+
+
+You can also add tabs to row:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode7.PNG){
+width=100%}
+</center>
+
+</br>
+You can download the source code [here](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/TabsetRow.Rmd). The dashboard displays the bottom row as a set of two tabs. Here the `{.tabset-fade}` attribute is used to enable a fade in/out effect when switching tabs:
+
+</br>
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput7.PNG){
+width=100% }
+</center>
+</br>
+
+####  Multiple pages
+
+This layout defines multiple pages using (`==================`). Each page can have its own top-level navigation tab and orientation. You can set the orientation via the `data-orientation` attribute:
+
+```pre
+
+Page 1
+=====================================  
+    
+Column 1 {data-width=600}
+-------------------------------------
+    
+### Chart 1
+    
+
+Column 2 {data-width=400}
+-------------------------------------
+   
+### Chart 2
+
+
+Page 2 {data-orientation=rows}
+=====================================     
+   
+Row 1 {data-height=600}
+-------------------------------------
+
+### Chart 1
+
+Row 1 {data-height=600}
+-------------------------------------
+
+### Chart 2
+
+```
+
+
+You can easily build the following dashboard:
+
+Click to See the [Dashboard](http://scientistcafe.com/CE_JSM2017/Examples/dashboard_multi-page.html) and [Source Code](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/dashboard_multi-page.Rmd)
+![](http://scientistcafe.com/CE_JSM2017/Examples/MultiPage.PNG)
+
+
+#### Storyboard
+
+
+If you want to present a sequence of charts and related commentary, stroyboard will be a great choice. 
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutputcode8.PNG){
+width=100%}
+</center>
+
+</br>
+
+You need to specify `storyboard: true`and additional commentary will show up alongside the storyboard frames (the content after the `***` separator in each section). `social: menu` will enable an icon to share the storyboard to your social network:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/shareicon.PNG){
+width=20%}
+</center>
+</br>
+
+`source: embed` allows you to embed the source code. The layout is:
+
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/layoutput8.PNG){
+width=100% }
+</center>
+</br>
+
+Here is an example of HTML Widgets Showcase storyboard. You can look at the source code by clicking "Source Code" tab at the upright corner.
+
+[See the storyboard here](http://scientistcafe.com/CE_JSM2017/Examples/storyboard.html).
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/storyboard.PNG){
+width=100% }
+</center>
+</br>
+
+### Components
+
+#### HTML Widgets
+
+The `htmlwidgets` framework brings JavaScript data visualization to R. The biggest advantage is the interactive character. As of writing this book, there are over 40  packages on CRAN which provide htmlwidgets. Charts based on `htmlwidgets` can dynamically re-size themselves so will fit within the bounds of their flexdashboard containers.
+
+Some htmlwidgets:
+
+- `DT`: provides an R interface to the JavaScript library DataTables
+- `leaflet`: a JavaScript library for creating dynamic maps that support panning and zooming along with various annotations.
+- `rbokeh`: an interface to Bokeh, a powerful declarative Bokeh framework for creating web-based plots.
+- `d3heatmap`: creates interactive D3 heatmaps including support for row/column highlighting and zooming.
+- `networkD3`: provides tools for creating D3 JavaScript network graphs from R
+- `dygraphs`: provides rich facilities for charting time-series data in R and includes support for many interactive features.
+- `plotly`: provides bindings to the plotly.js library and allows you to easily translate your ggplot2 graphics into an interactive web-based version.
+- `metricsgraphics`: enables easy creation of D3 scatterplots, line charts, and histograms.
+- `threejs`: provides interactive 3D scatterplots and globe plot
+
+One disadvantage of htmlwidgets is that there may be a performance problem for larger datasets. Because they embed their data directly in their host web page. You can use standard R graphics in the case of a large dataset.
+
+#### Standard R graphics
+
+A static dashboard is also a great tool for story-telling. Standard R graphics are also scaled in static dashboard with the same aspect ratios. However, it is possible for the PNG images fill the bounds of their container seamlessly. To solve that problem, you can scale figure by defining knitr `fig.width` and `fig.height` values to approximate the actual size on the page. For example:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/standardgraphic.PNG){
+width=100% }
+</center>
+</br>
+
+You can download the [source code](http://scientistcafe.com/CE_JSM2017/Examples/basicgraphic.Rmd) and see the complete [output](http://scientistcafe.com/CE_JSM2017/Examples/basicgraphic.html). Here is a screenshot of the output: 
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/standardgraphicoutput.PNG){
+width=100% }
+</center>
+</br>
+
+#### Tabular Data
+
+Some of the previous examples included a DataTable component. It is interactive table that you can sort, filter and paginate. You can also display simple table. Here is an example of both:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/tabulecomcode.PNG){
+width=100% }
+</center>
+</br>
+
+You can download the [source code](http://scientistcafe.com/CE_JSM2017/Examples/tabularcom.Rmd) and see the complete [output](http://scientistcafe.com/CE_JSM2017/Examples/tabularcom.html). 
+
+#### Value Boxes
+
+If you want to call out people's attention on one or more simple statistics in a dashboard, you can use the `valueBox` function. It allows you to display single values along with a title and optional icon. For example:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/valueboxcode.PNG){
+width=100% }
+</center>
+</br>
+
+You can download the [source code](http://scientistcafe.com/CE_JSM2017/Examples/valuebox.Rmd) and see the complete [output](http://scientistcafe.com/CE_JSM2017/Examples/valuebox.html). Here is a screenshot of part of the output: 
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/valueboxout.PNG){
+width=100% }
+</center>
+</br>
+
+The `valueBox` function will emit a value with a specified icon (`icon =`) and color (`color =`). 
+
+**Specify Icon**
+
+There are three different icon sets you can refer to. You should specify it's full name including the prefix to `icon` parameter (e.g `"icon = "fa-pencil"`,`"icon = ion-social-twitter"`, etc.) :
+
+- [Font Awesome Icons](http://fontawesome.io/icons/)
+- [Ionicons](http://ionicons.com/)
+- [BooBootstrap Glyphicons](https://getbootstrap.com/components/#glyphicons)
+
+**Specify Color**
+
+You can specify color using `color` parameter (e.g. `color = "success"`). Available colors include "primary", "info", "success", "warning", and "danger" (the default is "primary"). You can also specify and valid CSS color (e.g. "#ffffff", "rgb(100,100,100)", etc.) 
+
+
+#### Gauges
+
+If your value is within a specified range such as percentage, it is more intuitive to use gauges. 
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/gaugecode.PNG){
+width=100% }
+</center>
+</br>
+
+Output:
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/gaugeout.PNG){
+width=100% }
+</center>
+</br>
+
+You can download the [source code](http://scientistcafe.com/CE_JSM2017/Examples/gauge.Rmd) and see the complete [output](http://scientistcafe.com/CE_JSM2017/Examples/gauge.html). 
+
+Those are the main components in a dashboard. More information about flesdashboard for R, refer to "[flexdashboard: Easy interactive dashboards for R](http://rmarkdown.rstudio.com/flexdashboard/index.html)".
+
+## Shiny Dashboard
+
+### Brief Introduction to Shiny
+
+Shiny is a web application framework for R that can help turn your analyses into interactive web applications. It is easy to learn and use. It doesn't require HTML, CSS, or JavaScript knowledge. This section will demonstrate two examples to help you understand the basic structure of a Shiny App. With some basic understanding, the next section will show how to include shiny in a dashboard.  
+
+<font size="4"><strong>Example 1: Customer Segment Plot </strong></font>
+
+![](http://scientistcafe.com/CE_JSM2017/images/shiny1.PNG)
+
+
+The Customer Segment example is a simple application that plots the clothes customer data by segments using htmlwidget `metricsgraphics`. Type the following code to run the example:
+
+```r
+library(shiny)
+source("https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/shiny1.R")
+shinyApp(ui = ui, server = server)
+```
+
+A Shiny app contains two parts:
+
+- `ui`: It defines user interface and controls the outlook of the web page.
+- `server`: It includes the backend manipulation of the input.
+
+The source code for both of the components is: 
+
+```r
+library(shiny)
+library(dplyr)
+library(metricsgraphics)
+
+sim.dat<-readr::read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")%>%
+  filter(!is.na(income) & age<100)
+
+# Define UI for application that draws a metricsgraphics interactive plot
+
+ui <- pageWithSidebar(
+  
+  # inpute the panel header
+  headerPanel('Customer Segment'),
+  
+  # sidebar with input for customer segment
+  sidebarPanel(
+    selectInput('seg', 'Segment', unique(sim.dat$segment))
+  ),
+  
+  # show a metricsgraphics plot
+  mainPanel(
+    metricsgraphicsOutput('plot1')
+  )
+)
+
+# Define server logic required to draw a metricsgraphics plot
+server <-  function(input, output) {
+  
+  # Expression that generates a metricsgraphics The expression is
+  # wrapped in a call to renderMetricsgraphics to indicate that:
+  #
+  #  1) It is "reactive" and therefore should be automatically
+  #     re-executed when inputs change
+  #  2) Its output type is a renderMetricsgraphics
+  
+  # select the part of data needed
+  selectedData <- reactive({
+    dplyr::filter(sim.dat, segment == input$seg)
+  })
+  
+  # render plot
+  output$plot1 <- renderMetricsgraphics({
+    mjs_plot(selectedData(), x= age, y=online_exp) %>%
+      mjs_point(color_accessor=income, size_accessor=income) %>%
+      mjs_labs(x="Age", y="Online Expense")
+  })
+  
+}
+
+# Run the application 
+ shinyApp(ui = ui, server = server)
+```
+
+
+The example here has a single character input specified using a slider and a single `metricsgraphics` plot output. The server-side of the application generates a metricsgraphics plot. Notice that the code generating the plot is wrapped in a call to `renderMetricsgraphics`. There are different render calls in Shiny:
+
+- `renderDataTable`
+- `renderImage`
+- `renderPlot`
+- `renderPrint`
+- `renderTable`
+- `renderText`
+- `renderUI`
+
+You can choose the appropriate one as needed. The next example is a little more complicated with more input controls. You may be confused by the `reactive` expression in example 1. Don't worry. We will explain the use in the next example.
+
+
+<font size="4"><strong> Example 2: Customer Segment Plot and Summary Table</strong></font>
+
+
+![](http://scientistcafe.com/CE_JSM2017/images/shiny2.PNG)
+
+
+Example 2 demonstrates how to include multiple inputs and render both table and graphic using htmlwidgets.  Type the following code to run the application:
+
+```r
+library(shiny)
+source("https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/shiny2.R")
+shinyApp(ui = ui, server = server)
+```
+
+This example has a little more going on:  
+
+- three inputs: (1) customer segment; (2) x-axis variable of the plot; (3) y-axis variable of the plot
+- two outputs: (1) a table on HTML pages with filtering, pagination, sorting features in the table; (2) a `metricsgraphics` plot
+
+
+```r
+library(shiny)
+library(dplyr)
+library(DT)
+library(metricsgraphics)
+
+sim.dat<-readr::read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")%>%
+  filter(!is.na(income) & age<100)
+
+# Define UI for application that draws a histogram
+ui <- pageWithSidebar(
+  headerPanel('Customer Segment'),
+  
+  sidebarPanel(
+    selectInput('seg', 'Segment', unique(sim.dat$segment)),
+    selectInput('xcol', 'X Variable', c("age")),
+    selectInput('ycol', 'Y Variable', c("store_exp","online_exp","store_trans","online_trans"))
+  ),
+  
+  mainPanel(
+    metricsgraphicsOutput('plot1'),
+    
+    dataTableOutput("summary")
+  )
+)
+
+# Define server logic required to draw a histogram
+server <-  function(input, output) {
+  
+  # Combine the selected variables into a new data frame
+  selectedData <- reactive({
+    dplyr::filter(sim.dat, segment == input$seg)
+  })
+  
+  output$plot1 <- renderMetricsgraphics({
+    mjs_plot(selectedData(), x= input$xcol, y=input$ycol) %>%
+      mjs_point(color_accessor=income, size_accessor=income) %>%
+      mjs_labs(x=input$xcol, y=input$ycol)
+  })
+  
+  # Generate a summary of the dataset
+  output$summary <- renderDataTable({
+    sim.dat%>%
+      group_by(segment)%>%
+      summarise(Age=round(mean(na.omit(age)),0),
+                FemalePct=round(mean(gender=="Female"),2),
+                HouseYes=round(mean(house=="Yes"),2),
+                store_exp=round(mean(na.omit(store_exp),trim=0.1),0),
+                online_exp=round(mean(online_exp),0),
+                store_trans=round(mean(store_trans),1),
+                online_trans=round(mean(online_trans),1))%>%
+      data.frame()%>%
+      datatable( rownames = FALSE,
+                 caption = 'Table 1: Segment Summary Table',
+                 options = list(
+                   pageLength = 4, 
+                   autoWidth = TRUE)
+      )
+    
+  })
+  
+}
+
+# Run the application 
+shinyApp(ui = ui, server = server)
+```
+
+There are three `selectInput` calls in the user interface definition. Inside the `mainPanel()`, there are two calls `metricsgraphicsOutput` and `dataTableOutput`. 
+
+The server side also has some new elements. There are:
+
+- A `reactive` expression to return the subset of data according to user's choice
+- Rendering expression `renderMetricsgraphics` return the `output$plot1`
+- Rendering expression `renderDataTable` return the `output$summary`
+
+It is important to understand the concept of reactivity. The fundamental feature of Shiny is interactivity which means the output will change with input. The process is:
+
+1. user provide input
+1. backend R code will run using the input
+1. report an output back to user
+
+The changing step is through reactive programming. For more details about reactive programming, see the [Reactivity Overview](http://shiny.rstudio.com/articles/reactivity-overview.html). RStudio provides an excellent Shiny tutorial from beginning to deep level: http://shiny.rstudio.com/tutorial/.
+
+
+### Using `shiny` with `flexdashboard`
+
+You can also create a dashboard that enables viewers to change underlying parameters and see the corresponding results. You can add `shiny` to `flexdashboard` by specifying  `runtime: shiny` in the front-matter of your document. 
+
+<pre>---
+title: "Customer Segmentation Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    source_code: embed
+    social: menu
+    theme: flatly
+runtime: shiny
+---</pre>
+
+Then add one or more input controls and reactive expressions as in shiny. The difference is that when you add shiny function to flexdashboard, there is no need to use wrap the code to two components, `ui` and `server`. In that sense, using `shiny` in `flexdashboard` is easier than building Shiny App itself. 
+
+An alternative way to dashboards with Shiny is to use [`shinydashboard`](https://rstudio.github.io/shinydashboard/) package. 
+<font size="4"><strong> Example: Customer Segmentation Dashboard</strong></font>
+
+Here is an example dashboard using the clothes customer data.
+
+</br>
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/CustSegDB.PNG){
+width=100% }
+</center>
+</br>
+
+
+The control part of the source code is (analogy to `ui` in `shiny`): 
+
+```{r segmentdb_ui, comment='',echo=FALSE}
+cat(readLines('Data/segmentdb_ui.csv'), sep = '\n')
+```
+
+The reactive expressions are  (analogy to `server` in `shiny`): 
+
+```{r segmentdb_server, comment='',echo=FALSE}
+cat(readLines('Data/segmentdb_server.csv'), sep = '\n')
+```
+
+Click [here](https://raw.githubusercontent.com/happyrabbit/linhui.org/gh-pages/CE_JSM2017/Examples/segmentdb.Rmd) to download the complete source code. Here is the [app](https://scientistcafe.shinyapps.io/shinysample/).
+
+## HTML Widgets 
+
+R HTMLWidgets framework brings JavaScript visualization to R. If you use HTMLWidgets in the RStudio environment, you can interact with the plotting pane like a modern browser. There are many tools under the framework from geospatial mapping to time series visualization, from d3.js interactivity to a nice interactive table.  The HTMLWidgets framework and shiny together provides a foundation for that next level of interactivity and fluency in your interfaces. R developer with some JavaScript experience can develop new widgets using the seamless R/JavaScript bridge provided by the HTMLWidgets package.
+
+We will simply show some of the commonly used packages, and give the corresponding reference link for everyone to study further. There are detailed tutorials for each package.
+
+### `DT`: A Wrapper of the JavaScript Library DataTables
+
+The R package DT provides an R interface to the JavaScript library DataTables. R data objects (matrices or data frames) can be displayed as tables on HTML pages, and DataTables provides filtering, pagination, sorting, and many other features in the tables.
+
+Here is a simple example using our clothes customer data:
+
+```{r DT,message=FALSE}
+library(DT)
+library(dplyr)
+
+# Read the data
+sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+# Summarise data
+seg<-sim.dat%>%
+  filter(age < 100)%>%
+  group_by(segment)%>%
+  summarise(Age=round(mean(na.omit(age)),0),
+      FemalePct=round(mean(gender=="Female"),2),
+      HouseYes=round(mean(house=="Yes"),2),
+      store_exp=round(mean(na.omit(store_exp),trim=0.1),0),
+      online_exp=round(mean(online_exp),0),
+      store_trans=round(mean(store_trans),1),
+      online_trans=round(mean(online_trans),1))%>%
+  data.frame()
+
+# show summarized data by interactive table
+
+  datatable( seg,
+             # no row names
+             rownames = FALSE, 
+             # Define table CSS Classes
+             class = "cell-border stripe",
+             # Define table caption
+             caption = 'Table 1: Segment Summary Table',
+             options = list(
+               # show the first 4 rows
+               pageLength = 4, 
+               # Enable automatic column width calculation
+               autoWidth = TRUE)
+            )
+```
+
+</br>
+
+The `class` argument specifies the CSS classes. Here we assigned `cell-border stripe` to the `class`. Refer to [default styling options](https://datatables.net/manual/styling/classes) for possible values. You can customize many other features. Refer to https://rstudio.github.io/DT/ for more details.
+
+
+
+### `leaflet`:Interactive Web-Maps Based on the Leaflet JavaScript Library
+
+The JaveScript library [`Leaflet`](http://leafletjs.com/) is one of the most popular JaveScript libraries for interactive maps. The R package `leaflet` makes it easy for R users to integrate Leaflet maps. It is one of the most used visualization tools in my work. 
+
+
+```{r}
+library(leaflet)
+leaflet() %>%
+  addTiles() %>%
+  addMarkers(lng= -76.6171, lat=39.2854, popup="JSM 2017: Baltimore Convention Center")
+```
+
+See https://rstudio.github.io/leaflet/ for more details.
+
+### `dygraphs`: interactive plot for time series data 
+
+The dygraphs package is an R interface to the dygraphs JavaScript charting library. It provides rich facilities for charting time-series data in R, including highly configurable series and axis display and interactive features like zoom/pan and series/point highlighting. See https://rstudio.github.io/dygraphs/ for more details.
+
+```{r, message=FALSE}
+library(dygraphs)
+wikiview<-read.csv("Data/wikiview.csv")
+
+tr<-wikiview%>%
+  filter(article == "Donald_Trump")%>%
+  dplyr::select(timestamp, Donald_Trump = views)
+
+iv<-wikiview%>%
+  filter(article == "Ivanka_Trump")%>%
+  dplyr::select(timestamp, Ivanka_Trump = views)
+
+ku<-wikiview%>%
+  filter(article == "Jared_Kushner")%>%
+  dplyr::select(timestamp, Jared_Kushner = views)
+
+cl<-wikiview%>%
+  filter(article == "Hillary_Clinton")%>%
+  dplyr::select(timestamp, Hillary_Clinton = views)
+
+library(xts)
+library(lubridate)
+dplot<-merge(tr,iv)
+dplot<-merge(dplot,ku)
+dplot<-merge(dplot,cl)
+dplot$timestamp<-ymd(dplot$timestamp/100)
+
+dplot <- xts(dplyr::select(dplot, -timestamp), order.by = dplot$timestamp)
+dygraph(dplot, main = "Wikipedia Views")%>% 
+  dyRangeSelector()
+```
+
+### `highcharter`
+
+
+`Highcharter` is a rich R interface to the popular Highcharts JavaScript graphics library
+
+```{r}
+library(highcharter)
+library(dplyr)
+
+sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+dplot<-sim.dat%>%
+  filter(!is.na(income) & age<100)
+
+highchart() %>% 
+  hc_title(text = "Scatter chart: Age v.s Online Expense") %>% 
+  hc_add_series_scatter(dplot$age, round(dplot$online_exp,0),
+                        round(dplot$income,0), dplot$income)
+```
+
+###  `rbokeh` is a visualization library that provides a flexible and powerful declarative framework for creating web-based plots
+
+```{r}
+library(rbokeh)
+dplot<-sim.dat%>%
+  filter(!is.na(income) & age<100)
+p <- figure() %>%
+  ly_points(age, income, data = dplot,
+    color = segment, glyph = segment)
+p
+```
+
+*** 
+
+https://hafen.github.io/rbokeh/
+
+- `rbokeh` renders plots using HTML canvas and provides many mechanisms for interactivity
+
+- Plots in `rbokeh` are build by layering plot elements, called `glyphs`, to create the desired visualization
+
+### `metricsgraphics` enables easy creation of D3 scatterplots, line charts, and histograms.
+
+```{r}
+library(metricsgraphics)
+dplot<-sim.dat%>%
+  filter(!is.na(income) & age<100)
+mjs_plot(dplot, x= age, y=online_exp) %>%
+  mjs_point(color_accessor=income, size_accessor=income) %>%
+  mjs_labs(x="Age", y="Online Expense")
+```
+
+***
+
+https://hrbrmstr.github.io/metricsgraphics/
+
+This makes it possible to avoid one giant function with a ton of parameters and facilitates breaking out the chart building into logical steps. 
+
+While MetricsGraphics.js charts may not have the flexibility of ggplot2, you can build functional, interactive [multi-]line, scatterplot, bar charts & histograms and + even link charts together.
+
+### `networkD3`: D3 JavaScript Network Graphs from R 
+
+Package  networkD3  provides tools for creating D3 JavaScript network graphs from R.
+
+```{r, message=FALSE}
+library(networkD3)
+data(MisLinks, MisNodes)
+forceNetwork(Links = MisLinks, Nodes = MisNodes, Source = "source",
+             Target = "target", Value = "value", NodeID = "name",
+             Group = "group", opacity = 0.4)
+```
+
+
+### `threejs`: Interactive 3D Scatter Plots and Globes 
+
+Package threejs provides interactive 3D scatterplots and globe plots. Here is a galary of examples from the package and also the source code http://bwlewis.github.io/rthreejs/.
+
+Here is an example of R Markdown ducument including interactive figure/table from the packages mentioned. Run the following and you can get this interactive webpage http://linhui.org/Hui s_files/SampleForInteractiveReport.html
+
+```{r}
+library(threejs)
+data(world.cities, package="maps")
+cities <- world.cities[order(world.cities$pop,decreasing=TRUE)[1:1000],]
+value  <- 100 * cities$pop / max(cities$pop)
+
+earth <- texture(system.file("images/world.jpg",package="threejs"))
+globejs(img=earth, lat=cities$lat, long=cities$long, value=value)
+```
+
+As mentioned before, there are over 40 packages on CRAN which provide htmlwdgets. There are more than 80 packages in total. You can browse all available widgets in the [gallery](http://gallery.htmlwidgets.org/) and find example uses of popular htmlwidgets in the [showcase website](http://www.htmlwidgets.org/showcase_leaflet.html).

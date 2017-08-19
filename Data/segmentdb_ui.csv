@@ -1,0 +1,8 @@
+Sidebar {.sidebar data-width=350}
+======================================================================
+
+```{r}
+selectInput('seg', 'Segment', unique(sim.dat$segment))
+selectInput('xcol', 'X Variable', c("age"))
+selectInput('ycol', 'Y Variable', c("store_exp","online_exp","store_trans","online_trans"))
+```

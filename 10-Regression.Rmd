@@ -1,0 +1,10 @@
+#  Regression Models
+
+## Ordinary Least Squares
+
+## Multivariate Adaptive Regression Splines
+
+## Generalized Linear Model
+
+## PCR and PLS
+

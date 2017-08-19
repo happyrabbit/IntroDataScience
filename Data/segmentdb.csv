@@ -1,0 +1,164 @@
+---
+title: "Customer Segmentation Dashboard"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: rows
+    vertical_layout: fill
+    source_code: embed
+    social: menu
+    theme: flatly
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(shiny)
+library(leaflet) # devtools::install_github('rstudio/leaflet')
+library(highcharter) # devtools::install_github('jbkunst/highcharter')
+library(plotly) # devtools::install_github('ropensci/plotly')
+library(ggplot2) # devtools::install_github('hadley/ggplot2')
+library(sp)
+library(dplyr)
+library(flexdashboard) # devtools::install_github('rstudio/flexdashboard')
+library(rgeos)
+library(mapproj)
+library(maptools)
+library(readr)
+library(ggthemes)
+library(viridis)
+library(DataScienceR)
+require(htmlwidgets)
+require(rgdal)
+require(rJava)
+library(RColorBrewer)
+library(metricsgraphics)
+library(DT)
+
+sim.dat<-readr::read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")%>%
+  filter(!is.na(income) & age<100)
+
+```
+
+Sidebar {.sidebar data-width=350}
+======================================================================
+
+```{r}
+selectInput('seg', 'Segment', unique(sim.dat$segment))
+selectInput('xcol', 'X Variable', c("age"))
+selectInput('ycol', 'Y Variable', c("store_exp","online_exp","store_trans","online_trans"))
+```
+
+It is an application using `flexdashboard` and `shiny` in R.
+
+-  __Segment__ : customer segment
+
+- __X Variable__ : x-axis variable
+
+- __Y Variable__ : y-axis variable
+
+Application author: [Hui Lin](http://scientistcafe.com);  
+Please contact <longqiman@gmail.om> for any questions. 
+
+
+
+Segment Profile
+======================================================================
+
+Row {data-width=650}
+-----------------------------------------------------------------------
+### Conspicuous
+
+```{r}
+value <- table(sim.dat$segment)
+value <- as.vector(round(value/sum(value),2)*100)
+
+gauge(value[1], min = 0, max = 100,  symbol = '%', gaugeSectors(
+  success = c(30, 100),warning = c(21, 29), danger = c(0, 20)
+))
+```
+
+### Price Sensitive
+
+```{r}
+gauge(value[2], min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(30, 100),warning = c(21, 29), danger = c(0, 20)
+))
+```
+
+### Quality
+
+```{r}
+gauge(value[3], min = 0, max = 100, symbol = '%', gaugeSectors(
+  success = c(30, 100),warning = c(21, 29), danger = c(0, 20)
+))
+```
+
+### Style
+
+```{r}
+gauge(value[4], min = 0, max = 100, symbol = '%', gaugeSectors(
+ success = c(30, 100),warning = c(21, 29), danger = c(0, 20)
+))
+```
+
+
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Transactional Behavior by Age
+
+
+```{r}
+
+selectedData <- reactive({
+    dplyr::filter(sim.dat, segment == input$seg)
+  })
+  
+renderMetricsgraphics({
+    mjs_plot(selectedData(), x= input$xcol, y=input$ycol) %>%
+      mjs_point(color_accessor=income, size_accessor=income) %>%
+      mjs_labs(x=input$xcol, y=input$ycol)
+  })
+
+```
+
+
+Profile Summary 
+======================================================================
+
+Row {data-width=350}
+-----------------------------------------------------------------------
+
+### Segment Summary Table 
+
+```{r}
+ sim.dat%>%
+      group_by(segment)%>%
+      summarise(Age=round(mean(na.omit(age)),0),
+                FemalePct=round(mean(gender=="Female"),2),
+                HouseYes=round(mean(house=="Yes"),2),
+                store_exp=round(mean(na.omit(store_exp),trim=0.1),0),
+                online_exp=round(mean(online_exp),0),
+                store_trans=round(mean(store_trans),1),
+                online_trans=round(mean(online_trans),1))%>%
+      data.frame()%>%
+      datatable( rownames = FALSE,
+                 caption = 'Table 1: Segment Summary Table',
+                 options = list(
+                   pageLength = 4, 
+                   autoWidth = TRUE)
+      )
+    
+```
+
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### InsightS
+
+- Conspicuous: average age is about 40.  1/3 of them are female, and 2/3 are male. They may be a good target for candy dad. They buy regardless the price. Almost all of them own house (0.86). 
+
+- Price: They are older people, average age 60. Nearly all of them own a house(0.94). They are less likely to purchase online (store_trans=6 while online_trans=3). This is the only group that is less likely to purchase online.
+
+- Quality: The average age is 35. They are not way different with Conspicuous in terms of age. But they spend much less. The percentages of male and female are similar. They prefer online shopping. More than half of them don't own a house (0.66).
+
+- Style: They are young people with average age 24. The majority of them are female (0.81). Most of them don't own a house (0.73). They are very likely to be digital natives and definitely prefer online shopping.

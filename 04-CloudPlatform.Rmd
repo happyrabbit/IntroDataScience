@@ -1,0 +1,387 @@
+# Big Data Cloud Platform
+
+## How Data becomes Science?
+
+Data has been a friend of statistician for hundreds of years. Tabulated data are the most familiar format that we use daily. People used to store data on papers, tapes, diskettes, or hard drives. Only recently, with the development of the computer, hardware, software, and algorithms, the volume, variety, and speed of the data suddenly beyond the capacity of a traditional statistician. And data becomes a special science with the very first focus on a fundamental question: with a huge amount of data, how can we store the data and quick access and process the data. In the past a few years, by utilizing commodity hardware and open source software, a big data ecosystem was created for data storage, data retrieval, and parallel computation. Hadoop and Spark have become a popular platform that enables data scientist, statistician, and business analyst to access the data and to build models. Programming skills in the big data platform have been the largest gap for a statistician to become a successful data scientist. However, with the recent wave of cloud computing, this gap is significantly reduced. Many of the technical details have been pushed to the background, and the user interface becomes much easier to learn.  Cloud systems also enable quick implementation to the production environment. Now data science is emphasis more on the data itself as well as models and algorithms on top of the data instead of platform and infrastructure. 
+
+## Power of Cluster of Computers
+
+We are all familiar with our laptop/desktop computers which contain mainly three components to finish computation with data: (1) Hard disk, (2) Memory, and (3) CPU as shown in Figure 41 left. The data and codes are stored in the hard disk which has certain features such as relatively slow for reading and writes and relatively large capacity of around a few TB in today’s market. Memory is relatively fast for reading and writing but relatively small in capacity in the order of a few dozens of GB in today’s market. CPU is where all the computation is done. 
+
+<center>
+![Single computer (left) and a cluster of computers (right)](http://scientistcafe.com/CE_JSM2017/images/cluster.png)
+</center>
+
+For statistical software such as R, the amount of data that it can process is limited by the computer’s memory. For a typical computer before the year 2000, the memory is less than 1 GB. The memory capacity grows far slower than the availability of the data to analyze. Now it is quite often that we need to analyze data far beyond the capacity of a single computer’s memory, especially in an enterprise environment. Meanwhile, the computation time is growing faster than linear to solve the same problem (such as regressions) as the data size increases.  Using a cluster of computers become a common way to solve big data problem. In Figure 41 (right), a cluster of computers can be viewed as one powerful machine with total memory, hard disk and CPU equivale to the sum of individual computers. It is common to have thousands of nodes for a cluster. 
+
+
+In the past, to use a cluster of computers, users must write code (such as MPI) to take care of how data is distributed and how the computation is done in a parallel fashion. Luckily with the recent new development, the cloud environment for big data analysis is more user-friendly. As data is typically beyond the size of one hard disk, the dataset itself is stored across different nodes’ hard disk (i.e. the Hadoop system mentioned below). When we perform analysis, we can assume the needed data is already distributed across many node’s memories in the cluster and algorithm are parallel in nature to leverage corresponding nodes’ CPUs to compute (i.e. the Spark system mentioned below). 
+
+## Evolution of Clustering Computing
+
+Using computer clusters to solve general purpose data and analytics problems needs a lot of efforts if we have to specifically control every element and steps such as data storage, memory allocation, and parallel computation. Fortunately, high tech IT companies and open source communities have developed the entire ecosystem based on Hadoop and Spark. Users need only to know high-level scripting language such as Python and R to leverage computer clusters’ storage, memory and computation power.   
+
+### Hadoop
+
+The very first problem internet companies face is that a lot of data has been collected and how to better store these data for future analysis. Google developed its own file system to provide efficient, reliable access to data using large clusters of commodity hardware. The open source version is known as Hadoop Distributed File System (HDFS). Both systems use Map-Reduce to allocate computation across computation nodes on top of the file system. Hadoop in written in Java and writing map-reduce job using Java is a direct way to interact with Hadoop which is not familiar to many in the data and analytics community. To help better use Hadoop system, an SQL-like data warehouse system called Hive, and a scripting language for analytics interface called Pig were introduced for people with analytics background to interact with Hadoop system. Within Hive, we can create user defined function through R or Python to leverage the distributed and parallel computing infrastructure. Map-reduce on top of HDFS is the main concept of the Hadoop ecosystem. Each map-reduce operation requires retrieving data from hard disk, computation time, and then storing the result onto disk again. So, jobs on top of Hadoop require a lot of disk operation which may slow down the computation process.
+
+### Spark
+
+Spark works on top of distributed file system including HDFS with better data and analytics efficiency by leveraging in-memory operations and is more tailored for data processing and analytics. The spark system includes an SQL-like framework called Spark SQL and a parallel machine learning library called MLib. Fortunately for many in the analytics community, Spark also supports R and Python. We can interact with data stored in distributed file system using parallel computing across nodes easily with R and Python through the Spark API and do not need to worry about lower level details of distributed computing. We will introduce how to use R notebook to drive Spark computations. 
+
+## Introduction of Cloud Environment
+
+There are many cloud computing environments such as Amazon’s AWS which provides a complete list of functions for heavy-duty enterprise applications. For example, Netflix runs its business entirely on AWS and Netflix does not own any data centers. For beginners, Databricks provides an easy to use cloud system for learning purpose. Databricks is a company founded by the creators of Apache Spark and it provides a user-friendly web-based notebook environment that can create Hadoop/Spark/GPU cluster on the fly and run R/Python/Scala/SQL. We will use Databricks’ community edition to run demos in this book. Please note the content of this section is adopted from the following web pages:
+
+- https://docs.databricks.com/user-guide/faq/sparklyr.html 
+- http://spark.rstudio.com/index.html 
+
+## Open Account and Create a Cluster 
+
+Anyone can apply for a community edition for free through https://databricks.com/try-databricks and a short YouTube video illustrates the application process can be found https://youtu.be/vx-3-htFvrg. Another short YouTube video shows how to create a cluster for a cloud computing environment and create an R notebook to run R codes which can be found at https://youtu.be/0HFujX3t6TU. In fact, you can run Python/R/Scala/SQL cells, as well as markdown cells, in the same notebook by including a keyword at the beginning of each cell that we will discuss later.
+
+## R Notebook
+
+In last section of the video, we created an R notebook. For an R notebook, it contains multiple cells and by default, the content within each cell are R scripts. Usually, each cell is a well-managed a few lines of codes that accomplish a specific task. For example, Figure 42 shows the default cell for an R notebook for cell 1. We can type in R scripts and comments same as we are using R console. By default, only the result from the last line will be shown following the cell. However, you can use `print()` function to output results for any lines. If we move the mouse to the middle of the lower edge of the cell below the results, a “+” symbol will show up and click on the symbol will insert a new cell below. When you click any area within a cell, it will make it editable and you will see a few icons on the top right corn of the cell where you can run the cell, as well as add a cell below or above, copy the cell, cut cell, high cell etc. One quick way to run the cell is Shift+Enter when the cell is chosen. You will become familiar with the notebook environment quickly.
+
+<center>
+![R notebook default cell with R scripts](http://scientistcafe.com/CE_JSM2017/images/rnotebook.png)
+</center>
+
+
+## Markdown Cells
+
+For an R notebook, every cell by default will contain R scripts. But if we put %md, %sql or %python at the first line of a cell, that cell becomes Markdown cell, SQL script cell, and Python script cell accordingly. For example, Figure 43 shows a markdown cell with scripts and the actual appearance when exits editing mode. Markdown cell provides a straightforward way to descript what each cell is doing as well as what the entire notebook is about. It is a better way than simple comment within in the code.
+
+<center>
+![ An example of Markdown cell with scripts at top and actual appearance at bottom](http://scientistcafe.com/CE_JSM2017/images/markdown_databrick.png)
+</center>
+
+## Leverage Hadoop and Spark Parallel using R Notebook
+
+R is a powerful tool for data analysis given the data can be fit into memory. Because of the memory bounded dataset limit, R itself cannot be used directly for big data analysis where the data is likely stored in Hadoop and Spark system. By leverage `sparklyr` package created by RStudio, we can use Databricks’ R notebook to analyze data stored in Spark system where the data are stored across different nodes and computation are parallel in nature to use the collection of memory units across all nodes. And the process is relatively simple. In this section, we will illustrate how to use Databricks’ R notebook for big data analysis on top of Spark environment through `sparklyr` package. 
+
+### Library Installation
+
+First, we need to install `sparklyr` package which enables the connection between master or local node to Spark cluster environments. As it will install more than 10 dependencies, it may take more than 5 minutes to finish. Be patient while it is installing! Once the installation finishes, load the `sparklyr` package as illustrated by the following code: 
+
+```r
+# Installing sparklyr takes a few minutes, 
+# because it installs +10 dependencies.
+
+if (!require("sparklyr")) {
+  install.packages("sparklyr")  
+}
+
+# Load sparklyr package.
+library(sparklyr)
+```
+
+### Create Connection
+
+Once the library is loaded, we need to create a Spark Connection to link master / local node to Spark environment. Here we use the "databricks" option for parameter method which is specific for databricks’ system. In the enterprise environment, please consult your administrator for details. The created Spark Connection (i.e. sc) will be the pipe that connects master/local/terminal to the Spark Cluster. We can think of the web interface/terminal is running on a master node which has its local memory and CPU. The Spark Connection can be established with:
+
+```r
+# create a sparklyr connection 
+sc <- spark_connect(method = "databricks")
+```
+
+### Sample Dataset
+
+To simplify the learning process, let us use a very familiar dataset: the iris dataset. It is part of the `dplyr` library and let's load that library to use the iris data frame. Here the iris dataset is still on the local node where the R notebook is running on. And we can see that the first a few lines of the iris dataset below the code after running:
+
+```r
+library(dplyr)
+head(iris)
+```
+
+### IMPORTANT - Copy Data to Spark Environment
+
+In real applications, your data maybe massive and cannot fit onto a single hard disk. If the data is already in Hadoop/Spark ecosystem, you can use SparkDataFrame to analyze it in the Spark system directly. Here, we illustrate how to copy a local dataset to Spark environment and then work on that dataset in the Spark system. As we have already created the Spark Connection sc, it is easy to copy data to spark system by sdf_copy_to() function as below:
+
+```r
+iris_tbl <- sdf_copy_to(sc = sc, x = iris, overwrite = T)
+```
+
+The above one line code copies iris dataset from the local node to Spark cluster environment.  "`sc`" is the Spark Connection we just created; "`x`" is the data frame that we want to copy;  "`overwrite`" is the option whether we want to overwrite the target object if the same name SparkDataFrame exists in the Spark environment. Finally, sdf_copy_to() function will return an R object wrapping the copied SparkDataFrame. So irir_tbl can be used to refer to the iris SparkDataFrame.
+
+To check whether the iris data was copied to Spark environment successfully or not, we can use `src_tbls( )` function to the Spark Connection (sc):
+
+```r
+src_tbls(sc) ## code to return all the data frames associated with sc
+```
+
+### Analyzing the Data
+
+Now we have successfully copied the iris dataset to the Spark environment as a SparkDataFrame. This means that `iris_tbl` is an R object wrapping the iris SparkDataFrame and we can use `iris_tbl` to refer the iris dataset in the Spark system (i.e. the iris SparkDataFrame). With the `sparklyr` packages, we can use many functions in `dplyr` to SparkDataFrame directly through `iris_tbl`, same as we are applying `dplyr` functions to a local R data frame in our laptop. For example, we can use the `%>%` operator to pass `iris_tbl` to the `count( )` function:
+
+```
+iris_tbl %>% count
+```
+
+or using the `head( )` function to return the first few rows in iris_tbl:
+
+```r
+head(iris_tbl)
+```
+
+or more advanced data manipulation directly to `iris_tbl`:
+
+```r
+iris_tbl %>% 
+  mutate(Sepal_Width = ROUND(Sepal_Width * 2) / 2) %>% # Bucketizing Sepal_Width
+  group_by(Species, Sepal_Width) %>% 
+  summarize(count = n(), Sepal_Length = mean(Sepal_Length), stdev = sd(Sepal_Length))
+```
+
+### Collect Results Back to Master Node
+
+Even though we can run many of the `dplyr` functions on SparkDataFrame, we cannot apply functions from other packages to SparkDataFrame direction (such as `ggplot()`). For functions that can only work on local R data frames, we must copy the SparkDataFrame back to the local node. To copy SparkDataFrame back to the local node, we use the `collect()` function where the argument to it is the name of the SparkDataFrame. The following code `collect()` the results of a few operations and assign the collected data to iris_summary variable:
+
+```r
+iris_summary <- 
+  iris_tbl %>% 
+  mutate(Sepal_Width = ROUND(Sepal_Width * 2) / 2) %>% 
+  group_by(Species, Sepal_Width) %>% 
+  summarize(count = n(), Sepal_Length = mean(Sepal_Length), stdev = sd(Sepal_Length)) %>%  
+  collect
+```
+
+Now, `iris_summary` is a local variable to the R notebook and we can use all R packages and functions to it. In the following code, we will apply `ggplot()` to it, exactly the same as a stand along R console: 
+
+```r
+library(ggplot2)
+ggplot(iris_summary, aes(Sepal_Width, Sepal_Length, color = Species)) + 
+  geom_line(size = 1.2) +
+  geom_errorbar(aes(ymin = Sepal_Length - stdev, ymax = Sepal_Length + stdev), width = 0.05) +
+  geom_text(aes(label = count), vjust = -0.2, hjust = 1.2, color = "black") +
+  theme(legend.position="top")
+```
+
+### Fit Regression to SparkDataFrame
+
+One of the largest advantages is that, within Spark system, there are already many statistical and machine learning algorithms developed to run parallelly across many CPUs with data across many memory units. In this example, we have already uploaded the data to Spark system, and the data in the Spark system can be referred through iris_tbl.  The linear regression implemented in Spark system can be called through `ml_linear_regression()` function. The syntax to call the function is to define the Spark Data Frame (i.e. iris_tbl), response variable (i.e. y-variable in linear regression in the Spark data frame iris_tbl) and features (i.e. the x-variable in linear regression in the Spark data frame iris_tbl). So, we can easily fit a linear regression for large dataset far beyond the memory limit of one single computer, and it is truly scalable and only constrained by the resource of the Spark cluster. Below is an illustration of how to fit a linear regression to SparkDataFrame using R notebook:
+
+
+```r
+fit1 <-  ml_linear_regression(x = iris_tbl, response = "Sepal_Length", 
+                              features = c("Sepal_Width", "Petal_Length", "Petal_Width"))
+summary(fit1)
+```
+
+In the above code, x is the R object wrapping the SparkDataFrame; the response is y-variable, features are the collection of explanatory variables. For this function, both the data and computation are in the Spark cluster which leverages multiple CPUs and distributed memories. 
+
+### Fit a K-means Cluster
+
+Through the `sparklyr` package, we can use an R notebook to access many Spark Machine Learning Library (MLlib) algorithms such as linear regression, logistic regression, Survival Regression, Generalized Linear Regression, Decision Trees, Random Forests, Gradient-Boosted Trees, Principal Components Analysis, Naive-Bayes, K-Means Clustering and a few other methods. Below codes fit a k-means cluster algorithm: 
+
+```r
+## Now fit a k-means clustering using iris_tbl data 
+## with only two out of four features in iris_tbl
+fit2 <- ml_kmeans(x = iris_tbl, centers = 3, 
+                  features = c("Petal_Length", "Petal_Width"))
+
+# print our model fit
+print(fit2)
+```
+
+After the k-means model is fit, we can apply the model to predict other datasets through `sdf_predict()` function. Below code apply the model to `iris_tbl` again to predict and then the results are collected back to local variable prediction through `collect()` function:
+
+```r
+prediction = collect(sdf_predict(fit2, iris_tbl)) 
+```
+
+As prediction is a local variable, we can apply any R functions from any libraries to it. For example:
+
+```r
+prediction  %>%
+  ggplot(aes(Petal_Length, Petal_Width)) +
+  geom_point(aes(Petal_Width, Petal_Length, col = factor(prediction + 1)),
+             size = 2, alpha = 0.5) + 
+  geom_point(data = fit2$centers, aes(Petal_Width, Petal_Length),
+             col = scales::muted(c("red", "green", "blue")),
+             pch = 'x', size = 12) +
+  scale_color_discrete(name = "Predicted Cluster",
+                       labels = paste("Cluster", 1:3)) +
+  labs(
+    x = "Petal Length",
+    y = "Petal Width",
+    title = "K-Means Clustering",
+    subtitle = "Use Spark.ML to predict cluster membership with the iris dataset."
+  )
+```
+### Summary
+
+In the above a few sub-sections, we illustrated 
+
+(1) the relationship between master / local node and Spark Clusters; 
+
+(2) how to copy a local data frame to a SparkDataFrame (please note if your data is already in Spark environment, there is no need to copy. This is likely to be the case for enterprise environment); 
+
+(3) how to manipulate SparkDataFrame through `dplyr` functions with the installation of `sparklyr` package; 
+
+(4) how to fit statistical and machine learning models to SparkDataFrame; 
+
+(5) how to collect information from SparkDataFrame back to a local data frame for future analysis. 
+
+These procedures are pretty much covered the basics of big data analysis that a data scientist needs to know. The above steps are published as an R notebook: https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3725396058299890/1806228006848429/latest.html
+
+## Databases and SQL
+
+Databases have been around for many years and efficiently store, organize, retrieve, and update data systematically. In the past, statisticians usually dealt with small datasets stored in Excel files and often did not interact with databases. Students from traditional statistics departments usually lack the needed database knowledge which is essential and required in an enterprise environment where data are stored in some form of database. Databases often contain a collection of tables and the relationship among these tables (i.e. schema).  The table is the fundamental structure for databases which contains rows and columns similar to data frames in R or Python pandas. Database management systems (DBMS) ensure data integration and security in real time operations. There are many different DBMS such as Oracle, SQL Server, MySQL, Teradata, Hive, Redshift and Hana. The majority of database operations are very similar among different DBMS, and Structured Query Language (SQL) is the standard language to use these systems. 
+
+SQL became a standard of the American National Standards Institute (ANSI) in 1986, and of the International Organization for Standardization (ISO) in 1987. The most recent version is published in December 2016. For typical users, the fundamental knowledge is the nearly the same. In addition to the standard features, each DBMS providers include their own functions and features. So, for the same query, it may be different implementations (i.e. SQL script) for different systems. In this section, we use the Databricks’ SQL implementation (i.e. all the SQL scripts can run in Databricks SQL notebook).
+
+More recently data is stored in distributed system such as Hive or in-memory such as Hana. Most relational databases are row-based (i.e. data for each row are stored closely), whereas analytics workflows often favor column-based systems (i.e. data for each column are stored closely). Fortunately, as a database user, we only need to learn how to write SQL scripts to retrieve and manipulate data. Even though there are different implantations of SQL across different DBMS, SQL is nearly universal across relational database including Hive and Spark, which means once we know SQL, our knowledge can be transferred among different database systems. SQL is easy to learn even if you do not have previous experience. In this session, we will go over the key concepts in database and SQL. A more detailed description of database basic can be found through a list of YouTube videos using a specific textbook: https://www.youtube.com/playlist?list=PLtqstN-ayEb0H5AAo6_V5qEzWs0D-igpw 
+
+### Database, Table and View
+
+A database is a collection of tables that are related to each other. A database has its own database name and each table has its name as well. We can think database is a “folder” where tables within a database are “files” within the folder. A table has rows and columns exactly as an R or pandas data frame. Each row (also called record) represents a unique instance of the subject and each column (also called field or attribute) represents a characteristic of the subject on the table. For each table, there is a special column called primary key which uniquely identifies each of its record. 
+
+
+Tables within a specific database contains related information and the schema of a database illustrates all fields in every table as well as how these tables and fields relate to each other. Tables can be joined and aggregated to return specific information. View a virtual table composed of fields from one or more base tables. View does not store data, and only store table structure. Also referred as a saved query. View is typically used to protect the data stored in the table and users can only query information from a view and cannot change or update its contents.
+
+
+### Sample Tables 
+
+We will use two simple tables to illustrate basic SQL operations. These two tables are from an R dataset which contains the 50 states’ population and income. The first table is called "divisions" which has two columns: state and division and the first few rows are shown in the following table:
+
+<center>
+![Table divisions used in the examples](http://scientistcafe.com/CE_JSM2017/images/tbdivision.png)
+</center>
+
+The second table is called metrics which contains three columns: state, population and income and first few rows of the table is shown below:
+
+<center>
+![](http://scientistcafe.com/CE_JSM2017/images/tbpopin.png)
+</center>
+
+To illustrate missing information, three more rows are added at the end of the original division table with state Alberta, Ontario, and Quebec with their corresponding division NULL.
+
+Please watch the following YouTube video on how to upload a  .csv file to a Databricks table: https://youtu.be/H5LxjaJgpSk 
+
+### Basic SQL Statement
+
+After logging into Databricks and creating two tables, you can now open a notebook and now choose the type of the notebook to be SQL. There are a few very easy SQL statement to help us understand the database and table structure:
+
+- `show database`: show current databases in the system
+- `create database db_name`: create a new database with name db_name
+- `drop database db_name`: delete database db_name (be careful when using it!!)
+- `use db_name`: set up the current database to be used
+- `show tables`: show all the tables within the currently used database
+- `describe tbl_name`: show the structure of table with name tbl_name (i.e. list of column name and data type)
+- `drop tbl_name`: delete a table with name tbl_name (be careful when using it!!)
+- `select * from metrics limit 10`: show the first 10 rows of a table
+
+If you are familiar with a procedural programming language such as C and FORTRN or scripting languages such as R and Python, you may find SQL code a little bit strange. We should view SQL code by each specific chunk where it finishes a specific task. SQL codes descript a specific task and DBMS  will run and finish the task.
+
+### Simple SELECT Statement
+
+SELECT is the most used statements in SQL, especially for database users and business analyst. It is used to extract specific information (i.e. column or columns) FROM one or multiple tables. It can be used to combine multiple columns. WHERE can be used in SELECT statement to selected rows with specific conditions. ORDER BY can be used in SELECT statement to order the results in descending or ascending order. We can use * after SELECT to represent all columns in the table. Below is the basic structure of a SELECT statement:
+
+```sql
+SELECT Col_Name1, Col_Name2
+FROM Table_Name
+WHERE Specific_Condition
+ORDER BY Col_Name1, Col_Name2;
+```
+
+WHERE specific_condition is the typical logical conditions and only columns with TRUE for this condition will be chosen. For example, if we want to choose states and its total income where the population larger than 10000 and income less than 5000 with the result order by state name, we can use the following query
+
+```sql
+select state, income*population as total_income  
+from metrics
+where population > 10000 and income < 5000
+order by state
+```
+
+The SELECT statement is used to slicing and dicing the dataset as well as create new columns of interest using basic computation functions.
+
+### Aggregation Functions and GROUP BY
+
+We can also use aggregation functions in SELECT statement to summarize the data. For example, count(col_name) function will return the total number of not NULL rows for a specific column. Other aggregation function on numerical values include min(col_name), max(col_name), avg(col_name). Let’s use metrics table again to illustrate aggregation functions. For aggregation function, it takes all the rows that match WHERE condition (if any) and return one number. The following statement will calculate the maximum, minimum, and average population for all states starts with letter A to E. 
+
+```sql
+select sum(population) as sum_pop, max(population) as 
+    max_pop, min(population) as min_pop, avg(population)
+    as avg_pop, count(population) as count_pop
+from metrics
+where substring(state, 1, 1) in ('A', 'B', 'C', 'D', 'E')
+```
+
+The results from the above query only return one row as expected. Sometimes we want to find the aggregated value based on groups that can be defined by one or more columns. Instead of writing multiple SQL to calculate the aggregated value for each group, we can easily use the GROUP BY to calculate the aggregated value for each group in more SELECT statement. For example, if we want of find how many states in each division, we can use the following:
+
+```sql
+select division, count(state)as number_of_states
+from divisions
+group by division
+```
+
+Another special aggregation function is to return distinct values for one column or a combination of multiple columns. Simple use SELECT DISTINCT col_name1, col_name2 in the first line of the SELECT statement. 
+
+### Join Multiple Tables
+
+The database system is usually designed such that each table contains a piece of specific information and oftentimes we need to JOIN multiple tables to achieve a specific task. There are few types typically JOINs: inner join (keep only rows that match the join condition from both tables), left outer join (rows from inner join + unmatched rows from the first table), right outer join (rows from inner join + unmatched rows from the second table) and full outer join (rows from inner join + unmatched rows from both tables). The typical JOIN statement is illustrated below:
+
+```sql
+SELECT a.col_name1 as var1, b.col_name2 as var2
+FROM tbl_one as a
+INNER/LEFT JOIN tabl_two ad b
+ON a.col_to_match = b.col_to_match
+```
+
+For example, lets join the division table and metrics table to find what is the average population and income for each division, and the results order by division names:
+
+```sql
+select a.division, avg(b.population) as avg_pop,
+     avg(b.income) as avg_inc
+from divisions as a
+inner join metrics as b
+on a.state = b.state
+group by division
+order by division
+```
+
+### Add More Content into a Table
+
+We can use INSERT statement to add additional rows into a particular table, for example, we can add one more row to the metrics table by using the following query:
+
+```sql
+insert into metrics
+values ('Alberta', 4146, 7370)
+```
+
+### Advanced Topics in Database 
+
+Database management is a specific research area and there are many advanced topics such as how to efficiently query data using index; how to take care of data integrity when multiple users are using the same table; algorithm behind data storage (i.e. column-wise or row-wise data storage); how to design the database schema. Users can learn these advanced topics gradually. We hope the basic knowledge covered in this section will kick off the initial momentum to learn SQL. As you can see, it is fairly easy to write SQL statement to retrieve, join, slice, dice and aggregate data. All the SQL scripts can be found in this notebook: 
+https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/4213233595765185/1806228006848429/latest.html 
+
+## Other Useful Topics
+
+For data scientist, in addition to the above-mentioned areas, the following topics are also very important to get some exposure.
+
+### Linux Operation System
+
+Many of the cloud environment, servers, and production systems are usually running on top of Linux operation system and some basic understanding of Linux is essential to solving various problems in a data science project. Linux system is a multiple-user system that runs robustly without interrupt for months. For a typical user, we can access to some of the functions through a commend-line type terminal. Here is a list of commonly used command: 
+
+- `ls` : show files in current directory
+- `pwd` : display current directory and path
+- `mkdir dir_name` : create a new directory
+- `cd dir_path`: change directory through its path
+- `cd ..` : go one directory level up  
+- `cp file1 file2` : copy file1 to file2
+- `mv file1 file2`: rename file1 to file2
+- `head file` : show the first a few rows of file
+- `tail file` : show last a few rows of file
+- `top` : show current running job
+- `who` : list all users that log in the system
+
+There are many Linux training material available online. Once you have a need to learn Linux, you can always learn by yourself through these online training materials. The Linux system will be configured by your system administrator, please always ask your colleague and system administrator for suggestions. Some of the commands may knock the entire system down or permanently delete useful information, please be very careful and never try any commands that you do not know exactly the consequence. There are horror stories about deleting files or taking down systems caused by misusing linux commands.
+
+### Visualization
+
+R and Python both provide nice visualization capability. And you can combine `shiny` and `flexdashboard` packages to build a dynamic and interactive dashboard using RStudio. However, in a business environment, Tableau is still the most used dashboard visualization system. More recently, HTML5 and D3 have become popular for data visualization. For a successful data scientist, we need to have our own recommendation of what types of visualization are useful.  We may not need to implement these dashboard systems on our own, but we need to at least guide the team that manages these systems. 
+
+### GPU
+
+Many of the machine learning methods are based on linear algebra, especially deep learning algorithms. The CPU is not designed to handle large-size matrix linear algebra and using a GPU is an efficient alternative for matrix-based linear algebra computation. In Databricks Community Edition, we can also create a GPU machine to use. If you are interested in deep learning using Spark and GPU through Databrick, please watch this video for more detail: https://databricks.com/blog/2016/10/27/gpu-acceleration-in-databricks.html 

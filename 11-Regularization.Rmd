@@ -1,0 +1,9 @@
+# Regularization Methods
+
+## Ridge Regression
+
+## LASSO
+
+## Elastic Net
+
+## LASSO Generalized Linear Model

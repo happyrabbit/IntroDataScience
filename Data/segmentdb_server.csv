@@ -1,0 +1,22 @@
+Row {data-width=650}
+-----------------------------------------------------------------------
+
+### Transactional Behavior by Age
+
+
+```{r}
+
+selectedData <- reactive({
+    dplyr::filter(sim.dat, segment == input$seg)
+  })
+  
+renderMetricsgraphics({
+    mjs_plot(selectedData(), x= input$xcol, y=input$ycol) %>%
+      mjs_point(color_accessor=income, size_accessor=income) %>%
+      mjs_labs(x=input$xcol, y=input$ycol)
+  })
+
+```
+
+
+

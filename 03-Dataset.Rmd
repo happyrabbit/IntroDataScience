@@ -1,0 +1,514 @@
+# Introduction to the data
+
+Before tackling analytics problem, we start by creating data to be analyzed in later chapters. Why do we simulate data instead of using real data set?  
+
+- Going through the simulation code helps you practice R skills. 
+- It makes the book less dependent on downloading online data sets.
+- It allows you manipulate the synthetic data, run analysis and examine how the results change.
+- The authors do not need to worry about intellectual property rights.
+
+## Customer Data for Clothing Company
+
+Our first data set represents customers of a clothing company who sells products
+in stores and online. This data is typical of what one might get from a company's marketing data base (the data base will have more data than the one we show here). This data includes 1000 customers for whom we have 3 types of data:
+
+
+1. Demography
+    - `age`: age of the respondent
+    - `gender`: male/female
+    - `house`: 0/1 variable indicating if the customer owns a house or not
+
+1. Sales in the past year
+    - `store_exp`: expense in store
+    - `online_exp`: expense online
+    - `store_trans`: times of store purchase
+    - `online_trans`: times of online purchase
+
+1. Survey on product preference
+
+It is common for companies to survey their customers and draw insights to guide future marketing activities. The survey is as below:
+
+How strongly do you agree or disagree with the following statements:
+
+1. Strong disagree
+1. Disagree
+1. Neither agree nor disagree
+1. Agree
+1. Strongly agree
+
+- Q1. I like to buy clothes from different brands
+- Q2. I buy almost all my clothes from some of my favorite brands
+- Q3. I like to buy premium brands
+- Q4. Quality is the most important factor in my purchasing decision
+- Q5. Style is the most important factor in my purchasing decision
+- Q6. I prefer to buy clothes in store
+- Q7. I prefer to buy clothes online
+- Q8. Price is important 
+- Q9. I like to try different styles
+- Q10. I like to make a choice by myself and don't need too much of others' suggestions 
+
+There are 4 segments of customers: 
+
+1. Price
+1. Conspicuous
+1. Quality
+1. Style
+
+The simulation is not very straightforward and we will break it into three parts: 
+
+1. Define data structure: variable names, variable distribution, customer segment names, segment size
+1. Variable distribution parameters: mean and variance
+1. Iterate across segments and variables. Simulate data according to specific parameters assigned
+
+By organizing code this way, it makes easy for us to change specific parts of the simulation. For example, if we want to change the distribution of one variable, we can just change the corresponding part of the code.
+
+Here is code to define data structure:
+
+```r
+# set a random number seed to make the process repeatable
+set.seed(12345)
+# define the number of observations
+ncust<-1000
+# create a data frmae for simulated data
+seg_dat<-data.frame(id=as.factor(c(1:ncust)))
+# assign the variable names
+vars<-c("age","gender","income","house","store_exp","online_exp","store_trans","online_trans")
+# assign distribution for each variable
+vartype<-c("norm","binom","norm","binom","norm","norm","pois","pois")
+# names of 4 segments
+group_name<-c("Price","Conspicuous","Quality","Style")
+# size of each segments
+group_size<-c(250,200,200,350)
+```
+
+The next step is to define variable distribution parameters. There are 4 segments of customers and 8 parameters. Different segments correspond to different parameters. Let's store the parameters in a 4×8 matrix:
+
+
+```r
+# matrix for mean
+mus <- matrix( c(
+  # Price
+  60, 0.5, 120000,0.9, 500,200,5,2,
+  # Conspicuous
+  40, 0.7, 200000,0.9, 5000,5000,10,10,
+  # Quality
+  36, 0.5, 70000, 0.4, 300, 2000,2,15,
+  # Style
+  25, 0.2, 90000, 0.2, 200, 2000,2,20), ncol=length(vars), byrow=TRUE)
+```
+
+```r
+# matrix for variance
+sds<- matrix( c(
+  # Price
+  3,NA,8000,NA,100,50,NA,NA,
+  # Conspicuous
+  5,NA,50000,NA,1000,1500,NA,NA,
+  # Quality
+  7,NA,10000,NA,50,200,NA,NA,
+  # Style
+  2,NA,5000,NA,10,500,NA,NA), ncol=length(vars), byrow=TRUE)
+```
+
+Now we are ready to simulate data using the parameters defined above:
+
+```r
+# simulate non-survey data
+sim.dat<-NULL
+set.seed(2016)
+# loop on customer segment (i)
+ for (i in seq_along(group_name)){
+ 
+   # add this line in order to moniter the process
+   cat (i, group_name[i],"\n")
+ 
+  # create an empty matrix to store relevent data
+  seg<-data.frame(matrix(NA,nrow=group_size[i], ncol=length(vars)))  
+ 
+  # Simulate data within segment i
+  for (j in seq_along(vars)){
+ 
+    # loop on every variable (j)
+    if (vartype[j]=="norm"){
+      # simulate normal distribution
+      seg[,j]<-rnorm(group_size[i], mean=mus[i,j], sd=sds[i,j])
+    } else if (vartype[j]=="pois") {
+      # simulate poisson distribution
+      seg[,j]<-rpois(group_size[i], lambda=mus[i,j])
+    } else if (vartype[j]=="binom"){
+      # simulate binomial distribution
+      seg[,j]<-rbinom(group_size[i],size=1,prob=mus[i,j])
+    } else{
+      # if the distribution name is not one of the above, stop and return a message
+      stop ("Don't have type:",vartype[j])
+    }        
+  }
+  sim.dat<-rbind(sim.dat,seg)
+ }
+```
+
+Now let's edit the data we just simulated a little by adding tags to 0/1 binomial variables:
+
+```r
+# assign variable names
+names(sim.dat)<-vars
+# assign factor levels to segment variable
+sim.dat$segment<-factor(rep(group_name,times=group_size))
+# recode gender and house variable
+sim.dat$gender<-factor(sim.dat$gender, labels=c("Female","Male"))
+sim.dat$house<-factor(sim.dat$house, labels=c("No","Yes"))
+# store_trans and online_trans are at least 1
+sim.dat$store_trans<-sim.dat$store_trans+1
+sim.dat$online_trans<-sim.dat$online_trans+1
+# age is integer
+sim.dat$age<-floor(sim.dat$age)
+```
+
+In the real world, the data always includes some noise such as missing, wrong imputation. So we will add some noise to the data:
+
+```r
+# add missing values
+idxm <- as.logical(rbinom(ncust, size=1, prob=sim.dat$age/200))
+sim.dat$income[idxm]<-NA
+# add wrong imputations and outliers
+set.seed(123)
+idx<-sample(1:ncust,5)
+sim.dat$age[idx[1]]<-300
+sim.dat$store_exp[idx[2]]<- -500
+sim.dat$store_exp[idx[3:5]]<-c(50000,30000,30000)
+```
+
+So far we have created part of the data. You can check it using `summary(sim.dat).' Next, we will move on to simulate survey data.
+
+```r
+# number of survey questions
+nq<-10
+# mean matrix for different segments 
+mus2 <- matrix( c(
+  # Price
+ 5,2,1,3,1,4,1,4,2,4,
+  # Conspicuous
+ 1,4,5,4,4,4,4,1,4,2,
+  # Quality
+ 5,2,3,4,3,2,4,2,3,3,
+  # Style
+ 3,1,1,2,4,1,5,3,4,2), ncol=nq, byrow=TRUE)
+
+# assume the variance is 0.2 for all
+sd2<-0.2
+sim.dat2<-NULL
+set.seed(1000)
+# loop for customer segment (i)
+for (i in seq_along(group_name)){
+  # the following line is used for checking the progress
+  # cat (i, group_name[i],"\n")
+  # create an empty data frame to store data
+  seg<-data.frame(matrix(NA,nrow=group_size[i], ncol=nq))  
+  # simulate data within segment
+  for (j in 1:nq){
+    # simulate normal distribution
+    res<-rnorm(group_size[i], mean=mus2[i,j], sd=sd2)
+    # set upper and lower limit
+    res[res>5]<-5
+    res[res<1]<-1
+    # convert continuous values to discrete integers
+    seg[,j]<-floor(res)
+  }
+  sim.dat2<-rbind(sim.dat2,seg)
+}
+
+names(sim.dat2)<-paste("Q",1:10,sep="")
+sim.dat<-cbind(sim.dat,sim.dat2)
+sim.dat$segment<-factor(rep(group_name,times=group_size))
+```
+
+So far we have gotten all the data. Let's check it:
+
+```{r, echo=FALSE}
+library(readr)
+sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+```
+
+
+```{r}
+str(sim.dat,vec.len=3)
+```
+
+
+
+## Customer Satisfaction Survey Data from Airline Company
+
+We will simulate a customer satisfaction survey for three airline companies. There are `N=1000` respondents and 15 questions. The market researcher asked respondents to recall the experience with different airline companies and assign a score (1-9) to each airline company for all the 15 questions. The higher the score, the more satisfied the customer to the specific item. The 15 questions are of 4 types (the variable names are in the  parentheses):
+
+
+- How satisfied are you with your______?
+
+1. Ticketing
+    - Ease of making reservation（Easy_Reservation）
+    - Availability of preferred seats（Preferred_Seats）
+    - Variety of flight options（Flight_Options）
+    - Ticket prices（Ticket_Prices）
+1. Aircraft
+    - Seat comfort（Seat_Comfort）
+    - Roominess of seat area（Seat_Roominess）
+    - Availability of Overhead（Overhead_Storage）
+    - Cleanliness of aircraft（Clean_Aircraft）
+1. Service
+    - Courtesy of flight attendant（Courtesy）
+    - Friendliness（Friendliness）
+    - Helpfulness（Helpfulness）
+    - Food and drinks（Service）
+1. General
+    - Overall satisfaction（Satisfaction）
+    - Purchase again（Fly_Again）
+    - Willingness to recommend（Recommend）
+
+```r
+# Create a matrix of factor loadings
+# This pattern is called bifactor because it has a general factor for separate components.
+# For example, "Ease of making reservation" has general factor loading 0.33, specific factor loading 0.58
+# The outcome variables are formed as combinations of these general and specific factors
+
+loadings <- matrix(c (
+  # Ticketing
+  .33, .58, .00, .00,  # Ease of making reservation 
+  .35, .55, .00, .00,  # Availability of preferred seats
+  .30, .52, .00, .00,  # Variety of flight options
+  .40, .50, .00, .00,  # Ticket prices
+  # Aircraft
+  .50, .00, .55, .00,  # Seat comfort
+  .41, .00, .51, .00,  # Roominess of seat area
+  .45, .00, .57, .00,  # Availability of Overhead
+  .32, .00, .54, .00,  # Cleanliness of aircraft
+  # Service
+  .35, .00, .00, .50,  # Courtesy of flight attendant
+  .38, .00, .00, .57,  # Friendliness
+  .60, .00, .00, .50,  # Helpfulness
+  .52, .00, .00, .58,  # Food and drinks
+  # General   
+  .43, .10, .30, .30,  # Overall satisfaction
+  .35, .50, .40, .20,  # Purchase again
+  .25, .50, .50, .20), # Willingness to recommend
+  nrow=15,ncol=4, byrow=TRUE)
+  
+# Matrix multiplication produces the correlation matrix except for the diagonal
+cor_matrix<-loadings %*% t(loadings)
+# Diagonal set to ones
+diag(cor_matrix)<-1
+
+# use the mvtnorm package to randomly generate a data set with a given correlation pattern
+
+library(mvtnorm)
+# mean vectors of the 3 airline companies
+mu1=c(5,6,5,6, 7,8,6,7, 5,5,5,5, 6,6,6)
+mu2=c(3,3,2,3, 5,4,5,6, 8,8,8,8, 3,3,3)
+mu3=c(2,2,2,2, 8,8,8,8, 8,8,8,8, 8,8,8)
+
+# set random seed
+set.seed(123456) 
+# respondent ID
+resp.id <- 1:1000 
+
+library(MASS) 
+rating1 <- mvrnorm(length(resp.id),
+                     mu=mu1,
+                     Sigma=cor_matrix)
+rating2 <- mvrnorm(length(resp.id),
+                   mu=mu2,
+                   Sigma=cor_matrix)
+rating3 <- mvrnorm(length(resp.id),
+                   mu=mu3,
+                   Sigma=cor_matrix)
+
+
+# truncates scale to be between 1 and 9
+rating1[rating1>9]<-9
+rating1[rating1<1]<-1
+rating2[rating2>9]<-9
+rating2[rating2<1]<-1
+rating3[rating3>9]<-9
+rating3[rating3<1]<-1
+
+# Round to single digit
+rating1<-data.frame(round(rating1,0))
+rating2<-data.frame(round(rating2,0))
+rating3<-data.frame(round(rating3,0))
+rating1$ID<-resp.id
+rating2$ID<-resp.id
+rating3$ID<-resp.id
+rating1$Airline<-rep("AirlineCo.1",length(resp.id))
+rating2$Airline<-rep("AirlineCo.2",length(resp.id))
+rating3$Airline<-rep("AirlineCo.3",length(resp.id))
+rating<-rbind(rating1,rating2,rating3)
+
+# assign names to the variables in the data frame
+names(rating)<-c(
+  "Easy_Reservation",
+  "Preferred_Seats",
+  "Flight_Options",
+  "Ticket_Prices",
+  "Seat_Comfort",
+  "Seat_Roominess",
+  "Overhead_Storage",
+  "Clean_Aircraft",
+  "Courtesy",
+  "Friendliness",
+  "Helpfulness",
+  "Service",
+  "Satisfaction",
+  "Fly_Again",
+  "Recommend",
+  "ID",
+  "Airline")
+```
+
+Now check the data frame we have:
+
+```{r, echo=FALSE}
+rating<-read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
+```
+
+
+```{r}
+str(rating,vec.len=3)
+```
+
+
+## Swine Disease Breakout Data
+
+In this section, we are going to simulate a data set about swine disease. We simulate 800 farms (i.e. n=800) and 120 survey questions (i.e. G=120) in each data set. There are
+three possible answers for each question. The outbreak status for the $i^{th}$ farm is generated from a $Bernoulli(1, p_i)$ distribution with $p_i$ being a function of
+the question answers: 
+
+$$ln(\frac{p_i}{1-p_i})=\beta_0 + \Sigma_{g=1}^G\mathbf{x_{i,g}^T\beta_{g}}$$
+
+where $\beta_0$ is the intercept, $\mathbf{x_{i,g}}$ is a three-dimensional indication vector for question answer and $\mathbf(\beta_g)$ is the
+parameter vector corresponding to the $g^{th}$ predictor. Three types of questions are
+considered regarding their effects on the outcome. The first forty survey questions
+are important questions such that the coefficients of the three answers to these
+questions are all different:
+
+$$\mathbf{\beta_g}=(1,0,-1)\times \gamma,\ g=1,\dots,40$$
+The second forty survey questions are also important questions but only one answer
+has a coefficient that is different from the other two answers:
+
+$$\mathbf{\beta_g}=(1,0,0)\times \gamma,\ g=41,\dots,80$$
+
+The last forty survey questions are also unimportant questions such that all three
+answers have the same coefficients:
+
+$$\mathbf{\beta_g}=(0,0,0)\times \gamma,\ g=81,\dots,120$$
+
+The baseline coefficient $\beta_0$ is set to be $-\frac{40}{3}\gamma$ so that on average a farm have $50%$ of chance to have an outbreak. The parameter $\gamma$ in the above simulation is set to control the strength of the questions' effect on the outcome. In this simulation study, we consider the situations where $\gamma = 0.1, 0.25, 0.5, 1, 2$. So the parameter settings are:
+
+$$\mathbf{\beta^{T}}=\left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-1}},...,\underset{question\ 40}{\underbrace{1,0,-1}},\underset{question\ 41}{\underbrace{1,0,0}},...,\underset{question\ 80}{\underbrace{1,0,0}},\underset{question\ 81}{\underbrace{0,0,0}},...,\underset{question\ 120}{\underbrace{0,0,0}}\right)*\gamma$$
+
+```r
+# sim1_da1.csv  the 1st simulated data
+# similar sim1_da2 and sim1_da3
+# sim1.csv  simulated data, the first simulation
+# dummy.sim1.csv dummy variables for the first simulated data with all the baseline in
+#code for simulation
+
+# setwd(dirname(file.choose()))
+# library(grplasso)
+
+nf<-800
+for (j in 1:20){
+set.seed(19870+j)
+x<-c('A','B','C')
+sim.da1<-NULL
+for (i in 1:nf){
+# sample(x, 120, replace=TRUE)->sam
+sim.da1<-rbind(sim.da1,sample(x, 120, replace=TRUE))
+}
+
+data.frame(sim.da1)->sim.da1
+paste("Q", 1:120, sep = "")->col
+paste("Farm", 1:nf, sep = "")->row
+colnames(sim.da1)<-col
+rownames(sim.da1)<-row
+
+# use class.ind() function in nnet package to encode dummy variables
+library(nnet)
+dummy.sim1<-NULL
+for (k in 1:ncol(sim.da1)) {
+tmp=class.ind(sim.da1[,k])
+colnames(tmp)=paste(col[k],colnames(tmp))
+dummy.sim1=cbind(dummy.sim1,tmp)
+}
+data.frame(dummy.sim1)->dummy.sim1
+
+# set "C" as the baseline
+# delete baseline dummy variable
+
+base.idx<-3*c(1:120)
+dummy1<-dummy.sim1[,-base.idx]
+
+# simulate independent variable for different values of r
+# simulate based on one value of r each time
+# r=0.1, get the link function
+c(rep(c(1/10,0,-1/10),40),rep(c(1/10,0,0),40),rep(c(0,0,0),40))->s1
+as.matrix(dummy.sim1)%*%s1-40/3/10->link1
+
+# r=0.25 
+# c(rep(c(1/4,0,-1/4),40),rep(c(1/4,0,0),40),rep(c(0,0,0),40))->s1
+# as.matrix(dummy.sim1)%*%s1-40/3/4->link1
+
+# r=0.5 
+# c(rep(c(1/2,0,-1/2),40),rep(c(1/2,0,0),40),rep(c(0,0,0),40))->s1
+# as.matrix(dummy.sim1)%*%s1-40/3/2->link1
+
+# r=1
+# c(rep(c(1,0,-1),40),rep(c(1,0,0),40),rep(c(0,0,0),40))->s1
+# as.matrix(dummy.sim1)%*%s1-40/3->link1
+
+# r=2
+# c(rep(c(2,0,-2),40),rep(c(2,0,0),40),rep(c(0,0,0),40))->s1
+# as.matrix(dummy.sim1)%*%s1-40/3/0.5->link1
+
+
+# calculate the outbreak probability
+exp(link1)/(exp(link1)+1)->hp1
+
+# based on the probability hp1, simulate response variable: res
+res<-rep(9,nf)
+for (i in 1:nf){
+sample( c(1,0),1,prob=c(hp1[i],1-hp1[i]))->res[i]
+}
+
+# da1 with response variable, without group indicator
+# da2 without response variable, with group indicator
+# da3 without response variable, without group indicator
+
+dummy1$y<-res
+da1<-dummy1
+y<-da1$y
+ind<-NULL
+for (i in 1:120){
+c(ind,rep(i,2))->ind
+}
+
+da2<-rbind(da1[,1:240],ind)
+da3<-da1[,1:240]
+
+# save simulated data
+write.csv(da1,paste('sim',j,'_da',1,'.csv',sep=''),row.names=F)
+write.csv(da2,paste('sim',j,'_da',2,'.csv',sep=''),row.names=F)
+write.csv(da3,paste('sim',j,'_da',3,'.csv',sep=''),row.names=F)
+write.csv(sim.da1,paste('sim',j,'.csv',sep=''),row.names=F)
+write.csv(dummy.sim1,paste('dummy.sim',j,'.csv',sep=''),row.names=F)
+}
+```
+
+For each value of $\gamma$, 20 data sets are simulated. The bigger $\gamma$ is, the larger the corresponding parameter. We provided the data sets with $\gamma = 2$. Let's check the data:
+
+```{r}
+disease_dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/sim1_da1.csv")
+# only show the last 7 columns here
+head(subset(disease_dat,select=c( "Q118.A","Q118.B","Q119.A","Q119.B","Q120.A","Q120.B","y"))) 
+```
+
+Here `y` indicates the outbreak situation of the farms. `y=1` means there is an outbreak in 5 years after the survey. The rest columns indicate survey responses. For example `Q120.A = 1` means the respondent chose `A` in Q120. We consider `C` as the baseline. 
+
+
