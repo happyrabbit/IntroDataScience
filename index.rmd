@@ -50,7 +50,7 @@ options(formatR.indent = 2, width = 55)
 
 # Copyright Statement {-}
 
-This work is licensed under a Creative Commons Attribution-No Derivative Works 3.0 United States License.
+This work is released under a [CC-BY-NC-SA license] (https://creativecommons.org/licenses/by-nc-sa/3.0/us/)
 
 Copyright is retained by Hui Lin and Ming Li in all non-U.S. jurisdictions, but permission to use these materials in teaching is still granted, provided the authorship and licensing information here is displayed.
 
