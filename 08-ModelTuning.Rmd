@@ -265,7 +265,7 @@ Those highly adaptable models can model complex relationships. However, they ten
 
 _Data splitting_ is to put part of the data aside as testing set (or Hold-outs) and use the rest for model training. Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimizing value. Tuning parameters often control the complexity of the model. Poor choice for the values can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
 
-Instead of evaluating model on a single test set, more often, people will resample the training set. _Data resampling_ operates similarly: use a subset of samples to fit a model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
+Since to get reasonable precision of the performance values on a single test set, the size of the test set may need to be large. So more often, people will instead resample the training set. _Data resampling_ operates similarly: use a subset of samples to fit a model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
 
 -  Define a set of candidate values for tuning parameter(s)
     - For each candidate value in the set
@@ -279,3 +279,5 @@ Instead of evaluating model on a single test set, more often, people will resamp
 
 ![](http://scientistcafe.com/book/Figure/ParameterTuningProcess.png){width=100%}
 
+
+We have outlined above the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. 
