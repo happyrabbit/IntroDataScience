@@ -1,5 +1,15 @@
 # Tree-Based Methods
 
+The tree-based models can be used for regression and classification. They are popular tools for many reasons: 
+
+1. Do not require user to specify the form of the relationship between predictors and response
+1. Do not require (or if they do, very limited) data preprocessing and can handle different types of predictors (sparse, skewed, continuous, categorical, etc.)
+1. Robust to co-linearity
+1. Can handle missing data
+1. Many pre-built packages make implementation as easy as a button push
+
+![](http://scientistcafe.com/book/Figure/treeEN.png)
+
 ## Splitting Criteria 
 
 ## Tree Pruning
