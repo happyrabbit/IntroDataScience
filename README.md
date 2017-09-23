@@ -26,6 +26,12 @@ industry
 - End-to- end cycle of a typical data science project
 - Pitfalls that everyone should avoid
 
+**Others**
+
+- CRC Press
+- Deadline: Dec 1, 2019
+- Approximately 450 pages
+- Color book
 
 —————————— I am a cute divider line ————————————
 
@@ -42,13 +48,29 @@ Priority 1:
 - Regularized generalized regression
 - Add Python Code
 - Combine baby subsections
+- Need to give more thoughts on how to blend with the case study. Refer to " Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving" by Nolan and Temple Lang.
+- Add a “soft skills” section in each chapter which might break up the technical sequences and build on them in context.
+- Make chapter 4 an appendix or later chapter. And change the topic to be high-performance computing (Hadoop and spark, etc., based on reviewer 3). The rapid changing of platforms and tools is a concern. 
+- Chapter for clustering methods. 
+- Provide dataset and code supplements for both R and Python using notebooks. 
+- Accompany R package: https://github.com/happyrabbit/DataScienceR. 
+- Clarify the prerequisite further.
+- Clean the R packages that do the same thing. Only keep the current best practices.
+- Need native English speakers to help us with the language and scaffolding. Adjust the scaffolding according to feedbacks as we move on. 
+
 
 Priority 2:
 
-- Social network analytics
-- Natural language processing
+- Social network and their application in industry 
+
+    - Use Trump's Twitter data since 2016 as the case study.  
+    - Include it tentatively in the table of contents, but then see how the rest of the book shapes up, before deciding whether to include it or not. 
+    - The length of the book could be a concern. 
+    
+- Deep Learning and its application
 
 Priority 3:
+    
+- Natural language processing
 - Bayesian
-- Deep Learning and its application
 
