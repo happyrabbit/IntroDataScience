@@ -1,8 +1,5 @@
 # Task Distribution and Progress
 
-- **Bold**:  Brand new chapters
-- Unbold: Chapters with preexisting draft sample
-
 ## R and Python Code
 
 R code: Hui Lin
