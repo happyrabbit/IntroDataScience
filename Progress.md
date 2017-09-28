@@ -3,25 +3,34 @@
 - **Bold**:  Brand new chapters
 - Unbold: Chapters with preexisting draft sample
 
+## R and Python Code
+
 R code: Hui Lin
 Python code: Ming Li
 
-- The Art of Data Science (Hui Lin, 2017-12-01)
-- Soft Skills for Data Scientists (Ming Li)
-- Introduction to the data (Hui Lin and Ming Li)
-- Data Pre-processing (Hui Lin, 2017-12-01)
-- Data Wrangling (Hui Lin, 2017-12-01)
--  _Measuring Performance_ (Hui Lin, 2018-01-01)
--  _Model Tuning Technique_ (Hui Lin, 2018-02-01)
--  _Feature Engineering_ (Hui Lin, 2017-03-01)
--  _Regression Models_ (Hui Lin, 2018-04-01)
--  _Regularization Methods_ (Hui Lin, 2018-05-01)
--  _Tree-Based Methods_ (Hui Lin, 2018-06-01)
-- **Clustering Methods (Ming Li)**
-- Neural Network and Deep Learning (Hui Lin, 2018-09-01)
-- Dynamic/Reproducible Report  (Hui Lin, 2018-10-01)
-- **Network Data Analysis (Hui Lin, 2019-02-01)**
+## Text
+
+| Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
+|---------|-----------|----------|----------|-------------|
+| The Art of Data Science| Hui Lin | 17-12-01 | draft version |   |
+| Soft Skills for Data Scientists | Ming Li | ?? | draft version |  |
+| Introduction to the data | Hui Lin; Ming Li | ?? |    |   |
+| Data Pre-processing | Hui Lin | 17-12-01 | draft version |  |
+| Data Wrangling | Hui Lin | 17-12-01 | draft version |  |
+| Measuring Performance | Hui Lin | 18-02-01|  |  |
+| Model Tuning Technique| Hui Lin | 18-12-01| just started |  |
+| Feature Engineering | Hui Lin | 17-03-01 |  |  |
+| Regression Models | Hui Lin | 18-04-01 |  |  |
+| Regularization Methods | Hui Lin | 18-05-01|  |  |
+| Tree-Based Methods | Hui Lin| 18-06-01 |  |  |
+| Clustering Methods | Ming Li | ?? |  |  |
+| Neural Network and Deep Learning | Hui Lin; ?? | 18-09-01 | draft version |  |
+| Dynamic/Reproducible Report | Hui Lin | 18-10-01 | draft version |  |
+| Network Data Analysis | Hui Lin; ?? | 19-02-01|  |  |
 
 Appendix:
 
-- Big Data Cloud Platform (Ming Li)
+| Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
+|---------|-----------|----------|----------|-------------|
+| Big Data Cloud Platform | Ming Li | 17-12-01 | draft version |  |  
+
