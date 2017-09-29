@@ -2,7 +2,7 @@
 
 ## R and Python Code
 
-R code: Hui Lin
+R code: Hui Lin  
 Python code: Ming Li
 
 ## Text
@@ -29,5 +29,5 @@ Appendix:
 
 | Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
-| Big Data Cloud Platform | Ming Li | 17-12-01 | draft version |  |  
+| Big Data Cloud Platform | Ming Li |  | draft version |  |  
 
