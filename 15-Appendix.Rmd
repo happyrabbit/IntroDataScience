@@ -1,12 +1,12 @@
 # Appendix {-}
 
-A1. Big Data Cloud Platform
+## A1. Big Data Cloud Platform
 
-## How Data becomes Science?
+### How Data becomes Science?
 
 Data has been a friend of statistician for hundreds of years. Tabulated data are the most familiar format that we use daily. People used to store data on papers, tapes, diskettes, or hard drives. Only recently, with the development of the computer, hardware, software, and algorithms, the volume, variety, and speed of the data suddenly beyond the capacity of a traditional statistician. And data becomes a special science with the very first focus on a fundamental question: with a huge amount of data, how can we store the data and quick access and process the data. In the past a few years, by utilizing commodity hardware and open source software, a big data ecosystem was created for data storage, data retrieval, and parallel computation. Hadoop and Spark have become a popular platform that enables data scientist, statistician, and business analyst to access the data and to build models. Programming skills in the big data platform have been the largest gap for a statistician to become a successful data scientist. However, with the recent wave of cloud computing, this gap is significantly reduced. Many of the technical details have been pushed to the background, and the user interface becomes much easier to learn.  Cloud systems also enable quick implementation to the production environment. Now data science is emphasis more on the data itself as well as models and algorithms on top of the data instead of platform and infrastructure. 
 
-## Power of Cluster of Computers
+### Power of Cluster of Computers
 
 We are all familiar with our laptop/desktop computers which contain mainly three components to finish computation with data: (1) Hard disk, (2) Memory, and (3) CPU as shown in Figure 41 left. The data and codes are stored in the hard disk which has certain features such as relatively slow for reading and writes and relatively large capacity of around a few TB in today’s market. Memory is relatively fast for reading and writing but relatively small in capacity in the order of a few dozens of GB in today’s market. CPU is where all the computation is done. 
 
@@ -19,30 +19,30 @@ For statistical software such as R, the amount of data that it can process is li
 
 In the past, to use a cluster of computers, users must write code (such as MPI) to take care of how data is distributed and how the computation is done in a parallel fashion. Luckily with the recent new development, the cloud environment for big data analysis is more user-friendly. As data is typically beyond the size of one hard disk, the dataset itself is stored across different nodes’ hard disk (i.e. the Hadoop system mentioned below). When we perform analysis, we can assume the needed data is already distributed across many node’s memories in the cluster and algorithm are parallel in nature to leverage corresponding nodes’ CPUs to compute (i.e. the Spark system mentioned below). 
 
-## Evolution of Clustering Computing
+#### Evolution of Clustering Computing
 
 Using computer clusters to solve general purpose data and analytics problems needs a lot of efforts if we have to specifically control every element and steps such as data storage, memory allocation, and parallel computation. Fortunately, high tech IT companies and open source communities have developed the entire ecosystem based on Hadoop and Spark. Users need only to know high-level scripting language such as Python and R to leverage computer clusters’ storage, memory and computation power.   
 
-### Hadoop
+#### Hadoop
 
 The very first problem internet companies face is that a lot of data has been collected and how to better store these data for future analysis. Google developed its own file system to provide efficient, reliable access to data using large clusters of commodity hardware. The open source version is known as Hadoop Distributed File System (HDFS). Both systems use Map-Reduce to allocate computation across computation nodes on top of the file system. Hadoop in written in Java and writing map-reduce job using Java is a direct way to interact with Hadoop which is not familiar to many in the data and analytics community. To help better use Hadoop system, an SQL-like data warehouse system called Hive, and a scripting language for analytics interface called Pig were introduced for people with analytics background to interact with Hadoop system. Within Hive, we can create user defined function through R or Python to leverage the distributed and parallel computing infrastructure. Map-reduce on top of HDFS is the main concept of the Hadoop ecosystem. Each map-reduce operation requires retrieving data from hard disk, computation time, and then storing the result onto disk again. So, jobs on top of Hadoop require a lot of disk operation which may slow down the computation process.
 
-### Spark
+#### Spark
 
 Spark works on top of distributed file system including HDFS with better data and analytics efficiency by leveraging in-memory operations and is more tailored for data processing and analytics. The spark system includes an SQL-like framework called Spark SQL and a parallel machine learning library called MLib. Fortunately for many in the analytics community, Spark also supports R and Python. We can interact with data stored in distributed file system using parallel computing across nodes easily with R and Python through the Spark API and do not need to worry about lower level details of distributed computing. We will introduce how to use R notebook to drive Spark computations. 
 
-## Introduction of Cloud Environment
+### Introduction of Cloud Environment
 
 There are many cloud computing environments such as Amazon’s AWS which provides a complete list of functions for heavy-duty enterprise applications. For example, Netflix runs its business entirely on AWS and Netflix does not own any data centers. For beginners, Databricks provides an easy to use cloud system for learning purpose. Databricks is a company founded by the creators of Apache Spark and it provides a user-friendly web-based notebook environment that can create Hadoop/Spark/GPU cluster on the fly and run R/Python/Scala/SQL. We will use Databricks’ community edition to run demos in this book. Please note the content of this section is adopted from the following web pages:
 
 - https://docs.databricks.com/user-guide/faq/sparklyr.html 
 - http://spark.rstudio.com/index.html 
 
-## Open Account and Create a Cluster 
+**Open Account and Create a Cluster** 
 
 Anyone can apply for a community edition for free through https://databricks.com/try-databricks and a short YouTube video illustrates the application process can be found https://youtu.be/vx-3-htFvrg. Another short YouTube video shows how to create a cluster for a cloud computing environment and create an R notebook to run R codes which can be found at https://youtu.be/0HFujX3t6TU. In fact, you can run Python/R/Scala/SQL cells, as well as markdown cells, in the same notebook by including a keyword at the beginning of each cell that we will discuss later.
 
-## R Notebook
+**R Notebook**
 
 In last section of the video, we created an R notebook. For an R notebook, it contains multiple cells and by default, the content within each cell are R scripts. Usually, each cell is a well-managed a few lines of codes that accomplish a specific task. For example, Figure 42 shows the default cell for an R notebook for cell 1. We can type in R scripts and comments same as we are using R console. By default, only the result from the last line will be shown following the cell. However, you can use `print()` function to output results for any lines. If we move the mouse to the middle of the lower edge of the cell below the results, a “+” symbol will show up and click on the symbol will insert a new cell below. When you click any area within a cell, it will make it editable and you will see a few icons on the top right corn of the cell where you can run the cell, as well as add a cell below or above, copy the cell, cut cell, high cell etc. One quick way to run the cell is Shift+Enter when the cell is chosen. You will become familiar with the notebook environment quickly.
 
@@ -51,7 +51,7 @@ In last section of the video, we created an R notebook. For an R notebook, it co
 </center>
 
 
-## Markdown Cells
+**Markdown Cells**
 
 For an R notebook, every cell by default will contain R scripts. But if we put %md, %sql or %python at the first line of a cell, that cell becomes Markdown cell, SQL script cell, and Python script cell accordingly. For example, Figure 43 shows a markdown cell with scripts and the actual appearance when exits editing mode. Markdown cell provides a straightforward way to descript what each cell is doing as well as what the entire notebook is about. It is a better way than simple comment within in the code.
 
@@ -59,11 +59,11 @@ For an R notebook, every cell by default will contain R scripts. But if we put %
 ![ An example of Markdown cell with scripts at top and actual appearance at bottom](http://scientistcafe.com/CE_JSM2017/images/markdown_databrick.png)
 </center>
 
-## Leverage Hadoop and Spark Parallel using R Notebook
+**Leverage Hadoop and Spark Parallel using R Notebook**
 
 R is a powerful tool for data analysis given the data can be fit into memory. Because of the memory bounded dataset limit, R itself cannot be used directly for big data analysis where the data is likely stored in Hadoop and Spark system. By leverage `sparklyr` package created by RStudio, we can use Databricks’ R notebook to analyze data stored in Spark system where the data are stored across different nodes and computation are parallel in nature to use the collection of memory units across all nodes. And the process is relatively simple. In this section, we will illustrate how to use Databricks’ R notebook for big data analysis on top of Spark environment through `sparklyr` package. 
 
-### Library Installation
+**Library Installation**
 
 First, we need to install `sparklyr` package which enables the connection between master or local node to Spark cluster environments. As it will install more than 10 dependencies, it may take more than 5 minutes to finish. Be patient while it is installing! Once the installation finishes, load the `sparklyr` package as illustrated by the following code: 
 
@@ -79,7 +79,7 @@ if (!require("sparklyr")) {
 library(sparklyr)
 ```
 
-### Create Connection
+**Create Connection**
 
 Once the library is loaded, we need to create a Spark Connection to link master / local node to Spark environment. Here we use the "databricks" option for parameter method which is specific for databricks’ system. In the enterprise environment, please consult your administrator for details. The created Spark Connection (i.e. sc) will be the pipe that connects master/local/terminal to the Spark Cluster. We can think of the web interface/terminal is running on a master node which has its local memory and CPU. The Spark Connection can be established with:
 
@@ -88,7 +88,7 @@ Once the library is loaded, we need to create a Spark Connection to link master 
 sc <- spark_connect(method = "databricks")
 ```
 
-### Sample Dataset
+**Sample Dataset**
 
 To simplify the learning process, let us use a very familiar dataset: the iris dataset. It is part of the `dplyr` library and let's load that library to use the iris data frame. Here the iris dataset is still on the local node where the R notebook is running on. And we can see that the first a few lines of the iris dataset below the code after running:
 
@@ -97,7 +97,7 @@ library(dplyr)
 head(iris)
 ```
 
-### IMPORTANT - Copy Data to Spark Environment
+**IMPORTANT - Copy Data to Spark Environment**
 
 In real applications, your data maybe massive and cannot fit onto a single hard disk. If the data is already in Hadoop/Spark ecosystem, you can use SparkDataFrame to analyze it in the Spark system directly. Here, we illustrate how to copy a local dataset to Spark environment and then work on that dataset in the Spark system. As we have already created the Spark Connection sc, it is easy to copy data to spark system by sdf_copy_to() function as below:
 
@@ -113,7 +113,7 @@ To check whether the iris data was copied to Spark environment successfully or n
 src_tbls(sc) ## code to return all the data frames associated with sc
 ```
 
-### Analyzing the Data
+**Analyzing the Data**
 
 Now we have successfully copied the iris dataset to the Spark environment as a SparkDataFrame. This means that `iris_tbl` is an R object wrapping the iris SparkDataFrame and we can use `iris_tbl` to refer the iris dataset in the Spark system (i.e. the iris SparkDataFrame). With the `sparklyr` packages, we can use many functions in `dplyr` to SparkDataFrame directly through `iris_tbl`, same as we are applying `dplyr` functions to a local R data frame in our laptop. For example, we can use the `%>%` operator to pass `iris_tbl` to the `count( )` function:
 
@@ -136,7 +136,7 @@ iris_tbl %>%
   summarize(count = n(), Sepal_Length = mean(Sepal_Length), stdev = sd(Sepal_Length))
 ```
 
-### Collect Results Back to Master Node
+**Collect Results Back to Master Node**
 
 Even though we can run many of the `dplyr` functions on SparkDataFrame, we cannot apply functions from other packages to SparkDataFrame direction (such as `ggplot()`). For functions that can only work on local R data frames, we must copy the SparkDataFrame back to the local node. To copy SparkDataFrame back to the local node, we use the `collect()` function where the argument to it is the name of the SparkDataFrame. The following code `collect()` the results of a few operations and assign the collected data to iris_summary variable:
 
@@ -160,7 +160,7 @@ ggplot(iris_summary, aes(Sepal_Width, Sepal_Length, color = Species)) +
   theme(legend.position="top")
 ```
 
-### Fit Regression to SparkDataFrame
+**Fit Regression to SparkDataFrame**
 
 One of the largest advantages is that, within Spark system, there are already many statistical and machine learning algorithms developed to run parallelly across many CPUs with data across many memory units. In this example, we have already uploaded the data to Spark system, and the data in the Spark system can be referred through iris_tbl.  The linear regression implemented in Spark system can be called through `ml_linear_regression()` function. The syntax to call the function is to define the Spark Data Frame (i.e. iris_tbl), response variable (i.e. y-variable in linear regression in the Spark data frame iris_tbl) and features (i.e. the x-variable in linear regression in the Spark data frame iris_tbl). So, we can easily fit a linear regression for large dataset far beyond the memory limit of one single computer, and it is truly scalable and only constrained by the resource of the Spark cluster. Below is an illustration of how to fit a linear regression to SparkDataFrame using R notebook:
 
@@ -173,7 +173,7 @@ summary(fit1)
 
 In the above code, x is the R object wrapping the SparkDataFrame; the response is y-variable, features are the collection of explanatory variables. For this function, both the data and computation are in the Spark cluster which leverages multiple CPUs and distributed memories. 
 
-### Fit a K-means Cluster
+**Fit a K-means Cluster**
 
 Through the `sparklyr` package, we can use an R notebook to access many Spark Machine Learning Library (MLlib) algorithms such as linear regression, logistic regression, Survival Regression, Generalized Linear Regression, Decision Trees, Random Forests, Gradient-Boosted Trees, Principal Components Analysis, Naive-Bayes, K-Means Clustering and a few other methods. Below codes fit a k-means cluster algorithm: 
 
