@@ -7,24 +7,25 @@ Please note that this work is being written under a [Contributor Code of Conduct
 
 **Goals of the Book**
 
-Data Science is a cross-disciplinary subject involving hands-on experience and business problem solving exposures. The majority of existing introduction books in data science are about the modeling techniques and how to implement those techniques using R or Python. However, they fail to introduce data science in a context of the industrial environment. Moreover, a crucial part, art of data science in practice, is often missing. This book focuses on the hands-on and business problem-solving such that readers can quickly and easily transfer knowledge to real-world practice. We also introduce the best
-practices in industrial environments (such as big data cloud platform and soft skills) and the end-to-end business cycle of a typical data science project.
+Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books in data science are about the modeling techniques and implementation using R or Python. However, they fail to introduce data science in a context of the industrial environment. Moreover, a crucial part, the art of data science in practice, is often missing. This book focuses on the hands-on and business problem-solving such that readers can quickly and easily transfer knowledge to real-world practice. 
 
-Based on industry experience, this book outlines the real world scenario and points
-out pitfalls data science practitioners should avoid. It also covers big data cloud platform and the art of data science such as soft skills. We use R as the main tool and provide code for both R and Python.
+Based on industry experience, this book outlines the real world scenario and points out pitfalls data science practitioners should avoid. It also covers big data cloud platform and the art of data science such as soft skills. We use R as the main tool and provide code for both R and Python.
 
 **Our Target Audience**
 
-Our target audiences are graduate students in STEM and statisticians, operation researchers or economists currently working at various industries, and anyone who want to apply data science.
+This text is intended for a broad audience as both an introduction to data science as well as a guide to applying them. Non-mathematical readers will appreciate the emphasis on problem-solving with real data across a wide variety of applications and the reproducibility of the companion R and python code.
+
+Readers should know basic statistical ideas, such as correlation and linear regression analysis. While the text is biased against complex equations, a mathematical background is needed for advanced topics.
+
 
 **Key Features**
 
-- Comprehensive: covers not only technical skills, but also soft skills and big data environment in
-industry
-- Hands on using both R and Python
+- Comprehensive: covers not only technical skills but also soft skills and big data environment in industry
+- Hands-on using both R and Python
 - Repeatable
-- End-to- end cycle of a typical data science project
+- End-to-end cycle of a typical data science project
 - Pitfalls that everyone should avoid
+
 
 **Others**
 
@@ -74,4 +75,4 @@ Priority 3:
 - Natural language processing
 - Bayesian
 
-Please use <!--[[this is my comment]]--> for comments.
+Please use `<!--[[this is my comment]]-->` for comments.
