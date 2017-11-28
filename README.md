@@ -1,4 +1,4 @@
-This is a draft of the book [**Introduction to Data Science**](http://scientistcafe.com/CE_JSM2017/)
+This is a draft of the book [**Introduction to Data Science**](http://scientistcafe.com/IDS/)
 
 [![Travis-CI Build Status](https://travis-ci.org/dgrtwo/tidy-text-mining.svg?branch=master)](https://travis-ci.org/dgrtwo/tidy-text-mining)
 
