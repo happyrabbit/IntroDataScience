@@ -1,4 +1,12 @@
-book_filename: "CE_JSM2017"
+book_filename: "IDS"
 chapter_name: "Chapter "
 output_dir: "/Users/happyrabbit/Documents/GitHub/linhui.org/IDS"
-always_allow_html: yes
+delete_merged_file: true
+language:
+  label:
+    fig: "FIGURE "
+    tab: "TABLE "
+  ui:
+    edit: "Edit"
+    chapter_name: "Chapter "
+

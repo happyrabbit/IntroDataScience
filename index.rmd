@@ -1,51 +1,28 @@
 --- 
 title: "Introduction to Data Science "
 author: " [Hui Lin](http://scientistcafe.com) and Ming Li"
-
-date: '`r Sys.Date()`'
-output:
-  bookdown::gitbook:
-    config:
-      edit: null
-      fontsettings:
-        family: sans
-        size: 2
-        theme: white
-      search: yes
-      sharing:
-        all:
-        - facebook
-        - google
-        - twitter
-        - weibo
-        - instapaper
-        facebook: yes
-        google: no
-        instapper: no
-        twitter: yes
-        vk: no
-        weibo: no
-      toc:
-        after: null
-        before: null
-        collapse: subsection
-        scroll_highlight: yes
-      toolbar:
-        position: fixed
-description: This is the handouts for CE course at JSM 2017
+date: "`r Sys.Date()`"
+knit: "bookdown::render_book"
 documentclass: krantz
+bibliography: [bibliography.bib]
+biblio-style: apalike
 link-citations: yes
 colorlinks: yes
+lot: yes
+lof: yes
+fontsize: 12pt
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
-bibliography: bibliography.bib
-site: bookdown::bookdown_site
-biblio-style: apalike
+site: http://scientistcafe.com/IDS/
+description: "Introduction to Data Science"
+url: 'http\://scientistcafe.com/IDS/'
+github-repo: happyrabbit/IntroDataScience
 ---
 
-```{r}
+```{r include=FALSE}
 options(formatR.indent = 2, width = 55)
 #bookdown::render_book("index.Rmd", "bookdown::gitbook")
+#bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```
 
 # Copyright Statement {-}

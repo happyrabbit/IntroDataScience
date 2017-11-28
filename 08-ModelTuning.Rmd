@@ -39,7 +39,7 @@ The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $V
 library(grid)
 library(lattice)
 library(ggplot2)
-source("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/R_Code/multiplot.r")
+source("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/R/multiplot.r")
 # randomly simulate some non-linear samples
 x=seq(1,10,0.01)*pi
 e=rnorm(length(x),mean=0,sd=0.2)

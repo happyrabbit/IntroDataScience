@@ -452,7 +452,7 @@ A dummy variable is a binary variable (0/1) to represent subgroups of the sample
 Let's encode `gender` and `house` from `sim.dat` to dummy variables. There are two ways to implement this. The first is to use `class.ind()` from `nnet` package. However, it only works on one variable at a time.
 
 ```{r}
-dumVar<-class.ind(sim.dat$gender)
+dumVar<-nnet::class.ind(sim.dat$gender)
 head(dumVar)
 ```
 

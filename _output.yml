@@ -1,16 +1,35 @@
 bookdown::gitbook:
-  css: style.css
+  dev: svglite
+  css: css/style.css
+  split_by: section
   config:
     toc:
+      collapse: none
       before: |
         <li><a href="http://scientistcafe.com">Homepage</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
-    edit:
-      link: https://github.com/rstudio/bookdown-demo/edit/master/%s
+    download: [pdf, epub, mobi]
+    edit: https://github.com/happyrabbit/IntroDataScience/%s
+    sharing:
+      github: yes
+      facebook: no
+bookdown::html_chapters:
+  css: [css/style.css, css/toc.css]
 bookdown::pdf_book:
   includes:
-    in_header: preamble.tex
+    in_header: latex/preamble.tex
+    before_body: latex/before_body.tex
+    after_body: latex/after_body.tex
+  keep_tex: yes
+  dev: "cairo_pdf"
   latex_engine: xelatex
   citation_package: natbib
-bookdown::epub_book: default
+  template: null
+  toc_depth: 3
+  toc_unnumbered: no
+  toc_appendix: yes
+  quote_footer: ["\\VA{", "}{}"]
+bookdown::epub_book:
+  dev: svglite
+  stylesheet: css/style.css
