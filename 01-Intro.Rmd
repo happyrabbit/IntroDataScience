@@ -16,7 +16,7 @@ We are transiting to universal connectivity with a deluge of data filling teleco
 
 Data Science doesn't come out of the blue. Its predecessor is data analysis. Back in 1962, John Tukey wrote in “The Future of Data Analysis”:
 
-> For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. … All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.
+> For a long time I have thought I was a statistician, interested in inferences from the particular to the general. But as I have watched mathematical statistics evolve, I have had cause to wonder and to doubt. ...All in all, I have come to feel that my central interest is in data analysis, which I take to include, among other things: procedures for analyzing data, techniques for interpreting the results of such procedures, ways of planning the gathering of data to make its analysis easier, more precise or more accurate, and all the machinery and results of (mathematical) statistics which apply to analyzing data.
 
 It deeply shocked his academic readers. Aren’t you supposed to present something mathematically precise, such as definitions, theorems and proofs? If we use one sentence to summarize what John said, it is:
 
@@ -24,7 +24,7 @@ It deeply shocked his academic readers. Aren’t you supposed to present somethi
 
 In September 2015, the University of Michigan make plans to invest $100 million over the next five years in a new [Data Science Initiative](http://www.ns.umich.edu/new/releases/23105-u-michigan-launches-100-million-data-science-initiative) that will enhance opportunities for student and faculty researchers across the university to tap into the enormous potential of big data. UM Provost Martha Pollack said:
 
-> “Data science has become a fourth approach to scientific discovery, in addition to experimentation, modeling and computation,…”
+> “Data science has become a fourth approach to scientific discovery, in addition to experimentation, modeling and computation,...”
 
 How does the Data Science Initiative define Data science? Their website gives us an idea:
 
@@ -41,7 +41,7 @@ There is lots of confusion between Data Scientist, Statistician, Business/Financ
 
 In the obscenity case of Jacobellis v. Ohio (1964), Potter Stewart wrote in his short concurrence that “hard-core pornography” was hard to define, but that “I know it when I see it.” This applies to many things including data science. It is hard to define but you know it when you see it.
 
-So instead of scratching my head to figure out a one sentence definition, We are going to sketch the history of data science, what kind of questions data science can answer, and describe the skills required for being a data scientist. We hope this can give you a better depiction of data science.
+So instead of scratching my head to figure out a one sentence definition, we are going to sketch the history of data science, what kind of questions data science can answer, and describe the skills required for being a data scientist. We hope this can give you a better depiction of data science.
 
 In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
 
@@ -190,7 +190,7 @@ Programming skills are critical for data scientists. According to a 2017 survey 
 
 Data scientists need to know statistical and machine learning models. There is no clear line separating these two. Many statistical models are also machine learning models, vice versa. Generally speaking, a data scientist is familiar with basic statistical tests such as t-test, chi-square test, and analysis of variance. They can explain the difference between Spearman rank correlation and Pearson correlation, be aware of basic sampling schemes, such as Simple Random Sampling, Stratified Random Sampling, and Multi-Stage Sampling. Know commonly used probability distributions such as Normal distribution, Binomial distribution, Poisson distribution, F distribution, T distribution, and Chi-square distribution. Experimental design plays a significant role in the biological study.  Understanding the main tenants of Bayesian methods is necessary (at least be able to write the Bayes theorem on the whiteboard and know what does it mean).  Know the difference between supervised and unsupervised learning. Understand commonly used cluster algorithms, classifiers, and regression models. Some powerful tools in predictive analytics are tree models (such as random forest and AdaBoost) and penalized model (such as lasso and SVM).  Data scientist working on social science (such as consumer awareness surveys), also needs to know the latent variable model, such as exploratory factor analysis, confirmatory factor analysis, structural equation model. 
 
-Is the list getting a little scary? It can get even longer. Don't worry if you don't know all of them now. You will learn as you go.  Standard mathematics, statistics or computer science training in graduate school can get you started. But you have to learn lots of new skills after school.  Learning is happening increasingly outside of formal educational settings and in unsupervised environments. An excellent data scientist must be a lifetime learner. Fortunately, technological advantages provide new tools and opportunities for lifetime learners, MOOC, online data science workshops and various online tutorials.  So above all, **self-learning ability** is the most critical skill. 
+Is the list getting a little scary? It can get even longer. Don't worry if you don't know all of them now. You will learn as you go. Standard mathematics, statistics or computer science training in graduate school can get you started. But you have to learn lots of new skills after school.  Learning is happening increasingly outside of formal educational settings and in unsupervised environments. An excellent data scientist must be a lifetime learner. Fortunately, technological advantages provide new tools and opportunities for lifetime learners, MOOC, online data science workshops and various online tutorials.  So above all, **self-learning ability** is the most critical skill. 
 
 - Soft Skills
 
@@ -365,6 +365,7 @@ Ensemble method made its debut in the 1990s. The idea is to build a prediction m
 - Bootstrapped Aggregation (Bagging)
 - Random Forest
 - Gradient Boosting Machine (GBM)
+
 ```{r, out.width = "600px",out.height = "900px",echo=FALSE}
 knitr::include_graphics("http://scientistcafe.com/book/Figure/AlogrithmTypes.png")
 ```
