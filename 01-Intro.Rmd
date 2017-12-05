@@ -112,7 +112,7 @@ Often the quality of the data is more important than the quantity, but the quant
 
 Many of the data science books classify the various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on "problem-oriented" track. We first introduce different groups of real problems and then present which models can be used to answer the corresponding category of questions. 
 
-![](http://scientistcafe.com/book/Figure/DataScienceQuestion.png)
+![](images/DataScienceQuestion.png)
 
 
 1. Comparison
@@ -196,9 +196,8 @@ Is the list getting a little scary? It can get even longer. Don't worry if you d
 
 In addition to technical knowledge, there are some critical soft skills.  These include the ability to translate practical problems into data problems, excellent communication skill, attention to detail,  storytelling and so on. We will discuss it in a later chapter in more detail. 
 
-```{r, out.width = "800px",out.height = "400px",echo=FALSE}
-knitr::include_graphics("http://scientistcafe.com/book/Figure/SkillEN.png")
-```
+![](images/SkillEN.png)
+
 
 ## Types of Learning
 
@@ -220,9 +219,7 @@ In unsupervised learning, there is no response variable. For a long time, the ma
  
 (3) Provide a reduced number of uncorrelated learned features from original variables, such as principle component regression. 
 
-```{r, out.width = "800px",out.height = "400px",echo=FALSE}
-knitr::include_graphics("http://scientistcafe.com/book/Figure/LearningStyles.png")
-```
+![](images/LearningStyles.png)
 
 ## Types of Algorithm
 
@@ -289,10 +286,6 @@ People usually confuse Bayes theorem with Bayesian models. Bayes theorem is an i
 
 $$Pr(\theta|y)=\frac{Pr(y|\theta)Pr(\theta)}{Pr(y)}$$
 
-<center>
- ![300 yrs ago Thomas Bayes, a minister, revolutionized statistics w/a simple theorem](http://linhui.org/images/Jokes/jokeBayes.png)
- </center>
- 
 The actual Bayesian model is not identical to Bayes theorem. Given a likelihood, parameters to estimate, and a prior for each parameter, a Bayesian model treats the estimates as a purely logical consequence of those assumptions. The resulting estimates are the posterior distribution which is the relative plausibility of different parameter values, conditional on the observations.
 The Bayesian model here is not strictly in the sense of Bayesian but rather model using Bayes theorem. 
 
@@ -366,9 +359,8 @@ Ensemble method made its debut in the 1990s. The idea is to build a prediction m
 - Random Forest
 - Gradient Boosting Machine (GBM)
 
-```{r, out.width = "600px",out.height = "900px",echo=FALSE}
-knitr::include_graphics("http://scientistcafe.com/book/Figure/AlogrithmTypes.png")
-```
+![](images/AlogrithmTypes.png)
+
 
 <!--
 Uncertainty:

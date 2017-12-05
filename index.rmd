@@ -19,15 +19,15 @@ url: 'http\://scientistcafe.com/IDS/'
 github-repo: happyrabbit/IntroDataScience
 ---
 
-```{r include=FALSE}
+```{r include=FALSE, echo = FALSE}
+# Sys.setenv(TZ="UTC")
 options(formatR.indent = 2, width = 55)
 #bookdown::render_book("index.Rmd", "bookdown::gitbook")
 #bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```
 
-# Copyright Statement {-}
 
-This work by Hui Lin and Ming Li is licensed under a [Creative Commons Attribution-NonCommercial-ShareAlike 3.0 United States License](https://creativecommons.org/licenses/by-nc-sa/3.0/us/).
+# Copyright Statement {-}
 
 Please note that this work is being written under a [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms.
 
