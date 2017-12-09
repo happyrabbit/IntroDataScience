@@ -1,6 +1,6 @@
 --- 
 title: "Introduction to Data Science "
-author: " [Hui Lin](http://scientistcafe.com) and Ming Li"
+author: "Hui Lin and Ming Li"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
 documentclass: krantz
@@ -26,7 +26,9 @@ options(formatR.indent = 2, width = 55)
 #bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```
 
-# Goal of the Book {-}
+# Preface{-}
+
+## Goal of the Book {-}
 
 This is an introductory book to data science with a specific focus on the application. Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books on data science are about the modeling techniques and the implementation of models using R or Python. However, they fail to introduce data science in a context of the industrial environment. Moreover, a crucial part, the art of data science in practice, is often missing. This book intends to fill the gap. 
 
@@ -40,18 +42,18 @@ Some key features of this book are as follows:
 
 - Where appropriate, we point you to more advanced materials on models to dive deeper
 
-# Who this book is for {-}
+## Who this book is for {-}
 
 Non-mathematical readers will appreciate the emphasis on problem-solving with real data across a wide variety of applications and the reproducibility of the companion R and python code.
 
 Readers should know basic statistical ideas, such as correlation and linear regression analysis. While the text is biased against complex equations, a mathematical background is needed for advanced topics.
 
-# What this book covers {-}
+## What this book covers {-}
 
 Based on industry experience, this book outlines the real world scenario and points out pitfalls data science practitioners should avoid. It also covers big data cloud platform and the art of data science such as soft skills. We use R as the main tool and provide code for both R and Python.
 
-# Conventions {-}
+## Conventions {-}
 
-# Acknowledgements  {-}
+## Acknowledgements  {-}
 
 We want to give special thanks to Alex Shum and David Body for their editing and comments on the sections of this book. 
