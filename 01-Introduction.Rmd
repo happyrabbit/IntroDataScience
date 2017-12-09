@@ -2,8 +2,7 @@
 
 # Introduction
 
-Interest in data science is at an all time high and really has exploded in popularity in the last couple of years. Data scientists today are from various backgrounds. If someone ran into you asked what data science was all about, what would you tell them? It is not easy to answer because the definition
-of data science is really not that clear. Data science is definitely one of those areas where you ask ten people and get ten different answers. 
+Interest in data science is at an all time high and really has exploded in popularity in the last couple of years. Data scientists today are from various backgrounds. If someone ran into you asked what data science was all about, what would you tell them? It is not easy to answer. Data science is one of the areas where you ask ten people who will give ten different answers. It is not well-defined as an academic subject but broadly used in the industry.
 
 ## What is data science?
 
@@ -35,7 +34,7 @@ How does the Data Science Initiative define Data science? Their website gives us
 
 > “This coupling of scientific discovery and practice involves the collection, management, processing, analysis, visualization, and interpretation of vast amounts of heterogeneous data associated with a diverse array of scientific, translational, and interdisciplinary applications.”
 
-With the data science hype picking up stream, many professionals changed their titles to Data Scientist without any of the necessary qualifications. But at that time, the data scientist title was not well defined which lead to confusion in the market, obfuscation in resumes, and exaggeration of skills. Here is a list of somewhat whimsical definitions for a “data scientist”:
+Many professionals changed their titles to Data Scientist without any of the necessary qualifications. But at that time, the data scientist title was not well defined which lead to confusion in the market, obfuscation in resumes, and exaggeration of skills. Here is a list of somewhat whimsical definitions for a “data scientist”:
 
 - “A data scientist is a data analyst who lives in California”
 - “A data scientist is someone who is better at statistics than any software engineer and better at software engineering than any statistician.”
