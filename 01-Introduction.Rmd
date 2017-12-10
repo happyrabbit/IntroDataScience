@@ -41,6 +41,8 @@ In the obscenity case of Jacobellis v. Ohio (1964), Potter Stewart wrote in his 
 
 So instead of figuring out a good definition, we are going to sketch the history of data science, show you what kind of questions data science can answer, and describe the skills required for being a data scientist. We hope this can give you a better depiction of data science.
 
+![Data Science Timeline](images/DataScienceTimeline.png)
+
 In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
 
 > "generalized linear regression by allowing the linear model to be related to the response variable via a link function and by allowing the magnitude of the variance of each measurement to be a function of its predicted value." [from Wikipedia] 
@@ -57,27 +59,6 @@ John Tukey identified four forces driving data analysis (there was no “data sc
 1. The emphasis on quantification in an ever wider variety of disciplines 
 
 Tukey’s 1962 list is surprisingly modern. Let's inspect those points in today's context. There is always a time gap between a theory and its application. We had the theories much earlier than application. Fortunately, for the past 50 years, statisticians have been laying the theoretical groundwork for constructing "data science" today. The development of computers enables us to calculate much faster and deliver results in a friendly and intuitive way. The striking transition to the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems certain to be a major preoccupation of commercial life in coming decades. All the four forces John identified exist today and have been driving data science.   
-
-## Is it science? Totally?
-
-Let’s take one step back. What is science? Here is what John Tukey said:
-
-> There are diverse views as to what makes a science, but three constituents will be judged essential by most, viz:  
-(a1) intellectual content,  
-(a2) organization in an understandable form,  
-(a3) reliance upon the test of experience as the ultimate standard of validity
-
-
-The first one (a1) doesn’t provide useful information. And (a2) can’t distinguish science from art very well. The last one is a key character of science. The influential philosopher of science Karl Popper argued that science advances by falsifying hypotheses.  If science needs to be falsifiable, then data science is not 100% science. It is true that there are some analytical results that can be validated (falsified) through cross-validation or comparing prediction with future outcomes.  But certainly not all of them. Even in the problem of prediction, we can’t validate predictions in the 2nd order chaotic systems.
-
-We can’t scientifically validate much unsupervised learning or descriptive analysis, especially in the context of marketing. In that sense, data science is a combination of science and art.  
-There is another definition of science from the famous computer scientist Donald Knuth. He said in his legendary 1974 essay [Computer Programming as an Art](http://www.paulgraham.com/knuth.html):
-
-> "Science is knowledge which we understand so well that we can teach it to a computer."
-
-Computers are indispensable for data science. But can we teach computers to do all the work data scientists do today? No. So it is not totally science. Computers can’t communicate with stakeholders to transform a real-life problem to be a data problem. Computers don’t know which questions can be answered through analytics. Computers don’t know how to explain the results to different audiences using different ways according to their backgrounds. Computers are powerful in many ways but certainly not all. Would a computer enter a ‘runaway reaction’ of self-improvement cycles so that it could surpass human in every way in the future? Well, that is not a question we are trying to answer here.  If you are interested in the future of technology, there are some books you can refer to. Ray Kurzweil (The Singularity Is Near), Yuval Noah Harari (Homo Deus: A Brief History of Tomorrow) and Kevin Kelly (The Inevitable). At the risk of being short-sighted, we will assume it won’t happen in foreseeable future.
-
-To be simple, I will still use data science in the rest of the book. But it is important to realize that data science includes art.
 
 ## What kind of questions can data science solve?
 
@@ -110,7 +91,7 @@ Often the quality of the data is more important than the quantity, but the quant
 
 Many of the data science books classify the various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on "problem-oriented" track. We first introduce different groups of real problems and then present which models can be used to answer the corresponding category of questions. 
 
-![](images/DataScienceQuestion.png)
+![Data Science Questions](images/DataScienceQuestion.png)
 
 
 1. Comparison
@@ -170,7 +151,7 @@ In general, regression deals with the problem of "how much is it?" and return a 
 
 ## What are the required skills for a data scientist?
 
-We talked about the bewildering definitions of data scientist. With the data science hype picking up, some professionals have begun changing their titles to Data Scientist without any of the necessary qualifications (see “[Data Scientists…or Data Wannabes](http://www.burtchworks.com/2013/06/12/data-scientists-or-data-wannabes/)”). What are the required skills for a data scientist?
+We talked about the bewildering definitions of data scientist. What are the required skills for a data scientist?
 
 - Educational Background
 
@@ -194,7 +175,7 @@ Is the list getting a little scary? It can get even longer. Don't worry if you d
 
 In addition to technical knowledge, there are some critical soft skills.  These include the ability to translate practical problems into data problems, excellent communication skill, attention to detail,  storytelling and so on. We will discuss it in a later chapter in more detail. 
 
-![](images/SkillEN.png)
+![Data Scientist Skill Set](images/SkillEN.png)
 
 
 ## Types of Learning
@@ -217,7 +198,7 @@ In unsupervised learning, there is no response variable. For a long time, the ma
  
 (3) Provide a reduced number of uncorrelated learned features from original variables, such as principal component regression. 
 
-![](images/LearningStyles.png)
+![Machine Learning Styles](images/LearningStyles.png)
 
 ## Types of Algorithm
 
@@ -357,4 +338,4 @@ Ensemble method made its debut in the 1990s. The idea is to build a prediction m
 - Random Forest
 - Gradient Boosting Machine (GBM)
 
-![](images/AlogrithmTypes.png)
+![Machines Learning Algorithms](images/AlogrithmTypes.png)
