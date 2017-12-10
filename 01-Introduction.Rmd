@@ -41,6 +41,8 @@ In the obscenity case of Jacobellis v. Ohio (1964), Potter Stewart wrote in his 
 
 So instead of figuring out a good definition, we are going to sketch the history of data science, show you what kind of questions data science can answer, and describe the skills required for being a data scientist. We hope this can give you a better depiction of data science.
 
+If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
+
 ![Data Science Timeline](images/DataScienceTimeline.png)
 
 In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
@@ -49,7 +51,7 @@ In the early 19th century when Legendre and Gauss came up the least squares meth
 
 By the end of the 1970s, there was a range of analytical models and most of them were linear because computers were not powerful enough to fit non-linear model until the 1980s.
 
-In 1984 Breiman et al. introduced classification and regression tree (CART) which is one of the oldest and most utilized classifications and regression techniques. After that Ross Quinlan came up with more tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques (methods that combine many models’ predictions) began to appear. Bagging is a general approach that uses bootstrapping in conjunction with any regression or classification model to construct an ensemble. Based on the ensemble idea, Breiman came up with random forest in 2001. Later, Yoav Freund and Robert Schapire came up with the AdaBoost.M1 algorithm. Benefiting from the increasing availability of digitized information, and the possibility to distribute that via the internet, the toolbox has been expanding fast. The applications include business, health, biology, social science, politics, etc.
+In 1984 Breiman et al.[@Breiman1984] introduced classification and regression tree (CART) which is one of the oldest and most utilized classification and regression techniques. After that Ross Quinlan came up with more tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques (methods that combine many models’ predictions) began to appear. Bagging is a general approach that uses bootstrapping in conjunction with any regression or classification model to construct an ensemble. Based on the ensemble idea, Breiman came up with random forest in 2001. Later, Yoav Freund and Robert Schapire came up with the AdaBoost.M1 algorithm. Benefiting from the increasing availability of digitized information, and the possibility to distribute that via the internet, the toolbox has been expanding fast. The applications include business, health, biology, social science, politics, etc.
 
 John Tukey identified four forces driving data analysis (there was no “data science” then):
 
@@ -149,7 +151,7 @@ In general, regression deals with the problem of "how much is it?" and return a 
 - How long will the engine work?
 - How much beer should we prepare for this event?
 
-## What are the required skills for a data scientist?
+## Data Scientist Skill Set
 
 We talked about the bewildering definitions of data scientist. What are the required skills for a data scientist?
 
