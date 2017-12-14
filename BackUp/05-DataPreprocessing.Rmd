@@ -1,29 +1,4 @@
 
-One question to ask before imputation:  Is there any auxiliary information? Being aware of any auxiliary information is critical.  For example, if the system set customer who did not purchase as missing, then the real purchasing amount should be 0.  Is missing a random occurrence? If so, it may be reasonable to impute with mean or median. If not, is there a potential mechanism for the missing data? For example, older people are more reluctant to disclose their ages in the questionnaire, so that the absence of age is not completely random. In this case, the missing values need to be estimated using the relationship between age and other independent variables. For example, use variables such as whether they have children, income, and other survey questions to build a model to predict age.
-
-Also, the purpose of modeling is important for selecting imputation methods. If the goal is to interpret the parameter estimate or statistical inference, then it is important to study the missing mechanism carefully and to estimate the missing values using non-missing information as much as possible. If the goal is to predict,  people usually will not study the absence mechanism rigorously (but sometimes the mechanism is obvious). If the absence mechanism is not clear, treat it as missing at random and use mean, median, or k-nearest neighbor to impute. Since statistical inference is sensitive to missing values, researchers from survey statistics have conducted in-depth studies of various imputation schemes which focus on valid statistical inference. The problem of missing values in the prediction model is different from that in the traditional survey.  Therefore, there are not many papers on missing value imputation in the prediction model. Those who want to study further can refer to Saar-Tsechansky and Provost's comparison of different imputation methods [@missing1] and De Waal, Pannekoek and Scholtus' book [@impute1].
-
-### Impute missing values with median/mode
-
-In the case of missing at random, a common method is to imput with the mean (continuous variable) or median (categorical variables). You can use `impute ()` function in `imputeMissings` package.
-
-```{r}
-# save the result as another object
-demo_imp<-impute(sim.dat,method="median/mode")
-# check the first 5 columns, there is no missing values in other columns
-summary(demo_imp[,1:5])
-```
-
-After imputation, `demo_imp` has no missing value. This method is straightforward and widely used. The disadvantage is that it does not take into account the relationship between the variables. When there is a significant proportion of missing, it will distort the data. In this case, it is better to consider the relationship between variables and study the missing mechanism. In the example here, the missing variables are numeric. If the missing variable is a categorical/factor variable, the `impute ()` function will imput with the mode.
-
-You can also use `preProcess ()` function, but it is only for numeric variables, and can not imput categorical variables. Since missing values here are numeric, we can use the `preProcess ()` function. The result is the same as the `impute ()` function. `PreProcess ()`  is a powerful function that can link to a variety of data preprocessing methods.  We will use the function later for other data preprocessing.
-
-```{r}
-imp<-preProcess(sim.dat,method="medianImpute")
-demo_imp2<-predict(imp,sim.dat)
-summary(demo_imp2[,1:5])
-```
-
 ### K-nearest neighbors
 
 K-nearest neighbor (KNN) will find the k closest samples (Euclidian distance) in the training set and imput the mean of those "neighbors". 
