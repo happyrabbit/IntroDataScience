@@ -1,6 +1,6 @@
 # Introduction to the data
 
-Before tackling analytics problem, we start by creating data to be analyzed in later chapters. 
+Before tackling analytics problem, we start by introducing data to be analyzed in later chapters. 
 
 ## Customer Data for Clothing Company
 
@@ -49,6 +49,19 @@ There are 4 segments of customers:
 1. Quality
 1. Style
 
+Let's check it:
+
+```{r, echo=FALSE}
+library(readr)
+sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+```
+
+```{r}
+str(sim.dat,vec.len=3)
+```
+
+
+<!--
 The simulation is not very straightforward and we will break it into three parts: 
 
 1. Define data structure: variable names, variable distribution, customer segment names, segment size
@@ -217,23 +230,12 @@ sim.dat<-cbind(sim.dat,sim.dat2)
 sim.dat$segment<-factor(rep(group_name,times=group_size))
 ```
 
-So far we have gotten all the data. Let's check it:
-
-```{r, echo=FALSE}
-library(readr)
-sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
-```
-
-
-```{r}
-str(sim.dat,vec.len=3)
-```
-
-
+So far we have gotten all the data. 
+-->
 
 ## Customer Satisfaction Survey Data from Airline Company
 
-We will simulate a customer satisfaction survey for three airline companies. There are `N=1000` respondents and 15 questions. The market researcher asked respondents to recall the experience with different airline companies and assign a score (1-9) to each airline company for all the 15 questions. The higher the score, the more satisfied the customer to the specific item. The 15 questions are of 4 types (the variable names are in the  parentheses):
+This data set is from a customer satisfaction survey for three airline companies. There are `N=1000` respondents and 15 questions. The market researcher asked respondents to recall the experience with different airline companies and assign a score (1-9) to each airline company for all the 15 questions. The higher the score, the more satisfied the customer to the specific item. The 15 questions are of 4 types (the variable names are in the  parentheses):
 
 
 - How satisfied are you with your______?
@@ -257,6 +259,18 @@ We will simulate a customer satisfaction survey for three airline companies. The
     - Overall satisfaction（Satisfaction）
     - Purchase again（Fly_Again）
     - Willingness to recommend（Recommend）
+
+Now check the data frame we have:
+
+```{r, echo=FALSE}
+rating<-read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
+```
+
+```{r}
+str(rating,vec.len=3)
+```
+
+<!--
 
 ```r
 # Create a matrix of factor loadings
@@ -356,14 +370,6 @@ names(rating)<-c(
   "ID",
   "Airline")
 ```
-
-Now check the data frame we have:
-
-```{r, echo=FALSE}
-rating<-read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
-```
+-->
 
 
-```{r}
-str(rating,vec.len=3)
-```

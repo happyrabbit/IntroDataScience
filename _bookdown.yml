@@ -1,6 +1,7 @@
 book_filename: "IDS"
 chapter_name: "Chapter "
 output_dir: "/Users/happyrabbit/Documents/GitHub/linhui.org/IDS"
+clean: [packages.bib]
 delete_merged_file: true
 language:
   label:
