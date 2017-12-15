@@ -2,7 +2,7 @@
 
 Many data analysis related books focus on models, algorithms and statistical inferences. However, in practice, raw data is usually not directly used for modeling. Data preprocessing is the process of converting raw data into clean data that is proper for modeling. A model fails for various reasons. One is that the modeler doesn't correctly preprocess data before modeling. Data preprocessing can significantly impact model results, such as imputing missing value and handling with outliers. So data preprocessing is a very critical part. 
 
-![](images/DataPre-processing.png){width=90%}
+![Data Pre-processing Outline](images/DataPre-processing.png){width=90%}
 
 In real life, depending on the stage of data cleanup, data has the following types:
 
@@ -357,7 +357,7 @@ where $x_{ij}$ represents the $i^{th}$ observation and $j^{th}$ variable.  As sh
 
 Function `spatialSign()` `caret` package can conduct the transformation. Take `income` and `age` as an example:
 
-```{r sst, fig.cap='spatial sign transformation', out.width='80%', fig.asp=.75, fig.align='center'}
+```{r sst, fig.cap='Spatial sign transformation', out.width='80%', fig.asp=.75, fig.align='center'}
 # KNN imputation
 sdat<-sim.dat[,c("income","age")]
 imp<-preProcess(sdat,method=c("knnImpute"),k=5)
