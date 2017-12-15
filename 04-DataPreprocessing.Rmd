@@ -314,7 +314,7 @@ The estimate of $\lambda$ is the same as before (0.1). The skewness of the origi
 
 Even under certain assumptions we can statistically define outliers, it can be hard to define in some situations.  Box plot, histogram and some other basic visualizations can be used to initially check whether there are outliers. For example, we can visualize numerical non-survey variables in `sim.dat`:
 
-```{r scm, out.width='80%', fig.asp=.75, fig.align='center'}
+```{r scm, fig.cap='Use basic visualization to check outliers', out.width='80%', fig.asp=.75, fig.align='center'}
 # select numerical non-survey data
 sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
 # use scatterplotMatrix() function from car package
@@ -375,7 +375,7 @@ Some readers may have found that the above code does not seem to standardize the
 
 It is probably the technical term known by the most un-technical people. When two predictors are very strongly correlated, including both in a model may lead to confusion or problem with a singular matrix. There is an excellent function in `corrplot` package with the same name `corrplot()` that can visualize correlation structure of a set of predictors. The function has the option to reorder the variables in a way that reveals clusters of highly correlated ones. 
 
-```{r corp, out.width='80%', fig.asp=.75, fig.align='center'}
+```{r corp, fig.cap='Correlation Matrix', out.width='80%', fig.asp=.75, fig.align='center'}
 # select non-survey numerical variables
 sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
 # use bagging imputation here
@@ -438,6 +438,43 @@ The function will return a vector of integers indicating which columns to remove
 ```r
 nearZeroVar(zero_demo,freqCut = 95/5, uniqueCut = 10)
 ```
+
+As expected, it returns the two columns we generated. You can go ahead to remove them. Note the two arguments in the function `freqCut =` and `uniqueCut =` are corresponding to the previous two rules.
+
+- `freqCut`: the cutoff for the ratio of the most common value to the second most common value
+- `uniqueCut`: the cutoff for the percentage of distinct values out of the number of total samples
+
+## Re-encode Dummy Variables
+
+A dummy variable is a binary variable (0/1) to represent subgroups of the sample.  Sometimes we need to recode categories to smaller bits of information named “dummy variables.”  For example, some questionnaires have five options for each question, A, B, C, D, and E. After you get the data, you will usually convert the corresponding categorical variables for each question into five nominal variables, and then use one of the options as the baseline. 
+
+Let's encode `gender` and `house` from `sim.dat` to dummy variables. There are two ways to implement this. The first is to use `class.ind()` from `nnet` package. However, it only works on one variable at a time.
+
+```{r}
+dumVar<-nnet::class.ind(sim.dat$gender)
+head(dumVar)
+```
+
+Since it is redundant to keep both, we need to remove one of them when modeling. Another more powerful function is `dummyVars()` from `caret`:
+
+```{r}
+dumMod<-dummyVars(~gender+house+income,
+                  data=sim.dat,
+                  # use "origional variable name + level" as new name
+                  levelsOnly=F)
+head(predict(dumMod,sim.dat))
+```
+
+`dummyVars()` can also use formula format. The variable on the right-hand side can be both categorical and numeric. For a numerical variable, the function will keep the variable unchanged. The advantage is that you can apply the function to a data frame without removing numerical variables. Other than that, the function can create interaction term:
+
+```{r}
+dumMod<-dummyVars(~gender+house+income+income:gender,
+                  data=sim.dat,
+                  levelsOnly=F)
+head(predict(dumMod,sim.dat))
+```
+
+If you think the impact income levels on purchasing behavior is different for male and female, then you may add the interaction term between `income` and `gender`. You can do this by adding `income: gender` in the formula. 
 
 ## Python Computing
 
