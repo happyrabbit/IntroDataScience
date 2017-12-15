@@ -330,6 +330,47 @@ $$Z_{i}=\frac{Y_{i}-\bar{Y}}{s}$$
 
 where $\bar{Y}$ and $s$ are mean and standard deviation for $Y$. Z-score is a measurement of the distance between each observation and the mean. This method may be misleading, especially when the sample size is small. Iglewicz and Hoaglin proposed to use the modified Z-score to determine the outlier[@mad1]：
 
+$$M_{i}=\frac{0.6745(Y_{i}-\bar{Y})}{MAD}$$
+
+Where MAD is the median of a series of $|Y_ {i} - \bar{Y}|$, called the median of the absolute dispersion. Iglewicz and Hoaglin suggest that the points with the Z-score greater than 3.5 corrected above are possible outliers. Let's apply it to `income`:
+
+```{r}
+# calculate median of the absolute dispersion for income
+ymad<-mad(na.omit(sdat$income))
+# calculate z-score
+zs<-(sdat$income-mean(na.omit(sdat$income)))/ymad
+# count the number of outliers
+sum(na.omit(zs>3.5))
+```
+
+According to modified Z-score, variable income has `r sum(na.omit(zs>3.5))` outliers. Refer to [@mad1] for other ways of detecting outliers.
+
+The impact of outliers depends on the model. Some models are sensitive to outliers, such as linear regression, logistic regression. Some are pretty robust to outliers, such as tree models, support vector machine. Also, the outlier is not wrong data. It is real observation so cannot be deleted at will. If a model is sensitive to outliers, we can use _spatial sign transformation_ [@ssp] to minimize the problem. It projects the original sample points to the surface of a sphere by: 
+
+$$x_{ij}^{*}=\frac{x_{ij}}{\sqrt{\sum_{j=1}^{p}x_{ij}^{2}}}$$
+
+where $x_{ij}$ represents the $i^{th}$ observation and $j^{th}$ variable.  As shown in the equation, every observation for sample $i$ is divided by its square mode. The denominator is the Euclidean distance to the center of the p-dimensional predictor space. Three things to pay attention here:
+
+1.  It is important to center and scale the predictor data before using this transformation
+1.  Unlike centering or scaling, this manipulation of the predictors transforms them as a group
+1.  If there are some variables to remove (for example, highly correlated variables), do it before the transformation
+
+Function `spatialSign()` `caret` package can conduct the transformation. Take `income` and `age` as an example:
+
+```{r sst, fig.cap='spatial sign transformation', out.width='80%', fig.asp=.75, fig.align='center'}
+# KNN imputation
+sdat<-sim.dat[,c("income","age")]
+imp<-preProcess(sdat,method=c("knnImpute"),k=5)
+sdat<-predict(imp,sdat)
+transformed <- spatialSign(sdat)
+transformed <- as.data.frame(transformed)
+par(mfrow=c(1,2),oma=c(2,2,2,2))
+plot(income ~ age,data = sdat,col="blue",main="Before")
+plot(income ~ age,data = transformed,col="blue",main="After")
+```
+
+Some readers may have found that the above code does not seem to standardize the data before transformation. Recall the introduction of KNN, `preProcess()`  with `method="knnImpute"` by default will standardize data.
+
 ## Python Computing
 
 **Environmental Setup**
