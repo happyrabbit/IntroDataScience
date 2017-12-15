@@ -92,3 +92,262 @@ imp<-preProcess(sim.dat,method="medianImpute")
 demo_imp2<-predict(imp,sim.dat)
 summary(demo_imp2[,1:5])
 ```
+
+### K-nearest neighbors
+
+K-nearest neighbor (KNN) will find the k closest samples (Euclidian distance) in the training set and impute the mean of those "neighbors." 
+
+Use `preProcess()` to conduct KNN:
+
+```r
+imp<-preProcess(sim.dat,method="knnImpute",k=5)
+# need to use predict() to get KNN result
+demo_imp<-predict(imp,sim.dat)
+```
+```pre
+Error in `[.data.frame`(old, , non_missing_cols, drop = FALSE) : 
+  undefined columns selected
+```
+
+Now we get an error saying “undefined columns selected.”  It is because `sim.dat` has non-numeric variables. The `preProcess()` in the first line will automatically ignore non-numeric columns, so there is no error. However, there is a problem when using `predict()` to get the result. Removing those variable will solve the problem.
+
+```{r}
+# find factor columns
+imp<-preProcess(sim.dat,method="knnImpute",k=5)
+idx<-which(lapply(sim.dat,class)=="factor")
+demo_imp<-predict(imp,sim.dat[,-idx])
+summary(demo_imp[,1:3])
+```
+
+`lapply(data,class)` can return a list of column class. Here the data frame is `sim.dat`, and the following code will give the list of column class:
+
+```{r}
+# only show the first three elements
+lapply(sim.dat,class)[1:3]
+```
+
+Comparing the KNN result with the previous median imputation, the two are very different. This is because when you tell the `preProcess()` function to use KNN (the option `method =" knnImpute"`), it will automatically standardize the data. Another way is to use Bagging tree (in the next section). Note that KNN can not impute samples with the entire row missing. The reason is straightforward. Since the algorithm uses the average of its neighbors if none of them has a value, what does it apply to calculate the mean?
+Let's append a new row with all values missing to the original data frame to get a new object called `temp`. Then apply KNN to `temp` and see what happens:
+
+```{r}
+temp<-rbind(sim.dat,rep(NA,ncol(sim.dat)))
+imp<-preProcess(sim.dat,method="knnImpute",k=5)
+idx<-which(lapply(temp,class)=="factor")
+```
+
+```r
+demo_imp<-predict(imp,temp[,-idx])
+```
+```pre
+Error in FUN(newX[, i], ...) : 
+  cannot impute when all predictors are missing in the new data point
+```
+
+There is an error saying “cannot impute when all predictors are missing in the new data point”. It is easy to fix by finding and removing the problematic row:
+
+```{r}
+idx<-apply(temp,1,function(x) sum(is.na(x)) )
+as.vector(which(idx==ncol(temp)))
+```
+
+It shows that row 1001 is problematic. You can go ahead to delete it.
+
+### Bagging Tree
+
+Bagging (Bootstrap aggregating) was originally proposed by Leo Breiman. It is one of the earliest ensemble methods [@bag1]. When used in missing value imputation,  it will use the remaining variables as predictors to train a bagging tree and then use the tree to predict the missing values. Although theoretically, the method is powerful,  the computation is much more intense than KNN. In practice, there is a trade-off between computation time and the effect.  If a median or mean meet the modeling needs, even bagging tree may improve the accuracy a little, but the upgrade is so marginal that it does not deserve the extra time. The bagging tree itself is a model for regression and classification. Here we use `preProcess()` to impute `sim.dat`:
+
+```r
+imp<-preProcess(sim.dat,method="bagImpute")
+demo_imp<-predict(imp,sim.dat)
+summary(demo_imp[,1:5])
+```
+
+```pre
+      age           gender        income       house       store_exp      
+ Min.   :16.00   Female:554   Min.   : 41776   No :432   Min.   :  155.8  
+ 1st Qu.:25.00   Male  :446   1st Qu.: 86762   Yes:568   1st Qu.:  205.1  
+ Median :36.00                Median : 94739             Median :  329.0  
+ Mean   :38.58                Mean   :114665             Mean   : 1357.7  
+ 3rd Qu.:53.00                3rd Qu.:123726             3rd Qu.:  597.3  
+ Max.   :69.00                Max.   :319704             Max.   :50000.0  
+```
+
+## Centering and Scaling
+
+It is the most straightforward data transformation. It centers and scales a variable to mean 0 and standard deviation 1. It ensures that the criterion for finding linear combinations of the predictors is based on how much variation they explain and therefore improves the numerical stability. Models involving finding linear combinations of the predictors to explain response/predictors variation need data centering and scaling, such as PCA [@pca1], PLS [@PLS1] and EFA [@EFA1]. You can quickly write code yourself to conduct this transformation.  
+
+Let's standardize the variable `income` from `sim.dat`:
+
+```{r}
+income<-sim.dat$income
+# calculate the mean of income
+mux<-mean(income,na.rm=T)
+# calculate the standard deviation of income
+sdx<-sd(income,na.rm=T)
+# centering
+tr1<-income-mux
+# scaling
+tr2<-tr1/sdx
+```
+
+Or the function `preProcess()` in package `caret` can apply this transformation to a set of predictors. 
+
+```{r}
+sdat<-subset(sim.dat,select=c("age","income"))
+# set the "method" option
+trans<-preProcess(sdat,method=c("center","scale"))
+# use predict() function to get the final result
+transformed<-predict(trans,sdat)
+```
+
+Now the two variables are in the same scale: 
+
+```{r}
+summary(transformed)
+```
+
+Sometimes you only need to scale the variable. For example, if the model adds a penalty to the parameter estimates (such as $L_2$ penalty is ridge regression and $L_1$ penalty in LASSO), the variables need to have a similar scale to ensure a fair variable selection. I am a heavy user of this kind of penalty-based model in my work, and I used the following quantile transformation:
+
+$$
+x_{ij}^{*}=\frac{x_{ij}-quantile(x_{.j},0.01)}{quantile(x_{.j}-0.99)-quantile(x_{-j},0.01)}
+$$
+
+The reason to use 99% and 1% quantile instead of maximum and minimum values is to resist the impact of outliers.
+
+It is easy to write a function to do it:
+
+```{r,message=FALSE}
+qscale<-function(dat){
+  for (i in 1:ncol(dat)){
+    up<-quantile(dat[,i],0.99)
+    low<-quantile(dat[,i],0.01)
+    diff<-up-low
+    dat[,i]<-(dat[,i]-low)/diff
+  }
+  return(dat)
+}
+```
+
+In order to illustrate, let's apply it to some variables from `demo_imp2:
+
+```{r}
+demo_imp3<-qscale(subset(demo_imp2,select=c("income","store_exp","online_exp")))
+summary(demo_imp3)
+```
+
+After transformation, most of the variables are between 0-1.
+
+## Resolve Skewness
+
+[Skewness](https://en.wikipedia.org/wiki/Skewness)  is defined to be the third standardized central moment. The formula for the sample skewness statistics is:
+$$ skewness=\frac{\sum(x_{i}-\bar{x})^{3}}{(n-1)v^{3/2}}$$
+$$v=\frac{\sum(x_{i}-\bar{x})^{2}}{(n-1)}$$
+Skewness=0 means that the destribution is symmetric, i.e. the probability of falling on either side of the distribution's  mean is equal. 
+
+
+
+```{r skew, fig.cap='Shewed Distribution', out.width='80%', fig.asp=.75, fig.align='center'}
+# need skewness() function from e1071 package
+set.seed(1000)
+par(mfrow=c(1,2),oma=c(2,2,2,2))
+# random sample 1000 chi-square distribution with df=2
+# right skew
+x1<-rchisq(1000,2, ncp = 0)
+# get left skew variable x2 from x1
+x2<-max(x1)-x1
+plot(density(x2),main=paste("left skew, skewnwss =",round(skewness(x2),2)), xlab="X2")
+plot(density(x1),main=paste("right skew, skewness =",round(skewness(x1),2)), xlab="X1")
+```
+
+You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). There are different ways may help to remove skewness such as log, square root or inverse. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$[@BOXCOX1]. 
+
+$$
+x^{*}=\begin{cases}
+\begin{array}{c}
+\frac{x^{\lambda}-1}{\lambda}\\
+log(x)
+\end{array} & \begin{array}{c}
+if\ \lambda\neq0\\
+if\ \lambda=0
+\end{array}\end{cases}
+$$
+
+It is easy to see that this family includes log transformation ($\lambda=0$), square transformation ($\lambda=2$), square root ($\lambda=0.5$), inverse ($\lambda=-1$) and others in-between. We can still use function `preProcess()` in package `caret` to apply this transformation by chaning the `method` argument. 
+
+```{r}
+describe(sim.dat)
+```
+
+It is easy to see the skewed variables.  If `mean` and `trimmed` differ a lot, there is very likely outliers. By default, `trimmed` reports mean by dropping the top and bottom 10%. It can be adjusted by setting argument `trim= `. It is clear that `store_exp` has outliers.
+
+As an example, we will apply Box-Cox transformation on `store_trans` and `online_trans`:
+
+```{r}
+# select the two columns and save them as dat_bc
+dat_bc<-subset(sim.dat,select=c("store_trans","online_trans"))
+(trans<-preProcess(dat_bc,method=c("BoxCox")))
+```
+
+The last line of the output shows the estimates of $\lambda$ for each variable.  As before, use `predict()` to get the transformed result:
+
+```{r bc, fig.cap='Box-Cox Transformation', out.width='80%', fig.asp=.75, fig.align='center'}
+transformed<-predict(trans,dat_bc)
+par(mfrow=c(1,2),oma=c(2,2,2,2))
+hist(dat_bc$store_trans,main="Before Transformation",xlab="store_trans")
+hist(transformed$store_trans,main="After Transformation",xlab="store_trans")
+```
+
+Before the transformation, the `stroe_trans` is skewed right. The situation is significantly improved after (figure\@ref(fig:bc)). `BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
+
+```{r}
+(trans<-BoxCoxTrans(dat_bc$store_trans))
+```
+
+```{r}
+transformed<-predict(trans,dat_bc$store_trans)
+skewness(transformed)
+```
+
+The estimate of $\lambda$ is the same as before (0.1). The skewness of the original observation is 1.1, and -0.2 after transformation. Although it is not strictly 0, it is greatly improved. 
+
+## Resolve Outliers
+
+Even under certain assumptions we can statistically define outliers, it can be hard to define in some situations.  Box plot, histogram and some other basic visualizations can be used to initially check whether there are outliers. For example, we can visualize numerical non-survey variables in `sim.dat`:
+
+```{r scm, out.width='80%', fig.asp=.75, fig.align='center'}
+# select numerical non-survey data
+sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
+# use scatterplotMatrix() function from car package
+par(oma=c(2,2,1,2))
+scatterplotMatrix(sdat,diagonal="boxplot",smoother=FALSE)
+```
+
+As figure \@ref(fig:scm) shows, `store_exp` has outliers. It is also easy to observe the pair relationship from the plot. `age` is negatively correlated with `online_trans` but positively correlated with `store_trans`.  It seems that older people tend to purchase from the local store. The amount of expense is positively correlated with income. Scatterplot matrix like this can reveal lots of information before modeling.
+
+In addition to visualization, there are some statistical methods to define outliers, such as the commonly used Z-score. The Z-score for variable $\mathbf{Y}$ is defined as:
+
+$$Z_{i}=\frac{Y_{i}-\bar{Y}}{s}$$
+
+where $\bar{Y}$ and $s$ are mean and standard deviation for $Y$. Z-score is a measurement of the distance between each observation and the mean. This method may be misleading, especially when the sample size is small. Iglewicz and Hoaglin proposed to use the modified Z-score to determine the outlier[@mad1]：
+
+## Python Computing
+
+**Environmental Setup**
+
+```python
+from IPython.core.interactiveshell import InteractiveShell
+InteractiveShell.ast_node_interactivity = "all"
+
+import numpy as np
+import scipy as sp
+import pandas as pd
+import math
+
+from sklearn.preprocessing import Imputer
+from sklearn.preprocessing import StandardScaler
+
+from pandas.plotting import scatter_matrix
+import matplotlib.pyplot as plt
+```
+
+### Data Cleaning
