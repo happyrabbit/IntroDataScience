@@ -209,7 +209,9 @@ rsq<-melt(rsq,id.vars="Noise",measure.vars=c("rsq_linear","rsq_pls","rsq_mars","
 rsq<-read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/ResponseError.csv")
 ```
 
-```{r error, fig.cap= "Test set $R^2$ profiles for income models when measurement system noise increases. rsq_linear: linear regression, rsq_pls: Partial Least Square, rsq_mars: Multiple Adaptive Regression Spline Regression, rsq_svm: Support Vector Machine，rsq_rf: Random Forest", out.width='80%', fig.asp=.75, fig.align='center'}
+(ref:error-cap)  Test set $R^2$ profiles for income models when measurement system noise increases. `rsq_linear`: linear regression, `rsq_pls`: Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
+
+```{r error, fig.cap= "(ref:error-cap)", out.width="80%", fig.asp=.75, fig.align="center"}
 
 library(ggplot2)
 ggplot(data=rsq, aes(x=Noise, y=value, group=variable, colour=variable)) +
@@ -217,3 +219,78 @@ ggplot(data=rsq, aes(x=Noise, y=value, group=variable, colour=variable)) +
     geom_point()+
   ylab("R2") 
 ```
+
+Fig. \@ref(fig:error) shows that:
+
+All model performance decreases sharply with increasing noise intensity. To better anticipate model performance, it helps to understand the way variable is measured. It is something need to make clear at the beginning of an analytical project. A data scientist should be aware of the quality of the data in the database. For data from the clients, it is an important to understand the quality of the data by communication.
+
+More complex model is not necessarily better. The best model in this situation is MARS, not random forests or SVM. Simple linear regression and PLS perform the worst when noise is low. MARS is more complicated than the linear regression and PLS, but it is simpler and easier to explain than random forest and SVM.
+
+When noise increases to a certain extent, the potential structure becomes vaguer, and complex random forest model starts to fail. When the systematic measurement error is significant, a more straightforward but not naive model may be a better choice. It is always a good practice to try different models, and select the simplest model in the case of similar performance. Model evaluation and selection represent the career "maturity" of a data scientist.
+
+### Measurement Error in the Independent Variables
+
+The traditional statistical model usually assumes that the measurement of the independent variable has no error which is not possible in practice. Considering the error in the independent variables is necessary. The impact of the error depends on the following factors: (1) the magnitude of the randomness; (2) the importance of the corresponding variable in the model, and (3) the type of model used. Use variable `online_exp` as an example. The approach is similar to the previous section. Add varying degrees of noise and see its impact on the model performance. We add the following different levels of noise (0 to 3 times the standard deviation) to`online_exp`:
+
+$$\sigma_{0} \times (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0)$$
+
+where $\sigma_{0}$ is the standard error of `online_exp`.
+
+```r
+noise<-matrix(rep(NA,7*nrow(sim.dat)),nrow=nrow(sim.dat),ncol=7)
+for (i in 1:nrow(sim.dat)){
+noise[i,]<-rnorm(7,rep(0,7),sd(sim.dat$online_exp)*seq(0,3,by=0.5))
+}
+```
+
+Likewise, we examine the effect of noise intensity on different models ($R^2$). The models with complexity from low to high are: ordinary linear regression, partial least square regression(PLS), multivariate adaptive regression spline (MARS), support vector machine (SVM, the Kernel function is radial basis function), and random forest. The code is similar as before so not shown here.
+
+```{r,echo=FALSE}
+rsq<-read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/VariableError.csv")
+```
+
+(ref:errorvariable-cap)  Test set  $R^2$  profiles for income models when noise in `online_exp` increases. `rsq_linear` : linear regression, `rsq_pls` : Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
+
+```{r errorvariable, fig.cap="(ref:errorvariable-cap)", out.width='80%', fig.asp=.75, fig.align='center', echo=FALSE}
+library(ggplot2)
+ggplot(data=rsq, aes(x=Noise, y=value, group=variable, colour=variable)) +
+    geom_line() +
+    geom_point()+
+  ylab("R2") 
+```
+
+Comparing Fig. \@ref(fig:errorvariable) and Fig. \@ref(fig:error), the influence of the two types of error is very different. The error in response cannot be overcome for any model, but it is not the case for the independent variables. Imagine an extreme case, if `online_exp` is completely random, that is, no information in it, the impact on the performance of random forest and support vector machine is marginal. Linear regression and PLS still perform similarly. With the increase of noise, the performance starts to decline faster. To a certain extent, it becomes steady.  In general, if an independent variable contains error, other variables associated with it can compensate to some extent. 
+
+## Data Splitting and Resampling
+
+Those highly adaptable models can model complex relationships. However, they tend to overfit which leads to the poor prediction by learning too much from the data. It means that the model is susceptible to the specific sample used to fit it. When future data is not exactly like the past data, the model prediction may have big mistakes. A simple model like ordinary linear regression tends instead to underfit which leads to a bad prediction by learning too little from the data. It systematically over-predicts or under-predicts the data regardless of how well future data resemble past data. Without evaluating models, the modeler will not know about the problem before the future samples. Data splitting and resampling are fundamental techniques to build sound models for prediction. 
+
+_Data splitting_ is to put part of the data aside as testing set (or Hold-outs, out of bag samples) and use the rest for model training. Training samples are also called in-sample. Model performance metrics evaluated using in-sample are retrodictive, not predictive. 
+
+The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
+
+- What is the monthly sales of a product in 2015? 
+- What is the number of visits to our site in the past month?  
+- What is the sales difference in 2015 for two different product designs? 
+
+There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
+
+
+Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimizing value. Tuning parameters often control the complexity of the model. Poor choice for the values can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
+
+Since to get reasonable precision of the performance values on a single test set, the size of the test set may need to be large. So more often, people will instead resample the training set. _Data resampling_ operates similarly: use a subset of samples to fit a model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
+
+-  Define a set of candidate values for tuning parameter(s)
+    - For each candidate value in the set
+        - Resample data
+        - Fit model
+        - Predict hold-out
+        - Calculate performance
+- Aggregate the results
+- Determine the final tuning parameter
+- Refit the model with the entire training set
+
+![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
+
+
+We have outlined above the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. 
