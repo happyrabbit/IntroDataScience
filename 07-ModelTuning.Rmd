@@ -37,25 +37,30 @@ E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2} & = & E\left(f(\mathbf{X})-E[\hat{f}(\m
 
 The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $Var (\hat{f}(\mathbf{X}))$. To minimize the systematic error, we need to minimize both. The bias represents the error caused by the model's approximation of the reality, i.e., systematic relation, which may be very complex. For example, linear regression assumes a linear relationship between the predictors and the response, but rarely is there a perfect linear relationship in real life. So linear regression is more likely to have a high bias.
 
-To explore bias and variance, let's begin with a simple simulation. We will simulate a data with a non-linear relationship and fit different models on it. 
+To explore bias and variance, let's begin with a simple simulation. We will simulate a data with a non-linear relationship and fit different models on it. An intuitive way to show these is to compare the plots of various models. 
 
-The relationship between $x$ and $f(x)$ in the following figure is non-linear. Therefore, despite a large sample size, linear regression can not give the accurate prediction. In other words, in this case, the prediction of the linear regression model has a high bias.
+The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear.  
 
 ```{r}
-library(grid)
-library(lattice)
-library(ggplot2)
 source("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/R/multiplot.r")
 # randomly simulate some non-linear samples
 x=seq(1,10,0.01)*pi
 e=rnorm(length(x),mean=0,sd=0.2)
 fx<-sin(x)+e+sqrt(x)
 dat=data.frame(x,fx)
+```
+
+Then fit a simple linear regression on these data:
+
+```{r linearbias, fig.cap= "High bias regression", out.width="80%", fig.asp=.75, fig.align="center"}
 # plot fitting result
+library(ggplot2)
 ggplot(dat,aes(x,fx))+ 
   geom_point() +
   geom_smooth(method = "lm", se = FALSE)
 ```
+
+Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
 
 The estimated parameters will be different for the different training data. Intuitively, the estimated variance indicates that if we fit the same model with different data sets, how much the estimated results will change. Ideally, the change is small. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. The Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained on different samples. 
 
