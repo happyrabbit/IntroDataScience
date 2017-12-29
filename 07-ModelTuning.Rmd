@@ -68,7 +68,7 @@ Since the estimated parameters will be somewhat different for the different samp
 
 Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
 
-```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center"}
+```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center", message=FALSE}
 ggplot(dat,aes(x,fx))+geom_smooth(span = 0.03)
 ```
 
