@@ -52,7 +52,7 @@ dat=data.frame(x,fx)
 
 Then fit a simple linear regression on these data:
 
-```{r linearbias, fig.cap= "High bias regression", out.width="80%", fig.asp=.75, fig.align="center"}
+```{r linearbias, fig.cap= "High bias model", out.width="80%", fig.asp=.75, fig.align="center"}
 # plot fitting result
 library(ggplot2)
 ggplot(dat,aes(x,fx))+ 
@@ -62,15 +62,17 @@ ggplot(dat,aes(x,fx))+
 
 Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
 
-The estimated parameters will be different for the different training data. Intuitively, the estimated variance indicates that if we fit the same model with different data sets, how much the estimated results will change. Ideally, the change is small. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. The Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained on different samples. 
 
-The blue curve in the figure below is obtained by fitting the above nonlinear observations by a smoothing method, which is highly flexible and can fit the current data tightly:
 
-```{r}
+Since the estimated parameters will be somewhat different for the different samples, there is the variance of estimates. Intuitively, it gives you some sense that if we fit the same model with different samples (presumably, they are from the same population), how much will the estimates change. Ideally, the change is trivial. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. To overcome that problem, the Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained from different samples. 
+
+Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
+
+```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center"}
 ggplot(dat,aes(x,fx))+geom_smooth(span = 0.03)
 ```
 
-However, this method has a high variance, and if we simulate different subsets of the sample, the result curve will change significantly:
+The resulting plot (Fig. \@ref(fig:linearvar)) indicates the smoothing method fit the data much better so it has a much smaller bias. However, this method has a high variance. If we simulate different subsets of the sample, the result curve will change significantly:
 
 ```{r, warning=FALSE, message=FALSE}
 # set random seed
