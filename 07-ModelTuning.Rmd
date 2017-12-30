@@ -62,8 +62,6 @@ ggplot(dat,aes(x,fx))+
 
 Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
 
-
-
 Since the estimated parameters will be somewhat different for the different samples, there is the variance of estimates. Intuitively, it gives you some sense that if we fit the same model with different samples (presumably, they are from the same population), how much will the estimates change. Ideally, the change is trivial. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. To overcome that problem, the Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained from different samples. 
 
 Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
@@ -97,7 +95,7 @@ p4=ggplot(dat4,aes(x4,fx4))+geom_smooth(span = 0.03)
 multiplot(p1,p2,p3,p4,cols=2)
 ```
 
-Fitting the linear model using the same four subsets, the result barely changes:
+The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
 
 ```{r,warning=FALSE}
 p1=ggplot(dat1,aes(x1,fx1))+ 
