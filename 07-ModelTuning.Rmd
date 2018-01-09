@@ -121,9 +121,10 @@ multiplot(p1,p2,p3,p4,cols=2)
 
 In general, the variance ($Var(\hat{f}(\mathbf{X}))$) **increases** and the bias ($Bias(\hat{f}(\mathbf{X}))$) **decreases** as the model flexibility increases. Variance and bias together determine the systematic error. As we increase the flexibility of the model, at first the rate at which $Bias(\hat{f}(\mathbf{X}))$ decreases is faster than $Var (\hat{f} (\mathbf{X}))$, so the MSE decreases. However, to some degree, higher flexibility has little effect on $Bias(\hat{f}(\mathbf{X}))$ but $Var(\hat{f} (\mathbf{X}))$ increases significantly, so the MSE increases. 
 
+
 ### Measurement Error in the Response
 
-The random error ($\mathbf{\epsilon}$) reflects the measurement error in the response.  This part of the error is irreducible, and so it makes the root mean square error (RMSE) and $R^2$ have the corresponding upper and lower limits. RMSE and $R^2$ are commonly used performance measures for the regression model which we will talk in more detail later.  Therefore, the random error term not only represents the part of fluctuations the model cannot explain but also contains measurement error in the response variables. Section 20.2 of Applied Predictive Modeling [@APM] has an example that shows the effect of the measurement error in the response variable on the model performance (RMSE and $R^2$). 
+The measurement error in the response contributes to the random error ($\mathbf{\epsilon}$).  This part of the error is irreducible if you change the data collection mechanism, and so it makes the root mean square error (RMSE) and $R^2$ have the corresponding upper and lower limits. RMSE and $R^2$ are commonly used performance measures for the regression model which we will talk in more detail later.  Therefore, the random error term not only represents the part of fluctuations the model cannot explain but also contains measurement error in the response variables. Section 20.2 of Applied Predictive Modeling [@APM] has an example that shows the effect of the measurement error in the response variable on the model performance (RMSE and $R^2$). 
 
 The authors increased the error in the response proportional to a base level error which was gotten using the original data without introducing extra noise.  Then fit a set of models repeatedly using the "contaminated" data sets to study the change of $RMSE$ and $R^2$ as the level of noise. Here we use clothing consumer data for a similar illustration. Suppose many people do not want to disclose their income and so we need to use other variables to establish a model to predict income. We set up the following model:
 
@@ -294,10 +295,9 @@ The traditional business intelligence usually handles data description. Answer s
 
 There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
 
+Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimized value. Tuning parameters often control the complexity of the model. A poor choice can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
 
-Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimizing value. Tuning parameters often control the complexity of the model. Poor choice for the values can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
-
-Since to get reasonable precision of the performance values on a single test set, the size of the test set may need to be large. So more often, people will instead resample the training set. _Data resampling_ operates similarly: use a subset of samples to fit a model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
+To get a reasonable precision of the performance based on a single test set, the size of the test set may need to be large. So a conventional approach is to use a subset of samples to fit the model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
 
 -  Define a set of candidate values for tuning parameter(s)
     - For each candidate value in the set
@@ -307,9 +307,6 @@ Since to get reasonable precision of the performance values on a single test set
         - Calculate performance
 - Aggregate the results
 - Determine the final tuning parameter
-- Refit the model with the entire training set
+- Refit the model with the entire data set
 
 ![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
-
-
-We have outlined above the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. 
