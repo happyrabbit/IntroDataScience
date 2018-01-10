@@ -1,0 +1,87 @@
+---
+title: "Case Study: Customer Retention"
+author: '[Hui Lin](http://scientistcafe.com)'
+date: "2017/11/29 @ ASA"
+output:
+  slidy_presentation:
+    footer: http://scientistcafe.com
+  ioslides_presentation: default
+  beamer_presentation: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Outline
+
+- General context without going into business details
+- Follow the data science project circle
+- Elaborate the technical parts
+
+## Question
+
+- What is the likelihood a customer will purchase?
+- What are the key drivers?
+
+Clarification questions:
+
+- Who are our customers?
+- Are there different segments of customers?
+- What is a purchase?  
+- How far ahead do we need to predict?
+- What are the predictors? 
+- What is the quality of the data?
+- Where are different data sets located?
+- ...
+
+
+## Data Preprocessing
+
+- Cleaning
+- Missing values
+- Transformation
+    - Categorical
+    - 0/1
+    - percentage 
+    - large positive number 
+    - counts
+    - $x_{ij}^{*} = \frac{x_{ij} - quantile(x_{.j}, 0.01)}{quantile(x_{.j, 0.99})- quantile(x_{.j}, 0.01)}$
+
+## Model 
+
+- Multivariate logistic regression
+    - Problems: quasi-complete-separation and significane based variable selection
+    - Solution: add penalty
+
+- Lasso: weighted L1-norm penalty [Tibshirani 1996]
+    - $\hat{\beta}_{\lambda}=argmin_{\beta}(\parallel\mathbf{Y-X}\beta\parallel_{2}^{2}+\lambda\Sigma_{j=1}^{p}|\beta_{j}|)$
+    - Advantage: stabilize the estimation, also a variable selection tool
+    - Limitation: only selects individual dummy variables, the estimates are affected by the way dummy variables are encoded (M. Yuan and Y. Lin, Model selection and estimation in regression with grouped variables, J. R. Stat. Soc. Ser. B Stat. Methodol. 68 (2007), pp.49-67)
+    
+- Group Lasso Logistic Regression
+    
+    $$S_{\lambda}(\mathbf{\beta})=-l(\mathbf{\beta})+\lambda\Sigma_{g=1}^{G}\sqrt{df_{g}}\parallel\mathbf{\beta_{g}}\parallel_{2}$$
+
+where $l(\mathbf{\beta})$ is log-likelihood:
+
+  $$\Sigma_{i=1}^{n}\{y_{i}\eta_{\beta}(\mathbf{x_{i}})-log[1+exp(\eta_{\beta}(\mathbf{x_{i}}))]\}$$
+
+## Model Training and Testing
+
+- Maximize AUC
+- Grid of 148 values $${0.96\lambda_{max},0.96^{2}\lambda_{max},\dots,0.96^{148}\lambda_{max}}$$ 
+
+where 
+
+$$\lambda_{max}=max_{g\in {1,\dots,G}}{\frac{1}{s(df_{g})}\parallel \mathbf{x_{g}^{T}(y-\bar{y})}\parallel_{2}}$$
+
+## Model Comparison
+
+- Traditional Stepwise Regression
+- Random Forest
+- SVM
+- C4.5
+- Neural Network
+
+> Essentially, all models are wrong, but some are useful.
