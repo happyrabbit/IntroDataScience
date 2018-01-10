@@ -310,3 +310,45 @@ To get a reasonable precision of the performance based on a single test set, the
 - Refit the model with the entire data set
 
 ![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
+
+The above is an outline of the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. Ideally, we should evaluate model using samples that were not used to build or fine-tune the model. So it provides an unbiased sense of model effectiveness. When the sample size is large, it is a good practice to set aside part of the samples to evaluate the final model. People use "training" data to indicate samples used to fit or fine-tune the model and "test" or "validation" data set is used to validate performance. 
+
+The first decision to make for data splitting is to decide the proportion of data in the test set. There are two factors to consider here: (1) sample size; (2) computation intensity. If the sample size is large enough which is the most common situation according to my experience, you can try to use 20%, 30% and 40% of the data as the test set, and see which one works the best. If the model is computationally intense, then you may consider starting from a smaller sample of data to train the model hence will have a higher portion of data in the test set.  Depending on how it performs, you may need to increase the training set. If the sample size is small, you can use cross-validation or bootstrap which is the topic in the next section.  
+
+The next decision is to decide which samples are in the test set. There is a desire to make the training and test sets as similar as possible. A simple way is to split data by random sampling which, however, does not control for any of the data attributes, such as the percentage of the retained customer in the data. So it is possible that the distribution of outcomes is substantially different between the training and test sets. There are three main ways to split the data that account for the similarity of resulted data sets. We will describe the three approaches using the clothing company customer data as examples.
+
+(1) Divide data according to the outcome variable 
+
+Assume the outcome variable is customer segment (column `segment`) and we decide to use 80% as training and 20% test. The goal is to make the proportions of the categories in the two sets as similar as possible. The `createDataPartition()` function in `caret` will return a balanced splitting based on assigned variable.
+
+```{r}
+# load data
+sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+library(caret)
+# set random seed to make sure reproducibility
+set.seed(3456)
+trainIndex <- createDataPartition(sim.dat$segment, p = .8, list = FALSE, times = 1)
+head(trainIndex)
+```
+
+The `list = FALSE` in the call to `createDataPartition` is to return a data frame.  The `times = 1` tells R how many times you want to split the data. Here we only do it once, but you can repeat the splitting multiple times. In that case, the function will return multiple vectors indicating the rows to training/test.  You can set `times＝2` and rerun the above code to see the result.  Then we can use the returned indicator vector `trainIndex` to get training and test sets:
+
+```{r}
+# get training set
+datTrain <- sim.dat[ trainIndex,]
+# get test set
+datTest <- sim.dat[-trainIndex,]
+```
+
+According to the setting, there are 800 samples in the training set and 200 in test set. Let's check the distribution of the two sets:
+
+```{r}
+library(plyr)
+ddply(datTrain,"segment",summarise,count=length(segment),
+     percentage=round( length(segment)/nrow(datTrain),2))
+
+ddply(datTest,"segment",summarise,count=length(segment),
+      percentage=round(length(segment)/nrow(datTest),2))
+```
+
+The percentages are the same for these two sets. In practice, it is possible that the distributions are not exactly identical but should be close.
