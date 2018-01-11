@@ -25,6 +25,7 @@ options(
   htmltools.dir.version = FALSE, formatR.indent = 2,
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
+
 #bookdown::render_book("index.Rmd", "bookdown::gitbook")
 #bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```

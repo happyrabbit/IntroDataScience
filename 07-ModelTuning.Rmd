@@ -352,3 +352,57 @@ ddply(datTest,"segment",summarise,count=length(segment),
 ```
 
 The percentages are the same for these two sets. In practice, it is possible that the distributions are not exactly identical but should be close.
+
+(2) Divide data according to predictors  
+
+An alternative way is to split data based on the predictors.  The goal is to get a diverse subset from a dataset so that the sample is representative. In other words, we need an algorithm to identify the $n$ most diverse samples from a dataset with size $N$. However, the task is generally infeasible for non-trivial values of $n$ and $N$ [@willett].  And hence practicable approaches to dissimilarity-based selection involve approximate methods that are sub-optimal. A major class of algorithms split the data on _maximum dissimilarity sampling_.  The process starts from:
+
+- Initialize a single sample as starting test set
+- Calculate the dissimilarity between this initial sample and each remaining samples in the dataset
+- Add the most dissimilar unallocated sample to the test set
+
+To move forward, we need to define the dissimilarity between groups. Each definition results in a different version of the algorithm and hence a different subset. It is the same problem as in hierarchical clustering where you need to define a way to measure the distance between clusters. The possible approaches are to use minimum, maximum, sum of all distances, the average of all distances, etc. Unfortunately, there is not a single best choice, and you may have to try multiple methods and check the resulted sample sets. R users can implement the algorithm using `maxDissim()` function from `caret` package. The `obj` argument is to set the definition of dissimilarity. Refer to the help documentation for more details (`?maxDissim`).
+
+Let's use two variables (`age` and `income`) from the customer data as an example to illustrate how it works in R and compare maximum dissimilarity sampling with random sampling.
+
+```{r, message=F}
+library(lattice)
+# select variables
+testing<-subset(sim.dat,select=c("age","income" ))
+```
+
+Random select 5 samples as initial subset (`start`) , the rest will be in `samplePool`: 
+
+```{r}
+set.seed(5)
+# select 5 random samples
+startSet <- sample(1:dim(testing)[1], 5)
+start <- testing[startSet,]
+# save the rest in data frame "samplePool"
+samplePool <- testing[-startSet,]
+```
+
+Use `maxDissim()` to select another 5 samples from `samplePool` that are as different as possible with the initical set `start`:
+
+```{r}
+selectId <- maxDissim(start, samplePool,obj = minDiss, n = 5)
+minDissSet <-samplePool[selectId, ]
+```
+
+The `obj = minDiss` in the above code tells R to use minimum dissimilarity to define the distance between groups.  Next, random select 5 samples from `samplePool` in data frame `RandomSet`: 
+
+```{r}
+selectId <- sample(1:dim(samplePool)[1], 5)
+RandomSet<-samplePool[selectId, ]
+```
+
+Plot the resulted set to compare different sampling methods:
+
+```{r maxdis, fig.cap='Compare Maximum Dissimilarity Sampling with  Random Sampling', out.width='80%', fig.asp=.75, fig.align='center'}
+start$group<-rep("start",nrow(start))
+minDissSet $group<-rep("Maximum Dissimilarity Sampling",nrow(minDissSet))
+RandomSet$group<-rep("Random Sampling",nrow(RandomSet))
+xyplot(age~income,data=rbind(start, minDissSet, RandomSet),grid = TRUE,
+       group = group, auto.key = TRUE
+)
+```
