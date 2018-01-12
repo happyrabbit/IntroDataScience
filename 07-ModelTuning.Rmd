@@ -50,10 +50,10 @@ The code below simulates one predictor (`x`) and one response variable (`fx`). T
 ```{r}
 source("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/R/multiplot.r")
 # randomly simulate some non-linear samples
-x=seq(1,10,0.01)*pi
-e=rnorm(length(x),mean=0,sd=0.2)
-fx<-sin(x)+e+sqrt(x)
-dat=data.frame(x,fx)
+x = seq(1, 10, 0.01) * pi
+e = rnorm(length(x), mean = 0, sd = 0.2)
+fx <- sin(x) + e + sqrt(x)
+dat = data.frame(x, fx)
 ```
 
 Then fit a simple linear regression on these data:
@@ -61,9 +61,7 @@ Then fit a simple linear regression on these data:
 ```{r linearbias, fig.cap= "High bias model", out.width="80%", fig.asp=.75, fig.align="center"}
 # plot fitting result
 library(ggplot2)
-ggplot(dat,aes(x,fx))+ 
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
+ggplot(dat, aes(x, fx)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
 ```
 
 Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
@@ -73,7 +71,7 @@ Since the estimated parameters will be somewhat different for the different samp
 Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
 
 ```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center", message=FALSE}
-ggplot(dat,aes(x,fx))+geom_smooth(span = 0.03)
+ggplot(dat, aes(x, fx)) + geom_smooth(span = 0.03)
 ```
 
 The resulting plot (Fig. \@ref(fig:linearvar)) indicates the smoothing method fit the data much better so it has a much smaller bias. However, this method has a high variance. If we simulate different subsets of the sample, the result curve will change significantly:
@@ -81,42 +79,37 @@ The resulting plot (Fig. \@ref(fig:linearvar)) indicates the smoothing method fi
 ```{r, warning=FALSE, message=FALSE}
 # set random seed
 set.seed(2016)
-# sample part of the data to fit model
-# sample 1
-idx1=sample(1:length(x),100)
-dat1=data.frame(x1=x[idx1],fx1=fx[idx1])
-p1=ggplot(dat1,aes(x1,fx1))+geom_smooth(span = 0.03)
+# sample part of the data to fit model sample 1
+idx1 = sample(1:length(x), 100)
+dat1 = data.frame(x1 = x[idx1], fx1 = fx[idx1])
+p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(span = 0.03)
 # sample 2
-idx2=sample(1:length(x),100)
-dat2=data.frame(x2=x[idx2],fx2=fx[idx2])
-p2=ggplot(dat2,aes(x2,fx2))+geom_smooth(span = 0.03)
+idx2 = sample(1:length(x), 100)
+dat2 = data.frame(x2 = x[idx2], fx2 = fx[idx2])
+p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(span = 0.03)
 # sample 3
-idx3=sample(1:length(x),100)
-dat3=data.frame(x3=x[idx3],fx3=fx[idx3])
-p3=ggplot(dat3,aes(x3,fx3))+geom_smooth(span = 0.03)
+idx3 = sample(1:length(x), 100)
+dat3 = data.frame(x3 = x[idx3], fx3 = fx[idx3])
+p3 = ggplot(dat3, aes(x3, fx3)) + geom_smooth(span = 0.03)
 # sample 4
-idx4=sample(1:length(x),100)
-dat4=data.frame(x4=x[idx4],fx4=fx[idx4])
-p4=ggplot(dat4,aes(x4,fx4))+geom_smooth(span = 0.03)
-multiplot(p1,p2,p3,p4,cols=2)
+idx4 = sample(1:length(x), 100)
+dat4 = data.frame(x4 = x[idx4], fx4 = fx[idx4])
+p4 = ggplot(dat4, aes(x4, fx4)) + geom_smooth(span = 0.03)
+multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
 The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
 
 ```{r,warning=FALSE}
-p1=ggplot(dat1,aes(x1,fx1))+ 
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
-p2=ggplot(dat2,aes(x2,fx2))+ 
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
-p3=ggplot(dat3,aes(x3,fx3))+ 
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
-p4=ggplot(dat4,aes(x4,fx4))+ 
-  geom_point() +
-  geom_smooth(method = "lm", se = FALSE)
-multiplot(p1,p2,p3,p4,cols=2)
+p1 = ggplot(dat1, aes(x1, fx1)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p2 = ggplot(dat2, aes(x2, fx2)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p3 = ggplot(dat3, aes(x3, fx3)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p4 = ggplot(dat4, aes(x4, fx4)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
 In general, the variance ($Var(\hat{f}(\mathbf{X}))$) **increases** and the bias ($Bias(\hat{f}(\mathbf{X}))$) **decreases** as the model flexibility increases. Variance and bias together determine the systematic error. As we increase the flexibility of the model, at first the rate at which $Bias(\hat{f}(\mathbf{X}))$ decreases is faster than $Var (\hat{f} (\mathbf{X}))$, so the MSE decreases. However, to some degree, higher flexibility has little effect on $Bias(\hat{f}(\mathbf{X}))$ but $Var(\hat{f} (\mathbf{X}))$ increases significantly, so the MSE increases. 
@@ -131,15 +124,16 @@ The authors increased the error in the response proportional to a base level err
 ```{r}
 # load data
 sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv ")
-ymad<-mad(na.omit(sim.dat$income))
+ymad <- mad(na.omit(sim.dat$income))
 # calculate z-score
-zs<-(sim.dat$income-mean(na.omit(sim.dat$income)))/ymad
-# which(na.omit(zs>3.5)): identify outliers
-# which(is.na(zs)): identify missing values
-idex<-c(which(na.omit(zs>3.5)),which(is.na(zs)))
+zs <- (sim.dat$income - mean(na.omit(sim.dat$income)))/ymad
+# which(na.omit(zs>3.5)): identify outliers which(is.na(zs)):
+# identify missing values
+idex <- c(which(na.omit(zs > 3.5)), which(is.na(zs)))
 # delete rows with outliers and missing values
-sim.dat<-sim.dat[-idex,]
-fit<-lm(income~store_exp+online_exp+store_trans+online_trans,data=sim.dat)
+sim.dat <- sim.dat[-idex, ]
+fit <- lm(income ~ store_exp + online_exp + store_trans + online_trans, 
+    data = sim.dat)
 ```
 
 The output shows that without additional noise, the root mean square error (RMSE) of the model is `r as.integer (summary(fit)$sigma)`, $R^2$ is `r round(summary(fit)$adj.r.squared,2)`.  
@@ -149,9 +143,11 @@ Let's add various degrees of noise (0 to 3 times the RMSE) to the variable `inco
 $$ RMSE \times (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0) $$
 
 ```r
-noise<-matrix(rep(NA,7*nrow(sim.dat)),nrow=nrow(sim.dat),ncol=7)
-for (i in 1:nrow(sim.dat)){
-noise[i,]<-rnorm(7,rep(0,7),summary(fit)$sigma*seq(0,3,by=0.5))
+noise <- matrix(rep(NA, 7 * nrow(sim.dat)), nrow = nrow(sim.dat), 
+    ncol = 7)
+for (i in 1:nrow(sim.dat)) {
+    noise[i, ] <- rnorm(7, rep(0, 7), summary(fit)$sigma * seq(0, 
+        3, by = 0.5))
 }
 ```
 
@@ -159,11 +155,12 @@ We then examine the effect of noise intensity on $R^2$ for models with different
 
 ```r
 # fit ordinary linear regression
-rsq_linear<-rep(0,ncol(noise))
-for (i in 1:7){
-withnoise<-sim.dat$income+noise[,i]
-fit0<-lm(withnoise~store_exp+online_exp+store_trans+online_trans,data=sim.dat)
-rsq_linear[i]<-summary(fit0)$adj.r.squared
+rsq_linear <- rep(0, ncol(noise))
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- lm(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_linear[i] <- summary(fit0)$adj.r.squared
 }
 ```
 
@@ -172,72 +169,75 @@ PLS is a method of linearizing nonlinear relationships through hidden layers. It
 ```r
 # pls: conduct PLS and PCR
 library(pls)
-rsq_pls<-rep(0,ncol(noise))
+rsq_pls <- rep(0, ncol(noise))
 # fit PLS
-for (i in 1:7){
-withnoise<-sim.dat$income+noise[,i]
-fit0<-plsr(withnoise~store_exp+online_exp+store_trans+online_trans,data=sim.dat)
-rsq_pls[i]<-max(drop(R2(fit0, estimate = "train",intercept = FALSE)$val))
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- plsr(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_pls[i] <- max(drop(R2(fit0, estimate = "train", intercept = FALSE)$val))
 }
 ```
 
 ```r
-# earth: fit mars 
+# earth: fit mars
 library(earth)
-rsq_mars<-rep(0,ncol(noise))
-for (i in 1:7){
-withnoise<-sim.dat$income+noise[,i]
-fit0<-earth(withnoise~store_exp+online_exp+store_trans+online_trans,data=sim.dat)
-rsq_mars[i]<-fit0$rsq
+rsq_mars <- rep(0, ncol(noise))
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- earth(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_mars[i] <- fit0$rsq
 }
 ```
 
 ```r
 # caret: awesome package for tuning predictive model
 library(caret)
-rsq_svm<-rep(0,ncol(noise))
+rsq_svm <- rep(0, ncol(noise))
 # Need some time to run
-for (i in 1:7){
-idex<-which(is.na(sim.dat$income))
-withnoise<-sim.dat$income+noise[,i]
-trainX<-sim.dat[,c("store_exp","online_exp","store_trans","online_trans")]
-trainY<-withnoise
-fit0<-train(trainX,trainY,method="svmRadial",
-            tuneLength=15,
-            trControl=trainControl(method="cv"))
-rsq_svm[i]<-max(fit0$results$Rsquared)
+for (i in 1:7) {
+    idex <- which(is.na(sim.dat$income))
+    withnoise <- sim.dat$income + noise[, i]
+    trainX <- sim.dat[, c("store_exp", "online_exp", "store_trans", 
+        "online_trans")]
+    trainY <- withnoise
+    fit0 <- train(trainX, trainY, method = "svmRadial", tuneLength = 15, 
+        trControl = trainControl(method = "cv"))
+    rsq_svm[i] <- max(fit0$results$Rsquared)
 }
 ```
 
 ```r
 # randomForest: random forest model
 library(randomForest)
-rsq_rf<-rep(0,ncol(noise))
-# ntree=500 number of trees
-# na.action = na.omit  ignore missing value
-for (i in 1:7){
-withnoise<-sim.dat$income+noise[,i]
-fit0<-randomForest(withnoise~store_exp+online_exp+store_trans+online_trans,data=sim.dat,ntree=500,na.action = na.omit)
-rsq_rf[i]<-tail(fit0$rsq,1)
+rsq_rf <- rep(0, ncol(noise))
+# ntree=500 number of trees na.action = na.omit ignore
+# missing value
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- randomForest(withnoise ~ store_exp + online_exp + 
+        store_trans + online_trans, data = sim.dat, ntree = 500, 
+        na.action = na.omit)
+    rsq_rf[i] <- tail(fit0$rsq, 1)
 }
 library(reshape2)
-rsq<-data.frame(cbind(Noise=c(0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0),rsq_linear,rsq_pls,rsq_mars,rsq_svm,rsq_rf))
-rsq<-melt(rsq,id.vars="Noise",measure.vars=c("rsq_linear","rsq_pls","rsq_mars","rsq_svm","rsq_rf"))
+rsq <- data.frame(cbind(Noise = c(0, 0.5, 1, 1.5, 2, 2.5, 3), 
+    rsq_linear, rsq_pls, rsq_mars, rsq_svm, rsq_rf))
+rsq <- melt(rsq, id.vars = "Noise", measure.vars = c("rsq_linear", 
+    "rsq_pls", "rsq_mars", "rsq_svm", "rsq_rf"))
 ```
 
 ```{r,echo=FALSE}
-rsq<-read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/ResponseError.csv")
+rsq <- read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/ResponseError.csv")
 ```
 
 (ref:error-cap)  Test set $R^2$ profiles for income models when measurement system noise increases. `rsq_linear`: linear regression, `rsq_pls`: Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
 
 ```{r error, fig.cap= "(ref:error-cap)", out.width="80%", fig.asp=.75, fig.align="center"}
-
 library(ggplot2)
-ggplot(data=rsq, aes(x=Noise, y=value, group=variable, colour=variable)) +
-    geom_line() +
-    geom_point()+
-  ylab("R2") 
+ggplot(data = rsq, aes(x = Noise, y = value, group = variable, 
+    colour = variable)) + geom_line() + geom_point() + ylab("R2")
 ```
 
 Fig. \@ref(fig:error) shows that:
@@ -266,7 +266,7 @@ noise[i,]<-rnorm(7,rep(0,7),sd(sim.dat$online_exp)*seq(0,3,by=0.5))
 Likewise, we examine the effect of noise intensity on different models ($R^2$). The models with complexity from low to high are: ordinary linear regression, partial least square regression(PLS), multivariate adaptive regression spline (MARS), support vector machine (SVM, the Kernel function is radial basis function), and random forest. The code is similar as before so not shown here.
 
 ```{r,echo=FALSE}
-rsq<-read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/VariableError.csv")
+rsq <- read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/VariableError.csv")
 ```
 
 (ref:errorvariable-cap)  Test set  $R^2$  profiles for income models when noise in `online_exp` increases. `rsq_linear` : linear regression, `rsq_pls` : Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
@@ -323,11 +323,12 @@ Assume the outcome variable is customer segment (column `segment`) and we decide
 
 ```{r}
 # load data
-sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
 library(caret)
 # set random seed to make sure reproducibility
 set.seed(3456)
-trainIndex <- createDataPartition(sim.dat$segment, p = .8, list = FALSE, times = 1)
+trainIndex <- createDataPartition(sim.dat$segment, p = 0.8, list = FALSE, 
+    times = 1)
 head(trainIndex)
 ```
 
@@ -335,20 +336,20 @@ The `list = FALSE` in the call to `createDataPartition` is to return a data fram
 
 ```{r}
 # get training set
-datTrain <- sim.dat[ trainIndex,]
+datTrain <- sim.dat[trainIndex, ]
 # get test set
-datTest <- sim.dat[-trainIndex,]
+datTest <- sim.dat[-trainIndex, ]
 ```
 
 According to the setting, there are 800 samples in the training set and 200 in test set. Let's check the distribution of the two sets:
 
 ```{r}
 library(plyr)
-ddply(datTrain,"segment",summarise,count=length(segment),
-     percentage=round( length(segment)/nrow(datTrain),2))
+ddply(datTrain, "segment", summarise, count = length(segment), 
+    percentage = round(length(segment)/nrow(datTrain), 2))
 
-ddply(datTest,"segment",summarise,count=length(segment),
-      percentage=round(length(segment)/nrow(datTest),2))
+ddply(datTest, "segment", summarise, count = length(segment), 
+    percentage = round(length(segment)/nrow(datTest), 2))
 ```
 
 The percentages are the same for these two sets. In practice, it is possible that the distributions are not exactly identical but should be close.
@@ -368,7 +369,7 @@ Let's use two variables (`age` and `income`) from the customer data as an exampl
 ```{r, message=F}
 library(lattice)
 # select variables
-testing<-subset(sim.dat,select=c("age","income" ))
+testing <- subset(sim.dat, select = c("age", "income"))
 ```
 
 Random select 5 samples as initial subset (`start`) , the rest will be in `samplePool`: 
@@ -377,32 +378,31 @@ Random select 5 samples as initial subset (`start`) , the rest will be in `sampl
 set.seed(5)
 # select 5 random samples
 startSet <- sample(1:dim(testing)[1], 5)
-start <- testing[startSet,]
-# save the rest in data frame "samplePool"
-samplePool <- testing[-startSet,]
+start <- testing[startSet, ]
+# save the rest in data frame 'samplePool'
+samplePool <- testing[-startSet, ]
 ```
 
 Use `maxDissim()` to select another 5 samples from `samplePool` that are as different as possible with the initical set `start`:
 
 ```{r}
-selectId <- maxDissim(start, samplePool,obj = minDiss, n = 5)
-minDissSet <-samplePool[selectId, ]
+selectId <- maxDissim(start, samplePool, obj = minDiss, n = 5)
+minDissSet <- samplePool[selectId, ]
 ```
 
 The `obj = minDiss` in the above code tells R to use minimum dissimilarity to define the distance between groups.  Next, random select 5 samples from `samplePool` in data frame `RandomSet`: 
 
 ```{r}
 selectId <- sample(1:dim(samplePool)[1], 5)
-RandomSet<-samplePool[selectId, ]
+RandomSet <- samplePool[selectId, ]
 ```
 
 Plot the resulted set to compare different sampling methods:
 
 ```{r maxdis, fig.cap='Compare Maximum Dissimilarity Sampling with  Random Sampling', out.width='80%', fig.asp=.75, fig.align='center'}
-start$group<-rep("start",nrow(start))
-minDissSet $group<-rep("Maximum Dissimilarity Sampling",nrow(minDissSet))
-RandomSet$group<-rep("Random Sampling",nrow(RandomSet))
-xyplot(age~income,data=rbind(start, minDissSet, RandomSet),grid = TRUE,
-       group = group, auto.key = TRUE
-)
+start$group <- rep("Initial Set", nrow(start))
+minDissSet$group <- rep("Maximum Dissimilarity Sampling", nrow(minDissSet))
+RandomSet$group <- rep("Random Sampling", nrow(RandomSet))
+xyplot(age ~ income, data = rbind(start, minDissSet, RandomSet), grid = TRUE, 
+    group = group, auto.key = TRUE)
 ```
