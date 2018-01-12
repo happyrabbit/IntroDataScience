@@ -74,20 +74,20 @@
 <line x1='290.39' y1='322.38' x2='290.39' y2='78.01' style='stroke-width: 0.75; stroke: #E6E6E6;' clip-path='url(#cp3)' />
 <line x1='356.72' y1='322.38' x2='356.72' y2='78.01' style='stroke-width: 0.75; stroke: #E6E6E6;' clip-path='url(#cp3)' />
 <line x1='423.05' y1='322.38' x2='423.05' y2='78.01' style='stroke-width: 0.75; stroke: #E6E6E6;' clip-path='url(#cp3)' />
-<circle cx='449.18' cy='248.91' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
-<circle cx='323.18' cy='214.81' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
-<circle cx='259.07' cy='263.53' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
-<circle cx='80.51' cy='190.45' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
-<circle cx='385.57' cy='224.55' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
-<circle cx='137.62' cy='283.01' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
-<circle cx='144.10' cy='292.76' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
-<circle cx='156.58' cy='307.37' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
-<circle cx='193.00' cy='117.37' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
-<circle cx='156.96' cy='93.01' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
-<circle cx='143.96' cy='297.63' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
-<circle cx='149.59' cy='287.88' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
-<circle cx='146.24' cy='219.68' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
-<circle cx='194.65' cy='117.37' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
+<circle cx='156.96' cy='93.01' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
+<circle cx='143.96' cy='297.63' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
+<circle cx='149.59' cy='287.88' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
+<circle cx='146.24' cy='219.68' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
+<circle cx='194.65' cy='117.37' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp3)' />
+<circle cx='449.18' cy='248.91' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
+<circle cx='323.18' cy='214.81' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
+<circle cx='259.07' cy='263.53' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
+<circle cx='80.51' cy='190.45' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
+<circle cx='385.57' cy='224.55' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp3)' />
+<circle cx='137.62' cy='283.01' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
+<circle cx='144.10' cy='292.76' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
+<circle cx='156.58' cy='307.37' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
+<circle cx='193.00' cy='117.37' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp3)' />
 <defs>
   <clipPath id='cp4'>
     <rect x='0.00' y='0.00' width='504.00' height='378.00' />
@@ -95,9 +95,9 @@
 </defs>
 <rect x='54.70' y='78.01' width='420.29' height='244.37' style='stroke-width: 0.75;' clip-path='url(#cp4)' />
 <rect x='128.36' y='12.00' width='272.97' height='43.00' style='stroke-width: 0.75; stroke: none;' clip-path='url(#cp4)' />
-<g clip-path='url(#cp4)'><text x='137.26' y='24.89' style='font-size: 12.00pt; font-family: Arial;'>Maximum Dissimilarity Sampling</text></g>
-<g clip-path='url(#cp4)'><text x='137.26' y='39.23' style='font-size: 12.00pt; font-family: Arial;'>Random Sampling</text></g>
-<g clip-path='url(#cp4)'><text x='137.26' y='53.56' style='font-size: 12.00pt; font-family: Arial;'>start</text></g>
+<g clip-path='url(#cp4)'><text x='137.26' y='24.89' style='font-size: 12.00pt; font-family: Arial;'>Initial Set</text></g>
+<g clip-path='url(#cp4)'><text x='137.26' y='39.23' style='font-size: 12.00pt; font-family: Arial;'>Maximum Dissimilarity Sampling</text></g>
+<g clip-path='url(#cp4)'><text x='137.26' y='53.56' style='font-size: 12.00pt; font-family: Arial;'>Random Sampling</text></g>
 <circle cx='388.87' cy='19.17' r='2.40pt' style='stroke-width: 0.75; stroke: #0080FF;' clip-path='url(#cp4)' />
 <circle cx='388.87' cy='33.50' r='2.40pt' style='stroke-width: 0.75; stroke: #FF00FF;' clip-path='url(#cp4)' />
 <circle cx='388.87' cy='47.83' r='2.40pt' style='stroke-width: 0.75; stroke: #006400;' clip-path='url(#cp4)' />
