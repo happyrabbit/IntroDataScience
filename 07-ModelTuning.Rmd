@@ -406,3 +406,59 @@ RandomSet$group <- rep("Random Sampling", nrow(RandomSet))
 xyplot(age ~ income, data = rbind(start, minDissSet, RandomSet), grid = TRUE, 
     group = group, auto.key = TRUE)
 ```
+
+The points from maximum dissimilarity sampling are far away from the initial samples ( Fig. \@ref(fig:maxdis), while the random samples are much closer to the initial ones.  Why do we need a diverse subset? Because we hope the test set to be representative. If all test set samples are from respondents younger than 30, model performance on the test set has a high risk to fail to tell you how the model will perform on more general population.
+
+- Divide data according to time
+
+For time series data, random sampling is usually not the best way. There is an approach to divide data according to time-series. Since time series is beyond the scope of this book,  there is not much discussion here. For more detail of this method, see [@Hyndman]. We will use a simulated first-order autoregressive model [AR (1)] time-series data with 100 observations to show how to implement using the function `createTimeSlices ()` in the `caret` package. 
+
+```{r times, fig.cap='Divide data according to time', out.width='80%', fig.asp=.75, fig.align='center'}
+# simulte AR(1) time series samples
+timedata = arima.sim(list(order=c(1,0,0), ar=-.9), n=100)
+# plot time series
+plot(timedata, main=(expression(AR(1)~~~phi==-.9)))     
+```
+
+Fig. \@ref(fig:maxdis) shows 100 simulated time series observation. The goal is to make sure both training and test set to cover the whole period. 
+
+```{r}
+timeSlices <- createTimeSlices(1:length(timedata), 
+                   initialWindow = 36, horizon = 12, fixedWindow = T)
+str(timeSlices,max.level = 1)
+```
+
+There are three arguments in the above `createTimeSlices()`. 
+
+- `initialWindow`: The initial number of consecutive values in each training set sample
+- `horizon`: the number of consecutive values in test set sample
+- `fixedWindow`: if FALSE, all training samples start at 1
+
+The function returns two lists, one for the training set, the other for the test set. Let's look at the first training sample:
+
+```{r}
+# get result for the 1st training set
+trainSlices <- timeSlices[[1]]
+# get result for the 1st test set
+testSlices <- timeSlices[[2]]
+# check the index for the 1st training and test set
+trainSlices[[1]]
+testSlices[[1]]
+```
+
+The first training set is consist of sample 1-36 in the dataset (`initialWindow = 36`).  Then sample 37-48 are in the first test set ( `horizon = 12`). Type `head(trainSlices)` or `head(testSlices)` to check the later samples. If you are not clear about the argument `fixedWindow =`, try to change the setting to be `F` and check the change in `trainSlices` and `testSlices`. 
+
+Understand and implement data splitting is not difficult. But there are two things to note:
+ 
+1. The randomness in the splitting process will lead to uncertainty in performance measurement.
+2.  When the dataset is small, it can be too expensive to leave out test set. In this situation, if collecting more data is just not possible, the best shot is to use leave-one-out cross-validation which is in the next section.
+
+### Resampling
+
+You can consider resampling as repeated splitting. The basic idea is: use part of the data to fit model and then use the rest of data to calculate model performance. Repeat the process multiple times and aggregate the results. The differences in resampling techniques usually center around the ways to choose subsamples. There are two main reasons that we may need resampling:
+
+1. Estimate tuning parameters through resampling. Some examples of models with such parameters are Support Vector Machine (SVM), models including the penalty (LASSO) and random forest.
+
+2. For models without tuning parameter, such as ordinary linear regression and partial least square regression, the model fitting doesn't require resampling. But you can study the model stability through resampling.
+
+We will introduce three most common resampling techniques: k-fold cross-validation, repeated training/test splitting, and bootstrap.
