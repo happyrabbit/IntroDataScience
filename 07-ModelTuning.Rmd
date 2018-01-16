@@ -420,7 +420,7 @@ timedata = arima.sim(list(order=c(1,0,0), ar=-.9), n=100)
 plot(timedata, main=(expression(AR(1)~~~phi==-.9)))     
 ```
 
-Fig. \@ref(fig:maxdis) shows 100 simulated time series observation. The goal is to make sure both training and test set to cover the whole period. 
+Fig. \@ref(fig:times) shows 100 simulated time series observation. The goal is to make sure both training and test set to cover the whole period. 
 
 ```{r}
 timeSlices <- createTimeSlices(1:length(timedata), 
