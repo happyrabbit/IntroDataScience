@@ -285,6 +285,8 @@ Comparing Fig. \@ref(fig:errorvariable) and Fig. \@ref(fig:error), the influence
 
 Those highly adaptable models can model complex relationships. However, they tend to overfit which leads to the poor prediction by learning too much from the data. It means that the model is susceptible to the specific sample used to fit it. When future data is not exactly like the past data, the model prediction may have big mistakes. A simple model like ordinary linear regression tends instead to underfit which leads to a bad prediction by learning too little from the data. It systematically over-predicts or under-predicts the data regardless of how well future data resemble past data. Without evaluating models, the modeler will not know about the problem before the future samples. Data splitting and resampling are fundamental techniques to build sound models for prediction. 
 
+### Data Splitting
+
 _Data splitting_ is to put part of the data aside as testing set (or Hold-outs, out of bag samples) and use the rest for model training. Training samples are also called in-sample. Model performance metrics evaluated using in-sample are retrodictive, not predictive. 
 
 The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
@@ -446,7 +448,7 @@ trainSlices[[1]]
 testSlices[[1]]
 ```
 
-The first training set is consist of sample 1-36 in the dataset (`initialWindow = 36`).  Then sample 37-48 are in the first test set ( `horizon = 12`). Type `head(trainSlices)` or `head(testSlices)` to check the later samples. If you are not clear about the argument `fixedWindow =`, try to change the setting to be `F` and check the change in `trainSlices` and `testSlices`. 
+The first training set is consist of sample 1-36 in the dataset (`initialWindow = 36`).  Then sample 37-48 are in the first test set ( `horizon = 12`). Type `head(trainSlices)` or `head(testSlices)` to check the later samples. If you are not clear about the argument `fixedWindow`, try to change the setting to be `F` and check the change in `trainSlices` and `testSlices`. 
 
 Understand and implement data splitting is not difficult. But there are two things to note:
  
@@ -462,3 +464,19 @@ You can consider resampling as repeated splitting. The basic idea is: use part o
 2. For models without tuning parameter, such as ordinary linear regression and partial least square regression, the model fitting doesn't require resampling. But you can study the model stability through resampling.
 
 We will introduce three most common resampling techniques: k-fold cross-validation, repeated training/test splitting, and bootstrap.
+
+#### k-fold cross-validation
+
+k-fold cross-validation is to partition the original sample into $k$ equal size subsamples (folds). Use one of the $k$ folds to validate the model and the rest $k-1$ to train model. Then repeat the process $k$ times with each of the $k$ folds as the test set. Aggregate the results into a performance profile.  The following figure represents a  5-fold cross-validation example. 
+
+![5-fold cross-validation](http://scientistcafe.com/book/Figure/DivideData.png)
+
+The process of k-fold cross-validation is as follows:
+
+> 
+1. Partition the original sample into $k$ equal size folds
+2. for $i=1…k$
+     a. Use data other than fold $i$ to train the model $M_{i}$
+     b. Apply $M_{i}$ to predict fold $i$ to get $R_{i}$
+3. Aggregate the results $R_{i}\ i=1\dots k$ into a performance profile
+ 
