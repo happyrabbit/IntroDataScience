@@ -469,7 +469,7 @@ We will introduce three most common resampling techniques: k-fold cross-validati
 
 k-fold cross-validation is to partition the original sample into $k$ equal size subsamples (folds). Use one of the $k$ folds to validate the model and the rest $k-1$ to train model. Then repeat the process $k$ times with each of the $k$ folds as the test set. Aggregate the results into a performance profile.  The following figure represents a  5-fold cross-validation example. 
 
-![5-fold cross-validation](http://scientistcafe.com/book/Figure/DivideData.png)
+![5-fold cross-validation](images/cv5fold.png)
 
 The process of k-fold cross-validation is as follows:
 
@@ -479,7 +479,6 @@ The process of k-fold cross-validation is as follows:
      a. Use data other than fold $i$ to train the model $M_{i}$
      b. Apply $M_{i}$ to predict fold $i$ to get $R_{i}$
 3. Aggregate the results $R_{i}\ i=1\dots k$ into a performance profile
-
 
 It is a standard way to find the value of tuning parameter that gives you the best performance. It is also a way to study the variability of model performance. A special case of k-fold cross-validation is Leave One Out Cross Validation (LOOCV) where $k=1$. 
 When sample size is small, it is desired to use as many data to train the model. Most of the functions have default setting $k=10$. The choice is usually 5-10 in practice, but there is no standard rule. The more folds to use,  the more samples are used to fit model, and then the performance estimate is closer to the theoretical performance.  However, LOOCV has high computational cost since the number of interactions is the same as the sample size and each model fit uses a subset that is nearly the same size of the training set. On the other hand, when k is small (such as 2 or 3), the computation is more efficient, but the bias and uncertainty will increase.  When the sample size is big, the impact of $k$ becomes marginal.  
