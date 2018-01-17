@@ -518,4 +518,9 @@ Once know how to split the data, the repetition comes naturally.
 
 #### Bootstrap Methods
 
-Bootstrap is a powerful statistical tool (a little magic too). It can be used to analyze the uncertainty of parameter estimates [@bootstrap1986] quantitatively. For example, estimate the standard deviation of linear regression coefficients. The power of this method is that it can be easily applied to each model (to put it bluntly, there is a random sampling and fitting process of putting back the data repeatedly), and some models can hardly obtain the standard deviation by using the traditional statistical inference method And confidence interval. 
+Bootstrap is a powerful statistical tool (a little magic too). It can be used to analyze the uncertainty of parameter estimates [@bootstrap1986] quantitatively. For example, estimate the standard deviation of linear regression coefficients. The power of this method is that the concept is so simple that it can be easily applied to any model as long as the computation allows. However, you can hardly obtain the standard deviation for some models by using the traditional statistical inference. 
+
+Since it is with replacement, a sample can be selected multiple times, and the bootstrap sample size is the same as the original data. So for every bootstrap set, there are some left-out samples, which is also called "out-of-bag samples." The out-of-bag sample is used to evaluate the model. Efron points out that under normal circumstances [@efron1983], bootstrap estimates the error rate of the model with more certainty. On average, 63.2% of the sample spots appeared at least once in a bootstrap sample, so the estimation bias is similar to 2-fold cross-validation. As mentioned earlier, the smaller the number of folds, the larger the bias. Increasing the sample size will ease the problem. In general, bootstrap has larger bias and smaller uncertainty than cross-validation. Efron made improvements to the original bootstrap bias and came up the following 632-method:
+
+$$(0.632 × original bootstrap estimate) + (0.368 × apparent error rate)$$
+ 
