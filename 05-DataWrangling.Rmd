@@ -25,9 +25,9 @@ You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base
 
 1. `readr` functions do not convert strings to factors by default, are able to parse dates and times and can automatically determine the data types in each column. 
 
-1. The killing character, in my opinion, is that `readr` provides **progress bar**. What makes you feel worse than waiting is not knowing how long you have to wait. Without "progress bar" might be the No.1 reason that people break up with the one they have been dating.
+1. The killing character, in my opinion, is that `readr` provides **progress bar**. What makes you feel worse than waiting is not knowing how long you have to wait. 
 
-![](http://scientistcafe.com/book/Figure/prograssbar.png)
+![](images/prograssbar.png)
 
 The major functions of readr is to turn flat files into data frames:
 
@@ -259,13 +259,13 @@ dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
 Different from data frame, there are three arguments for data table:
 
 <center>
-![](http://scientistcafe.com/book/Figure/datable1.png)
+![](images/datable1.png)
 </center>
 
 It is analogous to SQL. You don't have to know SQL to learn data table. But experience with SQL will help you understand data table.  In SQL, you select column `j` (use command `SELECT`) for row `i` (using command `WHERE`).  `GROUP BY` in SQL will assign the variable to group the observations. 
 
 <center>
-![](http://scientistcafe.com/book/Figure/rSQL.png)
+![](images/rSQL.png)
 </center>
 
 Let's review our previous code:

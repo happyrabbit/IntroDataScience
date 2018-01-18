@@ -46,11 +46,11 @@ Python code: Ming Li
 | Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
 | Introduction | Hui Lin | 18-01-01 | draft version |  Scott I  |
-| Soft Skills for Data Scientists | Ming Li | ?? | draft version | |
-| Introduction to the data | Hui Lin; Ming Li | ?? |    |   |
+| Soft Skills for Data Scientists | Ming Li | ?? |  | |
+| Introduction to the data | Hui Lin |  |  draft version  |   |
 | Data Pre-processing | Hui Lin | 18-02-01 | draft version |  |
 | Data Wrangling | Hui Lin | 18-02-01 | draft version |  |
-| Measuring Performance | Hui Lin | 18-03-01|  | David B |
+| Measuring Performance | Hui Lin | 18-03-01|  just started | David B |
 | Model Tuning Technique| Hui Lin | 18-02-01| draft version  |  Alex S |
 | Feature Engineering | Hui Lin | 18-03-01 |  | Alex S|
 | Regression Models | Hui Lin | 18-04-01 |  | David B|
