@@ -51,7 +51,7 @@ Python code: Ming Li
 | Data Pre-processing | Hui Lin | 18-02-01 | draft version |  |
 | Data Wrangling | Hui Lin | 18-02-01 | draft version |  |
 | Measuring Performance | Hui Lin | 18-03-01|  | David B |
-| Model Tuning Technique| Hui Lin | 18-02-01| just started |  Alex S |
+| Model Tuning Technique| Hui Lin | 18-02-01| draft version  |  Alex S |
 | Feature Engineering | Hui Lin | 18-03-01 |  | Alex S|
 | Regression Models | Hui Lin | 18-04-01 |  | David B|
 | Regularization Methods | Hui Lin | 18-05-01|  |  |

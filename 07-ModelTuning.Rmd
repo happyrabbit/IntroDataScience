@@ -531,4 +531,6 @@ Pr{i\in B} & = & 1-\left(1-\frac{1}{N}\right)^{N}\\
 On average, 63.2% of the observations appeared at least once in a bootstrap sample, so the estimation bias is similar to 2-fold cross-validation. As mentioned earlier, the smaller the number of folds, the larger the bias. Increasing the sample size will ease the problem. In general, bootstrap has larger bias and smaller uncertainty than cross-validation. Efron came up the following ".632 estimator" to alleviate this bias:
 
 $$(0.632 × original\ bootstrap\ estimate) + (0.368 × apparent\ error\ rate)$$
- 
+
+The apparent error rate is the error rate when the data is used twice, both to fit the model and to check its accuracy and it is apparently over-optimistic. The modified bootstrap estimate reduces the bias but can be unstable with small samples size. This estimate can also be unduly optimistic when the model severely over-fits since the apparent error rate will be close to zero. Efron and Tibshirani [@b632plus] discuss another technique, called the “632+ method,” for adjusting the bootstrap estimates.
+
