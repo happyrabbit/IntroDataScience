@@ -423,3 +423,292 @@ system.time(topic<-data.table::fread("https://raw.githubusercontent.com/happyrab
 ```
 
 It is clear that `read_csv()` is much faster than `read.csv()`. `fread()` is a little faster than `read_csv()`. As the size increasing, the difference will become for significant. Note that `fread()` will read file as `data.table` by default. 
+
+
+### Summarize data 
+
+#### `apply()`, `lapply()` and `sapply()` in base R
+
+There are some powerful functions to summarize data in base R, such as `apply()`, `lapply()` and `sapply()`. They do the same basic things and are all from "apply" family: apply functions over parts of data. They differ in two important respects:
+
+1. the type of object they apply to
+1. the type of result they will return
+
+When do we use `apply()`? When we want to apply a function to margins of an array or matrix. That means our data need to be structured. The operations can be very flexible. It returns a vector or array or list of values obtained by applying a function to margins of an array or matrix.
+
+For example you can compute row and column sums for a matrix:
+
+```{r}
+## simulate a matrix
+x <- cbind(x1 =1:8, x2 = c(4:1, 2:5))
+dimnames(x)[[1]] <- letters[1:8]
+apply(x, 2, mean)
+col.sums <- apply(x, 2, sum)
+row.sums <- apply(x, 1, sum)
+```
+
+You can also apply other functions:
+
+```{r}
+ma <- matrix(c(1:4, 1, 6:8), nrow = 2)
+ma
+apply(ma, 1, table)  #--> a list of length 2
+apply(ma, 1, stats::quantile) # 5 x n matrix with rownames
+```
+
+Results can have different lengths for each call. This is a trickier example. What will you get? 
+
+```r
+## Example with different lengths for each call
+z <- array(1:24, dim = 2:4)
+zseq <- apply(z, 1:2, function(x) seq_len(max(x)))
+zseq         ## a 2 x 3 matrix
+typeof(zseq) ## list
+dim(zseq) ## 2 3
+zseq[1,]
+apply(z, 3, function(x) seq_len(max(x)))
+```
+
+- `lapply()` applies a function over a list, data.frame or vector and returns a list of the same length.
+- `sapply()` is a user-friendly version and wrapper of `lapply()`. By default it returns a vector, matrix or if  `simplify = "array"`, an array if appropriate. `apply(x, f, simplify = FALSE, USE.NAMES = FALSE)` is the same as `lapply(x, f)`. If `simplify=TRUE`, then it will return a `data.frame` instead of `list`. 
+
+Let's use some data with context to help you better understand the functions.
+
+- Get the mean and standard deviation of all numerical variables in the dataset.
+
+```{r}
+# Read data
+sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+# Get numerical variables
+sdat<-sim.dat[,!lapply(sim.dat,class)=="factor"]
+## Try the following code with apply() function
+## apply(sim.dat,2,class)
+## What is the problem?
+```
+
+The data frame `sdat` only includes numeric columns. Now we can go head and use `apply()` to get mean and standard deviation for each column:
+
+```{r}
+apply(sdat, MARGIN=2,function(x) mean(na.omit(x)))
+```
+
+Here we defined a function using ` function(x) mean(na.omit(x))`. It is a very simple function. It tells R to ignore the missing value when calculating the mean. ` MARGIN=2` tells R to apply the function to each column. It is not hard to guess what ` MARGIN=1` mean. The result show that the average online expense is much higher than store expense. You can also compare the average scores across different questions. The command to calculate standard deviation is very similar. The only difference is to change `mean()` to `sd()`:
+
+```{r}
+apply(sdat, MARGIN=2,function(x) sd(na.omit(x)))
+```
+
+Even the average online expense is higher than store expense, the standard deviation for store expense is much higher than online expense which indicates there is very likely some big/small purchase in store. We can check it quickly:
+
+```{r}
+summary(sdat$store_exp)
+summary(sdat$online_exp)
+```
+
+There are some odd values in store expense. The minimum value is -500 which is a wrong imputation which indicates that you should preprocess data before analyzing it. Checking those simple statistics will help you better understand your data. It then gives you some idea how to preprocess and analyze them. How about using `lapply()` and `sapply()`?
+
+Run the following code and compare the results:
+
+```r
+lapply(sdat, function(x) sd(na.omit(x)))
+sapply(sdat, function(x) sd(na.omit(x)))
+sapply(sdat, function(x) sd(na.omit(x)), simplify = FALSE)
+```
+
+### `dplyr` package
+
+`dplyr` provides a flexible grammar of data manipulation focusing on tools for working with data frames (hence the `d` in the name). It is faster and more friendly:
+
+- It identifies the most important data manipulations and make they easy to use from R
+- It performs faster for in-memory data by writing key pieces in C++ using `Rcpp`
+- The interface is the same for data frame, data table or database.
+
+We will illustrate the following functions in order: 
+
+1. Display
+1. Subset
+1. Summarize
+1. Create new variable
+1. Merge
+
+**Display**
+
+- `tbl_df()`: Convert the data to `tibble` which offers better checking and printing capabilities than traditional data frames. It will adjust output width according to fit the current window.
+
+```{r, message=FALSE, echo=FALSE}
+library(dplyr)
+```
+
+
+```r
+library(dplyr)
+tbl_df(sim.dat)
+```
+
+- `glimpse()`: This is like a transposed version of `tbl_df()`
+
+```r
+glimpse(sim.dat)
+```
+
+**Subset**
+
+Get rows with `income` more than 300000:
+
+```{r}
+library(magrittr)
+filter(sim.dat, income >300000) %>%
+  tbl_df()
+```
+
+Here we meet a new operator `%>%`. It is called "Pipe operator" which pipes a value forward into an expression or function call. What you get in the left operation will be the first argument or the only argument in the right operation.
+
+```r
+x %>% f(y) = f(x, y)
+y %>% f(x, ., z) = f(x, y, z )
+```
+It is an operator from `magrittr` which can be really beneficial. Look at the following code. Can you tell me what it does?
+
+```r
+ave_exp <- filter( 
+  summarise(
+    group_by( 
+      filter(
+        sim.dat, 
+        !is.na(income)
+      ), 
+      segment
+    ), 
+    ave_online_exp = mean(online_exp), 
+    n = n()
+  ), 
+  n > 200
+) 
+```
+
+Now look at the identical code using "`%>%`":
+
+```r
+ave_exp <- sim.dat %>% 
+ filter(!is.na(income)) %>% 
+ group_by(segment) %>% 
+ summarise( 
+   ave_online_exp = mean(online_exp), 
+   n = n() ) %>% 
+  filter(n > 200)
+```
+
+Isn't it much more straightforward now? Let's read it:
+
+1.    Delete observations from `sim.dat` with missing income values 
+2.    Group the data from step 1 by variable `segment`
+3.    Calculate mean of online expense for each segment and save the result as a new variable named `ave_online_exp`
+4.    Calculate the size of each segment and saved it as a new variable named `n`
+5.    Get segments with size larger than 200
+
+You can use `distinct()` to delete duplicated rows. 
+
+```r
+dplyr::distinct(sim.dat)
+```
+
+`sample_frac()` will randomly select some rows with a specified percentage. `sample_n()` can randomly select rows with a specified number.
+
+```r
+dplyr::sample_frac(sim.dat, 0.5, replace = TRUE) 
+dplyr::sample_n(sim.dat, 10, replace = TRUE) 
+```
+
+`slice()` will select rows by position:
+
+```r
+dplyr::slice(sim.dat, 10:15) 
+```
+
+It is equivalent to `sim.dat[10:15,]`. 
+
+`top_n()` will select the order top n entries:
+
+```r
+dplyr::top_n(sim.dat,2,income)
+```
+
+If you want to select columns instead of rows, you can use `select()`. The following are some sample codes:
+
+```r
+# select by column name
+dplyr::select(sim.dat,income,age,store_exp)
+
+# select columns whose name contains a character string
+dplyr::select(sim.dat, contains("_"))
+
+# select columns whose name ends with a character string
+# similar there is "starts_with"
+dplyr::select(sim.dat, ends_with("e"))
+
+# select columns Q1,Q2,Q3,Q4 and Q5
+select(sim.dat, num_range("Q", 1:5)) 
+
+# select columns whose names are in a group of names
+dplyr::select(sim.dat, one_of(c("age", "income")))
+
+# select columns between age and online_exp
+dplyr::select(sim.dat, age:online_exp)
+
+# select all columns except for age
+dplyr::select(sim.dat, -age)
+```
+
+**Summarize**
+
+A standard marketing problem is customer segmentation. It usually starts with designing survey and collecting data. Then run a cluster analysis on the data to get customer segments. Once we have different segments, the next is to understand how each group of customer look like by summarizing some key metrics. For example, we can do the following data aggregation for different segments of clothes customers.   
+
+```{r}
+sim.dat%>%
+  group_by(segment)%>%
+  summarise(Age=round(mean(na.omit(age)),0),
+      FemalePct=round(mean(gender=="Female"),2),
+      HouseYes=round(mean(house=="Yes"),2),
+      store_exp=round(mean(na.omit(store_exp),trim=0.1),0),
+      online_exp=round(mean(online_exp),0),
+      store_trans=round(mean(store_trans),1),
+      online_trans=round(mean(online_trans),1))
+```
+
+Now, let's peel the onion in order.
+
+The first line `sim.dat` is easy. It is the data you want to work on.  The second line `group_by(segment)` tells R that in the following steps you want to summarise by variable `segment`. Here we only summarize data by one categorical variable, but you can group by multiple variables, such as `group_by(segment, house)`.  The third argument `summarise` tells R the manipulation(s) to do. Then list the exact actions inside `summarise()` . For example,  ` Age=round(mean(na.omit(age)),0)` tell R the following things:
+
+1.    Calculate the mean of column `age` ignoring missing value for each customer segment
+2.    Round the result to the specified number of decimal places 
+3.    Store the result in a new variable named `Age`
+
+The rest of the command above is similar. In the end, we calculate the following for each segment:
+
+1.    `Age`: average age for each segment
+2.    `FemalePct`: percentage for each segment
+1.    `HouseYes`: percentage of people who own a house
+2.    `stroe_exp`: average expense in store
+3.    `online_exp`: average expense online
+4.    `store_trans`: average times of transactions in the store
+5.    `online_trans`: average times of online transactions 
+
+There is a lot of information you can extract from those simple averages.
+
+- Conspicuous: average age is about 40.  It is a group of middle-age wealthy people. 1/3 of them are female, and 2/3 are male. They buy regardless the price. Almost all of them own house (0.86).  It makes us wonder what is wrong with the rest 14%? 
+
+- Price: They are older people with average age 60. Nearly all of them own a house(0.94). They are less likely to purchase online (store_trans=6 while online_trans=3). It is the only group that is less likely to buy online.
+
+- Quality: The average age is 35. They are not way different with Conspicuous regarding age. But they spend much less. The percentages of male and female are similar. They prefer online shopping. More than half of them don't own a house (0.66).
+
+- Style: They are young people with average age 24. The majority of them are female (0.81). Most of them don't own a house (0.73). They are very likely to be digital natives and prefer online shopping.
+
+You may notice that Style group purchase more frequently online (`online_trans`) but the expense (`online_exp`) is not higher.  It makes us wonder what is the average expense each time, so you have a better idea about the price range of the group. 
+
+The analytical process is aggregated instead of independent steps. Current step shed new light on what to do next. Sometimes you also need to go back to fix something in the previous steps. For example, you may need to check those negative expense value.
+
+```{r}
+# apply function anyNA() to each column
+# you can also assign a function vector such as: c("anyNA","is.factor")
+dplyr::summarise_each(sim.dat, funs_(c("anyNA")))
+```
