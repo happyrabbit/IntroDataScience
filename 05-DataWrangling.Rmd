@@ -705,10 +705,37 @@ There is a lot of information you can extract from those simple averages.
 
 You may notice that Style group purchase more frequently online (`online_trans`) but the expense (`online_exp`) is not higher.  It makes us wonder what is the average expense each time, so you have a better idea about the price range of the group. 
 
-The analytical process is aggregated instead of independent steps. Current step shed new light on what to do next. Sometimes you also need to go back to fix something in the previous steps. For example, you may need to check those negative expense value.
+The analytical process is aggregated instead of independent steps. The current step will shed new light on what to do next. Sometimes you need to go back to fix something in the previous steps. Let's check average one-time online and instore purchase amounts:
+
+```{r}
+sim.dat%>%
+group_by(segment)%>%
+summarise(avg_online=round(sum(online_exp)/sum(online_trans),2),
+    avg_store=round(sum(store_exp)/sum(store_trans),2))
+```
+
+Price group has the lowest averaged one-time purchase. The Conspicuous group will pay the highest price. When we build customer profile in real life, we will also need to look at the survey summarization. You may be surprised how much information simple data manipulations can provide.
+
+Another comman task is to check which column has missing values. It requires the program to look at each column in the data. In this case you can use `summarise_all`: 
 
 ```{r}
 # apply function anyNA() to each column
 # you can also assign a function vector such as: c("anyNA","is.factor")
-dplyr::summarise_each(sim.dat, funs_(c("anyNA")))
+dplyr::summarise_all(sim.dat, funs_(c("anyNA")))
+```
+
+The above code returns a vector indicating if there is any value missing in each column. 
+
+**Create new variable**
+
+There are often situations where you need to create new variables. For example, adding online and store expense to get total expense. In this case, you will apply **window function** to the columns and return a column with the same length. `mutate()` can do it for you and append one or more new columns:
+
+```{r}
+dplyr::mutate(sim.dat, total_exp = store_exp + online_exp)
+```
+
+The above code sums up two columns and appends the result (`total_exp`) to `sim.dat`. Another similar function is `transmute()`. The difference is that `transmute()` will delete the original columns and only keep the new ones.
+
+```r
+dplyr::transmute(sim.dat, total_exp = store_exp + online_exp) 
 ```
