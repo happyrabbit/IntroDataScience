@@ -48,7 +48,7 @@ To explore bias and variance, let's begin with a simple simulation. We will simu
 The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear.  
 
 ```{r}
-source("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/R/multiplot.r")
+source(ids_url('R/multiplot.r'))
 # randomly simulate some non-linear samples
 x = seq(1, 10, 0.01) * pi
 e = rnorm(length(x), mean = 0, sd = 0.2)

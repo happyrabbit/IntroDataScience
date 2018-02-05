@@ -13,7 +13,7 @@ lof: yes
 fontsize: 12pt
 monofont: "Source Code Pro"
 monofontoptions: "Scale=0.7"
-site: http://scientistcafe.com/IDS/
+site: bookdown::bookdown_site
 description: "Introduction to Data Science"
 url: 'http\://scientistcafe.com/IDS/'
 github-repo: happyrabbit/IntroDataScience
@@ -25,7 +25,11 @@ options(
   htmltools.dir.version = FALSE, formatR.indent = 2,
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
-
+ids_url = function(file) {
+  paste0('https://github.com/',
+         'happyrabbit/DataScientistR/',
+         'raw/master/', file)
+}
 #bookdown::render_book("index.Rmd", "bookdown::gitbook")
 #bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```

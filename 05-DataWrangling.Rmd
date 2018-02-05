@@ -27,7 +27,7 @@ You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base
 
 1. The killing character, in my opinion, is that `readr` provides **progress bar**. What makes you feel worse than waiting is not knowing how long you have to wait. 
 
-![](images/prograssbar.png)
+![](images/prograssbar.png)\ 
 
 The major functions of readr is to turn flat files into data frames:
 
