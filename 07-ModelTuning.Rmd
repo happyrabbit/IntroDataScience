@@ -229,7 +229,7 @@ rsq <- melt(rsq, id.vars = "Noise", measure.vars = c("rsq_linear",
 ```
 
 ```{r,echo=FALSE}
-rsq <- read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/ResponseError.csv")
+rsq <- read.csv("Data/ResponseError.csv")
 ```
 
 (ref:error-cap)  Test set $R^2$ profiles for income models when measurement system noise increases. `rsq_linear`: linear regression, `rsq_pls`: Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
@@ -266,7 +266,7 @@ noise[i,]<-rnorm(7,rep(0,7),sd(sim.dat$online_exp)*seq(0,3,by=0.5))
 Likewise, we examine the effect of noise intensity on different models ($R^2$). The models with complexity from low to high are: ordinary linear regression, partial least square regression(PLS), multivariate adaptive regression spline (MARS), support vector machine (SVM, the Kernel function is radial basis function), and random forest. The code is similar as before so not shown here.
 
 ```{r,echo=FALSE}
-rsq <- read.csv("/Users/happyrabbit/Documents/GitHub/DataScientistR/Data/VariableError.csv")
+rsq <- read.csv("Data/VariableError.csv")
 ```
 
 (ref:errorvariable-cap)  Test set  $R^2$  profiles for income models when noise in `online_exp` increases. `rsq_linear` : linear regression, `rsq_pls` : Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
