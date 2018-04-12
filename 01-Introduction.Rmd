@@ -183,16 +183,18 @@ In addition to technical knowledge, there are some critical soft skills.  These 
 
 ## Types of Learning
 
-There are three broad groups of styles: supervised learning, reinforcement learning, and unsupervised learning. 
+There are three broad groups of styles: supervised learning, unsupervised learning and transfer learning. 
 
 In supervised learning, each observation of the predictor measurement(s) corresponds to a response measurement. There are two flavors of supervised learning: regression and classification. In regression, the response is a real number such as the total net sales in 2017, or the yield of corn next year. The goal is to approximate the response measurement as much as possible. In classification, the response is a class label, such as dichotomous response such as yes/no. The response can also have more than two categories, such as four segments of customers. A supervised learning model is a function that maps some input variables with corresponding parameters to a response y.  Modeling tuning is to adjust the value of parameters to make the mapping fit the given response.  In other words, it is to minimize the discrepancy between given response and the model output. When the response y is a real value, it is intuitive to define discrepancy as the squared difference between model output and given the response. When y is categorical,  there are other ways to measure the difference, such as AUC or information gain. 
 
+<!--
 In reinforcement learning, the correct input/output pairs are not present. The model will learn from a sequence of actions and select the action maximizing the expected sum of the future rewards.  There is a discount factor that makes future rewards less valuable than current rewards. Reinforcement learning is difficult for the following reasons: 
 
 (1) The rewards are not instant. If the action sequence is long, it is hard to know which action was wrong. 
 
 (2) The rewards are occasional. Each reward does not supply much information, so its impact of parameter change is limited.  Typically, it is not likely to learn a large number of parameters using reinforcement learning.   However, it is possible for supervised and unsupervised learning. The number of parameters in reinforcement learning usually range from dozens to maybe 1,000, but not millions. 
- 
+-->
+
 In unsupervised learning, there is no response variable. For a long time, the machine learning community overlooked unsupervised learning except for one called clustering. Moreover, many researchers thought that clustering was the only form of unsupervised learning. One reason is that it is hard to define the goal of unsupervised learning explicitly. Unsupervised learning can be used to do the following:
 
 (1) Identify a good internal representation or pattern of the input that is useful for subsequent supervised or reinforcement learning, such as finding clusters.
