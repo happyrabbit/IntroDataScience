@@ -93,42 +93,35 @@ Often the quality of the data is more important than the quantity, but the quant
 
 Many of the data science books classify the various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on "problem-oriented" track. We first introduce different groups of real problems and then present which models can be used to answer the corresponding category of questions. 
 
-![Data Science Questions](images/DataScienceQuestion.png)
-
 1. Description
 
 The basic analytic problem is to summarize and explore a data set with descriptive statistics (mean, standard deviation, and so forth) and visualization methods. It is the simplest problem and yet the most crucial and common one. You will need to describe and explore the dataset before moving on to more complex analysis. In the problem such as customer segmentation, after you cluster the sample, the next step is to figure out the profile of each class by comparing the descriptive statistics of the various variables. Questions of this kind are:
 
-- Is the income of the family's annual observations unbiased?
-- What is the mean/variance of the monthly sales volume of a product in different regions?
-- What is the difference in the magnitude of the variable? (Decide whether the data needs to be standardized)
-- What is the prediction variable in the model?
-- What is the age distribution of the respondents?
+- Is the distribution of annual income normal?
+- Are there outliers?
+- What are the means of different customer segments?
 
 Data description is often used to check data, find the appropriate data preprocessing method, and demonstrate the model results.
 
 2. Comparison
 
-The first common problem is to compare different groups. Such as: Is A better in some way than B? Or more comparisons: Is there any difference among A, B, C in a certain aspect? Here are some examples:
+The first common problem is to compare different groups. Such as: Is A better in some way than B? Or more comparisons: Is there any difference among A, B, and C in a particular aspect? Here are some examples:
 
-- Are the purchasing amounts different between consumers receiving coupons and those without coupons?
 - Are males more inclined to buy our products than females?
 - Are there any differences in customer satisfaction in different business districts?
-- Do the mice receiving a drug have a faster weight gain than the control group?
-- Do soybeans carrying a particular gene contain more oil than the control group?
+- Do soybean carrying a particular gene have higher oil content?
+
 
 For those problems, it is usually to start exploring from the summary statistics and visualization by groups. After a preliminary visualization, you can test the differences between treatment and control group statistically. The commonly used statistical tests are chi-square test, t-test, and ANOVA. There are also methods using Bayesian methods. In biology industry, such as new drug development, crop breeding, mixed effect models are the dominant technique.
-
 
 
 3. Clustering
 
 Clustering is a widespread problem, which is usually related to classification. Clustering answers questions like:
 
-- Which consumers have similar product preferences? (Marketing)
-- Which printer performs similar pattern to the broken ones? (Quality Control)
-- How many different kinds of employees are there in the company? (Human Resources)
-- How many different themes are there in the corpus? (Natural Language Processing)
+- Which customers have similar product preference? 
+- Which printer performs similar pattern to the broken ones?
+- How many different themes are there in the corpus?
 
 Note that clustering is unsupervised learning. The most common clustering algorithms include K-Means and Hierarchical Clustering. 
 
@@ -136,21 +129,19 @@ Note that clustering is unsupervised learning. The most common clustering algori
 
 Usually, a labeled sample set is used as a training set to train the classifier. Then the classifier is used to predict the category of a future sample.  Here are some example questions:
 
-- Is this customer going to buy our product? (yes/no)
-- Is there a risk that a lender does not repay?
-- Who is the author of this book?
-- Is this spam email?
+- Who is more likely to buy our product?
+-  Is the borrower going to pay back?
+-  Is it spam?
 
-There are hundreds of classifiers. In practice, we do not have to try all the models as long as we fit in several of the best models in most cases. 
+There are hundreds of classifiers. In practice, we do not need to try all the models but several models that perform well generally. 
 
 5. Regression
 
 In general, regression deals with the problem of "how much is it?" and return a numerical answer.  In some cases, it is necessary to coerce the model results to be 0, or round the result to the nearest integer. It is the most common problem. 
 
 - What will be the temperature tomorrow?
-- What will be the company's sales in the fourth quarter of this year?
-- How long will the engine work?
-- How much beer should we prepare for this event?
+- What is the projected net income for the next season?
+- How much inventory should we have? 
 
 ## Data Scientist Skill Set
 
@@ -228,9 +219,9 @@ They differ in how to create the surrogate features. PLS and neural networks use
 
 This type of model is based on a similarity measure. There are three main steps: (1) compare the new sample with the existing ones; (2) search for the closest sample; (3) and let the response of the nearest sample be used as the prediction. 
 
--   K-Nearest Neighbour [KNN]
--   Learning Vector Quantization [LVQ]
--   Self-Organizing Map [SOM]
+- K-Nearest Neighbour [KNN]
+- Learning Vector Quantization [LVQ]
+- Self-Organizing Map [SOM]
 
 The biggest advantage of this type of model is that they are intuitive.  K-Nearest Neighbour is generally the most popular algorithm in this set.  The other two are less common.   The key to similarity-based algorithms is to find an appropriate distance metric for your data.
 
