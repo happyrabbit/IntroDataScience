@@ -45,21 +45,19 @@ Python code: Ming Li
 
 | Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
-| Introduction | Hui Lin | 18-01-01 | draft version |  Scott I  |
-| Soft Skills for Data Scientists | Ming Li | ?? |  | |
+| Introduction | Hui Lin | 18-10-15 | draft version |    |
+| Soft Skills for Data Scientists | Ming Li | 18-10-19 |  | |
 | Introduction to the data | Hui Lin |  |  draft version  |   |
-| Data Pre-processing | Hui Lin | 18-02-01 | draft version |  |
-| Data Wrangling | Hui Lin | 18-02-01 | draft version |  |
-| Model Tuning Technique| Hui Lin | 18-02-01| draft version  |  Alex S |
-| Measuring Performance | Hui Lin | 18-05-01|  just started | David B |
-| Feature Engineering | Hui Lin | 18-08-01 |  | Alex S|
-| Regression Models | Hui Lin | 18-04-01 |  | David B|
-| Regularization Methods | Hui Lin | 18-06-01|  |  |
-| Tree-Based Methods | Hui Lin| 18-06-01 | just started  |  |
+| Data Pre-processing | Hui Lin | 18-10-15 | draft version |  |
+| Data Wrangling | Hui Lin | 18-10-15 | draft version |  |
+| Model Tuning Technique| Hui Lin | 18-10-15| draft version  |   |
+| Measuring Performance | Hui Lin |  |  just started |  |
+| Feature Engineering | Hui Lin |   |  |  |
+| Regression Models | Hui Lin |  |  |  |
+| Regularization Methods | Hui Lin |  |  |  |
+| Tree-Based Methods | Hui Lin|   | just started  |  |
 | Clustering Methods | Ming Li | ?? |  |  |
-| Neural Network and Deep Learning | Hui Lin; ?? | 18-09-01 | draft version |  |
-| Dynamic/Reproducible Report | Hui Lin | 18-10-01 | draft version |  |
-| Network Data Analysis | Hui Lin; ?? | 19-02-01|  |  |
+| Neural Network and Deep Learning | Hui Lin; Ming Li | 19-02-01 | draft version |  |
 
 Appendix:
 
@@ -67,6 +65,8 @@ Appendix:
 |---------|-----------|----------|----------|-------------|
 | Big Data Cloud Platform | Ming Li |  | draft version |  |  
 | Basic SQL | Hui Lin |    | Just started |  |
+| Network Data Analysis | Hui Lin; ?? | 19-02-01|  |  |
+
 
 # To do:
 
