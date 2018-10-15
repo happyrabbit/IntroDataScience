@@ -15,7 +15,7 @@ You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base
 1. It doesn't change the column names. The names can start with a number and "`.`"  will not be substituted to "`_`". For example:  
 
     
-    ```{r}
+    ```r
     library(readr)
     read_csv("2015,2016,2017
     1,2,3
@@ -43,7 +43,7 @@ The good thing is that those functions have similar syntax. Once you learn one, 
 
 The most important information for `read_csv()` is the path to your data:
 
-```{r, message=FALSE}
+```r
 library(readr)
 sim.dat <- read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv ")
 head(sim.dat)
@@ -60,7 +60,7 @@ Refer to http://r4ds.had.co.nz/tibbles.html for more information about ‘tibble
 
 When you run `read_csv()`  it prints out a column specification that gives the name and type of each column. To better understanding how `readr` works, it is helpful to type in some baby data set and check the results:
 
-```{r}
+```r
 dat=read_csv("2015,2016,2017
 100,200,300
 canola,soybean,corn")
@@ -69,7 +69,7 @@ print(dat)
 
 You can also add comments on the top and tell R to skip those lines:
 
-```{r}
+```r
 dat=read_csv("# I will never let you know that
           # my favorite food is carrot
           Date,Food,Mood
@@ -85,7 +85,7 @@ print(dat)
 
 If you don't have column names, set `col_names = FALSE` then R will assign names "`X1`","`X2`"... to the columns:
 
-```{r}
+```r
 dat=read_csv("Saturday,carrot,extremely happy
           Sunday,carrot,extremely happy", col_names=FALSE)
 print(dat)
@@ -95,7 +95,7 @@ You can also pass `col_names`  a character vector which will be used as the colu
 
 As mentioned before, you can use `read_csv2()` to read semicolon separated files:
 
-```{r}
+```r
 dat=read_csv2("Saturday; carrot; extremely happy \n Sunday; carrot; extremely happy", col_names=FALSE)
 print(dat)
 ```
@@ -104,13 +104,13 @@ Here "`\n`" is a convenient shortcut for adding a new line.
 
 You can use `read_tsv()` to read tab delimited files：
 
-```{r}
+```r
 dat=read_tsv("every\tman\tis\ta\tpoet\twhen\the\tis\tin\tlove\n", col_names = FALSE)
 print(dat)
 ```
 Or more generally, you can use `read_delim()` and assign separating character：
 
-```{r}
+```r
 dat=read_delim("THE|UNBEARABLE|RANDOMNESS|OF|LIFE\n", delim = "|", col_names = FALSE)
 print(dat)
 ```
@@ -118,7 +118,7 @@ print(dat)
 Another situation you will often run into is the missing value. In marketing survey, people like to use "99" to represent missing. You can tell R to set all observation with value "99" as missing when you read the data:
 
 
-```{r}
+```r
 dat=read_csv("Q1,Q2,Q3
                5, 4,99",na="99")
 print(dat)
@@ -160,7 +160,7 @@ What is `data.table`? It is an R package that provides an enhanced version of `d
 We will use the clothes customer data to illustrate. There are two dimensions in `[]`. The first one indicates the row and second one indicates column. It uses a comma to separate them.
 
 
-```{r}
+```r
 # read data
 sim.dat<-readr::read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
 # subset the first two rows
@@ -176,7 +176,7 @@ sim.dat[sim.dat$age>68 & sim.dat$gender == "Male", 3:4]
 
 Remember that there are usually different ways to conduct the same manipulation. For example, the following code presents three ways to calculate an average number of online transactions for male and female:
 
-```{r,message=FALSE}
+```r
 tapply(sim.dat$online_trans, sim.dat$gender, mean )
 
 aggregate(online_trans ~ gender, data = sim.dat, mean)
@@ -206,7 +206,7 @@ Can behave just like a data frame
 
 You need to install and load the package:
 
-```{r, message=FALSE}
+```r
 # If you haven't install it, use the code to instal
 # install.packages("data.table")
 # load packagw
@@ -215,14 +215,14 @@ library(data.table)
 
 Use `data.table()` to covert the existing data frame `sim.dat` to data table:
 
-```{r}
+```r
 dt <- data.table(sim.dat)
 class(dt)
 ```
 
 Calculate mean for counts of online transactions:
 
-```{r}
+```r
 dt[, mean(online_trans)]
 ```
 
@@ -237,18 +237,18 @@ Error in mean(online_trans) : object 'online_trans' not found
 
 If you want to calculate mean by group as before, set “`by = `” argument:
 
-```{r}
+```r
 dt[ , mean(online_trans), by = gender]
 ```
 You can group by more than one variables. For example, group by “`gender`” and “`house`”:
 
-```{r}
+```r
 dt[ , mean(online_trans), by = .(gender, house)]
 ```
 
 Assign column names for aggregated variables:
 
-```{r}
+```r
 dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
 ```
 
@@ -270,7 +270,7 @@ It is analogous to SQL. You don't have to know SQL to learn data table. But expe
 
 Let's review our previous code:
 
-```{r}
+```r
 dt[ , mean(online_trans), by = gender]
 ```
 
@@ -282,7 +282,7 @@ SELECT  gender, avg(online_trans) FROM sim.dat GROUP BY gender
 
 R code:
  
-```{r}
+```r
 dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
 ```
 
@@ -294,7 +294,7 @@ SELECT gender, house, avg(online_trans) AS avg FROM sim.dat GROUP BY gender, hou
 
 R code：
 
-```{r}
+```r
 dt[ age < 40, .(avg = mean(online_trans)), by = .(gender, house)]
 ```
 
@@ -308,7 +308,7 @@ You can see the analogy between `data.table` and `SQL`.  Now let's focus on oper
 
 - select row
 
-```{r}
+```r
 # select rows with age<20 and income > 80000
 dt[age < 20 & income > 80000]
 # select the first two rows
@@ -318,7 +318,7 @@ dt[1:2]
 
 Selecting columns in  `data.table` don't need `$`:
 
-```{r}
+```r
 # select column “age” but return it as a vector
 # the argument for row is empty so the result will return all observations
 ans <- dt[, age]
@@ -327,7 +327,7 @@ head(ans)
 
 To return `data.table` object, put column names in `list()`:
 
-```{r}
+```r
 # Select age and online_exp columns and return as a data.table instead
 ans <- dt[, list(age, online_exp)]
 head(ans)
@@ -335,21 +335,21 @@ head(ans)
 
 Or you can also put column names in `.()`:
 
-```{r}
+```r
 ans <- dt[, .(age, online_exp)]
 # head(ans)
 ```
 
 To select all columns from “`age`” to “`income`”:
 
-```{r}
+```r
 ans <- dt[, age:income, with = FALSE]
 head(ans,2)
 ```
 
 Delete columns using `-` or `!`:
 
-```{r}
+```r
 # delete columns from  age to online_exp
 ans <- dt[, -(age:online_exp), with = FALSE]
 ans <- dt[, !(age:online_exp), with = FALSE]
@@ -359,14 +359,14 @@ ans <- dt[, !(age:online_exp), with = FALSE]
 
 In data table. `.N` means to count。
 
-```{r}
+```r
 # row count
 dt[, .N] 
 ```
 
 If you assign the group variable, then it will count by groups:
 
-```{r}
+```r
 # counts by gender
 dt[, .N, by= gender]  
 # for those younger than 30, count by gender
@@ -375,19 +375,19 @@ dt[, .N, by= gender]
 
 Order table:
 
-```{r}
+```r
 # get records with the highest 5 online expense:
 head(dt[order(-online_exp)],5) 
 ```
 Since data table keep some characters of data frame, they share some operations:
  
-```{r}
+```r
 dt[order(-online_exp)][1:5]
 ```
 
 You can also order the table by more than one variable. The following code will order the table by `gender`, then order within `gender` by `online_exp`:
 
-```{r} 
+```r 
 dt[order(gender, -online_exp)][1:5]
 ```
 
@@ -438,7 +438,7 @@ When do we use `apply()`? When we want to apply a function to margins of an arra
 
 For example you can compute row and column sums for a matrix:
 
-```{r}
+```r
 ## simulate a matrix
 x <- cbind(x1 =1:8, x2 = c(4:1, 2:5))
 dimnames(x)[[1]] <- letters[1:8]
@@ -449,7 +449,7 @@ row.sums <- apply(x, 1, sum)
 
 You can also apply other functions:
 
-```{r}
+```r
 ma <- matrix(c(1:4, 1, 6:8), nrow = 2)
 ma
 apply(ma, 1, table)  #--> a list of length 2
@@ -476,7 +476,7 @@ Let's use some data with context to help you better understand the functions.
 
 - Get the mean and standard deviation of all numerical variables in the dataset.
 
-```{r}
+```r
 # Read data
 sim.dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
 # Get numerical variables
@@ -488,19 +488,19 @@ sdat<-sim.dat[,!lapply(sim.dat,class)=="factor"]
 
 The data frame `sdat` only includes numeric columns. Now we can go head and use `apply()` to get mean and standard deviation for each column:
 
-```{r}
+```r
 apply(sdat, MARGIN=2,function(x) mean(na.omit(x)))
 ```
 
 Here we defined a function using ` function(x) mean(na.omit(x))`. It is a very simple function. It tells R to ignore the missing value when calculating the mean. ` MARGIN=2` tells R to apply the function to each column. It is not hard to guess what ` MARGIN=1` mean. The result show that the average online expense is much higher than store expense. You can also compare the average scores across different questions. The command to calculate standard deviation is very similar. The only difference is to change `mean()` to `sd()`:
 
-```{r}
+```r
 apply(sdat, MARGIN=2,function(x) sd(na.omit(x)))
 ```
 
 Even the average online expense is higher than store expense, the standard deviation for store expense is much higher than online expense which indicates there is very likely some big/small purchase in store. We can check it quickly:
 
-```{r}
+```r
 summary(sdat$store_exp)
 summary(sdat$online_exp)
 ```
@@ -535,7 +535,7 @@ We will illustrate the following functions in order:
 
 - `tbl_df()`: Convert the data to `tibble` which offers better checking and printing capabilities than traditional data frames. It will adjust output width according to fit the current window.
 
-```{r, message=FALSE, echo=FALSE}
+```r
 library(dplyr)
 ```
 
@@ -555,7 +555,7 @@ glimpse(sim.dat)
 
 Get rows with `income` more than 300000:
 
-```{r}
+```r
 library(magrittr)
 filter(sim.dat, income >300000) %>%
   tbl_df()
@@ -663,7 +663,7 @@ dplyr::select(sim.dat, -age)
 
 A standard marketing problem is customer segmentation. It usually starts with designing survey and collecting data. Then run a cluster analysis on the data to get customer segments. Once we have different segments, the next is to understand how each group of customer look like by summarizing some key metrics. For example, we can do the following data aggregation for different segments of clothes customers.   
 
-```{r}
+```r
 sim.dat%>%
   group_by(segment)%>%
   summarise(Age=round(mean(na.omit(age)),0),
@@ -707,7 +707,7 @@ You may notice that Style group purchase more frequently online (`online_trans`)
 
 The analytical process is aggregated instead of independent steps. The current step will shed new light on what to do next. Sometimes you need to go back to fix something in the previous steps. Let's check average one-time online and instore purchase amounts:
 
-```{r}
+```r
 sim.dat%>%
 group_by(segment)%>%
 summarise(avg_online=round(sum(online_exp)/sum(online_trans),2),
@@ -718,7 +718,7 @@ Price group has the lowest averaged one-time purchase. The Conspicuous group wil
 
 Another comman task is to check which column has missing values. It requires the program to look at each column in the data. In this case you can use `summarise_all`: 
 
-```{r}
+```r
 # apply function anyNA() to each column
 # you can also assign a function vector such as: c("anyNA","is.factor")
 dplyr::summarise_all(sim.dat, funs_(c("anyNA")))
@@ -730,7 +730,7 @@ The above code returns a vector indicating if there is any value missing in each
 
 There are often situations where you need to create new variables. For example, adding online and store expense to get total expense. In this case, you will apply **window function** to the columns and return a column with the same length. `mutate()` can do it for you and append one or more new columns:
 
-```{r}
+```r
 dplyr::mutate(sim.dat, total_exp = store_exp + online_exp)
 ```
 
@@ -744,34 +744,34 @@ dplyr::transmute(sim.dat, total_exp = store_exp + online_exp)
 
 Similar to SQL, there are different joins in `dplyr`. We create two baby data sets to show how the functions work.
 
-```{r, warning=FALSE}
+```r
 (x<-data.frame(cbind(ID=c("A","B","C"),x1=c(1,2,3))))
 (y<-data.frame(cbind(ID=c("B","C","D"),y1=c(T,T,F))))
 ```
 
-```{r, warning=FALSE}
+```r
 # join to the left
 # keep all rows in x
 left_join(x,y,by="ID")
 ```
 
-```{r, warning=FALSE}
+```r
 # get rows matched in both data sets
 inner_join(x,y,by="ID")
 ```
 
-```{r, warning=FALSE}
+```r
 # get rows in either data set
 full_join(x,y,by="ID")
 ```
 
-```{r, warning=FALSE}
+```r
 # filter out rows in x that can be matched in y 
 # it doesn't bring in any values from y 
 semi_join(x,y,by="ID")
 ```
 
-```{r, warning=FALSE}
+```r
 # the opposite of  semi_join()
 # it gets rows in x that cannot be matched in y
 # it doesn't bring in any values from y
@@ -790,7 +790,7 @@ There are two commonly used packages for this kind of manipulations: `tidyr` and
 
 It is a reboot of the previous package `reshape`.  Take a baby subset of our exemplary clothes consumers data to illustrate: 
 
-```{r}
+```r
 (sdat<-sim.dat[1:5,1:6])
 ```
 
@@ -799,7 +799,7 @@ For the above data `sdat`, what if we want to have a variable indicating the pur
 - Use `melt()` to convert an object into a molten data frame, i.e., from wide to long
 - Use `dcast()` to cast a molten data frame into the shape you want, i.e., from long to wide
 
-```{r}
+```r
 library(reshape2)
 (mdat <- melt(sdat, measure.vars=c("store_exp","online_exp"),
               variable.name = "Channel",
@@ -822,7 +822,7 @@ summary(fit)
 
 You can `melt()`  list, matrix, table too. The syntax is similar, and we won't go through every situation. Sometimes we want to convert the data from "long" to "wide". For example, **you want to compare the online and in-store expense between male and female based on the house ownership. **
 
-```{r}
+```r
 dcast(mdat, house + gender ~ Channel, sum)
 ```
 
@@ -832,7 +832,7 @@ In the above code,  what is the left side of `~` are variables that you want to 
 
 The other package that will do similar manipulations is `tidyr`. Let's get a subset to illustrate the usage. 
 
-```{r}
+```r
 library(dplyr)
 # practice functions we learnt before
 sdat<-sim.dat[1:5,]%>%
@@ -842,7 +842,7 @@ sdat %>% tbl_df()
 
 `gather()` function in `tidyr` is analogous to `melt()` in `reshape2`. The following code will do the same thing as we did before using `melt()`: 
 
-```{r, message=FALSE}
+```r
 library(tidyr)
 msdat<-tidyr::gather(sdat,"variable","value",store_exp,store_trans)
 msdat %>% tbl_df()
@@ -864,13 +864,13 @@ melt(sdat, measure.vars=c("store_exp","store_trans"),
 
 The opposite operation to `gather()` is `spread()`. The previous one stacks columns and the latter one spread the columns.
 
-```{r}
+```r
 msdat %>% spread(variable,value)
 ```
 
 Another pair of functions that do opposite manipulations are `separate()` and `unite()`. 
 
-```{r}
+```r
 sepdat<- msdat %>% 
   separate(variable,c("Source","Type"))
 sepdat %>% tbl_df()
@@ -880,7 +880,7 @@ You can see that the function separates the original column "`variable`" to two 
 
 The `unite()` function will do the opposite: combining two columns. It is the generalization of `paste()` to a data frame.
 
-```{r}
+```r
 sepdat %>% 
   unite("variable",Source,Type,sep="_")
 ```
