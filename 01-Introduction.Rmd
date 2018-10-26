@@ -1,3 +1,5 @@
+# Introduction
+
 Interest in data science is at an all-time high and has exploded in popularity in the last couple of years. Data scientists today are from various backgrounds. If someone ran into you ask what data science is all about, what would you tell them? It is not an easy question to answer. Data science is one of the areas that everyone is talking about, but no one can define. 
 
 Media has been hyping about “Data Science” “Big Data” and “Artificial Intelligence” over the fast few years. I like this amusing  statement from the internet:
@@ -6,7 +8,26 @@ Media has been hyping about “Data Science” “Big Data” and “Artificial 
 
 For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with such big data sets. What are those skills? You may hear about: Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or about Spark, a system build atop Hadoop for speeding up the same by loading huge datasets into shared memory(RAM) across clusters. The new skills are for dealing with organizational artifacts of large-scale cluster computing but not for better solving the real problem. A lot of data means more tinkering with computers. After all, it isn’t the size of the data that’s important. It’s what you do with it.
 
-Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this up front that: we had that exact reaction. To declutter, let’s start with the fundamental question: what is data science?
+Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this up front that: we had that exact reaction. To declutter, let’s start from a brief history of data science. If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
+
+![Data Science Timeline](images/DataScienceTimeline.png)
+
+In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
+
+> "generalized linear regression by allowing the linear model to be related to the response variable via a link function and by allowing the magnitude of the variance of each measurement to be a function of its predicted value." [from Wikipedia] 
+
+By the end of the 1970s, there was a range of analytical models and most of them were linear because computers were not powerful enough to fit non-linear model until the 1980s.
+
+In 1984 Breiman et al. introduced classification and regression tree (CART) which is one of the oldest and most utilized classification and regression techniques. After that Ross Quinlan came up with more tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques (methods that combine many models’ predictions) began to appear. Bagging is a general approach that uses bootstrapping in conjunction with any regression or classification model to construct an ensemble. Based on the ensemble idea, Breiman came up with random forest in 2001. Later, Yoav Freund and Robert Schapire came up with the AdaBoost.M1 algorithm. Benefiting from the increasing availability of digitized information, and the possibility to distribute that via the internet, the toolbox has been expanding fast. The applications include business, health, biology, social science, politics, etc.
+
+John Tukey identified four forces driving data analysis (there was no “data science” then):
+
+1. The formal theories of math and statistics 
+1. Acceleration of developments in computers and display devices 
+1. The challenge, in many fields, of more and ever larger bodies of data 
+1. The emphasis on quantification in an ever wider variety of disciplines 
+
+Tukey’s 1962 list is surprisingly modern. Let's inspect those points in today's context. There is always a time gap between a theory and its application. We had the theories much earlier than application. Fortunately, for the past 50 years, statisticians have been laying the theoretical groundwork for constructing "data science" today. The development of computers enables us to calculate much faster and deliver results in a friendly and intuitive way. The striking transition to the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems certain to be a major preoccupation of commercial life in coming decades. All the four forces John identified exist today and have been driving data science.   
 
 ## Blind men and an elephant
 
@@ -14,4 +35,13 @@ There is a widely diffused Chinese parable (depending on where you are from, you
 
 >  "...In the case of the first person, whose hand landed on the trunk, said: 'This being is like a thick snake'. For another one whose hand reached its ear, it seemed like a kind of fan. As for another person, whose hand was upon its leg, said, the elephant is a pillar like a tree-trunk. The blind man who placed his hand upon its side said, 'elephant is a wall'. Another who felt its tail described it as a rope. The last felt its tusk, stating the elephant is that which is hard, smooth and like a spear."  [wikipedia](https://en.wikipedia.org/wiki/Blind_men_and_an_elephant)
 
-Data science is the elephant. With the data science hype picking up stream, many professionals changed their titles to be “Data Scientist” without any of the necessary qualifications. Today's data scientists have vastly different backgrounds, yet each one conceptualizes what the elephant is based on his/her own professional training and application area. And to make matters worse, most of us are not even fully aware of our own conceptualizations, much less the uniqueness of the experience from which they are derived. 
+Data science is the elephant. With the data science hype picking up stream, many professionals changed their titles to be “Data Scientist” without any of the necessary qualifications. Today's data scientists have vastly different backgrounds, yet each one conceptualizes what the elephant is based on his/her own professional training and application area. And to make matters worse, most of us are not even fully aware of our own conceptualizations, much less the uniqueness of the experience from which they are derived. Here is a list of somewhat whimsical definitions for a “data scientist”:
+
+- “A data scientist is a data analyst who lives in California”
+- “A data scientist is someone who is better at statistics than any software engineer and better at software engineering than any statistician.”
+- “A data scientist is a statistician who lives in San Francisco.”
+- “Data Science is statistics on a Mac.”
+
+> "We don’t see things as they are, we see them as we are. [by Anais Nin]"
+
+It is annoying but true. 

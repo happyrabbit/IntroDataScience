@@ -29,7 +29,7 @@ Readers should know basic statistical ideas, such as correlation and linear regr
 
 - CRC Press
 - Deadline: Dec 1, 2019
-- Approximately 450 pages
+- Approximately 450 ~ 500 pages
 - Color book
 
 —————————— I am a cute divider line ————————————
@@ -80,10 +80,11 @@ Priority 1:
 - Add Python Code
 - Combine baby subsections
 - Deep Learning and its application
+- Tense consistency
 - Need to give more thoughts on how to blend with the case study. Refer to " Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving" by Nolan and Temple Lang.
   ~~- Add a “soft skills” section in each chapter which might break up the technical sequences and build on them in context.~~
 - Make chapter 4 an appendix or later chapter. And change the topic to be high-performance computing (Hadoop and spark, etc., based on reviewer 3). The rapid changing of platforms and tools is a concern. 
-- Chapter for clustering methods. 
+- ~~Chapter for clustering methods. ~~
 - Provide dataset and code supplements for both R and Python using notebooks. 
 - Accompany R package: https://github.com/happyrabbit/DataScienceR. 
 - Clarify the prerequisite further.
