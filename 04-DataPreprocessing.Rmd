@@ -62,6 +62,17 @@ sim.dat$store_exp[which(sim.dat$store_exp<0)]<-NA
 summary(subset(sim.dat,select=c("age","income")))
 ```
 
+```pre
+      age            income      
+ Min.   :16.00   Min.   : 41776  
+ 1st Qu.:25.00   1st Qu.: 84930  
+ Median :33.00   Median : 93023  
+ Mean   :36.64   Mean   :109968  
+ 3rd Qu.:45.00   3rd Qu.:121535  
+ Max.   :69.00   Max.   :317476  
+ NA's   :1  
+```
+
 Now we will deal with the missing values in the data.
 
 ## Missing Values
@@ -81,6 +92,16 @@ In the case of missing at random, a common method is to impute with the mean (co
 demo_imp<-impute(sim.dat,method="median/mode")
 # check the first 5 columns, there is no missing values in other columns
 summary(demo_imp[,1:5])
+```
+
+```pre
+      age           gender        income       house       store_exp      
+ Min.   :16.00   Female:446   Min.   : 41776   No :372   Min.   :  155.8  
+ 1st Qu.:25.00   Male  :326   1st Qu.: 84930   Yes:400   1st Qu.:  202.7  
+ Median :33.00                Median : 93023             Median :  293.0  
+ Mean   :36.63                Mean   :109968             Mean   : 1265.4  
+ 3rd Qu.:45.00                3rd Qu.:121535             3rd Qu.:  540.2  
+ Max.   :69.00                Max.   :317476             Max.   :50000.0 
 ```
 
 After imputation, `demo_imp` has no missing value. This method is straightforward and widely used. The disadvantage is that it does not take into account the relationship between the variables. When there is a significant proportion of missing, it will distort the data. In this case, it is better to consider the relationship between variables and study the missing mechanism. In the example here, the missing variables are numeric. If the missing variable is a categorical/factor variable, the `impute()` function will impute with the mode.

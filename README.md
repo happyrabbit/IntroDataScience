@@ -43,29 +43,28 @@ Python code: Ming Li
 
 ## Text
 
-| Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
+| Chapter | Author(s) | Deadline | Detail | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
-| Introduction | Hui Lin | 18-10-15 | draft version |    |
-| Soft Skills for Data Scientists | Ming Li | 18-10-19 |  | |
-| Introduction to the data | Hui Lin |  |  draft version  |   |
-| Data Pre-processing | Hui Lin | 18-10-15 | draft version |  |
-| Data Wrangling | Hui Lin | 18-10-15 | draft version |  |
-| Model Tuning Technique| Hui Lin | 18-10-15| draft version  |   |
-| Measuring Performance | Hui Lin |  |  just started |  |
-| Feature Engineering | Hui Lin |   |  |  |
-| Regression Models | Hui Lin |  |  |  |
-| Regularization Methods | Hui Lin |  |  |  |
-| Tree-Based Methods | Hui Lin|   | just started  |  |
-| Clustering Methods | Ming Li | ?? |  |  |
-| Neural Network and Deep Learning | Hui Lin; Ming Li | 19-02-01 | draft version |  |
+| Introduction | Hui Lin | 2018-11-15 | Have a draft version. Need to revise it. |    |
+| Soft Skills | Ming Li |  |  | |
+| Introduction to the data | Hui Lin |  |  Have a draft version. Need to revise it  |   |
+| Data Pre-processing | Hui Lin | 18-12-31 | Have a draft version. Need to revise it and add python notebook |  |
+| Data Wrangling | Hui Lin | 18-12-31 | Have a draft version. Need to revise it and add python notebook |  |
+| Model Tuning Technique| Hui Lin | 18-12-31 | Have a draft version. Need to revise it and add python notebook |   |
+| Measuring Performance | Hui Lin | 19-01-31 |  just started |  |
+| Feature Engineering | Hui Lin | 19-03-31 |  |  |
+| Regression Models | Hui Lin | 19-04-30 |  |  |
+| Regularization Methods | Hui Lin | 19-05-31 |  |  |
+| Tree-Based Methods | Hui Lin| 19-06-30 | just started  |  |
+| Clustering Methods | Ming Li | ?? | Do we need that chapter? |  |
+| Neural Network and Deep Learning | Alex Shum;Hui Lin; Ming Li | 19-02-01 | have a draft version |  |
+| Big Data Cloud Platform | Ming Li |  | draft version | |
 
 Appendix:
 
 | Chapter | Author(s) | Deadline | Progress | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
-| Big Data Cloud Platform | Ming Li |  | draft version |  |  
-| Basic SQL | Hui Lin |    | Just started |  |
-| Network Data Analysis | Hui Lin; ?? | 19-02-01|  |  |
+| Basic SQL | Hui Lin |  | Just started |  |
 
 
 # To do:
@@ -80,8 +79,9 @@ Priority 1:
 - Regularized generalized regression
 - Add Python Code
 - Combine baby subsections
+- Deep Learning and its application
 - Need to give more thoughts on how to blend with the case study. Refer to " Data Science in R: A Case Studies Approach to Computational Reasoning and Problem Solving" by Nolan and Temple Lang.
-~~- Add a “soft skills” section in each chapter which might break up the technical sequences and build on them in context.~~
+  ~~- Add a “soft skills” section in each chapter which might break up the technical sequences and build on them in context.~~
 - Make chapter 4 an appendix or later chapter. And change the topic to be high-performance computing (Hadoop and spark, etc., based on reviewer 3). The rapid changing of platforms and tools is a concern. 
 - Chapter for clustering methods. 
 - Provide dataset and code supplements for both R and Python using notebooks. 
@@ -98,11 +98,10 @@ Priority 2:
     - Use Trump's Twitter data since 2016 as the case study.  
     - Include it tentatively in the table of contents, but then see how the rest of the book shapes up, before deciding whether to include it or not. 
     - The length of the book could be a concern. 
-    
-- Deep Learning and its application
+
 
 Priority 3:
-    
+​    
 - Natural language processing
 - Bayesian
 

@@ -14,14 +14,12 @@ You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base
 
 1. It doesn't change the column names. The names can start with a number and "`.`"  will not be substituted to "`_`". For example:  
 
-    
     ```r
     library(readr)
     read_csv("2015,2016,2017
     1,2,3
     4,5,6")
     ```
-
 
 1. `readr` functions do not convert strings to factors by default, are able to parse dates and times and can automatically determine the data types in each column. 
 
