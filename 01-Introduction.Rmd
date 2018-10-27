@@ -44,4 +44,14 @@ Data science is the elephant. With the data science hype picking up stream, many
 
 > "We don’t see things as they are, we see them as we are. [by Anais Nin]"
 
-It is annoying but true. 
+It is annoying but true. So the answer to the question "what is data science?" depends on who you are talking to. Who you may be talking to then? Data science has four main skill tracks: engineering, mechanics, analysis, and modeling (and yes, the order matters!).  Here are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
+
+[^1]: This is based on a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist from [Industry recommendations for academic data science programs](https://github.com/brohrer/academic_advisory).
+
+- Engineering: the process of making everything else possible
+
+You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As your data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+
+## Data Infrastructure
+
+Data infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
