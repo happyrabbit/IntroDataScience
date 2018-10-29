@@ -50,19 +50,19 @@ It is annoying but true. So the answer to the question "what is data science?" d
 
 - Engineering: the process of making everything else possible
 
-You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As your data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+
+Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day,  when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and carry out ETL process. As the development of could service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
 
 1. Data management  
     Automated data collection is a common task which includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. 
 
 2. Production
     If you want to integrate the model or analysis into the production system, then you have to automate all data handling steps. It involves the whole pipeline from data access to preprocessing, modeling and final deployment. It is necessary to make the system work smoothly with all existing stacks. So it requires to monitor the system through some sort of robust measures, such as rigorous error handling, fault tolerance, and graceful degradation to make sure the system is running smoothly and the users are happy.
-    
-3. Software engineering
 
-## Data Infrastructure
+## Data Pipeline Infrastructure
 
-Data infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
+Data pipeline infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
 
 
 
