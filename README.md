@@ -45,7 +45,7 @@ Python code: Ming Li
 
 | Chapter | Author(s) | Deadline | Detail | Reviewer(s) |
 |---------|-----------|----------|----------|-------------|
-| Introduction | Hui Lin | 2018-11-15 | Have a draft version. Need to revise it. |    |
+| Introduction | Alok Shrestha,  Hui Lin| 2018-11-15 | Have a draft version. Need to revise it. |    |
 | Soft Skills | Ming Li |  |  | |
 | Introduction to the data | Hui Lin |  |  Have a draft version. Need to revise it  |   |
 | Data Pre-processing | Hui Lin | 18-12-31 | Have a draft version. Need to revise it and add python notebook |  |
@@ -57,7 +57,7 @@ Python code: Ming Li
 | Regularization Methods | Hui Lin | 19-05-31 |  |  |
 | Tree-Based Methods | Hui Lin| 19-06-30 | just started  |  |
 | Clustering Methods | Ming Li | ?? | Do we need that chapter? |  |
-| Neural Network and Deep Learning | Alex Shum;Hui Lin; Ming Li | 19-02-01 | have a draft version |  |
+| Neural Network and Deep Learning | Alex Shum; Hui Lin; Ming Li | 19-02-01 | have a draft version |  |
 | Big Data Cloud Platform | Ming Li |  | draft version | |
 
 Appendix:
