@@ -6,9 +6,9 @@ Media has been hyping about “Data Science” “Big Data” and “Artificial 
 
 > “When you’re fundraising, it’s AI. When you’re hiring, it’s ML. When you’re implementing, it’s logistic regression.”
 
-For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with such big data sets. What are those skills? You may hear about: Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or about Spark, a system build atop Hadoop for speeding up the same by loading huge datasets into shared memory(RAM) across clusters. The new skills are for dealing with organizational artifacts of large-scale cluster computing but not for better solving the real problem. A lot of data means more tinkering with computers. After all, it isn’t the size of the data that’s important. It’s what you do with it.
+For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with such big data sets. What are those skills? You may hear about: Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or about Spark, a system build atop Hadoop for speeding up the same by loading huge datasets into shared memory(RAM) across clusters. The new skills are for dealing with organizational artifacts of large-scale cluster computing but not for better solving the real problem. A lot of data means more tinkering with computers. After all, it isn’t the size of the data that’s important. It’s what you do with it. Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this up front that: we had that exact reaction.
 
-Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this up front that: we had that exact reaction. To declutter, let’s start from a brief history of data science. If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
+To declutter, let’s start from a brief history of data science. If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
 
 ![Data Science Timeline](images/DataScienceTimeline.png)
 
@@ -18,16 +18,6 @@ In the early 19th century when Legendre and Gauss came up the least squares meth
 
 By the end of the 1970s, there was a range of analytical models and most of them were linear because computers were not powerful enough to fit non-linear model until the 1980s.
 
-In 1984 Breiman et al. introduced classification and regression tree (CART) which is one of the oldest and most utilized classification and regression techniques. After that Ross Quinlan came up with more tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques (methods that combine many models’ predictions) began to appear. Bagging is a general approach that uses bootstrapping in conjunction with any regression or classification model to construct an ensemble. Based on the ensemble idea, Breiman came up with random forest in 2001. Later, Yoav Freund and Robert Schapire came up with the AdaBoost.M1 algorithm. Benefiting from the increasing availability of digitized information, and the possibility to distribute that via the internet, the toolbox has been expanding fast. The applications include business, health, biology, social science, politics, etc.
-
-John Tukey identified four forces driving data analysis (there was no “data science” then):
-
-1. The formal theories of math and statistics 
-1. Acceleration of developments in computers and display devices 
-1. The challenge, in many fields, of more and ever larger bodies of data 
-1. The emphasis on quantification in an ever wider variety of disciplines 
-
-Tukey’s 1962 list is surprisingly modern. Let's inspect those points in today's context. There is always a time gap between a theory and its application. We had the theories much earlier than application. Fortunately, for the past 50 years, statisticians have been laying the theoretical groundwork for constructing "data science" today. The development of computers enables us to calculate much faster and deliver results in a friendly and intuitive way. The striking transition to the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems certain to be a major preoccupation of commercial life in coming decades. All the four forces John identified exist today and have been driving data science.   
 
 ## Blind men and an elephant
 
@@ -44,15 +34,15 @@ Data science is the elephant. With the data science hype picking up stream, many
 
 > "We don’t see things as they are, we see them as we are. [by Anais Nin]"
 
-It is annoying but true. So the answer to the question "what is data science?" depends on who you are talking to. Who you may be talking to then? Data science has four main skill tracks: engineering, mechanics, analysis, and modeling (and yes, the order matters!).  Here are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
+It is annoying but true. So the answer to the question "what is data science?" depends on who you are talking to. Who you may be talking to then? Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!).  Here are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
 
-[^1]: This is based on a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist from [Industry recommendations for academic data science programs](https://github.com/brohrer/academic_advisory).
+[^1]: This is based on [Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory](https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.
 
 - Engineering: the process of making everything else possible
 
 You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
 
-Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day,  when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and carry out ETL process. As the development of could service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
+Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day,  when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and perform ETL process. As the development of could service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
 
 1. Data management  
     Automated data collection is a common task which includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. 
