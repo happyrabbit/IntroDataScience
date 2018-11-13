@@ -10,14 +10,29 @@ For outsiders, data science is whatever magic that can get useful information ou
 
 To declutter, let’s start from a brief history of data science. If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
 
-![Data Science Timeline](images/DataScienceTimeline.png)
-
 In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
 
 > "generalized linear regression by allowing the linear model to be related to the response variable via a link function and by allowing the magnitude of the variance of each measurement to be a function of its predicted value." [from Wikipedia] 
 
 By the end of the 1970s, there was a range of analytical models and most of them were linear because computers were not powerful enough to fit non-linear model until the 1980s.
 
+In 1984 Breiman et al. introduced the classification and regression tree (CART) which is one of the oldest and most utilized classification and regression techniques. After that Ross Quinlan came up with more tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques (methods that combine many models’ predictions) began to appear. Bagging is a general approach that uses bootstrapping in conjunction with regression or classification model to construct an ensemble. Based on the ensemble idea, Breiman came up with random forest in 2001[@Breiman2001]. In the same year, Leo Breiman published a paper “[Statistical Modeling: The Two Cultures](http://www2.math.uu.se/~thulin/mm/breiman.pdf)” [@Breiman2001TwoCulture] where he pointed out two cultures in the use of statistical modeling to get information from data:
+
+(1)  Data is from a given stochastic data model  
+(2)  Data mechanism is unknown and people approach the data using algorithmic model
+
+Most of the classic statistical models are the first type. Black box models, such as random forest, GMB, and today's buzz work deep learning are algorithmic modeling. As Breiman pointed out, those models can be used both on large complex data as a more accurate and informative alternative to data modeling on smaller data sets. Those algorithms have developed rapidly, however, in fields outside statistics. That is one of the most important reasons that statisticians are not the mainstream of today's data science, both in theory and practice. Hence Python is catching up R as the most commonly used language in data science. It is due to the data scientists background rather than the language itself.  Since 2000, the approaches to get information out of data have been shifting from traditional statistical models to a more diverse toolbox named machine learning. 
+
+What is the driving force behind the shifting trend? John Tukey identified four forces driving data analysis (there was no “data science”  back to 1962):
+
+1. The formal theories of math and statistics 
+1. Acceleration of developments in computers and display devices 
+1. The challenge, in many fields, of more and ever larger bodies of data 
+1. The emphasis on quantification in an ever wider variety of disciplines 
+
+Tukey’s 1962 list is surprisingly modern. Let's inspect those points in today's context. People usually develop theories way before they find the applications. In the past 50 years, statisticians, mathematician, and computer scientists have been laying the theoretical groundwork for constructing "data science" today. The development of computers enables us to apply the algorithmic models (they can be very computationally expensive) and deliver results in a friendly and intuitive way. The striking transition to the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems certain to be a major preoccupation of commercial life in coming decades. All the four forces John identified exist today and have been driving data science.   
+
+Benefiting from the increasing availability of digitized information, and the possibility to distribute that through the internet, the toolbox and application have been expanding fast. Today, people apply data science in a   plethora of areas including business, health, biology, social science, politics, etc. 
 
 ## Blind men and an elephant
 
@@ -49,11 +64,11 @@ Data engineering mainly involves in building the data pipeline infrastructure. I
 
 2. Production
     If you want to integrate the model or analysis into the production system, then you have to automate all data handling steps. It involves the whole pipeline from data access to preprocessing, modeling and final deployment. It is necessary to make the system work smoothly with all existing stacks. So it requires to monitor the system through some sort of robust measures, such as rigorous error handling, fault tolerance, and graceful degradation to make sure the system is running smoothly and the users are happy.
-
+    
+<!--
 ## Data Pipeline Infrastructure
 
 Data pipeline infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
-
-
+-->
 
 
