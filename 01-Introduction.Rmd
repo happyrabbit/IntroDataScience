@@ -56,6 +56,8 @@ It is annoying but true. So the answer to the question "what is data science?" d
 
 [^1]: This is based on [Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory](https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.
 
+### Data science role/skill tracks
+
 - **Engineering: the process of making everything else possible**
 
 You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
@@ -110,10 +112,92 @@ In unsupervised learning, there is no response variable. For a long time, the ma
 
 In most of the cases, you just need to use the out of the box algorithms to solve the problem. But in some situations, there isn't enough data to use machine learning model, or  the question doesn't fit neatly in the specifications of existing tools, or the model needs to incorporate some prior domain knowledge . You may need to develop new models to accommodate the subtleties of the problem at hand. For example, people use bayesian models to include domain knowledge as prior distribution.   
 
+
 <!--
 ## Data Pipeline Infrastructure
 
 Data pipeline infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
 -->
 
+### What kind of questions can data science solve?
 
+#### Prerequisites
+
+Data science is not a panacea and there are problems data science can't help. It is best to make a judgment as early in the analytical cycle as possible. Tell your clients honestly and clearly when you think data analytics can't give the answer they want. What kind of questions can data science solve? 
+
+1. Your question needs to be specific enough
+
+Look at two examples:
+
+* Question 1:  How can I increase product sales?
+* Question 2:  Is the new promotional tool introduced at the beginning of this year boosting the annual sales of P1197 in Iowa and Wisconsin? (P1197 is an impressive corn seed product from DuPont Pioneer)
+
+It is easy to see the difference between the two questions. Question 1 is a grammatically correct question, but it is proper for data analysis to answer. Why? It is too general. What is the response variable here? Product sales? Which product? Is it annual sales or monthly sales? What are the candidate predictors? You nearly can't get any useful information from the questions. In contrast, question 2 is much more specific. From the analysis point of view, the response variable is clearly "annual sales of P1197 in Iowa and Wisconsin". Even we don't know all the predictors, but the variable of interest is "the new promotional tool introduced early this year." We want to study the impact of the promotion of sales. You can start from there and move on to figure out other variables need to include in the model by further communication. 
+
+As a data scientist, you may start with something general and unspecific like question 1 and eventually get to question 2. Effective communication and in-depth domain knowledge about the business problem are essential to convert a general business question into a solvable analytical problem. Domain knowledge helps data scientist communicate with the language the other people can understand and obtain the required information. 
+
+However, defining the question and variables involved won't guarantee that you can answer it. For example, I encountered this situation with a well-defined supply chain problem. My client asked me to estimate the stock needed for a product in a particular area. Why can't this question be answered? I tried fitting a Multivariate Adaptive Regression Spline (MARS) model and thought I found a reasonable solution. But it turned out later that the data my client gave me was inaccurate. In this case, only estimates rather than actual values of past supply figures were available and there was no way to get accurate data. The lesson lends itself to the next point.
+
+2.  You need to have sound and relevant data
+
+One cannot make a silk purse out of a sow's ear. Data scientists need data, sound and relevant data. The supply problem is a case in point. There was relevant data, but not sound. All the later analytics based on that data was a building on sand. Of course, data nearly almost have noise, but it has to be in a certain range.  Generally speaking, the accuracy requirement for the independent variables of interest and response variable is higher than others. In question 2, it is data related to the "new promotion" and "sales of P1197".
+
+The data has to be helpful for the question. If you want to predict which product consumers are most likely to buy in the next three months,  you need to have historical purchasing data: the last buying time, the amount of invoice, coupons and so on. Information about customers' credit card number, ID number, the email address is not going to help.
+
+Often the quality of the data is more important than the quantity, but the quantity cannot be overlooked. In the premise of guaranteeing quality, usually the more data, the better.  If you have a specific and reasonable question, also sound and relevant data, then congratulations, you can start playing data science!
+
+#### Problem type
+
+Many of the data science books classify the various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on "problem-oriented" track. We first introduce different groups of real problems and then present which models can be used to answer the corresponding category of questions. 
+
+1. Description
+
+The basic analytic problem is to summarize and explore a data set with descriptive statistics (mean, standard deviation, and so forth) and visualization methods. It is the simplest problem and yet the most crucial and common one. You will need to describe and explore the dataset before moving on to more complex analysis. In the problem such as customer segmentation, after you cluster the sample, the next step is to figure out the profile of each class by comparing the descriptive statistics of the various variables. Questions of this kind are:
+
+* How does the annual income distribute?
+* Are there outliers?
+* What are the mean active days of different accounts?
+
+Data description is often used to check data, find the appropriate data preprocessing method, and demonstrate the model results.
+
+2. Comparison
+
+The first common problem is to compare different groups. Such as: Is A better in some way than B? Or more comparisons: Is there any difference among A, B, and C in a particular aspect? Here are some examples:
+
+* Are males more inclined to buy our products than females?
+* Are there any differences in customer satisfaction in different business districts?
+* Do soybean carrying a particular gene have higher oil content?
+
+For those problems, it is usually to start exploring from the summary statistics and visualization by groups. After a preliminary visualization, you can test the differences between treatment and control group statistically. The commonly used statistical tests are chi-square test, t-test, and ANOVA. There are also methods using Bayesian methods. In biology industry, such as new drug development, crop breeding, mixed effect models are the dominant technique.
+
+3. Clustering
+
+Clustering is a widespread problem, which is usually related to classification. Clustering answers questions like:
+
+* Which customers have similar product preference? 
+* Which printer performs a similar pattern to the broken ones?
+* How many different themes are there in the corpus?
+
+Note that clustering is unsupervised learning. The most common clustering algorithms include K-Means and Hierarchical Clustering. 
+
+4. Classification
+
+Usually, a labeled sample set is used as a training set to train the classifier. Then the classifier is used to predict the category of a future sample.  Here are some example questions:
+
+* Who is more likely to buy our product?
+* Is the borrower going to pay back?
+* Is it spam?
+
+There are hundreds of classifiers. In practice, we do not need to try all the models but several models that perform well generally. 
+
+5. Regression
+
+In general, regression deals with the problem of "how much is it?" and return a numerical answer.  In some cases, it is necessary to coerce the model results to be 0, or round the result to the nearest integer. It is the most common problem. 
+
+* What will be the temperature tomorrow?
+* What is the projected net income for the next season?
+* How much inventory should we have? 
+
+### Types of Algorithm 
+
+## What should data science do? 

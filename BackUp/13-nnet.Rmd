@@ -3,6 +3,7 @@ output:
   pdf_document: default
   html_document: default
 ---
+
 # Neural Network
 
 Neural Network and its derivatives are so far the most hyped models. Those models sound fancy and mysterious, but it is no more than a button push in the implementation (thanks to all kinds of software). They require nearly no data preprocessing, and the users do not need to understand the reason behind the algorithms.  People usually react to things they do not understand in two ways: deification and demonization. The black box model is the first case.  In any case, in this chapter will illustrate the basic mathematical background of the neural network, what need to pay attention when using it and how to use R to train the neural network model. Hope it will help to demystify neural network in some degree.  Many models are like T stage exaggerated clothes, they look fancy but not necessarily practical in real life.
