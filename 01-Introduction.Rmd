@@ -90,7 +90,26 @@ Storytelling with data is key to deliver the insights and drive better decision 
   * Who are your audience?
   * What do you want your audience to know or do?
   * How can you use data to help make your point?    
-  
+
+- **Modeling – the process of diving deeper into the data to discover the pattern we don't easily see**
+
+Even fancy machine learning model is the first thing comes to mind when people think about data science, unfortunately, in industry, it occupies the smallest part of data scientist's time. Nevertheless, it is a powerful set of tools.
+
+(1) Supervised learning
+
+In supervised learning, each observation of the predictor measurement(s) corresponds to a response measurement. There are two flavors of supervised learning: regression and classification. In regression, the response is a real number such as the total net sales in 2017, or the yield of corn next year. The goal is to approximate the response measurement as much as possible. In classification, the response is a class label, such as dichotomous response such as yes/no. The response can also have more than two categories, such as four segments of customers. A supervised learning model is a function that maps some input variables with corresponding parameters to a response y.  Modeling tuning is to adjust the value of parameters to make the mapping fit the given response.  In other words, it is to minimize the discrepancy between given responses and the model output. When the response y is a real value, it is intuitive to define discrepancy as the squared difference between model output and given the response. When y is categorical,  there are other ways to measure the difference, such as AUC or information gain. 
+
+(2) Unsupervised learning
+
+In unsupervised learning, there is no response variable. For a long time, the machine learning community overlooked unsupervised learning except for one called clustering. Moreover, many researchers thought that clustering was the only form of unsupervised learning. One reason is that it is hard to define the goal of unsupervised learning explicitly. Unsupervised learning can be used to do the following:
+    * Identify a good internal representation or pattern of the input that is useful for subsequent supervised or reinforcement learning, such as finding clusters.
+    * It is a dimension reduction tool that is to provide compact, low dimensional representations of the input, such as factor analysis. 
+    *  Provide a reduced number of uncorrelated learned features from original variables, such as principal component regression. 
+
+(3) Customized model development
+
+In most of the cases, you just need to use the out of the box algorithms to solve the problem. But in some situations, there isn't enough data to use machine learning model, or  the question doesn't fit neatly in the specifications of existing tools, or the model needs to incorporate some prior domain knowledge . You may need to develop new models to accommodate the subtleties of the problem at hand. For example, people use bayesian models to include domain knowledge as prior distribution.   
+
 <!--
 ## Data Pipeline Infrastructure
 
