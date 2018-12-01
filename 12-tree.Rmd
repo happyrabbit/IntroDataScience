@@ -8,7 +8,7 @@ The tree-based models can be used for regression and classification. They are po
 1. Can handle missing data
 1. Many pre-built packages make implementation as easy as a button push
 
-![](http://scientistcafe.com/book/Figure/treeEN.png)
+![](../linhui.org/book/Figure/treeEN.png)
 
 ## Splitting Criteria 
 

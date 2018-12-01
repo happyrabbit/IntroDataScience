@@ -12,8 +12,8 @@ bookdown::gitbook:
     download: [pdf, epub, mobi]
     edit: https://github.com/happyrabbit/IntroDataScience/%s
     sharing:
-      github: yes
-      facebook: no
+      github: true
+      facebook: false
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:
@@ -26,11 +26,12 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   template: null
-  pandoc_args: --chapters
+  pandoc_args: --top-level-division=chapter
   toc_depth: 3
-  toc_unnumbered: no
-  toc_appendix: yes
+  toc_unnumbered: false
+  toc_appendix: true
   quote_footer: ["\\VA{", "}{}"]
+  highlight_bw: true
 bookdown::epub_book:
   dev: svglite
   stylesheet: css/style.css

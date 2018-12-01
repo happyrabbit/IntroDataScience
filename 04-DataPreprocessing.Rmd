@@ -281,7 +281,9 @@ plot(density(x2),main=paste("left skew, skewnwss =",round(skewness(x2),2)), xlab
 plot(density(x1),main=paste("right skew, skewness =",round(skewness(x1),2)), xlab="X1")
 ```
 
-You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). There are different ways may help to remove skewness such as log, square root or inverse. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$[@BOXCOX1]. 
+<!--You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). -->
+
+There are different ways may help to remove skewness such as log, square root or inverse. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$[@BOXCOX1]. 
 
 $$
 x^{*}=\begin{cases}
@@ -320,7 +322,9 @@ hist(dat_bc$store_trans,main="Before Transformation",xlab="store_trans")
 hist(transformed$store_trans,main="After Transformation",xlab="store_trans")
 ```
 
-Before the transformation, the `stroe_trans` is skewed right. The situation is significantly improved after (figure\@ref(fig:bc)). `BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
+Before the transformation, the `stroe_trans` is skewed right. 
+<!--The situation is significantly improved after (figure\@ref(fig:bc)). -->
+`BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
 
 ```r
 (trans<-BoxCoxTrans(dat_bc$store_trans))
@@ -346,7 +350,8 @@ par(oma=c(2,2,1,2))
 scatterplotMatrix(sdat,diagonal="boxplot",smoother=FALSE)
 ```
 
-As figure \@ref(fig:scm) shows, `store_exp` has outliers. It is also easy to observe the pair relationship from the plot. `age` is negatively correlated with `online_trans` but positively correlated with `store_trans`.  It seems that older people tend to purchase from the local store. The amount of expense is positively correlated with income. Scatterplot matrix like this can reveal lots of information before modeling.
+<!--As figure \@ref(fig:scm) shows, `store_exp` has outliers. -->
+It is also easy to observe the pair relationship from the plot. `age` is negatively correlated with `online_trans` but positively correlated with `store_trans`.  It seems that older people tend to purchase from the local store. The amount of expense is positively correlated with income. Scatterplot matrix like this can reveal lots of information before modeling.
 
 In addition to visualization, there are some statistical methods to define outliers, such as the commonly used Z-score. The Z-score for variable $\mathbf{Y}$ is defined as:
 
@@ -416,7 +421,9 @@ par(oma=c(2,2,2,2))
 corrplot.mixed(correlation,order="hclust",tl.pos="lt",upper="ellipse")
 ```
 
-Here use `corrplot.mixed()` function to visualize the correlation matrix (figure \@ref(fig:corp)).  The closer the correlation is to 0, the lighter the color is and the closer the shape is to a circle. The elliptical means the correlation is not equal to 0 (because we set the `upper = "ellipse"`), the greater the correlation, the narrower the ellipse. Blue represents a positive correlation; red represents a negative correlation. The direction of the ellipse also changes with the correlation. The correlation coefficient is shown in the lower triangle of the matrix. The variables relationship from previous scatter matrix (figure \@ref(fig: scm)) are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong ( such as the correlation between `online_trans` and` age` is -0.85) which means the two variables contain duplicate information. 
+<!--Here use `corrplot.mixed()` function to visualize the correlation matrix (figure \@ref(fig:corp)).-->
+The closer the correlation is to 0, the lighter the color is and the closer the shape is to a circle. The elliptical means the correlation is not equal to 0 (because we set the `upper = "ellipse"`), the greater the correlation, the narrower the ellipse. Blue represents a positive correlation; red represents a negative correlation. The direction of the ellipse also changes with the correlation. The correlation coefficient is shown in the lower triangle of the matrix. 
+The variables relationship from previous scatter matrix are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong ( such as the correlation between `online_trans` and` age` is -0.85) which means the two variables contain duplicate information. 
 
 Section 3.5 of “Applied Predictive Modeling” [@APM] presents a heuristic algorithm to remove a minimum number of predictors to ensure all pairwise correlations are below a certain threshold:
 
