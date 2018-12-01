@@ -204,4 +204,4 @@ In general, regression deals with the problem of "how much is it?" and return a 
 ### Types of Algorithm 
 
 ## What should data science do? 
->>>>>>> e579ca57eb3617ff29670d152fab063fc1783f8c
+
