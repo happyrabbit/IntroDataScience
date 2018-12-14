@@ -5,8 +5,7 @@ Before tackling analytics problem, we start by introducing data to be analyzed i
 ## Customer Data for Clothing Company
 
 Our first data set represents customers of a clothing company who sells products
-in stores and online. This data is typical of what one might get from a company's marketing data base (the data base will have more data than the one we show here). This data includes 1000 customers for whom we have 3 types of data:
-
+in stores and online. This data is typical of what one might get from a company's marketing data base (the data base will have more data than the one we show here). This data includes 1000 customers: 
 
 1. Demography
     - `age`: age of the respondent
