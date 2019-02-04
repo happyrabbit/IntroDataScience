@@ -12,7 +12,7 @@ For outsiders, data science is whatever magic that can get useful information ou
 
 To declutter, let’s start from a brief history of data science. If you hit up the Google Trends website which shows search keyword information over time and check the term “data science,” you will find the history of data science goes back a little further than 2004. From the way media describes it, you may feel machine learning algorithms were just invented last month, and there was never "big" data before Google. That is not true. There are new and exciting developments of data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians and scientists of all types. 
 
-In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, even non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
+In the early 19th century when Legendre and Gauss came up the least squares method for linear regression, only physicists would use it to fit linear regression. Now, non-technical people can fit linear regressions using excel. In 1936 Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression. In the 1970s, Nelder and Wedderburn formulated “generalized linear model (GLM)” which: 
 
 > "generalized linear regression by allowing the linear model to be related to the response variable via a link function and by allowing the magnitude of the variance of each measurement to be a function of its predicted value." [from Wikipedia] 
 
@@ -60,9 +60,9 @@ It is annoying but true. So the answer to the question "what is data science?" d
 
 - **Engineering: the process of making everything else possible**
 
-You need to have the ability to get data before making sense of it. If you only deal with a small dataset, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+You need to have the ability to get data before making sense of it. If you only deal with small datasets, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
 
-Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day,  when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and perform ETL process. As the development of could service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
+Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day, when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and perform ETL process. As the development of cloud service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
 
 (1) Data environment
 
@@ -80,7 +80,7 @@ If you want to integrate the model or analysis into the production system, then 
 
 (1) Domain knowledge
 
-Domain knowledge is the understanding of the organization or industry where you apply data science. You can't make sense of data without context, such as what are the important metric for this kind of business, what are the business questions, what type of data they have and what do the data represent, how to translate a business need to data problem, what has been tried before and with what results, what are the accuracy-cost-time trade-offs, how can things fail, what other factors are not accounted, what are the reasonable assumptions and what are faulty. In the end, domain knowledge helps you to deliver the results in an audience-friendly way.
+Domain knowledge is the understanding of the organization or industry where you apply data science. You can't make sense of data without context, such as what are the important metric for this kind of business, what are the business questions, what type of data they have and what the data represents, how to translate a business need to a data problem, what has been tried before and with what results, what are the accuracy-cost-time trade-offs, how can things fail, what other factors are not accounted, what are the reasonable assumptions and what are faulty. In the end, domain knowledge helps you to deliver the results in an audience-friendly way.
 
 (2) Exploratory analysis
 
@@ -110,14 +110,64 @@ In unsupervised learning, there is no response variable. For a long time, the ma
 
 (3) Customized model development
 
-In most of the cases, you just need to use the out of the box algorithms to solve the problem. But in some situations, there isn't enough data to use machine learning model, or  the question doesn't fit neatly in the specifications of existing tools, or the model needs to incorporate some prior domain knowledge . You may need to develop new models to accommodate the subtleties of the problem at hand. For example, people use bayesian models to include domain knowledge as prior distribution.   
+In most of the cases, you just need to use the out of the box algorithms to solve the problem. But in some situations, there isn't enough data to use machine learning model, or  the question doesn't fit neatly in the specifications of existing tools, or the model needs to incorporate some prior domain knowledge . You may need to develop new models to accommodate the subtleties of the problem at hand. For example, people use bayesian models to include domain knowledge as prior distribution.
 
+**What others?**
+
+There are some common skills to have regardless the role people have in data science. 
+
+- **Data Preprocessing: the process nobody wants to go through yet nobody can avoid**
+
+No matter what role you hold in data science team, you will have to do some data cleaning which tend not to be the favorite part of anyone's job. Data preprocessing is the process of converting raw data into clean data that is proper for use.  
+
+(1) Data preprocessing for data engineer
+
+Getting data together from different sources and dumping them to a Data Lake, a dumping ground of amorphous data,  is far from the data schema analyst and scientist would use. A data lake is a storage repository that stores a vast amount of raw data in its native format, including XML, JSON, CSV, Parquet, etc.  It is a data cesspool rather than data lake.  It is data engineer's job to get a clean schema out of the data lake by transforming and formatting the data. Some common problems to resolve are:
+
+* Enforce new tables' schema to be the desired one
+* Repair broken records in newly inserted data
+* Aggregate the data to form the tables with a proper granularity
+
+(2) Data preprocessing for data analyst and scientist
+
+Not just for data engineer,  it also occupies a large fraction of  data analyst and scientist's working hours too.  A facility and a willingness to do these tasks are a prerequisite for a strong data scientist. If you are lucky as a data scientist,  you may end up spending 50% of your time doing this. If you are like most of us, you will spend over 80% of your working hours wrangling data.
+
+The data you get can still be very rough even it is from a nice and clean database that engineers set up. Dates and times are notorious for having many representations and time zone ambiguity.  You may also get market survey responds from your clients in an excel file where the table title could be multi-line, or the format does not meet the requirements, such as using 50% to represent the percentage rather than 0.5.  So in many cases, you need to set the data to be the right format before moving on to analysis. 
+
+Even the data is in the right format, there are other issues to solve before or during analysis. For example, variables can have missing values. Knowledge about the data collection process and what it will be used for is necessary to decide a way to handle the missing. Also, different models have different requirements on the data. For example, some model may require the variables are of consistent scale; some may be susceptible to outliers or collinearity, some may not be able to handle categorical variables and so on. The modeler has to preprocess the data to make it proper for the specific model.
 
 <!--
 ## Data Pipeline Infrastructure
 
 Data pipeline infrastructure is the ecosystem data science lives in. As someone with math/statistics background, it can be challenging to understand and get used to the infrastructure. 
 -->
+
+## What should data science do? 
+
+### Let's dream big
+
+Here is my two points for the question:
+
+* Make human better human by alleviating bounded rationality and minimize politics/emotion (rather than make machine more like human)
+* Strive for the “democratization” of data as legally possible: empower everyone in the organization to acquire, process, and leverage data in a timely and efficient fashion
+
+I know it is vague. Behold, I am going to explain more.  
+
+It’s easy to pretend that you are data driven. But if you get into the mindset to collect and measure everything you can, and think about what the data you’ve collected means, you’ll be ahead of most of the organizations that claim to be data driven. If you know the difference between "data driven" and "data confirmed", you'll be sailing at the right direction. What on earth is the difference?
+
+Imagine that you are buying something online and you need to decide whether or not to trust the product without seeing it physically. You see the  average rating is 4.1 out of 5.0. Is this a good score? It depends on your subconscious decision. If you really need the thing, you may happily cheer "It is more than 4.0!". If you are still not sure whether you need it, you can't help to check the few low rating reviews and tell yourself "look at those 1-star reviews". Sounds familiar? Psychologists call it confirmation bias.
+
+> Confirmation bias is the tendency to search for, interpret, favor, and recall information in a way that confirms one's preexisting beliefs or hypotheses [Wikipedia]
+
+So if you use data to feel better (confirm) decisions/assumptions that are already made before you analyze the data, that is "data confirmed". A clear sign of confirmation bias is when you go back to tinker the definition of your metic because the current result is not impressive. However, this bias is not always easy to see. It is not only misleading but also expensive. Because it could take data science team days of toil to boil everything down to that magic number and put the result on the report.  Data scientists are not totally immune to the bias either. Good news is that there is antidote to confirmation bias.
+
+Antidote 1: Do the brainstorming of data definition and set the goal in advance and resist temptation to move them later. In other words, the decision makers have to set decision criteria and the boundary up front in your data science project.  
+
+Antidote 2: Data democratization. Keep in mind that data isn’t just for the professionals or a small group of people in the organization that are "key decision makers". Everyone should be able to get access to and look at the data (as much as legally possible). In that way, there will be more eyes on the decision.
+
+The way data science can help is to provide a sound data framework and necessary training for the organization to access data with least amount of pain. Also be clear about the data definition and documentation. Data science holds the responsibility for data stewardship in the organization with high integrity. (there is data science for social good which is data science's responsibility for outside the organization but we are not going to discuss that here)
+
+That is still very abstract, I hear you. Now, Let's be more specific...
 
 ### What kind of questions can data science solve?
 
@@ -197,7 +247,3 @@ In general, regression deals with the problem of "how much is it?" and return a 
 * What will be the temperature tomorrow?
 * What is the projected net income for the next season?
 * How much inventory should we have? 
-
-### Types of Algorithm 
-
-## What should data science do? 
