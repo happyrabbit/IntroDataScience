@@ -1,1 +1,7 @@
 # Measuring Performance
+
+In order to compare different models, we need a way to measure model performance. There are different metrics to measure model performance. Sometimes, it is better to look at models through multiple lens. In this chapter, we will introduce some of the most common measurement metrics. 
+
+## Regression Model Performance
+
+## Classification Model Performance
