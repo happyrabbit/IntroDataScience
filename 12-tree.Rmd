@@ -1,6 +1,6 @@
 # Tree-Based Methods
 
-The tree-based models can be used for regression and classification. They are popular tools for many reasons: 
+The tree-based models can be used for regression and classification. They are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
 
 1. Do not require user to specify the form of the relationship between predictors and response
 1. Do not require (or if they do, very limited) data preprocessing and can handle different types of predictors (sparse, skewed, continuous, categorical, etc.)
@@ -8,7 +8,13 @@ The tree-based models can be used for regression and classification. They are po
 1. Can handle missing data
 1. Many pre-built packages make implementation as easy as a button push
 
+CART can refer to the tree model in general, but most of the time, it represents the algorithm initially proposed by Breiman [@Breiman1984]. After Breiman, there are many new algorithms, such as ID3, C4.5, and C5.0. C5.0 is an improved version of C4.5, but since C5.0 is not open source, the C4.5 algorithm is more popular. C4.5 was a major competitor of CART. But now, all those seem outdated. The most popular tree models are Random Forest (RF) and Gradient Boosting Machine (GBM). Despite being out of favor in application, it is important to understand the mechanism of the basic tree algorithm. Because the later models are based on the same foundation.  
+
+The original CART algorithm targets binary classification, and the later algorithms can handle multi-category classification. A single tree is easy to explain but has poor accuracy. More complicated tree models, such as RF and GBM, can provide much better prediction at the cost of explainability. As the model becoming more complicated, it is more like a black-box which makes it very difficult to explain the relationship among predictors. There is always a trade-off between explainability and predictability.
+
 ![](../linhui.org/book/Figure/treeEN.png)
+
+The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite to the real tree, the root is on the top, and the leaf is on the bottom. 
 
 ## Splitting Criteria 
 
