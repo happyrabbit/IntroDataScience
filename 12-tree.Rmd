@@ -14,7 +14,13 @@ The original CART algorithm targets binary classification, and the later algorit
 
 ![](../linhui.org/book/Figure/treeEN.png)
 
-The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite to the real tree, the root is on the top, and the leaf is on the bottom. 
+The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite to the real tree, the root is on the top, and the leaf is on the bottom. From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide split into branches. The leaf node contains the final "decision," final class the sample belongs to or the sample's value has. Here are the important definitions in the tree model:
+
+- Classification tree: the outcome is discrete 
+- Regression tree: the outcome is continuous (e.g. the price of a house, or a patient's length of stay in a hospital).
+- Non-leaf node (or split node): the algorithm needs to decide a split at each non-leaf node  (eg age <=25; 25<age<=35; age>35) 
+- Root node：the beginning node where the tree starts
+- Leaf node (or Terminal node): the node stops splitting. It has the final decision of the model.
 
 ## Splitting Criteria 
 
