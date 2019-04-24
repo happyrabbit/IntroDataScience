@@ -28,9 +28,20 @@ The reason why it is called "tree" is of course because the structure has simila
 - **Child**: the node directly after and connected to another node 
 - **Parent**: the converse notion of a child
 
-Single tree is easy to explain but has high variance and low accuracy, and hence is very limited. Minor changes in the training data can lead to large changes in the fitted tree. A series of rectangular decision regions defined by a single tree is too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
+Single tree is easy to explain but has high variance and low accuracy, and hence is very limited. Minor changes in the training data can lead to large changes in the fitted tree. A series of rectangular decision regions defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
 
 ## Splitting Criteria 
+
+The splitting criteria used by the regression tree and the classification tree are different. Like the regression tree, the goal of the classification tree is to divide the data into smaller, more homogeneous groups. Homogeneity means that most of the samples at each node are from one class. The original CART algorithm uses Gini impurity as the splitting criterion;  The later ID3, C4.5, and C5.0 use entropy. We will look at three most common splitting criteria.
+
+**Gini impurity**
+
+Gini impurity[@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree.  For a two-class problem, the Gini impurity for a given node is defined as:
+
+$$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
+
+where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer majors. Here is the simple classification tree result obtained with the gender variable.
+
 
 ## Tree Pruning
 
