@@ -40,8 +40,18 @@ Gini impurity[@Breiman1984] is a measure of non-homogeneity. It is widely used i
 
 $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
-where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer majors. Here is the simple classification tree result obtained with the gender variable.
+where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
+![](../linhui.org/book/Figure/giniEN.PNG)
+
+Let's calculate the Gini impurity for splitting node "Gender": 
+
+1. Gini impurity for "Female" = $\frac{1}{6}\times\frac{5}{6}+\frac{5}{6}\times\frac{1}{6}=\frac{5}{18}$
+2. Gini impurity for "Male" = $0\times1+1\times 0=0$
+
+The Gini impurity for the node "Gender" is the following weighted sum of the above two scores:
+
+$$\frac{3}{5}\times\frac{5}{18}+\frac{2}{5}\times 0=\frac{1}{6}$$
 
 ## Tree Pruning
 
