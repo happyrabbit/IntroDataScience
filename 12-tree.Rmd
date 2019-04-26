@@ -61,6 +61,12 @@ Looking at the samples in the following three nodes, which one is the easiest to
 
 ![](../linhui.org/book/Figure/InfoGainEN.PNG)
 
+A measure of the degree of disorder is entropy which is defined as:
+
+$$Entropy=-plog_{2}p-(1-p)log_{2}(1-p)$$
+
+where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50%－50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. 
+
 ## Tree Pruning
 
 ## Regression and Decision Tree Basic
