@@ -53,6 +53,14 @@ The Gini impurity for the node "Gender" is the following weighted sum of the abo
 
 $$\frac{3}{5}\times\frac{5}{18}+\frac{2}{5}\times 0=\frac{1}{6}$$
 
+The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is easy to calculate the Gini impurity drop from $\frac{1}{2}$ to $\frac{1}{6}$ after splitting. The split using "gender" causes a Gini impurity decrease of $\frac{1}{3}$.  The algorithm will use different variables to split the data and choose the one that causes the most substantial Gini impurity decrease.
+
+**Information gain**
+
+Looking at the samples in the following three nodes, which one is the easiest to describe? It is obviously C. Because all the samples in C are of the same type, so the description requires the least amount of information. On the contrary, B needs more information, and A needs the most information. In other words, C has the highest purity, B is the second, and A has the lowest purity. We need less information to describe nodes with lower purity. 
+
+![](../linhui.org/book/Figure/InfoGainEN.PNG)
+
 ## Tree Pruning
 
 ## Regression and Decision Tree Basic
