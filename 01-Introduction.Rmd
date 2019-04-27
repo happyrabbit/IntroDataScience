@@ -4,7 +4,7 @@
 
 Interest in data science is at an all-time high and has exploded in popularity in the last couple of years. Data scientists today are from various backgrounds. If someone ran into you ask what data science is all about, what would you tell them? It is not an easy question to answer. Data science is one of the areas that everyone is talking about, but no one can define. 
 
-Media has been hyping about “Data Science” “Big Data” and “Artificial Intelligence” over the fast few years. I like this amusing  statement from the internet:
+Media has been hyping about “Data Science” “Big Data” and “Artificial Intelligence” over the past few years. I like this amusing  statement from the internet:
 
 > “When you’re fundraising, it’s AI. When you’re hiring, it’s ML. When you’re implementing, it’s logistic regression.”
 
@@ -135,6 +135,8 @@ Not just for data engineer,  it also occupies a large fraction of  data analyst 
 The data you get can still be very rough even it is from a nice and clean database that engineers set up. Dates and times are notorious for having many representations and time zone ambiguity.  You may also get market survey responds from your clients in an excel file where the table title could be multi-line, or the format does not meet the requirements, such as using 50% to represent the percentage rather than 0.5.  So in many cases, you need to set the data to be the right format before moving on to analysis. 
 
 Even the data is in the right format, there are other issues to solve before or during analysis. For example, variables can have missing values. Knowledge about the data collection process and what it will be used for is necessary to decide a way to handle the missing. Also, different models have different requirements on the data. For example, some model may require the variables are of consistent scale; some may be susceptible to outliers or collinearity, some may not be able to handle categorical variables and so on. The modeler has to preprocess the data to make it proper for the specific model.
+
+Most of the people in data science today focus on one of the tracks. A small number of people are experts of two tracks. People that are proficient in all three? They are unicorns! 
 
 <!--
 ## Data Pipeline Infrastructure

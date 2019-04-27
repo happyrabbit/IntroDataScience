@@ -387,3 +387,370 @@ R and Python both provide nice visualization capability. And you can combine `sh
 ### GPU
 
 Many of the machine learning methods are based on linear algebra, especially deep learning algorithms. The CPU is not designed to handle large-size matrix linear algebra and using a GPU is an efficient alternative for matrix-based linear algebra computation. In Databricks Community Edition, we can also create a GPU machine to use. If you are interested in deep learning using Spark and GPU through Databrick, please watch this video for more detail: https://databricks.com/blog/2016/10/27/gpu-acceleration-in-databricks.html 
+
+## A2. R code for data simulation 
+
+### Customer Data for Clothing Company
+
+The simulation is not very straightforward and we will break it into three parts: 
+
+1. Define data structure: variable names, variable distribution, customer segment names, segment size
+1. Variable distribution parameters: mean and variance
+1. Iterate across segments and variables. Simulate data according to specific parameters assigned
+
+By organizing code this way, it makes easy for us to change specific parts of the simulation. For example, if we want to change the distribution of one variable, we can just change the corresponding part of the code.
+
+Here is code to define data structure:
+
+```r
+# set a random number seed to make the process repeatable
+set.seed(12345)
+# define the number of observations
+ncust<-1000
+# create a data frmae for simulated data
+seg_dat<-data.frame(id=as.factor(c(1:ncust)))
+# assign the variable names
+vars<-c("age","gender","income","house","store_exp","online_exp","store_trans","online_trans")
+# assign distribution for each variable
+vartype<-c("norm","binom","norm","binom","norm","norm","pois","pois")
+# names of 4 segments
+group_name<-c("Price","Conspicuous","Quality","Style")
+# size of each segments
+group_size<-c(250,200,200,350)
+```
+
+The next step is to define variable distribution parameters. There are 4 segments of customers and 8 parameters. Different segments correspond to different parameters. Let's store the parameters in a 4×8 matrix:
+
+
+```r
+# matrix for mean
+mus <- matrix( c(
+  # Price
+  60, 0.5, 120000,0.9, 500,200,5,2,
+  # Conspicuous
+  40, 0.7, 200000,0.9, 5000,5000,10,10,
+  # Quality
+  36, 0.5, 70000, 0.4, 300, 2000,2,15,
+  # Style
+  25, 0.2, 90000, 0.2, 200, 2000,2,20), ncol=length(vars), byrow=TRUE)
+```
+
+```r
+# matrix for variance
+sds<- matrix( c(
+  # Price
+  3,NA,8000,NA,100,50,NA,NA,
+  # Conspicuous
+  5,NA,50000,NA,1000,1500,NA,NA,
+  # Quality
+  7,NA,10000,NA,50,200,NA,NA,
+  # Style
+  2,NA,5000,NA,10,500,NA,NA), ncol=length(vars), byrow=TRUE)
+```
+
+Now we are ready to simulate data using the parameters defined above:
+
+```r
+# simulate non-survey data
+sim.dat<-NULL
+set.seed(2016)
+# loop on customer segment (i)
+ for (i in seq_along(group_name)){
+ 
+   # add this line in order to moniter the process
+   cat (i, group_name[i],"\n")
+ 
+  # create an empty matrix to store relevent data
+  seg<-data.frame(matrix(NA,nrow=group_size[i], ncol=length(vars)))  
+ 
+  # Simulate data within segment i
+  for (j in seq_along(vars)){
+ 
+    # loop on every variable (j)
+    if (vartype[j]=="norm"){
+      # simulate normal distribution
+      seg[,j]<-rnorm(group_size[i], mean=mus[i,j], sd=sds[i,j])
+    } else if (vartype[j]=="pois") {
+      # simulate poisson distribution
+      seg[,j]<-rpois(group_size[i], lambda=mus[i,j])
+    } else if (vartype[j]=="binom"){
+      # simulate binomial distribution
+      seg[,j]<-rbinom(group_size[i],size=1,prob=mus[i,j])
+    } else{
+      # if the distribution name is not one of the above, stop and return a message
+      stop ("Don't have type:",vartype[j])
+    }        
+  }
+  sim.dat<-rbind(sim.dat,seg)
+ }
+```
+
+Now let's edit the data we just simulated a little by adding tags to 0/1 binomial variables:
+
+```r
+# assign variable names
+names(sim.dat)<-vars
+# assign factor levels to segment variable
+sim.dat$segment<-factor(rep(group_name,times=group_size))
+# recode gender and house variable
+sim.dat$gender<-factor(sim.dat$gender, labels=c("Female","Male"))
+sim.dat$house<-factor(sim.dat$house, labels=c("No","Yes"))
+# store_trans and online_trans are at least 1
+sim.dat$store_trans<-sim.dat$store_trans+1
+sim.dat$online_trans<-sim.dat$online_trans+1
+# age is integer
+sim.dat$age<-floor(sim.dat$age)
+```
+
+In the real world, the data always includes some noise such as missing, wrong imputation. So we will add some noise to the data:
+
+```r
+# add missing values
+idxm <- as.logical(rbinom(ncust, size=1, prob=sim.dat$age/200))
+sim.dat$income[idxm]<-NA
+# add wrong imputations and outliers
+set.seed(123)
+idx<-sample(1:ncust,5)
+sim.dat$age[idx[1]]<-300
+sim.dat$store_exp[idx[2]]<- -500
+sim.dat$store_exp[idx[3:5]]<-c(50000,30000,30000)
+```
+
+So far we have created part of the data. You can check it using `summary(sim.dat)`. Next, we will move on to simulate survey data.
+
+```r
+# number of survey questions
+nq<-10
+# mean matrix for different segments 
+mus2 <- matrix( c(
+  # Price
+ 5,2,1,3,1,4,1,4,2,4,
+  # Conspicuous
+ 1,4,5,4,4,4,4,1,4,2,
+  # Quality
+ 5,2,3,4,3,2,4,2,3,3,
+  # Style
+ 3,1,1,2,4,1,5,3,4,2), ncol=nq, byrow=TRUE)
+
+# assume the variance is 0.2 for all
+sd2<-0.2
+sim.dat2<-NULL
+set.seed(1000)
+# loop for customer segment (i)
+for (i in seq_along(group_name)){
+  # the following line is used for checking the progress
+  # cat (i, group_name[i],"\n")
+  # create an empty data frame to store data
+  seg<-data.frame(matrix(NA,nrow=group_size[i], ncol=nq))  
+  # simulate data within segment
+  for (j in 1:nq){
+    # simulate normal distribution
+    res<-rnorm(group_size[i], mean=mus2[i,j], sd=sd2)
+    # set upper and lower limit
+    res[res>5]<-5
+    res[res<1]<-1
+    # convert continuous values to discrete integers
+    seg[,j]<-floor(res)
+  }
+  sim.dat2<-rbind(sim.dat2,seg)
+}
+
+names(sim.dat2)<-paste("Q",1:10,sep="")
+sim.dat<-cbind(sim.dat,sim.dat2)
+sim.dat$segment<-factor(rep(group_name,times=group_size))
+```
+
+### Customer Satisfaction Survey Data from Airline Company
+
+```r
+# Create a matrix of factor loadings
+# This pattern is called bifactor because it has a general factor for separate components.
+# For example, "Ease of making reservation" has general factor loading 0.33, specific factor loading 0.58
+# The outcome variables are formed as combinations of these general and specific factors
+loadings <- matrix(c (
+  # Ticketing
+  .33, .58, .00, .00,  # Ease of making reservation 
+  .35, .55, .00, .00,  # Availability of preferred seats
+  .30, .52, .00, .00,  # Variety of flight options
+  .40, .50, .00, .00,  # Ticket prices
+  # Aircraft
+  .50, .00, .55, .00,  # Seat comfort
+  .41, .00, .51, .00,  # Roominess of seat area
+  .45, .00, .57, .00,  # Availability of Overhead
+  .32, .00, .54, .00,  # Cleanliness of aircraft
+  # Service
+  .35, .00, .00, .50,  # Courtesy of flight attendant
+  .38, .00, .00, .57,  # Friendliness
+  .60, .00, .00, .50,  # Helpfulness
+  .52, .00, .00, .58,  # Food and drinks
+  # General   
+  .43, .10, .30, .30,  # Overall satisfaction
+  .35, .50, .40, .20,  # Purchase again
+  .25, .50, .50, .20), # Willingness to recommend
+  nrow=15,ncol=4, byrow=TRUE)
+  
+# Matrix multiplication produces the correlation matrix except for the diagonal
+cor_matrix<-loadings %*% t(loadings)
+# Diagonal set to ones
+diag(cor_matrix)<-1
+
+# use the mvtnorm package to randomly generate a data set with a given correlation pattern
+
+library(mvtnorm)
+# mean vectors of the 3 airline companies
+mu1=c(5,6,5,6, 7,8,6,7, 5,5,5,5, 6,6,6)
+mu2=c(3,3,2,3, 5,4,5,6, 8,8,8,8, 3,3,3)
+mu3=c(2,2,2,2, 8,8,8,8, 8,8,8,8, 8,8,8)
+
+# set random seed
+set.seed(123456) 
+# respondent ID
+resp.id <- 1:1000 
+
+library(MASS) 
+rating1 <- mvrnorm(length(resp.id),
+                     mu=mu1,
+                     Sigma=cor_matrix)
+rating2 <- mvrnorm(length(resp.id),
+                   mu=mu2,
+                   Sigma=cor_matrix)
+rating3 <- mvrnorm(length(resp.id),
+                   mu=mu3,
+                   Sigma=cor_matrix)
+
+
+# truncates scale to be between 1 and 9
+rating1[rating1>9]<-9
+rating1[rating1<1]<-1
+rating2[rating2>9]<-9
+rating2[rating2<1]<-1
+rating3[rating3>9]<-9
+rating3[rating3<1]<-1
+
+# Round to single digit
+rating1<-data.frame(round(rating1,0))
+rating2<-data.frame(round(rating2,0))
+rating3<-data.frame(round(rating3,0))
+rating1$ID<-resp.id
+rating2$ID<-resp.id
+rating3$ID<-resp.id
+rating1$Airline<-rep("AirlineCo.1",length(resp.id))
+rating2$Airline<-rep("AirlineCo.2",length(resp.id))
+rating3$Airline<-rep("AirlineCo.3",length(resp.id))
+rating<-rbind(rating1,rating2,rating3)
+
+# assign names to the variables in the data frame
+names(rating)<-c(
+  "Easy_Reservation",
+  "Preferred_Seats",
+  "Flight_Options",
+  "Ticket_Prices",
+  "Seat_Comfort",
+  "Seat_Roominess",
+  "Overhead_Storage",
+  "Clean_Aircraft",
+  "Courtesy",
+  "Friendliness",
+  "Helpfulness",
+  "Service",
+  "Satisfaction",
+  "Fly_Again",
+  "Recommend",
+  "ID",
+  "Airline")
+```
+
+### Swine Disease Breakout Data
+
+```r
+# sim1_da1.csv the 1st simulated data similar sim1_da2 and sim1_da3
+# sim1.csv simulated data, the first simulation dummy.sim1.csv dummy
+# variables for the first simulated data with all the baseline code for
+# simulation
+
+# setwd(dirname(file.choose())) library(grplasso)
+
+nf <- 800
+for (j in 1:20) {
+    set.seed(19870 + j)
+    x <- c("A", "B", "C")
+    sim.da1 <- NULL
+    for (i in 1:nf) {
+        # sample(x, 120, replace=TRUE)->sam
+        sim.da1 <- rbind(sim.da1, sample(x, 120, replace = TRUE))
+    }
+    
+    sim.da1 <- data.frame(sim.da1)
+    col <- paste("Q", 1:120, sep = "")
+    row <- paste("Farm", 1:nf, sep = "")
+    colnames(sim.da1) <- col
+    rownames(sim.da1) <- row
+    
+    # use class.ind() function in nnet package to encode dummy variables
+    library(nnet)
+    dummy.sim1 <- NULL
+    for (k in 1:ncol(sim.da1)) {
+        tmp = class.ind(sim.da1[, k])
+        colnames(tmp) = paste(col[k], colnames(tmp))
+        dummy.sim1 = cbind(dummy.sim1, tmp)
+    }
+    dummy.sim1 <- data.frame(dummy.sim1)
+    
+    # set 'C' as the baseline delete baseline dummy variable
+    
+    base.idx <- 3 * c(1:120)
+    dummy1 <- dummy.sim1[, -base.idx]
+    
+    # simulate independent variable for different values of r simulate
+    # based on one value of r each time r=0.1, get the link function
+    s1 <- c(rep(c(1/10, 0, -1/10), 40), rep(c(1/10, 0, 0), 40), rep(c(0, 
+        0, 0), 40))
+    link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/10
+    
+    # r=0.25
+    # c(rep(c(1/4,0,-1/4),40),rep(c(1/4,0,0),40),rep(c(0,0,0),40))->s1
+    # as.matrix(dummy.sim1)%*%s1-40/3/4->link1
+    
+    # r=0.5
+    # c(rep(c(1/2,0,-1/2),40),rep(c(1/2,0,0),40),rep(c(0,0,0),40))->s1
+    # as.matrix(dummy.sim1)%*%s1-40/3/2->link1
+    
+    # r=1 c(rep(c(1,0,-1),40),rep(c(1,0,0),40),rep(c(0,0,0),40))->s1
+    # as.matrix(dummy.sim1)%*%s1-40/3->link1
+    
+    # r=2 c(rep(c(2,0,-2),40),rep(c(2,0,0),40),rep(c(0,0,0),40))->s1
+    # as.matrix(dummy.sim1)%*%s1-40/3/0.5->link1
+    
+    
+    # calculate the outbreak probability
+    hp1 <- exp(link1)/(exp(link1) + 1)
+    
+    # based on the probability hp1, simulate response variable: res
+    res <- rep(9, nf)
+    for (i in 1:nf) {
+        res[i] <- sample(c(1, 0), 1, prob = c(hp1[i], 1 - hp1[i]))
+    }
+    
+    # da1 with response variable, without group indicator da2 without
+    # response variable, with group indicator da3 without response
+    # variable, without group indicator
+    
+    dummy1$y <- res
+    da1 <- dummy1
+    y <- da1$y
+    ind <- NULL
+    for (i in 1:120) {
+        ind <- c(ind, rep(i, 2))
+    }
+    
+    da2 <- rbind(da1[, 1:240], ind)
+    da3 <- da1[, 1:240]
+    
+    # save simulated data
+    write.csv(da1, paste("sim", j, "_da", 1, ".csv", sep = ""), row.names = F)
+    write.csv(da2, paste("sim", j, "_da", 2, ".csv", sep = ""), row.names = F)
+    write.csv(da3, paste("sim", j, "_da", 3, ".csv", sep = ""), row.names = F)
+    write.csv(sim.da1, paste("sim", j, ".csv", sep = ""), row.names = F)
+    write.csv(dummy.sim1, paste("dummy.sim", j, ".csv", sep = ""), row.names = F)
+}
+```
