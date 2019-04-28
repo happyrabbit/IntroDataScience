@@ -42,8 +42,6 @@ $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
 where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
-<<<<<<< HEAD:12-tree.Rmd
-=======
 ![](../linhui.org/book/Figure/giniEN.PNG)
 
 Let's calculate the Gini impurity for splitting node "Gender": 

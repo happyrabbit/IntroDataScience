@@ -65,11 +65,24 @@ surf3D(x1, x2, g4, colvar = g4, border = "black", colkey = FALSE, box = FALSE,
 
 You can see that this framework is very flexible. In essence, it is to do a non-linear transformation of the linear combination. You can use this way to capture varies of relationships. For example,$x_{1}x_{2}$ can be written as $\frac{(x_{1}+x_{2})^{2}-(x_{1}-x_{2})^{2}}{4}$, where $M=2$. All the higher order factors of $x_1$ and $x_2$ can be represented similarly. If $M$ is large enough, this framework can approximate any continuous function on $\mathbb{R}^{p}$. So the model family covers a board area, but with a price. That is the interpretability. Because the number of parameters increases with M and the mode is nested. 
 
-Since the advent of the PPR in 1981, it has not been widely used. It is due to the limitation of computational capability then. But this is a new idea which leads to the debut of the neural network model. 
+PPR in 1981 was a new idea then which lead to the debut of the neural network model. The basic technical idea behind deep learning has been around for decades. However, why did they take off in recent years? Here are some main drivers behind the rise. 
+
+First, thanks to the digitalization where lots of human activities are now in the digital realm and captured as data. So in the last 10 year, for many problems, we went from having a relatively small amount of data to accumulating a large amount of data. The traditional learning algorithms, like Logistic Regression, Support Vector Machine, Random Forest cannot effectively take advantage of such big data.  Second, the increasing computation power enables us to train a large neural network either on a CPU or GPU using big data. The scale of data and computation ability lead to much progress, but tremendous algorithmic innovation is also an important driver. Many of the innovations are about speeding up the optimization of neural network. One of the examples is to use ReLU as intermediate layer activation function instead of the previous sigmoid function. The change has made the optimization process much faster because the previous sigmoid function suffers from vanishing gradient. We will talk more about that in the following sections. Here we just want to show an example of the impact of algorithmic innovation.  
 
 ## Standard Neural Network
 
+### Logistic Regression as Neural Network
 
+Let's look at logistic regression from the lens of neural network. For a binary classification problem, like spam classifier, given $m$ samples including input feature vectors $x^{(i)}$ and output $y^{(i)}$:  $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$. For each sample $i$, there are $n_{x}$ input features.
+
+$$X=\left[\begin{array}{cccc}
+x_{1}^{(1)} & x_{1}^{(2)} & \dotsb & x_{1}^{(m)}\\
+x_{2}^{(1)} & x_{2}^{(2)} & \dotsb & x_{2}^{(m)}\\
+\vdots & \vdots & \vdots & \vdots\\
+x_{n_{x}}^{(1)} & x_{n_{x}}^{(2)} & \dots & x_{n_{x}}^{(m)}
+\end{array}\right]\in\mathbb{R}^{n_{x}\times m}$$
+
+$$y=[y^{(1)},y^{(2)},\dots,y^{(m)}] \in \mathbb{R}^{1 \times m}$$
 
 ## Convolutional Neural Network
 

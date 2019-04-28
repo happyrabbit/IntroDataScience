@@ -4,7 +4,8 @@ bookdown::gitbook:
   split_by: section
   config:
     toc:
-      collapse: none
+      collapse: section
+      scroll_highlight: yes
       before: |
         <li><a href="http://scientistcafe.com">Homepage</a></li>
       after: |

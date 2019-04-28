@@ -38,7 +38,7 @@ How strongly do you agree or disagree with the following statements:
 - Q7. I prefer to buy clothes online
 - Q8. Price is important 
 - Q9. I like to try different styles
-- Q10. I like to make a choice by myself and don't need too much of others' suggestions 
+- Q10. I like to make decision myself and don't need too much of others' suggestions 
 
 There are 4 segments of customers: 
 
@@ -50,7 +50,6 @@ There are 4 segments of customers:
 Let's check it:
 
 ```{r, echo=FALSE}
-library(readr)
 sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
 ```
 
@@ -65,7 +64,7 @@ Refer to Appendix for the simulation code.
 This data set is from a customer satisfaction survey for three airline companies. There are `N=1000` respondents and 15 questions. The market researcher asked respondents to recall the experience with different airline companies and assign a score (1-9) to each airline company for all the 15 questions. The higher the score, the more satisfied the customer to the specific item. The 15 questions are of 4 types (the variable names are in the  parentheses):
 
 
-- How satisfied are you with your______?
+- How satisfied are you with our______?
 
 1. Ticketing
     - Ease of making reservation（Easy_Reservation）
@@ -90,7 +89,7 @@ This data set is from a customer satisfaction survey for three airline companies
 Now check the data frame we have:
 
 ```{r, echo=FALSE}
-rating<-read_csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
+rating<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
 ```
 
 ```{r}
@@ -133,3 +132,6 @@ head(subset(disease_dat,select=c( "Q118.A","Q118.B","Q119.A","Q119.B","Q120.A","
 Here `y` indicates the outbreak situation of the farms. `y=1` means there is an outbreak in 5 years after the survey. The rest columns indicate survey responses. For example `Q120.A = 1` means the respondent chose `A` in Q120. We consider `C` as the baseline. 
 
 Refer to Appendix for the simulation code.
+
+## MNIST Dataset
+
