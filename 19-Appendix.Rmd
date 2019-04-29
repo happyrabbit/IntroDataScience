@@ -1,12 +1,12 @@
-# Appendix {-}
+# (APPENDIX) Appendix {-}
 
-## A1. Big Data Cloud Platform {-}
+# Big Data Cloud Platform
 
-### How Data becomes Science? {-}
+## How Data becomes Science?
 
 Data has been a friend of statistician for hundreds of years. Tabulated data are the most familiar format that we use daily. People used to store data on papers, tapes, diskettes, or hard drives. Only recently, with the development of the computer, hardware, software, and algorithms, the volume, variety, and speed of the data suddenly beyond the capacity of a traditional statistician. And data becomes a special science with the very first focus on a fundamental question: with a huge amount of data, how can we store the data and quick access and process the data. In the past a few years, by utilizing commodity hardware and open source software, a big data ecosystem was created for data storage, data retrieval, and parallel computation. Hadoop and Spark have become a popular platform that enables data scientist, statistician, and business analyst to access the data and to build models. Programming skills in the big data platform have been the largest gap for a statistician to become a successful data scientist. However, with the recent wave of cloud computing, this gap is significantly reduced. Many of the technical details have been pushed to the background, and the user interface becomes much easier to learn.  Cloud systems also enable quick implementation to the production environment. Now data science is emphasis more on the data itself as well as models and algorithms on top of the data instead of platform and infrastructure. 
 
-### Power of Cluster of Computers {-}
+## Power of Cluster of Computers
 
 We are all familiar with our laptop/desktop computers which contain mainly three components to finish computation with data: (1) Hard disk, (2) Memory, and (3) CPU as shown in Figure 41 left. The data and codes are stored in the hard disk which has certain features such as relatively slow for reading and writes and relatively large capacity of around a few TB in today’s market. Memory is relatively fast for reading and writing but relatively small in capacity in the order of a few dozens of GB in today’s market. CPU is where all the computation is done. 
 
@@ -19,19 +19,19 @@ For statistical software such as R, the amount of data that it can process is li
 
 In the past, to use a cluster of computers, users must write code (such as MPI) to take care of how data is distributed and how the computation is done in a parallel fashion. Luckily with the recent new development, the cloud environment for big data analysis is more user-friendly. As data is typically beyond the size of one hard disk, the dataset itself is stored across different nodes’ hard disk (i.e. the Hadoop system mentioned below). When we perform analysis, we can assume the needed data is already distributed across many node’s memories in the cluster and algorithm are parallel in nature to leverage corresponding nodes’ CPUs to compute (i.e. the Spark system mentioned below). 
 
-#### Evolution of Clustering Computing {-}
+### Evolution of Clustering Computing
 
 Using computer clusters to solve general purpose data and analytics problems needs a lot of efforts if we have to specifically control every element and steps such as data storage, memory allocation, and parallel computation. Fortunately, high tech IT companies and open source communities have developed the entire ecosystem based on Hadoop and Spark. Users need only to know high-level scripting language such as Python and R to leverage computer clusters’ storage, memory and computation power.   
 
-#### Hadoop {-}
+### Hadoop
 
 The very first problem internet companies face is that a lot of data has been collected and how to better store these data for future analysis. Google developed its own file system to provide efficient, reliable access to data using large clusters of commodity hardware. The open source version is known as Hadoop Distributed File System (HDFS). Both systems use Map-Reduce to allocate computation across computation nodes on top of the file system. Hadoop in written in Java and writing map-reduce job using Java is a direct way to interact with Hadoop which is not familiar to many in the data and analytics community. To help better use Hadoop system, an SQL-like data warehouse system called Hive, and a scripting language for analytics interface called Pig were introduced for people with analytics background to interact with Hadoop system. Within Hive, we can create user defined function through R or Python to leverage the distributed and parallel computing infrastructure. Map-reduce on top of HDFS is the main concept of the Hadoop ecosystem. Each map-reduce operation requires retrieving data from hard disk, computation time, and then storing the result onto disk again. So, jobs on top of Hadoop require a lot of disk operation which may slow down the computation process.
 
-#### Spark {-}
+### Spark
 
 Spark works on top of distributed file system including HDFS with better data and analytics efficiency by leveraging in-memory operations and is more tailored for data processing and analytics. The spark system includes an SQL-like framework called Spark SQL and a parallel machine learning library called MLib. Fortunately for many in the analytics community, Spark also supports R and Python. We can interact with data stored in distributed file system using parallel computing across nodes easily with R and Python through the Spark API and do not need to worry about lower level details of distributed computing. We will introduce how to use R notebook to drive Spark computations. 
 
-### Introduction of Cloud Environment {-}
+## Introduction of Cloud Environment
 
 There are many cloud computing environments such as Amazon’s AWS which provides a complete list of functions for heavy-duty enterprise applications. For example, Netflix runs its business entirely on AWS and Netflix does not own any data centers. For beginners, Databricks provides an easy to use cloud system for learning purpose. Databricks is a company founded by the creators of Apache Spark and it provides a user-friendly web-based notebook environment that can create Hadoop/Spark/GPU cluster on the fly and run R/Python/Scala/SQL. We will use Databricks’ community edition to run demos in this book. Please note the content of this section is adopted from the following web pages:
 
@@ -212,7 +212,8 @@ prediction  %>%
     subtitle = "Use Spark.ML to predict cluster membership with the iris dataset."
   )
 ```
-### Summary {-}
+
+## Summary
 
 In the above a few sub-sections, we illustrated 
 
@@ -228,7 +229,7 @@ In the above a few sub-sections, we illustrated
 
 These procedures are pretty much covered the basics of big data analysis that a data scientist needs to know. The above steps are published as an R notebook: https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3725396058299890/1806228006848429/latest.html
 
-## Databases and SQL {-}
+# Databases and SQL
 
 Databases have been around for many years and efficiently store, organize, retrieve, and update data systematically. In the past, statisticians usually dealt with small datasets stored in Excel files and often did not interact with databases. Students from traditional statistics departments usually lack the needed database knowledge which is essential and required in an enterprise environment where data are stored in some form of database. Databases often contain a collection of tables and the relationship among these tables (i.e. schema).  The table is the fundamental structure for databases which contains rows and columns similar to data frames in R or Python pandas. Database management systems (DBMS) ensure data integration and security in real time operations. There are many different DBMS such as Oracle, SQL Server, MySQL, Teradata, Hive, Redshift and Hana. The majority of database operations are very similar among different DBMS, and Structured Query Language (SQL) is the standard language to use these systems. 
 
@@ -236,7 +237,7 @@ SQL became a standard of the American National Standards Institute (ANSI) in 198
 
 More recently data is stored in distributed system such as Hive or in-memory such as Hana. Most relational databases are row-based (i.e. data for each row are stored closely), whereas analytics workflows often favor column-based systems (i.e. data for each column are stored closely). Fortunately, as a database user, we only need to learn how to write SQL scripts to retrieve and manipulate data. Even though there are different implantations of SQL across different DBMS, SQL is nearly universal across relational database including Hive and Spark, which means once we know SQL, our knowledge can be transferred among different database systems. SQL is easy to learn even if you do not have previous experience. In this session, we will go over the key concepts in database and SQL. A more detailed description of database basic can be found through a list of YouTube videos using a specific textbook: https://www.youtube.com/playlist?list=PLtqstN-ayEb0H5AAo6_V5qEzWs0D-igpw 
 
-### Database, Table and View {-}
+## Database, Table and View
 
 A database is a collection of tables that are related to each other. A database has its own database name and each table has its name as well. We can think database is a “folder” where tables within a database are “files” within the folder. A table has rows and columns exactly as an R or pandas data frame. Each row (also called record) represents a unique instance of the subject and each column (also called field or attribute) represents a characteristic of the subject on the table. For each table, there is a special column called primary key which uniquely identifies each of its record. 
 
@@ -244,7 +245,7 @@ A database is a collection of tables that are related to each other. A database 
 Tables within a specific database contains related information and the schema of a database illustrates all fields in every table as well as how these tables and fields relate to each other. Tables can be joined and aggregated to return specific information. View a virtual table composed of fields from one or more base tables. View does not store data, and only store table structure. Also referred as a saved query. View is typically used to protect the data stored in the table and users can only query information from a view and cannot change or update its contents.
 
 
-### Sample Tables {-}
+## Sample Tables
 
 We will use two simple tables to illustrate basic SQL operations. These two tables are from an R dataset which contains the 50 states’ population and income. The first table is called "divisions" which has two columns: state and division and the first few rows are shown in the following table:
 
@@ -262,7 +263,7 @@ To illustrate missing information, three more rows are added at the end of the o
 
 Please watch the following YouTube video on how to upload a  .csv file to a Databricks table: https://youtu.be/H5LxjaJgpSk 
 
-### Basic SQL Statement {-}
+## Basic SQL Statement
 
 After logging into Databricks and creating two tables, you can now open a notebook and now choose the type of the notebook to be SQL. There are a few very easy SQL statement to help us understand the database and table structure:
 
@@ -277,7 +278,7 @@ After logging into Databricks and creating two tables, you can now open a notebo
 
 If you are familiar with a procedural programming language such as C and FORTRN or scripting languages such as R and Python, you may find SQL code a little bit strange. We should view SQL code by each specific chunk where it finishes a specific task. SQL codes descript a specific task and DBMS  will run and finish the task.
 
-### Simple SELECT Statement {-}
+### Simple SELECT Statement
 
 SELECT is the most used statements in SQL, especially for database users and business analyst. It is used to extract specific information (i.e. column or columns) FROM one or multiple tables. It can be used to combine multiple columns. WHERE can be used in SELECT statement to selected rows with specific conditions. ORDER BY can be used in SELECT statement to order the results in descending or ascending order. We can use * after SELECT to represent all columns in the table. Below is the basic structure of a SELECT statement:
 
@@ -299,7 +300,7 @@ order by state
 
 The SELECT statement is used to slicing and dicing the dataset as well as create new columns of interest using basic computation functions.
 
-### Aggregation Functions and GROUP BY {-}
+### Aggregation Functions and GROUP BY
 
 We can also use aggregation functions in SELECT statement to summarize the data. For example, count(col_name) function will return the total number of not NULL rows for a specific column. Other aggregation function on numerical values include min(col_name), max(col_name), avg(col_name). Let’s use metrics table again to illustrate aggregation functions. For aggregation function, it takes all the rows that match WHERE condition (if any) and return one number. The following statement will calculate the maximum, minimum, and average population for all states starts with letter A to E. 
 
@@ -321,7 +322,7 @@ group by division
 
 Another special aggregation function is to return distinct values for one column or a combination of multiple columns. Simple use SELECT DISTINCT col_name1, col_name2 in the first line of the SELECT statement. 
 
-### Join Multiple Tables {-}
+### Join Multiple Tables
 
 The database system is usually designed such that each table contains a piece of specific information and oftentimes we need to JOIN multiple tables to achieve a specific task. There are few types typically JOINs: inner join (keep only rows that match the join condition from both tables), left outer join (rows from inner join + unmatched rows from the first table), right outer join (rows from inner join + unmatched rows from the second table) and full outer join (rows from inner join + unmatched rows from both tables). The typical JOIN statement is illustrated below:
 
@@ -344,7 +345,7 @@ group by division
 order by division
 ```
 
-### Add More Content into a Table {-}
+### Add More Content into a Table
 
 We can use INSERT statement to add additional rows into a particular table, for example, we can add one more row to the metrics table by using the following query:
 
@@ -353,16 +354,16 @@ insert into metrics
 values ('Alberta', 4146, 7370)
 ```
 
-### Advanced Topics in Database {-}
+## Advanced Topics in Database
 
 Database management is a specific research area and there are many advanced topics such as how to efficiently query data using index; how to take care of data integrity when multiple users are using the same table; algorithm behind data storage (i.e. column-wise or row-wise data storage); how to design the database schema. Users can learn these advanced topics gradually. We hope the basic knowledge covered in this section will kick off the initial momentum to learn SQL. As you can see, it is fairly easy to write SQL statement to retrieve, join, slice, dice and aggregate data. All the SQL scripts can be found in this notebook: 
 https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/4213233595765185/1806228006848429/latest.html 
 
-## Other Useful Topics {-}
+# Other Useful Topics 
 
 For data scientist, in addition to the above-mentioned areas, the following topics are also very important to get some exposure.
 
-### Linux Operation System {-}
+## Linux Operation System 
 
 Many of the cloud environment, servers, and production systems are usually running on top of Linux operation system and some basic understanding of Linux is essential to solving various problems in a data science project. Linux system is a multiple-user system that runs robustly without interrupt for months. For a typical user, we can access to some of the functions through a commend-line type terminal. Here is a list of commonly used command: 
 
@@ -380,17 +381,17 @@ Many of the cloud environment, servers, and production systems are usually runni
 
 There are many Linux training material available online. Once you have a need to learn Linux, you can always learn by yourself through these online training materials. The Linux system will be configured by your system administrator, please always ask your colleague and system administrator for suggestions. Some of the commands may knock the entire system down or permanently delete useful information, please be very careful and never try any commands that you do not know exactly the consequence. There are horror stories about deleting files or taking down systems caused by misusing linux commands.
 
-### Visualization {-}
+## Visualization
 
 R and Python both provide nice visualization capability. And you can combine `shiny` and `flexdashboard` packages to build a dynamic and interactive dashboard using RStudio. However, in a business environment, Tableau is still the most used dashboard visualization system. More recently, HTML5 and D3 have become popular for data visualization. For a successful data scientist, we need to have our own recommendation of what types of visualization are useful.  We may not need to implement these dashboard systems on our own, but we need to at least guide the team that manages these systems. 
 
-### GPU {-}
+## GPU
 
 Many of the machine learning methods are based on linear algebra, especially deep learning algorithms. The CPU is not designed to handle large-size matrix linear algebra and using a GPU is an efficient alternative for matrix-based linear algebra computation. In Databricks Community Edition, we can also create a GPU machine to use. If you are interested in deep learning using Spark and GPU through Databrick, please watch this video for more detail: https://databricks.com/blog/2016/10/27/gpu-acceleration-in-databricks.html 
 
-## A2. R code for data simulation {-}
+# R code for data simulation
 
-### Customer Data for Clothing Company {-}
+## Customer Data for Clothing Company
 
 The simulation is not very straightforward and we will break it into three parts: 
 
@@ -560,7 +561,7 @@ sim.dat<-cbind(sim.dat,sim.dat2)
 sim.dat$segment<-factor(rep(group_name,times=group_size))
 ```
 
-### Customer Satisfaction Survey Data from Airline Company {-}
+## Customer Satisfaction Survey Data from Airline Company
 
 ```r
 # Create a matrix of factor loadings
@@ -660,7 +661,7 @@ names(rating)<-c(
   "Airline")
 ```
 
-### Swine Disease Breakout Data {-}
+## Swine Disease Breakout Data
 
 ```r
 # sim1_da1.csv the 1st simulated data similar sim1_da2 and sim1_da3

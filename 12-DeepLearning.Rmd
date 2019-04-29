@@ -71,18 +71,43 @@ First, thanks to the digitalization where lots of human activities are now in th
 
 ## Standard Neural Network
 
-### Logistic Regression as Neural Network
+### Logistic Regression as Neural Network {#logistic_reg_as_neural_network}
 
-Let's look at logistic regression from the lens of neural network. For a binary classification problem, like spam classifier, given $m$ samples including input feature vectors $x^{(i)}$ and output $y^{(i)}$:  $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$. For each sample $i$, there are $n_{x}$ input features.
+Let's look at logistic regression from the lens of neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have: 
 
-$$X=\left[\begin{array}{cccc}
+\begin{equation}
+X=\left[\begin{array}{cccc}
 x_{1}^{(1)} & x_{1}^{(2)} & \dotsb & x_{1}^{(m)}\\
 x_{2}^{(1)} & x_{2}^{(2)} & \dotsb & x_{2}^{(m)}\\
 \vdots & \vdots & \vdots & \vdots\\
 x_{n_{x}}^{(1)} & x_{n_{x}}^{(2)} & \dots & x_{n_{x}}^{(m)}
-\end{array}\right]\in\mathbb{R}^{n_{x}\times m}$$
+\end{array}\right]\in\mathbb{R}^{n_{x}\times m}
+(\#eq:input)
+\end{equation}
 
 $$y=[y^{(1)},y^{(2)},\dots,y^{(m)}] \in \mathbb{R}^{1 \times m}$$
+
+To predict if sample $i$ is a spam email, we first get the inactivated **neuro** $z^{(i)}$ by a linear transformation of the input $x^{(i)}$, which is $z^{(i)}=w^Tx^{(i)} + b$. Then we apply a function to "activate" the neuro  $z^{(i)}$ and we call it "activation function". In logistic regression, the activation function is sigmoid function and the "activated"  $z^{(i)}$ is the prediction:
+
+$$\hat{y}^{(i)} = \sigma(w^Tx^{(i)} + b)$$
+
+where $\sigma(z) = \frac{1}{1+e^{-z}}$. The following figure summarizes the process:
+
+
+<center>
+![](images/dnn0.png){width=30%}
+</center>
+
+To train the model, you need a cost function which is defined as equation \@ref(eq:costlogistic).
+
+\begin{equation}
+J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)}) = \frac{1}{m} \Sigma_{i=1}^{m} \{\ -y^{(i)}log(\hat{y}^{(i)})-(1-y^{(i)})log(1-\hat{y}^{(i)}) \}
+(\#eq:costlogistic)
+\end{equation}
+
+The general approach to minimizing  $J(w,b)$ is by gradient descent, also known as _back-propagation_.
+    
+### One layer neural network
 
 ## Convolutional Neural Network
 

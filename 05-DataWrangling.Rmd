@@ -778,13 +778,13 @@ anti_join(x,y,by="ID")
 
 There are other functions(`intersect()`, `union()` and `setdiff()`). Also the data frame version of `rbind` and `cbind` which are `bind_rows()` and `bind_col()`. We are not going to go through them all. You can try them yourself. If you understand the functions we introduced so far. It should be easy for you to figure out the rest.
 
-## Tidy and Reshape Data 
+### Tidy and Reshape Data 
 
  "Tidy data" represent the information from a dataset as data frames where each row is an observation, and each column contains the values of a variable (i.e., an attribute of what we are observing). Depending on the situation, the requirements on what to present as rows and columns may change. To make data easy to work with for the problem at hand, in practice, we often need to convert data between the "wide" and the "long" format. The process feels like kneading the dough.
  
 There are two commonly used packages for this kind of manipulations: `tidyr` and `reshape2`. We will show how to tidy and reshape data using the two packages. By comparing the functions to show how they overlap and where they differ.
 
-### ` reshape2` package
+#### ` reshape2` package
 
 It is a reboot of the previous package `reshape`.  Take a baby subset of our exemplary clothes consumers data to illustrate: 
 
@@ -826,7 +826,7 @@ dcast(mdat, house + gender ~ Channel, sum)
 
 In the above code,  what is the left side of `~` are variables that you want to group by. The right side is the variable you want to spread as columns. It will use the column indicating value from `melt()` before. Here is "`Expense`" .  
 
-### `tidyr` package
+#### `tidyr` package
 
 The other package that will do similar manipulations is `tidyr`. Let's get a subset to illustrate the usage. 
 
@@ -884,3 +884,5 @@ sepdat %>%
 ```
 
 The reshaping manipulations may be the trickiest part. You have to practice a lot to get familiar with those functions. Unfortunately, there is no shortcut. 
+
+### Data Wrangling Using Python
