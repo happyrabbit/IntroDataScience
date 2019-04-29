@@ -12,7 +12,9 @@ CART can refer to the tree model in general, but most of the time, it represents
 
 The original CART algorithm targets binary classification, and the later algorithms can handle multi-category classification. A single tree is easy to explain but has poor accuracy. More complicated tree models, such as RF and GBM, can provide much better prediction at the cost of explainability. As the model becoming more complicated, it is more like a black-box which makes it very difficult to explain the relationship among predictors. There is always a trade-off between explainability and predictability.
 
+<center>
 ![](../linhui.org/book/Figure/treeEN.png)
+</center>
 
 The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite to the real tree, the root is on the top, and the leaf is on the bottom. From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide split into branches. The leaf node contains the final "decision," final class the sample belongs to or the sample's value has. Here are the important definitions in the tree model:
 
@@ -42,14 +44,16 @@ $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
 where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
+<center>
 ![](../linhui.org/book/Figure/giniEN.PNG)
+</center>
 
 Let's calculate the Gini impurity for splitting node "Gender": 
 
 1. Gini impurity for "Female" = $\frac{1}{6}\times\frac{5}{6}+\frac{5}{6}\times\frac{1}{6}=\frac{5}{18}$
 2. Gini impurity for "Male" = $0\times1+1\times 0=0$
 
-The Gini impurity for the node "Gender" is the following weighted sum of the above two scores:
+The Gini impurity for the node "Gender" is the following weighted average of the above two scores:
 
 $$\frac{3}{5}\times\frac{5}{18}+\frac{2}{5}\times 0=\frac{1}{6}$$
 
@@ -59,13 +63,27 @@ The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is 
 
 Looking at the samples in the following three nodes, which one is the easiest to describe? It is obviously C. Because all the samples in C are of the same type, so the description requires the least amount of information. On the contrary, B needs more information, and A needs the most information. In other words, C has the highest purity, B is the second, and A has the lowest purity. We need less information to describe nodes with lower purity. 
 
+<center>
 ![](../linhui.org/book/Figure/InfoGainEN.PNG)
+</center>
 
 A measure of the degree of disorder is entropy which is defined as:
 
 $$Entropy=-plog_{2}p-(1-p)log_{2}(1-p)$$
 
 where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50%－50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. 
+
+Similarly, the entropy of a splitting node is the weighted average of the entropy of each child. In the above tree for the students, the entropy of the root node with all 50 students is  $-\frac{25}{50}log_{2}\frac{25}{50}-\frac{25}{50}log_{2}\frac{25}{50}=1$. Here an entropy of 1 indicates that the purity of the node is the lowest, that is, each type takes up half of the samples.
+
+The entropy of the split using variable "gender" can be calculated  in three steps:
+
+1. Entropy for "Female" = $-\frac{5}{30}log_{2}\frac{5}{30}-\frac{25}{30}log_{2}\frac{25}{30}=0.65$
+2. Entropy for "Male" = $0\times1+1\times 0=0$
+3. Entropy for the node "Gender" is the weighted average of the above two entropy numbers: $\frac{3}{5}\times 0.65+\frac{2}{5}\times 0=0.39$
+
+So entropy decreases from 1 to 0.39 after the split.
+
+**Sum of Square Error (SSE)**
 
 ## Tree Pruning
 

@@ -109,6 +109,10 @@ The general approach to minimizing  $J(w,b)$ is by gradient descent, also known 
     
 ### One layer neural network
 
+### Activation Function
+
+You need to choose activation function in the hidden layers. Logistic regression only uses sigmoid activation function. But there are other choices. Intermediate layers usually use different activation function than the last layer. Let's first look at some of the common options other than sigmoid.
+
 ## Convolutional Neural Network
 
 ## Recurrent Neural Network
