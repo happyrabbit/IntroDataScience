@@ -88,11 +88,37 @@ So entropy decreases from 1 to 0.39 after the split.
 The previous two metrics are for classification tree.  The SSE is the most widely used splitting metric for regression. Suppose you want to divide the data set $S$ into two groups of $S_{1}$ and $S_{2}$, where the selection of $S_{1}$ and $S_{2}$ needs to minimize the sum of squared errors:  
 
 \begin{equation}
-$$SSE=\Sigma_{i\in S_{1}}(y_{i}-\bar{y}_{1})^{2}+\Sigma_{i\in S_{2}}(y_{i}-\bar{y}_{2})^{2}$$
+SSE=\Sigma_{i\in S_{1}}(y_{i}-\bar{y}_{1})^{2}+\Sigma_{i\in S_{2}}(y_{i}-\bar{y}_{2})^{2}
 (\#eq:treesse)
 \end{equation}
 
-In equation \@ref(eq:treesse), $\bar{y}_{1}$ and $\bar{y}_{1}$  are the average of the sample in $S_{1}$ and $S_{2}$. 
+In equation \@ref(eq:treesse), $\bar{y}_{1}$ and $\bar{y}_{1}$  are the average of the sample in $S_{1}$ and $S_{2}$. The way regression tree grows is to automatically decide on the splitting variables and split points that can maximize **SSE reduction**.  Since this process  is essentially a recursive segmentation, this approach is also called recursive partitioning.
+
+
+Take a look at this simple regression tree for the height of 10 students:
+
+<center>
+![](images/varEN.png)
+</center>
+
+You can calculate the SSE using the following code: 
+
+```{r,echo=FALSE}
+y1=c(156,167,165,163,160,170,160)
+y2=c(172,180,176)
+y=c(y1,y2)
+sse1=sum((y1-mean(y1))^2)
+sse2=sum((y2-mean(y2))^2)
+sse=sum((y-mean(y))^2)
+```
+
+1. SSE for "Female" is 136
+2. SSE for "Male" is 32
+3. SSE for splitting node "Gender" is the sum of the above two numbers which is 168
+
+SSE for the 10 students in root node is 522.9.  After the split, SSE decreases from 522.9 to 168.
+
+If there is another possible way of splitting, divide it by major, as follows:
 
 ## Tree Pruning
 
