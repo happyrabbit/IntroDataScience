@@ -85,6 +85,15 @@ So entropy decreases from 1 to 0.39 after the split.
 
 **Sum of Square Error (SSE)**
 
+The previous two metrics are for classification tree.  The SSE is the most widely used splitting metric for regression. Suppose you want to divide the data set $S$ into two groups of $S_{1}$ and $S_{2}$, where the selection of $S_{1}$ and $S_{2}$ needs to minimize the sum of squared errors:  
+
+\begin{equation}
+$$SSE=\Sigma_{i\in S_{1}}(y_{i}-\bar{y}_{1})^{2}+\Sigma_{i\in S_{2}}(y_{i}-\bar{y}_{2})^{2}$$
+(\#eq:treesse)
+\end{equation}
+
+In equation \@ref(eq:treesse), $\bar{y}_{1}$ and $\bar{y}_{1}$  are the average of the sample in $S_{1}$ and $S_{2}$. 
+
 ## Tree Pruning
 
 ## Regression and Decision Tree Basic
