@@ -104,12 +104,12 @@ Take a look at this simple regression tree for the height of 10 students:
 You can calculate the SSE using the following code: 
 
 ```{r,echo=FALSE}
-y1=c(156,167,165,163,160,170,160)
-y2=c(172,180,176)
-y=c(y1,y2)
-sse1=sum((y1-mean(y1))^2)
-sse2=sum((y2-mean(y2))^2)
-sse=sum((y-mean(y))^2)
+y1 = c(156, 167, 165, 163, 160, 170, 160)
+y2 = c(172, 180, 176)
+y = c(y1, y2)
+sse1 = sum((y1 - mean(y1))^2)
+sse2 = sum((y2 - mean(y2))^2)
+sse = sum((y - mean(y))^2)
 ```
 
 1. SSE for "Female" is 136
@@ -119,6 +119,30 @@ sse=sum((y-mean(y))^2)
 SSE for the 10 students in root node is 522.9.  After the split, SSE decreases from 522.9 to 168.
 
 If there is another possible way of splitting, divide it by major, as follows:
+
+
+<center>
+![](images/varEN2.png)
+</center>
+
+```{r,echo=FALSE}
+y1 = c(156, 167, 160, 170, 172)
+y2 = c(180, 176, 165, 163, 160)
+# y=c(y1,y2)
+sse1 = sum((y1 - mean(y1))^2)
+sse2 = sum((y2 - mean(y2))^2)
+# sum((y-mean(y))^2)
+```
+
+In this situation: 
+
+1. SSE for "Math" is 184
+2. SSE for "English" is 302.8
+3. SSE for splitting node "Major" is the sum of the above two numbers which is 486.8
+
+Splitting data using variable "gender" reduced SSE from 522.9 to 168; using variable "major" reduced SSE from 522.9 to 486.8. Based on SSE reduction, you should use gender to split the data.
+
+The three splitting criteria mentioned above are the basis for building a tree model.
 
 ## Tree Pruning
 

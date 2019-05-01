@@ -105,7 +105,7 @@ J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)}) = \frac{1}{m} \Sigma
 (\#eq:costlogistic)
 \end{equation}
 
-The general approach to minimizing  $J(w,b)$ is by gradient descent, also known as _back-propagation_.
+The general approach to minimize  $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. 
     
 ### One layer neural network
 
