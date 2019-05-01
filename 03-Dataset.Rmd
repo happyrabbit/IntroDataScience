@@ -117,7 +117,7 @@ The last forty survey questions are also unimportant questions such that all thr
 
 $$\mathbf{\beta_g}=(0,0,0)\times \gamma,\ g=81,\dots,120$$
 
-The baseline coefficient $\beta_0$ is set to be $-\frac{40}{3}\gamma$ so that on average a farm have $50%$ of chance to have an outbreak. The parameter $\gamma$ in the above simulation is set to control the strength of the questions' effect on the outcome. In this simulation study, we consider the situations where $\gamma = 0.1, 0.25, 0.5, 1, 2$. So the parameter settings are:
+The baseline coefficient $\beta_0$ is set to be $-\frac{40}{3}\gamma$ so that on average a farm have 50% of chance to have an outbreak. The parameter $\gamma$ in the above simulation is set to control the strength of the questions' effect on the outcome. In this simulation study, we consider the situations where $\gamma = 0.1, 0.25, 0.5, 1, 2$. So the parameter settings are:
 
 $$\mathbf{\beta^{T}}=\left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-1}},...,\underset{question\ 40}{\underbrace{1,0,-1}},\underset{question\ 41}{\underbrace{1,0,0}},...,\underset{question\ 80}{\underbrace{1,0,0}},\underset{question\ 81}{\underbrace{0,0,0}},...,\underset{question\ 120}{\underbrace{0,0,0}}\right)*\gamma$$
 
