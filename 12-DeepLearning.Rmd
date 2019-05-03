@@ -105,8 +105,48 @@ J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)}) = \frac{1}{m} \Sigma
 (\#eq:costlogistic)
 \end{equation}
 
-The general approach to minimize  $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. 
-    
+The general approach to minimize  $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. Let's look at the gradient descent for logistic regression across m sample. The non-vectorized process is as follows.
+
+Initialize $J=0$, $dw_1=0$, $dw_2=0$, ... , $dw_{n_x}  = 0$, $db  = 0$   
+
+For i = 1, ..., m,  calculate: 
+
+$z^{(i)} = w^{T}x^{(i)} + b = w_1x_1^{(i)} + w_2x_2^{(i)} + ... + w_{n_x}x_{n_x}^{(i)} + b$
+
+$a^{(i)} = \hat{y}^{(i)}= \sigma(z^{(i)}) = \frac{1}{1+e^{-z^{(i)}}}$
+
+$J^{(i)} = -y^{(i)}loga^{(i)} - (1-y^{(i)})log(1-a^{(i)})$
+
+$\frac{dJ^{(i)}}{da^{(i)}} = \frac{1-y^{(i)}}{1-a^{(i)}} - \frac{y^{(i)}}{a^{(i)}}$
+
+$\frac{da^{(i)}}{dz^{(i)}} = a^{(i)}(1-a^{(i)})$
+
+$\frac{z^{(i)}}{dw_1} = x_1^{(i)}$
+
+...
+
+$\frac{z^{(i)}}{dw_{n_x}} = x_{n_x}^{(i)}$
+
+$\frac{dz^{(i)}}{db} = 1$
+
+$\frac{dJ^{(i)}}{dw_1} = \frac{dJ^{(i)}}{da^{(i)}}\frac{da^{(i)}}{dz^{(i)}}\frac{dz^{(i)}}{dw_1} = [a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}]x_1^{(i)}$
+
+...
+
+$\frac{dJ^{(i)}}{dw_{n_x}} = [a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}]x_{n_x}^{(i)}$
+
+$\frac{dJ^{(i)}}{db} = \frac{dJ^{(i)}}{da^{(i)}}\frac{da^{(i)}}{dz^{(i)}}\frac{dz^{(i)}}{db} = a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}$
+
+$J += J^{(i)}$
+
+$dw_1 += \frac{dJ^{(i)}}{dw_1}$
+
+...
+
+$dw_{n_x} += \frac{dJ^{(i)}}{dw_{n_x}}$
+
+$db += \frac{dJ^{(i)}}{db}$
+
 ### One layer neural network
 
 ### Activation Function
