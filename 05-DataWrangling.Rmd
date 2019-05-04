@@ -2,11 +2,9 @@
 
 This chapter focuses on some of the most frequently used data manipulations and shows how to implement them in R and Python. It is critical to explore the data with descriptive statistics (mean, standard deviation, etc.) and data visualization before analysis. Transform data so that the data structure is in line with the requirements of the model. You also need to summarize the results after analysis. 
 
-## Data Wrangling Using R
+## Read and write data
 
-### Read and write data
-
-#### `readr`
+### `readr`
 
 You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base R. Here we will introduce a more efficient package from RStudio in 2015 for reading and writing data: `readr` package. The corresponding functions are `read_csv()`, `read_table()` and `write_csv()`. The commands look quite similar, but `readr` is different in the following respects:
 
@@ -145,7 +143,7 @@ Some other useful materials:
 - [R data import/export manual](https://cran.r-project.org/doc/manuals/r-release/R-data.html#Acknowledgements)
 - `rio` package：https://github.com/leeper/rio
 
-#### `data.table`--- enhanced `data.frame`
+### `data.table`--- enhanced `data.frame`
 
 What is `data.table`? It is an R package that provides an enhanced version of `data.frame`.  The most used object in R is `data frame`.  Before we move on, let's briefly review some basic characters and manipulations of data.frame:
 
@@ -423,9 +421,9 @@ system.time(topic<-data.table::fread("https://raw.githubusercontent.com/happyrab
 It is clear that `read_csv()` is much faster than `read.csv()`. `fread()` is a little faster than `read_csv()`. As the size increasing, the difference will become for significant. Note that `fread()` will read file as `data.table` by default. 
 
 
-### Summarize data 
+## Summarize data 
 
-#### `apply()`, `lapply()` and `sapply()` in base R
+### `apply()`, `lapply()` and `sapply()` in base R
 
 There are some powerful functions to summarize data in base R, such as `apply()`, `lapply()` and `sapply()`. They do the same basic things and are all from "apply" family: apply functions over parts of data. They differ in two important respects:
 
@@ -778,13 +776,13 @@ anti_join(x,y,by="ID")
 
 There are other functions(`intersect()`, `union()` and `setdiff()`). Also the data frame version of `rbind` and `cbind` which are `bind_rows()` and `bind_col()`. We are not going to go through them all. You can try them yourself. If you understand the functions we introduced so far. It should be easy for you to figure out the rest.
 
-### Tidy and Reshape Data 
+## Tidy and Reshape Data 
 
  "Tidy data" represent the information from a dataset as data frames where each row is an observation, and each column contains the values of a variable (i.e., an attribute of what we are observing). Depending on the situation, the requirements on what to present as rows and columns may change. To make data easy to work with for the problem at hand, in practice, we often need to convert data between the "wide" and the "long" format. The process feels like kneading the dough.
  
 There are two commonly used packages for this kind of manipulations: `tidyr` and `reshape2`. We will show how to tidy and reshape data using the two packages. By comparing the functions to show how they overlap and where they differ.
 
-#### ` reshape2` package
+### ` reshape2` package
 
 It is a reboot of the previous package `reshape`.  Take a baby subset of our exemplary clothes consumers data to illustrate: 
 
@@ -826,7 +824,7 @@ dcast(mdat, house + gender ~ Channel, sum)
 
 In the above code,  what is the left side of `~` are variables that you want to group by. The right side is the variable you want to spread as columns. It will use the column indicating value from `melt()` before. Here is "`Expense`" .  
 
-#### `tidyr` package
+### `tidyr` package
 
 The other package that will do similar manipulations is `tidyr`. Let's get a subset to illustrate the usage. 
 
@@ -885,4 +883,3 @@ sepdat %>%
 
 The reshaping manipulations may be the trickiest part. You have to practice a lot to get familiar with those functions. Unfortunately, there is no shortcut. 
 
-### Data Wrangling Using Python

@@ -1,0 +1,60 @@
+---
+title: "GradientDescent"
+author: "Hui Lin"
+date: "5/3/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+Initialize $J=0$, $dw_1=0$, $dw_2=0$, ... , $dw_{n_x}  = 0$, $db  = 0$   
+
+For i = 1, ..., m,  calculate: 
+
+$z^{(i)} = w^{T}x^{(i)} + b = w_1x_1^{(i)} + w_2x_2^{(i)} + ... + w_{n_x}x_{n_x}^{(i)} + b$
+
+$a^{(i)} = \hat{y}^{(i)}= \sigma(z^{(i)}) = \frac{1}{1+e^{-z^{(i)}}}$
+
+$J^{(i)} = -y^{(i)}loga^{(i)} - (1-y^{(i)})log(1-a^{(i)})$
+
+$\frac{dJ^{(i)}}{da^{(i)}} = \frac{1-y^{(i)}}{1-a^{(i)}} - \frac{y^{(i)}}{a^{(i)}}$
+
+$\frac{da^{(i)}}{dz^{(i)}} = a^{(i)}(1-a^{(i)})$
+
+$\frac{z^{(i)}}{dw_1} = x_1^{(i)}$
+
+$\vdots$
+
+$\frac{z^{(i)}}{dw_{n_x}} = x_{n_x}^{(i)}$
+
+$\frac{dz^{(i)}}{db} = 1$
+
+$\frac{dJ^{(i)}}{dw_1} = \frac{dJ^{(i)}}{da^{(i)}}\frac{da^{(i)}}{dz^{(i)}}\frac{dz^{(i)}}{dw_1} = [a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}]x_1^{(i)}$
+
+$\vdots$
+
+$\frac{dJ^{(i)}}{dw_{n_x}} = [a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}]x_{n_x}^{(i)}$
+
+$\frac{dJ^{(i)}}{db} = \frac{dJ^{(i)}}{da^{(i)}}\frac{da^{(i)}}{dz^{(i)}}\frac{dz^{(i)}}{db} = a^{(i)}(1-y^{(i)})-(1-a^{(i)})y^{(i)}$
+
+$J += J^{(i)}$
+
+$dw_1 += \frac{dJ^{(i)}}{dw_1}$
+
+$\vdots$
+
+$dw_{n_x} += \frac{dJ^{(i)}}{dw_{n_x}}$
+
+$db += \frac{dJ^{(i)}}{db}$
+
+$J=\frac{J}{m}$, $dw_1=\frac{dw_1}{m}$, ... , $dw_{n_x}=\frac{dw_{n_x}}{m}$, $db =\frac{db}{m}$
+
+$w_1 = w_1 - \gamma dw_1$
+
+$\vdots$
+
+$w_{n_x} = w_{n_x} - \gamma dw_{n_x}$
+
+$b = b - \gamma db$
