@@ -111,6 +111,7 @@ The general approach to minimize  $J(w,b)$ is by gradient descent, also known as
 ![](images/GradientDescent.png){width=100%}
 </center>
 
+The forward propagation takes the current weights and calculates the prediction $\hat{h}^{(i)}$ and cost $J^{(i)}$. 
 
 
 ### One layer neural network

@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+Initialize $w_1$, $w_2$, ... , $w_{n_x}$, $b$   
+
+
 Initialize $J=0$, $dw_1=0$, $dw_2=0$, ... , $dw_{n_x}  = 0$, $db  = 0$   
 
 For i = 1, ..., m,  calculate: 
