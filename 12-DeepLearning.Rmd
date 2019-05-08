@@ -111,8 +111,11 @@ The general approach to minimize  $J(w,b)$ is by gradient descent, also known as
 ![](images/GradientDescent.png){width=100%}
 </center>
 
-The forward propagation takes the current weights and calculates the prediction $\hat{h}^{(i)}$ and cost $J^{(i)}$. The backward propagation calculates the gradient descent for the parameters. 
+First initialize $w_1$, $w_2$, ... , $w_{n_x}$, and $b$. Then plug in the initialized value to the forward and backward propagation.  The forward propagation takes the current weights and calculates the prediction $\hat{h}^{(i)}$ and cost $J^{(i)}$. The backward propagation calculates the gradient descent for the parameters. After iterating through all $m$ samples, you can calculate gradient descent for the parameters. Then update the parameter by:
+    $$w := w - \gamma \frac{\partial J}{\partial w}$$
+    $$b := b - \gamma \frac{\partial J}{\partial b}$$
 
+Repeat the progapation process using the updated parameter until the cost $J$ stabilizes. 
 
 ### One layer neural network
 
