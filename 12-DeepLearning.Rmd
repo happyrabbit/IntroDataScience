@@ -98,7 +98,8 @@ where $\sigma(z) = \frac{1}{1+e^{-z}}$. The following figure summarizes the proc
 ![](images/dnn0.png){width=30%}
 </center>
 
-To train the model, you need a cost function which is defined as equation \@ref(eq:costlogistic).
+
+There are two types of layers. The last layer connects directly to the output. All the rest are _intermediate layers_. Depending on your definition, we call it "0-layer neural network" where the layer count only considers _intermediate layers_. To train the model, you need a cost function which is defined as equation \@ref(eq:costlogistic).
 
 \begin{equation}
 J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)}) = \frac{1}{m} \Sigma_{i=1}^{m} \{\ -y^{(i)}log(\hat{y}^{(i)})-(1-y^{(i)})log(1-\hat{y}^{(i)}) \}
@@ -117,7 +118,13 @@ First initialize $w_1$, $w_2$, ... , $w_{n_x}$, and $b$. Then plug in the initia
 
 Repeat the progapation process using the updated parameter until the cost $J$ stabilizes. 
 
-### One layer neural network
+### Deep Neural Network
+
+Before people coined the term _deep learning_, a neural network refers to _single hidden layer network_. Neural networks with more than one layers are called _deep learning_. 
+
+<center>
+![](images/dnn_str.png)
+</center>
 
 ### Activation Function
 

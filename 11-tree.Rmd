@@ -146,6 +146,12 @@ The three splitting criteria mentioned above are the basis for building a tree m
 
 ## Tree Pruning
 
+Pruning is the process that reduces the size of decision trees. It reduces the risk of overfitting by limiting the size of the tree or removing sections of the tree that provide little power.  
+
+**Limit the size**
+
+You can limit the tree size by setting some parameters.
+
 ## Regression and Decision Tree Basic
 
 ## Bagging Tree

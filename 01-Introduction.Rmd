@@ -52,15 +52,18 @@ Data science is the elephant. With the data science hype picking up stream, many
 
 > "We don’t see things as they are, we see them as we are. [by Anais Nin]"
 
-It is annoying but true. So the answer to the question "what is data science?" depends on who you are talking to. Who you may be talking to then? Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!).  Here are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
+It is annoying but true. So the answer to the question "what is data science?" depends on who you are talking to. Who you may be talking to then? Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!). 
+
+Here are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
 
 [^1]: This is based on [Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory](https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.
 
 ### Data science role/skill tracks
 
-- **Engineering: the process of making everything else possible**
 
-You need to have the ability to get data before making sense of it. If you only deal with small datasets, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+When people talk about all the machine learning and AI algorithms, they often over look the critical data engineering part that makes everything else possible. Data engineering is the unseen iceberg under the water surface.  Think your company need a data scientist? You are wrong if you haven't hired a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets, you may be able to get by with entering some numbers into a spreadsheet. As the data increasing in size, data engineering becomes a sophisticated discipline in its own right. 
+
+- **Engineering: the process of making everything else possible**
 
 Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day, when data is stored on local servers, computers or other devices, building the data infrastructure can be a humongous IT project which involves not only the software but also the hardware that used to store the data and perform ETL process. As the development of cloud service, data storage and computing on the cloud becomes the new norm. Data engineering today at its core is software engineering. Ensuring maintainability through modular, well-commented code and version control is fundamental.
 
