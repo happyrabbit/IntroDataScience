@@ -152,6 +152,8 @@ Pruning is the process that reduces the size of decision trees. It reduces the r
 
 You can limit the tree size by setting some parameters.
 
+- Minimum sample size at each node: Defining the minimum sample size at the node helps to prevent the leaf nodes having only one sample. The sample size can be a tuning parameter. If it is too large, the model tends to under-fit. If it is too small, the model tends to over-fit. In the case of severe class imbalance, the minimum sample size may need to be smaller because the number of samples in a particular class is small.
+
 ## Regression and Decision Tree Basic
 
 ## Bagging Tree
