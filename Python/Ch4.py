@@ -8,14 +8,19 @@ import numpy as np
 import math
 # from sklearn.impute import *
 from sklearn.preprocessing import Imputer
+from sklearn.impute import SimpleImputer
 from sklearn.preprocessing import StandardScaler
 from pandas.plotting import scatter_matrix
 import matplotlib.pyplot as plt
 
 ## load data
 sim_dat = pd.read_csv('https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv')
+
+## Check the head of the data
 sim_dat.head()
-sim_dat.describe()
+
+# Describe the data
+summary_dat = sim_dat.describe()
 
 ## find the position of bad values
 bad_obs = sim_dat['age'] > 100
@@ -29,20 +34,31 @@ sim_dat.loc[bad_obs, 'store_exp'] = np.NaN
 sim_dat['age'].hasnans
 sim_dat['store_exp'].hasnans
 
-
 ### Impute missing values with mean/median/mode
 
 ## If strategy='mean', then replace missing values using the mean along each column.
 ## Can only be used with numeric data.
 imp_mean = SimpleImputer(missing_values=np.NaN, strategy='mean')
+
 ## get only the columns need to be filled
 data_with_imputed_mean = imp_mean.fit_transform(sim_dat[['age', 'store_exp']])
+
+## Produce a copy of the data frame for imputation
+sim_dat_after_impute = sim_dat.copy()
+
+## Over write the two columns with imputed columns
+sim_dat_after_impute[['age', 'store_exp']] = data_with_imputed_mean
+
+## check if it is imputed successfully
+sim_dat_after_impute['age'].hasnans
+sim_dat_after_impute['store_exp'].hasnans
 
 ## If strategy='median', then replace missing values using the median along each column.
 ## Can only be used with numeric data.
 imp_median = SimpleImputer(missing_values=np.NaN, strategy='median')
 ## get only the columns need to be filled
 data_with_imputed_median = imp_median.fit_transform(sim_dat[['age', 'store_exp']])
+## You can over-write the two columns as before
 
 ## If strategy='most_frequent', then replace missing using the most frequent value along each column.
 ## Can be used with strings or numeric data.
