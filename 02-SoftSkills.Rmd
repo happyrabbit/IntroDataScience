@@ -2,44 +2,42 @@
 
 ## Comparison between Statistician and Data Scientist
 
-Statistics as a scientific area can be traced back to 1749 and statistician as a career has been around for hundreds of years with well-established theory and application. Data Scientist becomes an attractive career for only a few years along with the fact that data size and variety beyond the traditional statistician’s toolbox and the fast-growing of computation power. Statistician and data scientist have a lot of common backgrounds, but there are also some significant differences. 
+Statistics as a scientific area can be traced back to 1749 and statistician as a career has been around for hundreds of years with well-established theory and application. Data Scientist becomes an attractive career for only a few years along with the fact that data size and variety beyond the traditional statistician’s toolbox and the fast-growing of computation power. Statistician and data scientist have a lot of in common, but there are also significant differences.
 
 <center>
 ![Comparison of Statistician and Data Scientist](images/softskill1.png)
 </center>
 
-Both statistician and data scientist work closely with data. For the traditional statistician, the data is usually well-formatted text files with numbers and labels. The size of the data usually can be fitted in a PC’s memory. Comparing to statisticians, data scientists need to deal with more varieties of data: well-formatted data stored in a database system with size much larger than a PC’s memory or hard-disk; huge amount of verbatim text, voice, image, and video; real-time streaming data and other types of records. One particular power of statistics is that statistician can fit model and make an inference based on limited data. It is quite common that once the data is given and cleaned, the majority of the work is developed different models around the data. Today, data is relatively abundant, and modeling is just part of the overall effort. The focus is to deliver actionable results. Different from statisticians, data scientists, sometimes need to fit model on the cloud instead of reading data in since the data size is too large. From the entire problem-solving cycle, statisticians are usually not well integrated with the production system where data is obtained in real time; while data scientists are more embedded in the production system and closer to the data generation procedures. 
+Both statistician and data scientist work closely with data. For the traditional statistician, the data is usually well-formatted text files with numbers and labels. The size of the data usually can be fitted in a PC’s memory. Comparing to statisticians, data scientists need to deal with more varieties of data: 
 
-## Where Does Data Science Team Fits?
+- well-formatted data stored in a database system with size much larger than a PC’s memory or hard-disk;
+- huge amount of verbatim text, voice, image, and video;
+- real-time streaming data and other types of records. 
 
-During the past decade, a huge amount of data has become available and readily accessible for analysis in many companies across different business sectors. The size, complexity, and speed of increment of data suddenly beyond the traditional scope of statistical analysis or BI reporting as mentioned above. To leverage the big data, many companies have established new data science organizations. Companies have gone through different paths to create their data science and machine learning organizations. There are three major formats of data science teams: 
+One unique power of statistics is to make statistical inference based on a small set of data. Statisticians spend most of their time developing models and don't need to put too much effort on data cleaning. Today, data is relatively abundant, and modeling is only part of the overall effort, often a small part. Due to the active development of some open source communities, fitting models is not too far from button pushing. Data scientists instead spend lot of time preprocessing and wrangling the data before feeding them to the model. 
 
-(1) independent of any current organizations and the team report directly to senior leadership;   
-(2) within each business unit and the team report to business unit leaders;    
-(3) within in the traditional IT organizations and the team report to IT leaders.
-
-Companies are different in many aspects, but in general, the most efficient option to mine big data is a team of data scientist independent of business units and IT organizations. The independence enables the data science team to collaborate across business units and IT organizations more efficiently and the independence also provides flexibility and potential to solve corporate level strategic big data problems. For each business units, there are many business unit specific data science related problems and embedding data scientist within each business units is also an efficient way to solve business unit specific data science problems. The full cycle of data science projects from data to decision (i.e. Data -> Information -> Knowledge -> Insight -> Decision) is relatively difficult to achieve if the data science team is part of traditional IT organizations. 
+Different from statisticians, data scientists often focus on delivering actionable results and sometimes need to fit model on the cloud. The data can be too large to read in laptop.  From the entire problem-solving cycle, statisticians are usually not well integrated with the production system where data is obtained in real time; while data scientists are more embedded in the production system and closer to the data generation procedures.
 
 ## Beyond Data and Analytics
 
-Data scientists usually have a good sense of data and analytics, but data scientist project is more than just data and analytics. A data science project may involve people with many different roles:  
+Data scientists usually have a good sense of data and analytics, but data scientist project is more than that. A data science project may involve people with different roles, especially in a big company:
 
-- a business owner or leader to identify opportunities in business value; program managers to ensure each data science project fit into the overall technical program development; 
-- data owners and computation resource and infrastructure owners from IT department; 
-- dedicated team to make sure the data and model are under model governance and privacy guidelines; 
+- a business owner or leader to identify business value;
+- program manager to ensure the data science project fits into the overall technical program development and coordinate all parties to set periodical tasks so that the project meets the preset milestones and results;
+- data owner and computation resource and infrastructure owner from the IT department;
+- dedicated team to make sure the data and model are under model governance and privacy guidelines;
 - a team to implement, maintain and refresh the model;
-- project managers to coordinate all parties to set periodical tasks so that the project meets the preset milestones and delivery results; 
-- multiple rounds of discussion of resource allocation (i.e. who will pay for the data science project). 
+- multiple rounds of discussion of resource allocation among groups (i.e., who pay for the data science project).
 
-Effective communication and in-depth domain knowledge about the business problem are essential requirements for a successful data scientist. A data scientist will interact with people at various levels ranging from senior leaders who are setting the corporate strategies to front-line employees who are doing the daily work. A data scientist needs to have the capability to view the problem from 10,000 feet above ground, as well as down to the detail to the very bottom. To convert a business question into a data problem, a data scientist needs to communicate using the language the other people can understand and obtain the required information. 
+Effective communication and in-depth domain knowledge about the business problem are essential requirements for a successful data scientist. A data scientist may interact with people at various levels from senior leaders who set the corporate strategies to front-line employees who do the daily work. A data scientist needs to have the capability to view the problem from 10,000 feet above the ground, as well as down to the detail to the very bottom. To convert a business question into a data problem, a data scientist needs to communicate using the language the other people can understand and obtain the required information.
 
-## Data Scientist as a Leader
+In the entire process of data science project defining, planning, executing and implementing, every step involves the data scientist to ensure people correctly define the business problem  and reasonably evaluate the business value and success. Corporates are investing heavily in data science and machine learning with a very high expectation of return. 
 
-During the entire process of data science project defining, planning, executing and implementation, the data scientist lead needs to be involved in every step to ensure the business problem is defined correctly and the business value and success metric are evaluated reasonably. Corporates are investing heavily in data science and machine learning with a very high expectation of big return. There are too many opportunities to introduce unrealistic goal and business impact for a particular data science project. The leading data scientist need to be the leader in these discussions to define the goal backed by data and analytics. Many data science projects over promise in deliverables and too optimistic on the timeline and these projects eventually fail by not delivering the preset business impact within the timeline. As the data scientist in the team, we need to identify these issues early in the stage and communicate to the entire team to make sure the project has a realistic deliverable and timeline. The data scientist team also need to work closely with data owners to identify relevant internal and external data source and evaluate the quality of the data; as well as working closely with the computation infrastructure team to understand the computation resources (i.e. hardware and software) available for the data science project.
+However, it is easy to set unrealistic goal and wrongly estimate the business impact. The data scientist lead should navigate the discussions to make sure the goal can be backed by data and analytics. Many data science projects over promise and are too optimistic on the timeline. These projects eventually fail by not delivering the preset business impact within the timeline. As data scientists, we need to identify these issues early in the stage and communicate with the entire team to make sure the project has a realistic deliverable and timeline. The data scientist team also need to work closely with data owners to identify relevant internal and external data source and evaluate the quality of the data; as well as working closely with the infrastructure team to understand the computation resources (i.e. hardware and software) available for the data science project.
 
 ## Three Pillars of Knowledge
 
-The following picture summarizes the needed three pillars of knowledge to be a successful data scientist. 
+The following picture summarizes the three pillars of knowledge needed for a successful data scientist. 
 
 (1) A successful data scientist needs to have a strong technical background in data mining, statistics and machine learning. The in-depth understanding of modeling with the insight about data enable a data scientist to convert a business problem to a data science problem. 
 
