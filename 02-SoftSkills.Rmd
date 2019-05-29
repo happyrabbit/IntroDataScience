@@ -37,31 +37,64 @@ However, it is easy to set unrealistic goal and wrongly estimate the business im
 
 ## Three Pillars of Knowledge
 
-The following picture summarizes the three pillars of knowledge needed for a successful data scientist. 
+(1) Analytics knowledge and tool sets
 
-(1) A successful data scientist needs to have a strong technical background in data mining, statistics and machine learning. The in-depth understanding of modeling with the insight about data enable a data scientist to convert a business problem to a data science problem. 
+A successful data scientist needs to have a strong technical background in data mining, statistics and machine learning. The in-depth understanding of modeling with the insight about data enable a data scientist to convert a business problem to a data science problem.
 
-(2) A successful data scientist needs some domain knowledge to understand business problem. For any data science project, the data scientist need to collaborate with other team members and effective communication and leadership skills are critical, especially when you are the only data person in the room and you need to decide with uncertainty. 
+(2) Domain knowledge and collaboration
 
-(3) The last pillar is about computation environment and model implementation in big data platform. This used to be the most difficult one for a data scientist with statistics background (i.e. lack computer science or programming skills). The good news is that with the rise of cloud computation big data platform, this barrier is getting easier for a statistician to overcome and we will discuss in more detail in next chapter.
+A successful data scientist needs some domain knowledge to understand the business problem. For any data science project, the data scientist need to collaborate with other team members and effective communication and leadership skills are critical, especially when you are the only data person in the room and you need to decide with uncertainty.
 
+(3) (Big) data management and (new) IT skills
+
+The last pillar is about computation environment and model implementation in a big data platform. This used to be the most difficult one for a data scientist with statistics background (i.e. lack computer science or programming skills). The good news is that with the rise of cloud computation big data platform, it is easier for a statistician to overcome this barrier.
 <center>
 ![Comparison of Statistician and Data Scientist](images/softskill2.png)
 </center>
 
-## Common Pitfalls of Data Science Projects
+## Data Science Project Cycle
 
-Data science projects are usually complicated, and many of these data science projects eventually fail due to various reasons. We will briefly discuss a few common pitfalls in data science projects and how to avoid them.
+A data science project has various stages. Many textbooks and blogs focus on one or two specific stages and it is rare to see the end-to-end life cycle of data science projects. In fact, to get a good grasp of the end-to-end cycle requires many years of experience of doing real-world data science. We will share our opinions on that in this section. Seeing a holistic picture of the whole cycle helps you to better prepare for real-world applications.
 
-- **Solve the wrong problem:** data science project usually starts with a very vague description and a few rounds of detailed discussion with all stakeholders involved are needed to define the busses problem. There will be lots of opportunities to introduce misalignment when mapping the business problem into specific data science methods. Especially when the quality and availability of the data are not as good as what is expected at the first place. If not well-communicated during the project, the final data science solution may not be the right one to solve the business problem. As the data scientist (sometimes the only data scientist) in the room, we must understand the business problem thoroughly and communicate regularly to business partners especially there is a change of status to make sure everyone is aligned with the progress and final deliverables.
+### Types of Data Science Projects
 
-- **Over promise on business value:** business leaders usually have high expectation on data science projects and the goal of business value and deliverables sometimes are set unrealistic and eventually beyond the scope of available data and computation resource.  As the data scientist (sometimes the only data scientist) in the room, we must have our voice heard based on fact (i.e. data, analytics, and resources) instead of wishful thinking. Backed with fact-based evidence, it is easier to communicate what is a realistic goal for the entire team. 
+People often use data science project to describe any project that uses data to solve a business problem, including traditional business analytics or data visualization. Here we limit our discussion of data science projects that involve data and some statistical or machine learning models. The business problem itself gives us the flavor of the project, data is the raw ingredient to start with, and the model makes the dish. Different types of data science projects can be determined by the types of data used and the final model development and implementation.
 
-- **Too optimistic about the timeline:** there are lots of uncertainties in data science projects such as the data source availability and data quality, computation hardware and software, resource availability in the business team, implementation team and IT department, as well as project direction change which may delay the final delivery date. To have a better-estimated timeline, get as much detail as possible for all the needed tasks and estimated each task individually and reach out to each team member to confirm their availability. Most importantly, communicate with the entire team if there are blocking factors for the project in a prompt way such that everyone aware of the situation and potential impact on the timeline.
+#### Offline and online Data
 
-- **Too optimistic about data availability and quality:** the most important asset in data science project is data. Even though we are at the big data age, often there is not enough relevant data for the data science projects. The data quality is also a general problem for data science projects. A thorough data availability and quality check are needed at the beginning of the data science project to estimate the needed effort to obtain data as well as data cleaning. 
+There are offline and online data. Offline data are historical archived data stored in databases or data warehouses. With the development of data storage, the cost to store a large amount of data is cheap and offline data are very rich in general (for example website may track and store each individual user's mouse position, click and typing information while the user is visiting the website). Offline data is usually stored in a distributed system and it can be extracted in batch as raw materials to create features that can be used in model training. Online data are real-time information that can be feed to models to make automatic actions. Real-time information can changes frequently such as the keywords a customer is searching for. Capturing and using real-time online data requires the integration of machine learning to the production infrastructure. It used to be a steep learning curve for data scientists, but the cloud infrastructure makes it much easier.
 
-- **Model cannot be scaled:**  be careful if you use a subset of data to fit the model and then scale it to the entire dataset. When developing the model using a smaller dataset, we must keep in mind how much computation resources needed for the whole dataset. With limited computation resource, it is important to maximize the computation time in production to a reasonable level based on the business application when fits the model with a sample dataset. 
+#### Offline training and offline application
 
-- **Take too long to fail:** data science projects usually are trying to push the boundary of current applications to new territory, people do not expect all data science projects to be successful. Fail fast is good practice such that we can quickly find a better way to solve the problem. A data scientist needs to have an open mindset to not stuck with one idea or one approach for a long time to avoid taking too long to fail.
+This type of data science project is for a specific business problem which needs to be solved once or multiple times. But the dynamic nature of the business problem requires substantial work every time. One example of such a project is "whether a new workflow is going to improve efficiency." In this situation, we often use offline internal and external data, build models, and deliver the final results as a report to answer the specific business question. It is similar to the traditional business intelligence project but with more focus on data and model. Sometimes the data size and model complexity are beyond the capacity of a single computer. So you need to use distributed storage and computation. Since the model is based on the historical data and the output is a report, there is no need for real-time execution. Usually, there is no run-time constraint on the machine learning model unless the model is running beyond a reasonable time frame such as a few hours or a few days. We can call this type of data science project "offline training, offline application" project.
 
+#### Offline training and online application
+
+Another type of data science project is to use offline data for training and apply the trained model to real-time online data in the production environment. One example of such a project is "using historical data to train a personalized advertisement model, and then provides real-time ad recommendation when customers visit the website." The model is trained based on offline data, and then use a customer's online real-time data as features to run the model in real time to provide an automatic action. The model training is very similar to the "offline training, offline application" project, but as the trained model will be put to production, there are specific requirements such as features used in the offline training have to be available online in real time, and the online run-time of the model has to be short enough without impacting user experience. In most cases, data science projects in this category create continuous and scalable business value. We will use this type of data science project to describe the project cycle.
+
+#### Online training and online application
+
+For some business problems, it is so dynamic that even yesterday's data is out of date. For such cases, we can use online data to train the model and then applying it in real time. We call this type of data science project "online training, online application." This type of data science project requires high automation and low latency.
+
+### At the Planning Stage
+
+To ensure a successful data science project, a data-driven and fact-based planning stage is essential. With the recent big data and data science hype, there is a high demand for data science projects to create business value across different business sectors. Often times, these data science project proposals are initiated by the leaders of an organization. This top-down style data science projects usually have high visibility with certain human and computation resources pre-allocated. However, it is crucial to understand the business problem first and align the goal across different teams including 
+
+(1) the business team which may include members from the business operation team, business analyst, insight and reporting team; 
+
+(2) technology team which may include members from database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team; (3) project management team which may include program management team and product management team depending on the scope of the data science project.
+
+ To start the conversation, we can ask the following questions to everyone in the team:
+
+- What are the pain points in current business operation?
+- What data are available and how is the quality and quantity of the data?
+- What might be the most significant impacts of a data science project?
+- Are there any negative impact to other teams?
+- What computation resources are available for model training and model execution?
+- Can we define key metrics to compare and quantity business value?
+- Are there any data security, privacy and legal concerns?
+- What are the desired milestones, check points and timeline?
+- Is the final application online or offline?
+- Are the data online or offline?
+
+It is likely to have a series of intense meetings and heated discussions to frame the project to a reasonable scope. After the planning stage, we should be able to define a set of key metrics related to the project, identify some offline and online data sources, request needed computation resources, draft tentative timeline and milestones, and form a team of data scientist, data engineer, software developer, project manager and members from business operation.  Data scientists should play a major role in these discussions. If data scientist is not leading the data science project formulation, it is very likely the entire project will not reach the timeline and milestones.
