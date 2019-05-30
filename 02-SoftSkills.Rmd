@@ -84,7 +84,7 @@ To ensure a successful data science project, a data-driven and fact-based planni
 
 (2) technology team which may include members from database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team; (3) project management team which may include program management team and product management team depending on the scope of the data science project.
 
- To start the conversation, we can ask the following questions to everyone in the team:
+To start the conversation, we can ask the following questions to everyone in the team:
 
 - What are the pain points in current business operation?
 - What data are available and how is the quality and quantity of the data?
@@ -98,3 +98,15 @@ To ensure a successful data science project, a data-driven and fact-based planni
 - Are the data online or offline?
 
 It is likely to have a series of intense meetings and heated discussions to frame the project to a reasonable scope. After the planning stage, we should be able to define a set of key metrics related to the project, identify some offline and online data sources, request needed computation resources, draft tentative timeline and milestones, and form a team of data scientist, data engineer, software developer, project manager and members from business operation.  Data scientists should play a major role in these discussions. If data scientist is not leading the data science project formulation, it is very likely the entire project will not reach the timeline and milestones.
+
+### At the Modeling Stage
+
+Even though at the planning stage we already set some strategy, milestone, and timeline, data science projects are dynamic in nature and there could be uncertainties along the road. As a data scientist, clearly communicate any newly encountered difficulties during the modeling stage to the entire team is essential to keep the data science project progress. With the available data source identified at the planning stage, data clearing, data wrangling, and exploratory data analysis are great starting points toward modeling. Meanwhile, abstracting the business problem to be a set of statistical and machine learning problems is an iterative process. It is rare that business problems can be solved by using just one statistical or machine learning model. The ability to use a sequence of methods to decompose the business problem is one of the key responsibility for a senior data scientist. The process requires iterative rounds of discussions with the business team and data engineering team based on the new learning from each iteration. Each iteration includes both data related and model related part.
+
+#### Data related
+
+Data cleaning, data preprocessing and feature engineering are closely related procedures. The goal of these data-related procedures is to create usable variables or features for statistical and machine learning models. One important aspect of data related procedures is to make sure the data source we are using is a good representation of the situation where the final trained model will be applied. The exact same representation is rarely possible, and reasonable approximation is totally fine to start with. A data scientist has to be clear on the assumptions and communicate with the entire team the limitations of biased data and quantify its impact on the application. In data related part, sometimes the available data is not that relevant to the business problem we want to solve, and we have to collect more data.
+
+#### Model related
+
+There are different types of statistical and machine learning models, such as supervised learning, unsupervised learning, and causal inference. For each type, there are various algorithms, libraries, or packages readily available. To solve a business problem, you sometimes need to piece together a few methods at the model exploring and developing stage. This stage also includes model training, validation, and testing to make sure the model works well in the production environment; i.e., it is not overfitting and can be generalized. The model selection follows Occam’s razor, which is to choose the simplest among a set of compatible models. Before you try complicated models, it is a good practice to get some benchmark by additional business rules, common sense decision, or standard models (such as random forest for classification). 
