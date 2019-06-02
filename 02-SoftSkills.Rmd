@@ -110,3 +110,20 @@ Data cleaning, data preprocessing and feature engineering are closely related pr
 #### Model related
 
 There are different types of statistical and machine learning models, such as supervised learning, unsupervised learning, and causal inference. For each type, there are various algorithms, libraries, or packages readily available. To solve a business problem, you sometimes need to piece together a few methods at the model exploring and developing stage. This stage also includes model training, validation, and testing to make sure the model works well in the production environment; i.e., it is not overfitting and can be generalized. The model selection follows Occam’s razor, which is to choose the simplest among a set of compatible models. Before you try complicated models, it is a good practice to get some benchmark by additional business rules, common sense decision, or standard models (such as random forest for classification). 
+
+### At the Production Stage
+
+For offline application data science projects, the end product is often a detailed report with model result and output. However, for online application projects, a trained model is just halfway from the finish line. The offline data is stored and processed in a totally different environment from the online production environment. Building the online data pipeline and implementing machine learning models in a production environment requires lots of additional work. Even though recent advance in cloud infrastructure lowers the barrier dramatically, it still takes effort to implement an offline model in the online production system. Before you promote the model to production, there are two more steps to go: 
+
+1. shadow mode
+2. A/B testing
+
+A **shadow mode** is like an observation period when the data pipeline and machine learning models run as it is fully functional, but we only record the model output without any actions. Some people call it proof of concept (POC).  During POC, people frequently check the data pipeline and model and detect bugs such as a timeout or missing features, version conflict (for example python 2 v.s. python 3), data type mismatch, etc.
+
+Once the online model passes the shadow mode, **A/B testing** is the next stage. During A/B testing, all the incoming observations are randomly separated into two groups: control and treatment. The control group is going to skip the machine learning model, while the treatment group is going through the machine learning model. After that, people monitor a list of pre-defined key metrics during a specific time period to compare the control and treatment groups. The differences in these key metrics determine whether the machine learning model provides business value or not. Real applications can be complicated. For example, there can be multiple treatment groups, or hundreds, even thousands of A/B testing running by different teams at any given time.
+
+Once the A/B testing shows that the model provides significant business value, then you can put it into full production. It is ideal that the model runs as expected and continues to provide scalable values. However, the business can change and a machine learning model works now can break tomorrow, and features available now may not be available tomorrow. You need a monitoring system to automatically notify us when one or multiple features change. When the model performance degrades below a pre-defined a level, you need to fine-tune the parameters and thresholds, re-train the model with more recent data, add or remove features to improve model performance. Eventually, any model will fail or retire at some time.
+
+### Summary
+
+Data science end-to-end project cycle is a complicated process which requires close collaboration among many teams. Data scientist, maybe the only scientist in the team, has to lead the planning discussion and model development based on data available and clearly communicate key assumptions and uncertainties with the entire team. A data science project may fail at any stage, and a clear end-to-end cycle view of the project helps avoid some mistakes.
