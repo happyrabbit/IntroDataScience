@@ -155,3 +155,22 @@ The data used to build the models is always biased or unrepresentative to some e
 ###  Production Stage
 
 Now suppose you have found a model that works great for the training and testing data. If it is an online application,  you are halfway. The next is to put the model in production, which sounds like alien work for a data scientist. It is true that the data engineering team can help with model production. However, as a data scientist, you need to know the potential mistakes at this stage.  One big mistake is **missing A/B testing** and assuming that the model performance at model training/testing stays the same in the production environment. Unfortunately, the model trained and evaluated using historical data nearly never performs the same in the production environment. The data used in the offline training maybe significant different from online data and the business context may have changed.  If possible, machine learning models in production should always go through A/B testing to evaluate performance.
+
+In the model training stage, people usually focus on model performance, such as accuracy without paying too much attention to the model execution time. When a model runs online in real time, the total run time for each instance (i.e., model latency) should not impact the customer's user experience. Nobody wants to wait for even one second to see the results after click the "Search" button. In the production stage, feature availability is crucial to run a real-time model. Engineering resources are essential for model production. However, in traditional companies, it is common that a data science project  **fail to scale in real time applications** due to lack of computation capacity, engineering resources, or non-tech culture and environment.
+
+As the business problem evolve rapidly, the data and model in the production environment need to change accordingly or the performance of the model deteriorates over time. The online production environment is more complicated than model training and testing, for example, you pull online features from different resources, and some features may be missing at a specific time; the model may run into time out zone, and there are tons of different software and data exceptions that may happen. We need regular checkup during the entire life of the model cycle from implementation to retirement. Unfortunately, people often don't set the monitoring system for data science projects, and it is another common mistake: **missing necessary online checkup**. It is essential to set a monitoring dashboard and automatic alarms,  create model tuning, re-training, and retirement plans.
+
+### Summary
+
+The data science project is a combination of art and engineering. A data science project may fail in different ways. However, if we put data and business context at the center of the project, get familiar with the data science project cycle and proactively identify and avoid these potential mistakes, the data science project can provide significant business value. Here is the summary of the mistakes:
+
+- Solving the wrong problem
+- Over promise on business value
+- Too optimistic about the timeline
+- Too optimistic about data availability and quality
+- Unrepresentative data
+- Overfitting and obsession for complicated models
+- Take too long to fail
+- Missing A/B testing
+- Fail to scale in real-time applications
+- Missing necessary online checkup
