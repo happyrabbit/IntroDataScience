@@ -2,6 +2,20 @@
 
 This chapter focuses on some of the most frequently used data manipulations and shows how to implement them in R and Python. It is critical to explore the data with descriptive statistics (mean, standard deviation, etc.) and data visualization before analysis. Transform data so that the data structure is in line with the requirements of the model. You also need to summarize the results after analysis. 
 
+Load the R packages first:
+
+```{r, message=FALSE,results="hide"}
+# install packages from CRAN
+p_needed <- c('imputeMissings','caret','e1071','psych')
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
+
 ## Read and write data
 
 ### `readr`
@@ -23,7 +37,7 @@ You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base
 
 1. The killing character, in my opinion, is that `readr` provides **progress bar**. What makes you feel worse than waiting is not knowing how long you have to wait. 
 
-![](images/prograssbar.png)\ 
+![](images/prograssbar.png)
 
 The major functions of readr is to turn flat files into data frames:
 

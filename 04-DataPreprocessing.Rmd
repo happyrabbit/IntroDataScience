@@ -31,49 +31,97 @@ It is highly recommended to store each step of the data and the R code, making t
 
 Load the R packages first:
 
-```{r}
+<!--
+```r
 source("https://raw.githubusercontent.com/happyrabbit/CE_JSM2017/master/Rcode/00-course-setup.R")
+```
+-->
+
+```{r, message=FALSE,results="hide"}
+# install packages from CRAN
+p_needed <- c('imputeMissings','caret','e1071','psych')
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
 ```
 
 ## Data Cleaning
 
 After you load the data, the first thing is to check how many variables are there, the type of variables, the distributions, and data errors. Let's read and check the data:
 
-```r
-sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv ")
+```{r,  results="hide"}
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 summary(sim.dat)
 ```
 
-Are there any problems? Questionnaire response Q1-Q10 seem reasonable, the minimum is 1 and maximum is 5. Recall that the questionnaire score is 1-5. The number of store transactions (store_trans) and online transactions (store_trans) make sense too. Things need to pay attention are: 
+```pre
+      age           gender        income       house       store_exp    
+ Min.   : 16.0   Female:554   Min.   : 41776   No :432   Min.   : -500  
+ 1st Qu.: 25.0   Male  :446   1st Qu.: 85832   Yes:568   1st Qu.:  205  
+ Median : 36.0                Median : 93869             Median :  329  
+ Mean   : 38.8                Mean   :113543             Mean   : 1357  
+ 3rd Qu.: 53.0                3rd Qu.:124572             3rd Qu.:  597  
+ Max.   :300.0                Max.   :319704             Max.   :50000  
+                              NA's   :184                               
+   online_exp    store_trans     online_trans        Q1            Q2      
+ Min.   :  69   Min.   : 1.00   Min.   : 1.0   Min.   :1.0   Min.   :1.00  
+ 1st Qu.: 420   1st Qu.: 3.00   1st Qu.: 6.0   1st Qu.:2.0   1st Qu.:1.00  
+ Median :1942   Median : 4.00   Median :14.0   Median :3.0   Median :1.00  
+ Mean   :2120   Mean   : 5.35   Mean   :13.6   Mean   :3.1   Mean   :1.82  
+ 3rd Qu.:2441   3rd Qu.: 7.00   3rd Qu.:20.0   3rd Qu.:4.0   3rd Qu.:2.00  
+ Max.   :9479   Max.   :20.00   Max.   :36.0   Max.   :5.0   Max.   :5.00  
+                                                                           
+       Q3             Q4             Q5             Q6             Q7      
+ Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   :1.00   Min.   :1.00  
+ 1st Qu.:1.00   1st Qu.:2.00   1st Qu.:1.75   1st Qu.:1.00   1st Qu.:2.50  
+ Median :1.00   Median :3.00   Median :4.00   Median :2.00   Median :4.00  
+ Mean   :1.99   Mean   :2.76   Mean   :2.94   Mean   :2.45   Mean   :3.43  
+ 3rd Qu.:3.00   3rd Qu.:4.00   3rd Qu.:4.00   3rd Qu.:4.00   3rd Qu.:4.00  
+ Max.   :5.00   Max.   :5.00   Max.   :5.00   Max.   :5.00   Max.   :5.00  
+                                                                           
+       Q8            Q9            Q10              segment   
+ Min.   :1.0   Min.   :1.00   Min.   :1.00   Conspicuous:200  
+ 1st Qu.:1.0   1st Qu.:2.00   1st Qu.:1.00   Price      :250  
+ Median :2.0   Median :4.00   Median :2.00   Quality    :200  
+ Mean   :2.4   Mean   :3.08   Mean   :2.32   Style      :350  
+ 3rd Qu.:3.0   3rd Qu.:4.00   3rd Qu.:3.00                    
+ Max.   :5.0   Max.   :5.00   Max.   :5.00                    
+```
+
+Are there any problems? Questionnaire response Q1-Q10 seem reasonable, the minimum is 1 and maximum is 5. Recall that the questionnaire score is 1-5. The number of store transactions (`store_trans`) and online transactions (`online_trans`) make sense too. Things to pay attention are: 
 
 - There are some missing values. 
 - There are outliers for store expenses (`store_exp`). The maximum value is 50000. Who would spend $50000 a year buying clothes? Is it an imputation error? 
 - There is a negative value ( -500) in `store_exp ` which is not logical. 
 - Someone is 300 years old. 
 
-How to deal with that? Depending on the real situation, if the sample size is large enough, it will not hurt to delete those problematic samples. Here we have 1000 observations. Since marketing survey is usually expensive,  it is better to set these values as missing and impute them instead of deleting the rows. 
+How to deal with that? Depending on the real situation, if the sample size is large enough, it does not hurt to delete those problematic samples. Here we have 1000 observations. Since marketing survey is usually expensive, it is better to set these values as missing and impute them instead of deleting the rows. 
 
 
 ```r
 # set problematic values as missings
-sim.dat$age[which(sim.dat$age>100)]<-NA
-sim.dat$store_exp[which(sim.dat$store_exp<0)]<-NA
+sim.dat$age[which(sim.dat$age > 100)] <- NA
+sim.dat$store_exp[which(sim.dat$store_exp < 0)] <- NA
 # see the results
-summary(subset(sim.dat,select=c("age","income")))
+summary(subset(sim.dat, select = c("age", "store_exp")))
 ```
 
 ```pre
-      age            income      
- Min.   :16.00   Min.   : 41776  
- 1st Qu.:25.00   1st Qu.: 84930  
- Median :33.00   Median : 93023  
- Mean   :36.64   Mean   :109968  
- 3rd Qu.:45.00   3rd Qu.:121535  
- Max.   :69.00   Max.   :317476  
- NA's   :1  
+      age          store_exp      
+ Min.   :16.00   Min.   :  155.8  
+ 1st Qu.:25.00   1st Qu.:  205.1  
+ Median :36.00   Median :  329.8  
+ Mean   :38.58   Mean   : 1358.7  
+ 3rd Qu.:53.00   3rd Qu.:  597.4  
+ Max.   :69.00   Max.   :50000.0  
+ NA's   :1       NA's   :1        
 ```
 
-Now we will deal with the missing values in the data.
+Now let's deal with the missing values in the data.
 
 ## Missing Values
 
@@ -89,29 +137,39 @@ In the case of missing at random, a common method is to impute with the mean (co
 
 ```r
 # save the result as another object
-demo_imp<-impute(sim.dat,method="median/mode")
+demo_imp <- impute(sim.dat, method = "median/mode")
 # check the first 5 columns, there is no missing values in other columns
-summary(demo_imp[,1:5])
+summary(demo_imp[, 1:5])
 ```
 
 ```pre
       age           gender        income       house       store_exp      
- Min.   :16.00   Female:446   Min.   : 41776   No :372   Min.   :  155.8  
- 1st Qu.:25.00   Male  :326   1st Qu.: 84930   Yes:400   1st Qu.:  202.7  
- Median :33.00                Median : 93023             Median :  293.0  
- Mean   :36.63                Mean   :109968             Mean   : 1265.4  
- 3rd Qu.:45.00                3rd Qu.:121535             3rd Qu.:  540.2  
- Max.   :69.00                Max.   :317476             Max.   :50000.0 
+ Min.   :16.00   Female:554   Min.   : 41776   No :432   Min.   :  155.8  
+ 1st Qu.:25.00   Male  :446   1st Qu.: 87896   Yes:568   1st Qu.:  205.1  
+ Median :36.00                Median : 93869             Median :  329.8  
+ Mean   :38.58                Mean   :109923             Mean   : 1357.7  
+ 3rd Qu.:53.00                3rd Qu.:119456             3rd Qu.:  597.3  
+ Max.   :69.00                Max.   :319704             Max.   :50000.0
 ```
 
 After imputation, `demo_imp` has no missing value. This method is straightforward and widely used. The disadvantage is that it does not take into account the relationship between the variables. When there is a significant proportion of missing, it will distort the data. In this case, it is better to consider the relationship between variables and study the missing mechanism. In the example here, the missing variables are numeric. If the missing variable is a categorical/factor variable, the `impute()` function will impute with the mode.
 
-You can also use `preProcess()` function, but it is only for numeric variables, and can not impute categorical variables. Since missing values here are numeric, we can use the `preProcess()` function. The result is the same as the `impute()` function. `PreProcess()`  is a powerful function that can link to a variety of data preprocessing methods.  We will use the function later for other data preprocessing.
+You can also use `preProcess()` in package `caret`, but it is only for numeric variables, and can not impute categorical variables. Since missing values here are numeric, we can use the `preProcess()` function. The result is the same as the `impute()` function. `PreProcess()`  is a powerful function that can link to a variety of data preprocessing methods.  We will use the function later for other data preprocessing.
 
 ```r
-imp<-preProcess(sim.dat,method="medianImpute")
-demo_imp2<-predict(imp,sim.dat)
-summary(demo_imp2[,1:5])
+imp <- preProcess(sim.dat, method = "medianImpute")
+demo_imp2 <- predict(imp, sim.dat)
+summary(demo_imp2[, 1:5])
+```
+
+```pre
+      age           gender        income       house       store_exp      
+ Min.   :16.00   Female:554   Min.   : 41776   No :432   Min.   :  155.8  
+ 1st Qu.:25.00   Male  :446   1st Qu.: 87896   Yes:568   1st Qu.:  205.1  
+ Median :36.00                Median : 93869             Median :  329.8  
+ Mean   :38.58                Mean   :109923             Mean   : 1357.7  
+ 3rd Qu.:53.00                3rd Qu.:119456             3rd Qu.:  597.3  
+ Max.   :69.00                Max.   :319704             Max.   :50000.0  
 ```
 
 ### K-nearest neighbors
@@ -121,54 +179,46 @@ K-nearest neighbor (KNN) will find the k closest samples (Euclidian distance) in
 Use `preProcess()` to conduct KNN:
 
 ```r
-imp<-preProcess(sim.dat,method="knnImpute",k=5)
+imp <- preProcess(sim.dat, method = "knnImpute", k = 5)
 # need to use predict() to get KNN result
-demo_imp<-predict(imp,sim.dat)
-```
-```pre
-Error in `[.data.frame`(old, , non_missing_cols, drop = FALSE) : 
-  undefined columns selected
-```
-
-Now we get an error saying “undefined columns selected.”  It is because `sim.dat` has non-numeric variables. The `preProcess()` in the first line will automatically ignore non-numeric columns, so there is no error. However, there is a problem when using `predict()` to get the result. Removing those variable will solve the problem.
-
-```r
-# find factor columns
-imp<-preProcess(sim.dat,method="knnImpute",k=5)
-idx<-which(lapply(sim.dat,class)=="factor")
-demo_imp<-predict(imp,sim.dat[,-idx])
-summary(demo_imp[,1:3])
-```
-
-`lapply(data,class)` can return a list of column class. Here the data frame is `sim.dat`, and the following code will give the list of column class:
-
-```r
+demo_imp <- predict(imp, sim.dat)
 # only show the first three elements
-lapply(sim.dat,class)[1:3]
+lapply(sim.dat, class)[1:3]
 ```
 
-Comparing the KNN result with the previous median imputation, the two are very different. This is because when you tell the `preProcess()` function to use KNN (the option `method =" knnImpute"`), it will automatically standardize the data. Another way is to use Bagging tree (in the next section). Note that KNN can not impute samples with the entire row missing. The reason is straightforward. Since the algorithm uses the average of its neighbors if none of them has a value, what does it apply to calculate the mean?
+```pre
+      age                gender        income        
+ Min.   :-1.5910972   Female:554   Min.   :-1.43989  
+ 1st Qu.:-0.9568733   Male  :446   1st Qu.:-0.53732  
+ Median :-0.1817107                Median :-0.37606  
+ Mean   : 0.0000156                Mean   : 0.02389  
+ 3rd Qu.: 1.0162678                3rd Qu.: 0.21540  
+ Max.   : 2.1437770                Max.   : 4.13627 
+```
+
+The `preProcess()` in the first line will automatically ignore non-numeric columns.
+
+Comparing the KNN result with the previous median imputation, the two are very different. This is because when you tell the `preProcess()` function to use KNN (the option `method =" knnImpute"`), it will automatically standardize the data.
+Another way is to use Bagging tree (in the next section). Note that KNN can not impute samples with the entire row missing. The reason is straightforward. Since the algorithm uses the average of its neighbors if none of them has a value, what does it apply to calculate the mean?
+
 Let's append a new row with all values missing to the original data frame to get a new object called `temp`. Then apply KNN to `temp` and see what happens:
 
 ```r
-temp<-rbind(sim.dat,rep(NA,ncol(sim.dat)))
-imp<-preProcess(sim.dat,method="knnImpute",k=5)
-idx<-which(lapply(temp,class)=="factor")
+temp <- rbind(sim.dat, rep(NA, ncol(sim.dat)))
+imp <- preProcess(sim.dat, method = "knnImpute", k = 5)
+demo_imp <- predict(imp, temp)
 ```
 
-```r
-demo_imp<-predict(imp,temp[,-idx])
-```
 ```pre
 Error in FUN(newX[, i], ...) : 
   cannot impute when all predictors are missing in the new data point
 ```
 
-There is an error saying “cannot impute when all predictors are missing in the new data point”. It is easy to fix by finding and removing the problematic row:
+There is an error saying “`cannot impute when all predictors are missing in the new data point`”. It is easy to fix by finding and removing the problematic row(s):
 
 ```r
-idx<-apply(temp,1,function(x) sum(is.na(x)) )
-as.vector(which(idx==ncol(temp)))
+idx <- apply(temp, 1, function(x) sum(is.na(x)))
+as.vector(which(idx == ncol(temp)))
 ```
 
 It shows that row 1001 is problematic. You can go ahead to delete it.
@@ -178,9 +228,9 @@ It shows that row 1001 is problematic. You can go ahead to delete it.
 Bagging (Bootstrap aggregating) was originally proposed by Leo Breiman. It is one of the earliest ensemble methods [@bag1]. When used in missing value imputation,  it will use the remaining variables as predictors to train a bagging tree and then use the tree to predict the missing values. Although theoretically, the method is powerful,  the computation is much more intense than KNN. In practice, there is a trade-off between computation time and the effect.  If a median or mean meet the modeling needs, even bagging tree may improve the accuracy a little, but the upgrade is so marginal that it does not deserve the extra time. The bagging tree itself is a model for regression and classification. Here we use `preProcess()` to impute `sim.dat`:
 
 ```r
-imp<-preProcess(sim.dat,method="bagImpute")
-demo_imp<-predict(imp,sim.dat)
-summary(demo_imp[,1:5])
+imp <- preProcess(sim.dat, method = "bagImpute")
+demo_imp <- predict(imp, sim.dat)
+summary(demo_imp[, 1:5])
 ```
 
 ```pre
@@ -200,63 +250,28 @@ It is the most straightforward data transformation. It centers and scales a vari
 Let's standardize the variable `income` from `sim.dat`:
 
 ```r
-income<-sim.dat$income
+income <- sim.dat$income
 # calculate the mean of income
-mux<-mean(income,na.rm=T)
+mux <- mean(income, na.rm = T)
 # calculate the standard deviation of income
-sdx<-sd(income,na.rm=T)
+sdx <- sd(income, na.rm = T)
 # centering
-tr1<-income-mux
+tr1 <- income - mux
 # scaling
-tr2<-tr1/sdx
+tr2 <- tr1/sdx
 ```
 
-Or the function `preProcess()` in package `caret` can apply this transformation to a set of predictors. 
+Or the function `preProcess()` can apply this transformation to a set of predictors. 
 
 ```r
-sdat<-subset(sim.dat,select=c("age","income"))
-# set the "method" option
-trans<-preProcess(sdat,method=c("center","scale"))
+sdat <- subset(sim.dat, select = c("age", "income"))
+# set the 'method' option
+trans <- preProcess(sdat, method = c("center", "scale"))
 # use predict() function to get the final result
-transformed<-predict(trans,sdat)
+transformed <- predict(trans, sdat)
 ```
 
-Now the two variables are in the same scale: 
-
-```r
-summary(transformed)
-```
-
-Sometimes you only need to scale the variable. For example, if the model adds a penalty to the parameter estimates (such as $L_2$ penalty is ridge regression and $L_1$ penalty in LASSO), the variables need to have a similar scale to ensure a fair variable selection. I am a heavy user of this kind of penalty-based model in my work, and I used the following quantile transformation:
-
-$$
-x_{ij}^{*}=\frac{x_{ij}-quantile(x_{.j},0.01)}{quantile(x_{.j}-0.99)-quantile(x_{-j},0.01)}
-$$
-
-The reason to use 99% and 1% quantile instead of maximum and minimum values is to resist the impact of outliers.
-
-It is easy to write a function to do it:
-
-```r
-qscale<-function(dat){
-  for (i in 1:ncol(dat)){
-    up<-quantile(dat[,i],0.99)
-    low<-quantile(dat[,i],0.01)
-    diff<-up-low
-    dat[,i]<-(dat[,i]-low)/diff
-  }
-  return(dat)
-}
-```
-
-In order to illustrate, let's apply it to some variables from `demo_imp2:
-
-```r
-demo_imp3<-qscale(subset(demo_imp2,select=c("income","store_exp","online_exp")))
-summary(demo_imp3)
-```
-
-After transformation, most of the variables are between 0-1.
+Now the two variables are in the same scale. You can check the result using `summary(transformed)`. Note that there are missing values.
 
 ## Resolve Skewness
 
@@ -267,18 +282,18 @@ Skewness=0 means that the destribution is symmetric, i.e. the probability of fal
 
 
 
-```r 
-# skew, fig.cap='Shewed Distribution', out.width='80%', fig.asp=.75, # fig.align='center'
+```{r} 
 # need skewness() function from e1071 package
 set.seed(1000)
-par(mfrow=c(1,2),oma=c(2,2,2,2))
-# random sample 1000 chi-square distribution with df=2
-# right skew
-x1<-rchisq(1000,2, ncp = 0)
+par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
+# random sample 1000 chi-square distribution with df=2 right skew
+x1 <- rchisq(1000, 2, ncp = 0)
 # get left skew variable x2 from x1
-x2<-max(x1)-x1
-plot(density(x2),main=paste("left skew, skewnwss =",round(skewness(x2),2)), xlab="X2")
-plot(density(x1),main=paste("right skew, skewness =",round(skewness(x1),2)), xlab="X1")
+x2 <- max(x1) - x1
+plot(density(x2), main = paste("left skew, skewnwss =", round(skewness(x2), 
+    2)), xlab = "X2")
+plot(density(x1), main = paste("right skew, skewness =", round(skewness(x1), 
+    2)), xlab = "X1")
 ```
 
 <!--You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). -->
@@ -302,36 +317,48 @@ It is easy to see that this family includes log transformation ($\lambda=0$), sq
 describe(sim.dat)
 ```
 
+```pre
+             vars    n      mean       sd median   trimmed      mad ...
+age             1 1000     38.84    16.42     36     37.69    16.31
+gender*         2 1000      1.45     0.50      1      1.43     0.00
+income          3  816 113543.07 49842.29  93869 104841.94 28989.47
+house*          4 1000      1.57     0.50      2      1.58     0.00
+store_exp       5 1000   1356.85  2774.40    329    839.92   196.45
+online_exp      6 1000   2120.18  1731.22   1942   1874.51  1015.21
+store_trans     7 1000      5.35     3.70      4      4.89     2.97
+online_trans    8 1000     13.55     7.96     14     13.42    10.38
+...
+```
+
 It is easy to see the skewed variables.  If `mean` and `trimmed` differ a lot, there is very likely outliers. By default, `trimmed` reports mean by dropping the top and bottom 10%. It can be adjusted by setting argument `trim= `. It is clear that `store_exp` has outliers.
 
 As an example, we will apply Box-Cox transformation on `store_trans` and `online_trans`:
 
-```r
+```{r}
 # select the two columns and save them as dat_bc
-dat_bc<-subset(sim.dat,select=c("store_trans","online_trans"))
-(trans<-preProcess(dat_bc,method=c("BoxCox")))
+dat_bc <- subset(sim.dat, select = c("store_trans", "online_trans"))
+(trans <- preProcess(dat_bc, method = c("BoxCox")))
 ```
 
 The last line of the output shows the estimates of $\lambda$ for each variable.  As before, use `predict()` to get the transformed result:
 
-```r
-# bc, fig.cap='Box-Cox Transformation', out.width='80%', fig.asp=.75, # fig.align='center'
-transformed<-predict(trans,dat_bc)
-par(mfrow=c(1,2),oma=c(2,2,2,2))
-hist(dat_bc$store_trans,main="Before Transformation",xlab="store_trans")
-hist(transformed$store_trans,main="After Transformation",xlab="store_trans")
+```{r}
+transformed <- predict(trans, dat_bc)
+par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
+hist(dat_bc$store_trans, main = "Before Transformation", xlab = "store_trans")
+hist(transformed$store_trans, main = "After Transformation", xlab = "store_trans")
 ```
 
 Before the transformation, the `stroe_trans` is skewed right. 
 <!--The situation is significantly improved after (figure\@ref(fig:bc)). -->
 `BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
 
-```r
-(trans<-BoxCoxTrans(dat_bc$store_trans))
+```{r}
+(trans <- BoxCoxTrans(dat_bc$store_trans))
 ```
 
-```r
-transformed<-predict(trans,dat_bc$store_trans)
+```{r}
+transformed <- predict(trans, dat_bc$store_trans)
 skewness(transformed)
 ```
 
@@ -341,8 +368,7 @@ The estimate of $\lambda$ is the same as before (0.1). The skewness of the origi
 
 Even under certain assumptions we can statistically define outliers, it can be hard to define in some situations.  Box plot, histogram and some other basic visualizations can be used to initially check whether there are outliers. For example, we can visualize numerical non-survey variables in `sim.dat`:
 
-```r
-# scm, fig.cap='Use basic visualization to check outliers', out.width='80%', # fig.asp=.75, fig.align='center'
+```{r}
 # select numerical non-survey data
 sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
 # use scatterplotMatrix() function from car package
@@ -363,13 +389,13 @@ $$M_{i}=\frac{0.6745(Y_{i}-\bar{Y})}{MAD}$$
 
 Where MAD is the median of a series of $|Y_ {i} - \bar{Y}|$, called the median of the absolute dispersion. Iglewicz and Hoaglin suggest that the points with the Z-score greater than 3.5 corrected above are possible outliers. Let's apply it to `income`:
 
-```r
+```{r}
 # calculate median of the absolute dispersion for income
-ymad<-mad(na.omit(sdat$income))
+ymad <- mad(na.omit(sdat$income))
 # calculate z-score
-zs<-(sdat$income-mean(na.omit(sdat$income)))/ymad
+zs <- (sdat$income - mean(na.omit(sdat$income)))/ymad
 # count the number of outliers
-sum(na.omit(zs>3.5))
+sum(na.omit(zs > 3.5))
 ```
 
 According to modified Z-score, variable income has `r sum(na.omit(zs>3.5))` outliers. Refer to [@mad1] for other ways of detecting outliers.
@@ -386,18 +412,16 @@ where $x_{ij}$ represents the $i^{th}$ observation and $j^{th}$ variable.  As sh
 
 Function `spatialSign()` `caret` package can conduct the transformation. Take `income` and `age` as an example:
 
-```r 
-# sst, fig.cap='Spatial sign transformation', out.width='80%', fig.asp=.75, 
-# fig.align='center'}
+```{r} 
 # KNN imputation
-sdat<-sim.dat[,c("income","age")]
-imp<-preProcess(sdat,method=c("knnImpute"),k=5)
-sdat<-predict(imp,sdat)
+sdat <- sim.dat[, c("income", "age")]
+imp <- preProcess(sdat, method = c("knnImpute"), k = 5)
+sdat <- predict(imp, sdat)
 transformed <- spatialSign(sdat)
 transformed <- as.data.frame(transformed)
-par(mfrow=c(1,2),oma=c(2,2,2,2))
-plot(income ~ age,data = sdat,col="blue",main="Before")
-plot(income ~ age,data = transformed,col="blue",main="After")
+par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
+plot(income ~ age, data = sdat, col = "blue", main = "Before")
+plot(income ~ age, data = transformed, col = "blue", main = "After")
 ```
 
 Some readers may have found that the above code does not seem to standardize the data before transformation. Recall the introduction of KNN, `preProcess()`  with `method="knnImpute"` by default will standardize data.
@@ -406,24 +430,24 @@ Some readers may have found that the above code does not seem to standardize the
 
 It is probably the technical term known by the most un-technical people. When two predictors are very strongly correlated, including both in a model may lead to confusion or problem with a singular matrix. There is an excellent function in `corrplot` package with the same name `corrplot()` that can visualize correlation structure of a set of predictors. The function has the option to reorder the variables in a way that reveals clusters of highly correlated ones. 
 
-```r
-# corp, fig.cap='Correlation Matrix', out.width='80%', fig.asp=.75, 
-# fig.align='center'}
+```{r, warning=FALSE}
 # select non-survey numerical variables
-sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
+sdat <- subset(sim.dat, select = c("age", "income", "store_exp", "online_exp", 
+    "store_trans", "online_trans"))
 # use bagging imputation here
-imp<-preProcess(sdat,method="bagImpute")
-sdat<-predict(imp,sdat)
+imp <- preProcess(sdat, method = "bagImpute")
+sdat <- predict(imp, sdat)
 # get the correlation matrix
-correlation<-cor(sdat)
-# plot 
-par(oma=c(2,2,2,2))
-corrplot.mixed(correlation,order="hclust",tl.pos="lt",upper="ellipse")
+correlation <- cor(sdat)
+# plot
+par(oma = c(2, 2, 2, 2))
+corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", upper = "ellipse")
 ```
 
 <!--Here use `corrplot.mixed()` function to visualize the correlation matrix (figure \@ref(fig:corp)).-->
 The closer the correlation is to 0, the lighter the color is and the closer the shape is to a circle. The elliptical means the correlation is not equal to 0 (because we set the `upper = "ellipse"`), the greater the correlation, the narrower the ellipse. Blue represents a positive correlation; red represents a negative correlation. The direction of the ellipse also changes with the correlation. The correlation coefficient is shown in the lower triangle of the matrix. 
-The variables relationship from previous scatter matrix are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong ( such as the correlation between `online_trans` and` age` is -0.85) which means the two variables contain duplicate information. 
+
+The variables relationship from previous scatter matrix are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong ( such as the correlation between `online_trans` and`age` is `r correlation['online_trans','age']`) which means the two variables contain duplicate information. 
 
 Section 3.5 of “Applied Predictive Modeling” [@APM] presents a heuristic algorithm to remove a minimum number of predictors to ensure all pairwise correlations are below a certain threshold:
 
@@ -436,18 +460,20 @@ Section 3.5 of “Applied Predictive Modeling” [@APM] presents a heuristic alg
 
 The `findCorrelation()` function in package `caret` will apply the above algorithm.
 
-```r
-(highCorr<-findCorrelation(cor(sdat),cutoff=.75))
+```{r}
+(highCorr <- findCorrelation(cor(sdat), cutoff = 0.7))
 ```
-It returns the index of columns need to be deleted. It tells us that we need to remove the first column to make sure the correlations are all below 0.75.
+
+It returns the index of columns need to be deleted. It tells us that we need to remove the first column to make sure the correlations are all below 0.7.
 
 ```r
 # delete highly correlated columns
-sdat<-sdat[-highCorr]
+sdat <- sdat[-highCorr]
 # check the new correlation matrix
-cor(sdat)
+(cor(sdat))
 ```
-The absolute value of the elements in the correlation matrix after removal are all below 0.75. How strong does a correlation have to get, before you should start worrying about multicollinearity? There is no easy answer to that question. You can treat the threshold as a tuning parameter and pick one that gives you best prediction accuracy. 
+
+The absolute value of the elements in the correlation matrix after removal are all below 0.7. How strong does a correlation have to get, before you should start worrying about multicollinearity? There is no easy answer to that question. You can treat the threshold as a tuning parameter and pick one that gives you best prediction accuracy. 
 
 ## Sparse Variables
 
@@ -458,19 +484,18 @@ Other than the highly related predictors, predictors with degenerate distributio
 
 `nearZeroVar()` function in the `caret` package can filter near-zero variance predictors according to the above rules. In order to show the useage of the function, let's arbitaryly add some problematic variables to the origional data `sim.dat`:
 
-```r
+```{r}
 # make a copy
-zero_demo<-sim.dat
-# add two sparse variable
-# zero1 only has one unique value
-# zero2 is a vector with the first element 1 and the rest are 0s
-zero_demo$zero1<-rep(1,nrow(zero_demo))
-zero_demo$zero2<-c(1,rep(0,nrow(zero_demo)-1))
+zero_demo <- sim.dat
+# add two sparse variable zero1 only has one unique value zero2 is a
+# vector with the first element 1 and the rest are 0s
+zero_demo$zero1 <- rep(1, nrow(zero_demo))
+zero_demo$zero2 <- c(1, rep(0, nrow(zero_demo) - 1))
 ```
 
 The function will return a vector of integers indicating which columns to remove:
 
-```r
+```{r}
 nearZeroVar(zero_demo,freqCut = 95/5, uniqueCut = 10)
 ```
 
@@ -485,50 +510,28 @@ A dummy variable is a binary variable (0/1) to represent subgroups of the sample
 
 Let's encode `gender` and `house` from `sim.dat` to dummy variables. There are two ways to implement this. The first is to use `class.ind()` from `nnet` package. However, it only works on one variable at a time.
 
-```r
-dumVar<-nnet::class.ind(sim.dat$gender)
+```{r}
+dumVar <- nnet::class.ind(sim.dat$gender)
 head(dumVar)
 ```
 
 Since it is redundant to keep both, we need to remove one of them when modeling. Another more powerful function is `dummyVars()` from `caret`:
 
-```r
-dumMod<-dummyVars(~gender+house+income,
-                  data=sim.dat,
-                  # use "origional variable name + level" as new name
-                  levelsOnly=F)
-head(predict(dumMod,sim.dat))
+```{r}
+# use "origional variable name + level" as new name
+dumMod <- dummyVars(~gender + house + income, 
+                    data = sim.dat, 
+                    levelsOnly = F)
+head(predict(dumMod, sim.dat))
 ```
 
 `dummyVars()` can also use formula format. The variable on the right-hand side can be both categorical and numeric. For a numerical variable, the function will keep the variable unchanged. The advantage is that you can apply the function to a data frame without removing numerical variables. Other than that, the function can create interaction term:
 
-```r
-dumMod<-dummyVars(~gender+house+income+income:gender,
-                  data=sim.dat,
-                  levelsOnly=F)
-head(predict(dumMod,sim.dat))
+```{r}
+dumMod <- dummyVars(~gender + house + income + income:gender, 
+                    data = sim.dat, 
+                    levelsOnly = F)
+head(predict(dumMod, sim.dat))
 ```
 
 If you think the impact income levels on purchasing behavior is different for male and female, then you may add the interaction term between `income` and `gender`. You can do this by adding `income: gender` in the formula. 
-
-## Python Computing
-
-**Environmental Setup**
-
-```python
-from IPython.core.interactiveshell import InteractiveShell
-InteractiveShell.ast_node_interactivity = "all"
-
-import numpy as np
-import scipy as sp
-import pandas as pd
-import math
-
-from sklearn.preprocessing import Imputer
-from sklearn.preprocessing import StandardScaler
-
-from pandas.plotting import scatter_matrix
-import matplotlib.pyplot as plt
-```
-
-### Data Cleaning

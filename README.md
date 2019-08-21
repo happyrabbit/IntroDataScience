@@ -32,3 +32,8 @@ Readers should know basic statistical ideas, such as correlation and linear regr
 - Approximately 450 ~ 500 pages
 - Color book
 
+Short links:
+
+- https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv to http://bit.ly/2P5gTw4
+- https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv to http://bit.ly/2TNQ6TK
+- https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/sim1_da1.csv to http://bit.ly/2KXb1Qi

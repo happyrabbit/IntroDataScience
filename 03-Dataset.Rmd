@@ -50,7 +50,7 @@ There are 4 segments of customers:
 Let's check it:
 
 ```{r, echo=FALSE}
-sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 ```
 
 ```{r}
@@ -89,7 +89,7 @@ This data set is from a customer satisfaction survey for three airline companies
 Now check the data frame we have:
 
 ```{r, echo=FALSE}
-rating<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/AirlineRating.csv")
+rating<-read.csv("http://bit.ly/2TNQ6TK")
 ```
 
 ```{r}
@@ -124,9 +124,10 @@ $$\mathbf{\beta^{T}}=\left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-
 For each value of $\gamma$, 20 data sets are simulated. The bigger $\gamma$ is, the larger the corresponding parameter. We provided the data sets with $\gamma = 2$. Let's check the data:
 
 ```{r}
-disease_dat<-read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/sim1_da1.csv")
+disease_dat<-read.csv("http://bit.ly/2KXb1Qi")
 # only show the last 7 columns here
-head(subset(disease_dat,select=c( "Q118.A","Q118.B","Q119.A","Q119.B","Q120.A","Q120.B","y"))) 
+head(subset(disease_dat,select=c("Q118.A","Q118.B","Q119.A",
+                                 "Q119.B","Q120.A","Q120.B","y"))) 
 ```
 
 Here `y` indicates the outbreak situation of the farms. `y=1` means there is an outbreak in 5 years after the survey. The rest columns indicate survey responses. For example `Q120.A = 1` means the respondent chose `A` in Q120. We consider `C` as the baseline. 
@@ -135,3 +136,4 @@ Refer to Appendix for the simulation code.
 
 ## MNIST Dataset
 
+## IMDB Dataset
