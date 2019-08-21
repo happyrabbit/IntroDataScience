@@ -39,7 +39,7 @@ source("https://raw.githubusercontent.com/happyrabbit/CE_JSM2017/master/Rcode/00
 
 ```{r, message=FALSE,results="hide"}
 # install packages from CRAN
-p_needed <- c('imputeMissings','caret','e1071','psych')
+p_needed <- c('imputeMissings','caret','e1071','psych','car','corrplot')
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
 if (length(p_to_install) > 0) {

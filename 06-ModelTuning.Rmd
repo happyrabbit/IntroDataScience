@@ -123,7 +123,7 @@ The authors increased the error in the response proportional to a base level err
 
 ```{r}
 # load data
-sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 ymad <- mad(na.omit(sim.dat$income))
 # calculate z-score
 zs <- (sim.dat$income - mean(na.omit(sim.dat$income)))/ymad
