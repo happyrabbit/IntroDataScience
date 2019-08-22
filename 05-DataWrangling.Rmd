@@ -854,44 +854,43 @@ In the above code,  what is the left side of `~` are variables that you want to 
 
 The other package that will do similar manipulations is `tidyr`. Let's get a subset to illustrate the usage. 
 
-```r
+```{r}
 # practice functions we learnt before
-sdat<-sim.dat[1:5,]%>%
-  dplyr::select(age,gender,store_exp,store_trans)
+sdat <- sim.dat[1:5, ] %>% 
+  dplyr::select(age, gender, store_exp, store_trans)
 sdat %>% tbl_df()
 ```
 
 `gather()` function in `tidyr` is analogous to `melt()` in `reshape2`. The following code will do the same thing as we did before using `melt()`: 
 
-```r
-library(tidyr)
-msdat<-tidyr::gather(sdat,"variable","value",store_exp,store_trans)
+```{r}
+msdat <- tidyr::gather(sdat, "variable","value", store_exp, store_trans)
 msdat %>% tbl_df()
 ```
 
 Or if we use the pipe operation, we can write the above code as:
 
 ```r
-sdat%>%gather("variable","value",store_exp,store_trans)
+sdat %>% gather("variable", "value", store_exp, store_trans)
 ```
 
 It is identical with the following code using `melt()`:
 
 ```r
-melt(sdat, measure.vars=c("store_exp","store_trans"),
-            variable.name = "variable",
-              value.name = "value")
+melt(sdat, measure.vars = c("store_exp", "store_trans"), 
+     variable.name = "variable", 
+     value.name = "value")
 ```
 
 The opposite operation to `gather()` is `spread()`. The previous one stacks columns and the latter one spread the columns.
 
-```r
-msdat %>% spread(variable,value)
+```{r}
+msdat %>% spread(variable, value)
 ```
 
 Another pair of functions that do opposite manipulations are `separate()` and `unite()`. 
 
-```r
+```{r}
 sepdat<- msdat %>% 
   separate(variable,c("Source","Type"))
 sepdat %>% tbl_df()
@@ -901,9 +900,9 @@ You can see that the function separates the original column "`variable`" to two 
 
 The `unite()` function will do the opposite: combining two columns. It is the generalization of `paste()` to a data frame.
 
-```r
+```{r}
 sepdat %>% 
-  unite("variable",Source,Type,sep="_")
+  unite("variable", Source, Type, sep = "_")
 ```
 
 The reshaping manipulations may be the trickiest part. You have to practice a lot to get familiar with those functions. Unfortunately, there is no shortcut. 

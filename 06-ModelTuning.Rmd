@@ -228,7 +228,7 @@ rsq <- melt(rsq, id.vars = "Noise", measure.vars = c("rsq_linear",
     "rsq_pls", "rsq_mars", "rsq_svm", "rsq_rf"))
 ```
 
-```{r,echo=FALSE}
+```{r, echo=FALSE}
 rsq <- read.csv("Data/ResponseError.csv")
 ```
 
