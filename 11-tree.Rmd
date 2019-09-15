@@ -160,6 +160,32 @@ You can limit the tree size by setting some parameters.
 
 - The number of variables considered for each split: the algorithm randomly selects variables used in finding the optimal split point at each level. In general, the square root of the number of all variables works best, which is also the default setting for many functions. However, people often treat it as a tuning parameter.
 
+**Remove branches**
+
+Another way is to first let the tree grow as much as possible and then go back to remove insignificant branches. The process reduces the depth of the tree. The idea is to overfit the training set and then correct using the testing set. There are different implementations.
+
+- cost/complexity penalty
+
+The idea is that the pruning minimizes the penalized error $SSE_{\lambda}$ with a certain value of tuning parameter $\lambda$.
+
+$$SSE_{\lambda} = SSE+\lambda \times (complexity)$$
+
+Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the smallest tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization[@Breiman1984].
+
+To find the optimal pruning tree, you need to iterate through a series of values of $\lambda$ and calculate the corresponding SSE. For the same $\lambda$, SSE changes over different samples. Breiman et al. suggested using cross-validation [@Breiman1984] to study the variation of SSE under each $\lambda$ value. They also proposed a standard deviation criterion to give the simplest tree: within one standard deviation, find the simplest tree that minimizes the absolute error. Another method is to choose the tree size that minimizes the numerical error [@Hastie2008].
+
+- Error-based pruning
+
+This method was first proposed by Quinlan [@Quinlan1999]. The idea behind is intuitive. All split nodes of the tree are included in the initial candidate pool. Pruning a split node means removing the entire subtree under the node and setting the node as a terminal node. The data is divided into 3 subsets for:
+
+(1) training a complete tree;
+
+(2) pruning;
+
+(3) testing the final model.
+
+You train a complete tree using the subset (1) and apply the tree on the subset (2) to calculate the accuracy.  Then prune the tree based on a node and apply that on the subset (2) to calculate another accuracy. If the accuracy after pruning is higher or equal to that from the complete tree,  then we set the node as a terminal node. Otherwise, keep the subtree under the node.  The advantage of this method is that it is easy to compute.  However, when the size of the subset (2) is much smaller than that of the subset (1), there is a risk of over-pruning. Some researchers found that this method results in more accurate trees than pruning process based on tree size [@Espoito1997].
+
 ## Regression and Decision Tree Basic
 
 ## Bagging Tree
