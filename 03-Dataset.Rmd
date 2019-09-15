@@ -1,4 +1,4 @@
-# Introduction to the data
+# Introduction to The Data
 
 Before tackling analytics problem, we start by introducing data to be analyzed in later chapters. 
 
