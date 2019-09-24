@@ -10,7 +10,10 @@ We are familiar with our laptop/desktop computers which have three main componen
 
 The data and codes stored in the hard disk have specific features such as slow to read and write, and large capacity of around a few TB in today's market. Memory is fast to read and write but with small capacity in the order of a few dozens of GB in today's market. CPU is where all the computation happens.
 
+```{r spark_cluster, fig.cap= "Single computer (left) and a cluster of computers (right)", out.width="80%", fig.asp=.75, fig.align="center"}
+knitr::include_graphics("images/cluster.png")
+```
 
-![Single computer (left) and a cluster of computers (right)](images/cluster.png){width=90%}
+![](images/cluster.png){width=90%}
 
 For statistical software such as R, the amount of data it can process is limited by the computer's memory. The memory of computers before 2000 is less than 1 GB. The memory capacity grows way slower than the amount of the data. Now it is common that we need to analyze data far beyond the capacity of a single computer's memory, especially in an enterprise environment. Meanwhile, as the data size increases,  to solve the same problem (such as regressions), the computation time is growing faster than linear. Using a cluster of computers become a common way to solve a big data problem. 
