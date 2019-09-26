@@ -19,3 +19,4 @@ For statistical software such as R, the amount of data it can process is limited
 In the past, users need to write code (such as MPI) to distribute data and do parallel computing.  Fortunately, with the recent new development, the cloud environment for big data analysis is more user-friendly. As data is often beyond the size of the hard disk, the dataset itself is stored across different nodes (i.e., the Hadoop system). When doing analysis, the data is distributed across different nodes, and algorithms are parallel to leverage corresponding nodes' CPUs to compute (i.e., the Spark system).
 
 ## Evolution of Cluster Computing
+

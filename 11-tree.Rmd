@@ -186,6 +186,37 @@ This method was first proposed by Quinlan [@Quinlan1999]. The idea behind is int
 
 You train a complete tree using the subset (1) and apply the tree on the subset (2) to calculate the accuracy.  Then prune the tree based on a node and apply that on the subset (2) to calculate another accuracy. If the accuracy after pruning is higher or equal to that from the complete tree,  then we set the node as a terminal node. Otherwise, keep the subtree under the node.  The advantage of this method is that it is easy to compute.  However, when the size of the subset (2) is much smaller than that of the subset (1), there is a risk of over-pruning. Some researchers found that this method results in more accurate trees than pruning process based on tree size [@Espoito1997].
 
+- Error-complexity pruning
+
+This method is to search for a trade-off between error and complexity.  Assume we have a splitting node $t$, and the corresponding subtree $T$. The error cost of the node is defined as:
+
+$$R(t)=r(t)\times p(t)$$
+
+where $r(t)$ is the error rate associate with the node: 
+
+$$r(t)=\frac{misclassified\ sample\ size\ of\ the\ node}{sample\ size\ of\ the\ node}$$
+
+$p(t)$ is the ratio of the sample of the node to the total sample：
+
+$$p(t)=\frac{ sample\ size\ of\ the\ node}{total\ sample\ size}$$
+
+If we keep note $t$, the error cost of the subtree $T$ is:
+
+$$R(T)=\Sigma_{i = no.\ of\ leaves} R(i)$$
+
+The error-complexity measure of the node is:
+
+$$a(t)=\frac{R(t)-R(T)_{t}}{no.\ of\ leaves - 1}$$
+
+Based on the metrics above, the pruning process is [@Nikita2012]：
+
+1. Calculate $a$ for every node $t$
+2. Prune the node with the lowest value
+3. Repeat 1 and 2. It produces a pruned tree each time and they form a forest. 
+4. Select the tree with the best overall accuracy
+
+
+
 ## Regression and Decision Tree Basic
 
 ## Bagging Tree
