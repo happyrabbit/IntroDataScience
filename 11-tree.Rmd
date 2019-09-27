@@ -184,7 +184,7 @@ This method was first proposed by Quinlan [@Quinlan1999]. The idea behind is int
 
 (3) testing the final model.
 
-You train a complete tree using the subset (1) and apply the tree on the subset (2) to calculate the accuracy.  Then prune the tree based on a node and apply that on the subset (2) to calculate another accuracy. If the accuracy after pruning is higher or equal to that from the complete tree,  then we set the node as a terminal node. Otherwise, keep the subtree under the node.  The advantage of this method is that it is easy to compute.  However, when the size of the subset (2) is much smaller than that of the subset (1), there is a risk of over-pruning. Some researchers found that this method results in more accurate trees than pruning process based on tree size [@Espoito1997].
+You train a complete tree using the subset (1) and apply the tree on the subset (2) to calculate the accuracy.  Then prune the tree based on a node and apply that on the subset (2) to calculate another accuracy. If the accuracy after pruning is higher or equal to that from the complete tree,  then we set the node as a terminal node. Otherwise, keep the subtree under the node. The advantage of this method is that it is easy to compute. However, when the size of the subset (2) is much smaller than that of the subset (1), there is a risk of over-pruning. Some researchers found that this method results in more accurate trees than pruning process based on tree size [@Espoito1997].
 
 ## Regression and Decision Tree Basic
 
