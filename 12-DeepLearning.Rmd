@@ -133,3 +133,4 @@ You need to choose activation function in the hidden layers. Logistic regression
 ## Convolutional Neural Network
 
 ## Recurrent Neural Network
+### 
