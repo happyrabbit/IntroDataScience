@@ -259,6 +259,18 @@ In theory,  the region can be any shape. However, to simplify the problem, we di
 
 $$R_{1}(j, s)=\{X|X_j<s\}\ and\ R_{2}(j, s)=\{X|X_j\geq s\}$$
 
+Calculate the RSS decrease after the split. For different $(j,s)$, search for the combination that minimizes the RSS, that is to minimize the following: 
+
+$$\Sigma_{i:x_i\in R_1(j,s)}(y_i-\hat{y}*{R*{1}})^2+\Sigma_{i:x_i\in R_2(j,s)}(y_i-\hat{y}*{R*{2}})^2$$
+
+where $\hat{y}{R_1}$ is the mean of all samples in $R_1$, $\hat{y}{R_2}$ is the mean of samples in $R_2$. It can be quick to optimize the equation above. Especially when $p$ is not too large. 
+
+Next, we continue to search for the split that optimize the RSS. Note that the optimization is limited in the sub-region. The process keeps going until a stopping criterion is reaches. For example, continue until no region contains more than 5 samples or the RSS decreases less than 1%. The process is like a tree growing.
+
+<center>
+![](images/BinaryTree.png)
+</center>
+
 ## Bagging Tree
 
 ## Random Forest
