@@ -313,7 +313,6 @@ plot(rpartTree2)
 ```
 
 ### Decision Tree
->>>>>>> 6932c1929a687fa11025a1158c401513992b965d
 
 ## Bagging Tree
 
