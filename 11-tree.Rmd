@@ -1,6 +1,6 @@
 # Tree-Based Methods
 
-The tree-based models can be used for regression and classification. They are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
+The tree-based models can be used for regression and classification. The goal is to stratify or segment the predictor space into a number of sub-regions. For a given observation, use the mean or the mode of the training observations in the sub-region as the prediction. Tree-based methods are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
 
 1. Do not require user to specify the form of the relationship between predictors and response
 1. Do not require (or if they do, very limited) data preprocessing and can handle different types of predictors (sparse, skewed, continuous, categorical, etc.)
@@ -235,7 +235,7 @@ Based on the above definition, the pruning process is[@Espoito1997]:
 
 ## Regression and Decision Tree Basic
 
-### Regression tree
+### Regression Tree
 
 Let's look at the process of building a regression tree[@ISLR15]. There are two steps:
 
@@ -270,6 +270,50 @@ Next, we continue to search for the split that optimize the RSS. Note that the o
 <center>
 ![](images/BinaryTree.png)
 </center>
+
+
+There are multiple R packages for building regression tree, such as `ctree`, `rpart` and `tree`. `rpart` is widely used for building single tree. The split is based on CART algorithm, using `rpart()` function from the package. There are some parameters that controls the model fitting, such as the minimum number of observations that must exist in a node in order for a split to be attempted,  the minimum number of observations in any leaf node etc. You can can set those parameter using `rpart.control`. 
+
+A more convenient way is to use `train()` function in `caret` package. The package can call `rpart()` function and train the model through cross-validation. In this case, the most common parameters are `cp` (complexity parameter) and `maxdepth` (the maximum depth of any node of the final tree). To  tune the complexity parameter, set `method = "rpart"`. To tune the maximum tree depth, set `method = "rpart2"` :
+
+```{r}
+library(rpart)
+dat <- read.csv("http://bit.ly/2P5gTw4")
+# data cleaning: delete wrong observations
+dat <- subset(dat, store_exp > 0 & online_exp > 0)
+# use the 10 survey questions as predictors
+trainx <- dat[, grep("Q", names(dat))]
+# use the sum of store and online expenditure as response variable
+# total expenditure = store expenditure + online expenditure
+trainy <- dat$store_exp + dat$online_exp
+set.seed(100)
+rpartTune <- train(trainx, trainy, method = "rpart2", tuneLength = 10, 
+    trControl = trainControl(method = "cv"))
+plot(rpartTune)
+```
+
+RMSE doesn't change much when the maximum is larger than 2. So we set the maximum depth to be 2 and refit the model:
+
+```{r}
+rpartTree <- rpart(trainy ~ ., data = trainx, maxdepth = 2)
+```
+
+You can check the result using `print()`: 
+
+```{r}
+print(rpartTree)
+```
+
+You can see that the final model picks `Q3` and `Q5`  to predict total expenditure. To visualize the tree, you can convert `rpart` object to `party` object using `partykit` then use  `plot()` function:
+
+```{r}
+library(partykit)
+rpartTree2 <- as.party(rpartTree)
+plot(rpartTree2)
+```
+
+### Decision Tree
+>>>>>>> 6932c1929a687fa11025a1158c401513992b965d
 
 ## Bagging Tree
 
