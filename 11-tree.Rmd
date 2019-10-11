@@ -230,10 +230,34 @@ $$n_{t,c}= number\ of\ sample\ under\ t\ that\ belong\ to\ category\ c$$
 Based on the above definition, the pruning process is[@Espoito1997]:  
 
 - Calculate the expected error rate for each non-leave node if that subtree is pruned
-- Calculate the expected error rate for that node if that subtree is not pruned
+- Calculate the expected error rate for each non-leave node if that subtree is not pruned
 - If pruning the node leads to higher expected rate, then keep the subtree; otherwise, prune it.
 
 ## Regression and Decision Tree Basic
+
+### Regression tree
+
+Let's look at the process of building a regression tree[@ISLR15]. There are two steps:
+
+1. Divide predictors space — that is a set of possible values of $X_1,X_2,\dots,X_p$— into $J$ distinct and non-overlapping regions: $R_1,R_2,\dots,R_J$
+2. For every observation that falls into the region $R_j$, the prediction in the mean of the response values for the training observations in $R_j$
+
+Let's go back to the previous baby example. If we use the variable "Gender" to divide the observations, we obtain two regions $R_1$ (female) and $R_2$ (male).
+
+<center>
+![](images/varEN.png)
+</center>
+
+```{r}
+y1=c(156,167,165,163,160,170,160)
+y2=c(172,180,176)
+```
+
+The sample average for region $R_1$ is `r mean(y1)`, for region $R_2$ is `r mean(y2)`. For a new observation, if it is female, the model predicts the height to be `r mean(y1)`,  if it is male, the predicted height is `r mean(y2)`. Calculating the mean is easy.  Let's look at the first step in more detail which is to divide the space into $R_1, R_2, \dots, R_J$.
+
+In theory,  the region can be any shape. However, to simplify the problem, we divide the predictor space into high-dimensional rectangles. The goal is to divide the space in a way that minimize RSS. Practically, it is nearly impossible to consider all possible partitions of the feature space.  So we use an approach named recursive binary splitting, a top-down , greedy algorithm.  The process starts from the top of the tree (root node) and then successively splits the predictor space. Each split produces two branches (hence binary). At each step of the process, it chooses the best split at that particular step, rather than looking ahead and picking a split that leads to a better tree in general (hence greedy).
+
+$$R_{1}(j, s)=\{X|X_j<s\}\ and\ R_{2}(j, s)=\{X|X_j\geq s\}$$
 
 ## Bagging Tree
 
