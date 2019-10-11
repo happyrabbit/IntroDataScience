@@ -1050,11 +1050,7 @@
     <rect x='28.80' y='28.80' width='223.20' height='302.40' />
   </clipPath>
 </defs>
-<<<<<<< HEAD
-<g clip-path='url(#cpMjguOHwyNTJ8MzMxLjJ8MjguOA==)'><text x='131.99' y='63.47' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='45.61px' lengthAdjust='spacingAndGlyphs'>Before</text></g>
-=======
 <g clip-path='url(#cpMjguOHwyNTJ8MzMxLjJ8MjguOA==)'><text x='132.63' y='63.33' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='44.34px' lengthAdjust='spacingAndGlyphs'>Before</text></g>
->>>>>>> 6932c1929a687fa11025a1158c401513992b965d
 <g clip-path='url(#cpMjguOHwyNTJ8MzMxLjJ8MjguOA==)'><text x='144.79' y='312.48' style='font-size: 12.00px; font-family: Arial;' textLength='20.02px' lengthAdjust='spacingAndGlyphs'>age</text></g>
 <g clip-path='url(#cpMjguOHwyNTJ8MzMxLjJ8MjguOA==)'><text transform='translate(41.76,192.14) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='38.68px' lengthAdjust='spacingAndGlyphs'>income</text></g>
 <defs>
@@ -2095,11 +2091,7 @@
     <rect x='252.00' y='28.80' width='223.20' height='302.40' />
   </clipPath>
 </defs>
-<<<<<<< HEAD
-<g clip-path='url(#cpMjUyfDQ3NS4yfDMzMS4yfDI4Ljg=)'><text x='361.20' y='63.47' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='33.60px' lengthAdjust='spacingAndGlyphs'>After</text></g>
-=======
 <g clip-path='url(#cpMjUyfDQ3NS4yfDMzMS4yfDI4Ljg=)'><text x='361.67' y='63.33' style='font-size: 14.40px; font-weight: bold; font-family: Arial;' textLength='32.67px' lengthAdjust='spacingAndGlyphs'>After</text></g>
->>>>>>> 6932c1929a687fa11025a1158c401513992b965d
 <g clip-path='url(#cpMjUyfDQ3NS4yfDMzMS4yfDI4Ljg=)'><text x='367.99' y='312.48' style='font-size: 12.00px; font-family: Arial;' textLength='20.02px' lengthAdjust='spacingAndGlyphs'>age</text></g>
 <g clip-path='url(#cpMjUyfDQ3NS4yfDMzMS4yfDI4Ljg=)'><text transform='translate(264.96,192.14) rotate(-90)' style='font-size: 12.00px; font-family: Arial;' textLength='38.68px' lengthAdjust='spacingAndGlyphs'>income</text></g>
 </svg>

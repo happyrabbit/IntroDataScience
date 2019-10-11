@@ -306,7 +306,7 @@ print(rpartTree)
 
 You can see that the final model picks `Q3` and `Q5`  to predict total expenditure. To visualize the tree, you can convert `rpart` object to `party` object using `partykit` then use  `plot()` function:
 
-```{r}
+```{r error=FALSE, warning=FALSE, message= FALSE}
 library(partykit)
 rpartTree2 <- as.party(rpartTree)
 plot(rpartTree2)
