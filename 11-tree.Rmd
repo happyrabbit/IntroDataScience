@@ -261,9 +261,9 @@ $$R_{1}(j, s)=\{X|X_j<s\}\ and\ R_{2}(j, s)=\{X|X_j\geq s\}$$
 
 Calculate the RSS decrease after the split. For different $(j,s)$, search for the combination that minimizes the RSS, that is to minimize the following: 
 
-$$\Sigma_{i:x_i\in R_1(j,s)}(y_i-\hat{y}*{R*{1}})^2+\Sigma_{i:x_i\in R_2(j,s)}(y_i-\hat{y}*{R*{2}})^2$$
+$$\Sigma_{i:x_i\in R_1(j,s)}(y_i-\hat{y}_{R_{1}})^2+\Sigma_{i:x_i\in R_2(j,s)}(y_i-\hat{y}_{R_{2}})^2$$
 
-where $\hat{y}{R_1}$ is the mean of all samples in $R_1$, $\hat{y}{R_2}$ is the mean of samples in $R_2$. It can be quick to optimize the equation above. Especially when $p$ is not too large. 
+where $\hat{y}_{R_1}$ is the mean of all samples in $R_1$, $\hat{y}_{R_2}$ is the mean of samples in $R_2$. It can be quick to optimize the equation above. Especially when $p$ is not too large. 
 
 Next, we continue to search for the split that optimize the RSS. Note that the optimization is limited in the sub-region. The process keeps going until a stopping criterion is reaches. For example, continue until no region contains more than 5 samples or the RSS decreases less than 1%. The process is like a tree growing.
 
@@ -310,6 +310,41 @@ You can see that the final model picks `Q3` and `Q5`  to predict total expenditu
 library(partykit)
 rpartTree2 <- as.party(rpartTree)
 plot(rpartTree2)
+```
+
+
+Similar to a regression tree, the goal of a classification tree is to stratifying the predictor space into a number of sub-regions that are more homogeneous. The difference is that a classification tree is used to predict a categorical response rather than a continuous one. For a classification tree, the prediction is the most commonly occurring class of training observations in the region to which an observation belongs. The splitting criteria for a classification tree are different. The most common criteria are entropy and Gini impurity.  CART uses Gini impurity and  C4.5 uses entropy. 
+
+When the predictor is continuous, the splitting process is straightforward. When the predictor is categorical, the process can take different approaches:
+
+1. Keep the variable as categorical and group some categories on either side of the split. In this way, the model can make more dynamic splits but must treat the categorical predictor as an ordered set of bits.
+2. Encode the categorical variable to be a set of binary dummy variables. In this way, the information in the categorical variable is decomposed to independent bits of information. The model considers these dummy variables separately and evaluates for each of these on one split point (because there are only two possible values: 0/1).
+
+When fitting tree models, people need to choose the way to treat categorical predictors. If you know some of the categories have higher predictability, then the first approach may be better. In the rest of this section, we will build tree models using the above two approaches and compare them. 
+
+Let's build a classification model to identify the gender of the customer:
+
+
+```{r}
+library(caret)
+library(pROC)
+dat <- read.csv("http://bit.ly/2P5gTw4")
+# use the 10 survey questions as predictors
+trainx1 <- dat[, grep("Q", names(dat))]
+# add a categorical predictor
+# use two ways to treat categorical predictor
+# trainx1: use approach 1, without encoding
+trainx1$segment <- dat$segment
+
+# trainx2: use approach 2, encode it to a set of dummy variables
+dumMod<-dummyVars(~.,
+                  data=trainx1,
+                  # Combine the previous variable name and the level name
+                  # as the new dummy variable name
+                  levelsOnly=F)
+trainx2 <- predict(dumMod,trainx1)
+# the response variable is gender
+trainy <- dat$gender
 ```
 
 ### Decision Tree
