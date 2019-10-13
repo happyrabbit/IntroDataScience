@@ -312,6 +312,7 @@ rpartTree2 <- as.party(rpartTree)
 plot(rpartTree2)
 ```
 
+### Decision Tree
 
 Similar to a regression tree, the goal of a classification tree is to stratifying the predictor space into a number of sub-regions that are more homogeneous. The difference is that a classification tree is used to predict a categorical response rather than a continuous one. For a classification tree, the prediction is the most commonly occurring class of training observations in the region to which an observation belongs. The splitting criteria for a classification tree are different. The most common criteria are entropy and Gini impurity.  CART uses Gini impurity and  C4.5 uses entropy. 
 
@@ -323,7 +324,6 @@ When the predictor is continuous, the splitting process is straightforward. When
 When fitting tree models, people need to choose the way to treat categorical predictors. If you know some of the categories have higher predictability, then the first approach may be better. In the rest of this section, we will build tree models using the above two approaches and compare them. 
 
 Let's build a classification model to identify the gender of the customer:
-
 
 ```{r}
 library(caret)
@@ -347,7 +347,47 @@ trainx2 <- predict(dumMod,trainx1)
 trainy <- dat$gender
 ```
 
-### Decision Tree
+Here we use `train()` function in `caret` package to call `rpart` to build the model. We can compare the model results from the two approaches:
+
+```{r, echo=FALSE}
+set.seed(100)
+rpartTune1 <- caret::train(trainx1, trainy, method = "rpart",
+                       tuneLength = 30,
+                       metric = "ROC", 
+                       trControl = trainControl(method = "cv",
+                                                summaryFunction = twoClassSummary,
+                                                classProbs = TRUE,
+                                                savePredictions = TRUE))
+rpartTune1
+```
+
+```pre
+CART 
+
+1000 samples
+  11 predictor
+   2 classes: 'Female', 'Male' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 901, 899, 900, 900, 901, 900, ... 
+Resampling results across tuning parameters:
+
+  cp       ROC     Sens    Spec  
+  0.00000  0.6937  0.6517  0.6884
+  0.00835  0.7026  0.6119  0.7355
+  0.01670  0.6852  0.5324  0.8205
+  0.02505  0.6803  0.5107  0.8498
+  0.03340  0.6803  0.5107  0.8498
+  
+  ......
+
+  0.23380  0.6341  0.5936  0.6745
+  0.24215  0.5556  0.7873  0.3240
+
+ROC was used to select the optimal model using the largest value.
+The final value used for the model was cp = 0.00835.
+```
 
 ## Bagging Tree
 
