@@ -349,7 +349,7 @@ trainy <- dat$gender
 
 Here we use `train()` function in `caret` package to call `rpart` to build the model. We can compare the model results from the two approaches:
 
-```{r, echo=FALSE}
+```{r, echo=FALSE, results=FALSE}
 set.seed(100)
 rpartTune1 <- caret::train(trainx1, trainy, method = "rpart",
                        tuneLength = 30,
@@ -389,7 +389,62 @@ ROC was used to select the optimal model using the largest value.
 The final value used for the model was cp = 0.00835.
 ```
 
+The above keeps the variable as categorical without encoding. Here `cp` is the complexity parameter. It is used to decide when to stop growing the tree. `cp = 0.01` means the algorithm only keeps the split that improves the corresponding metric by more than 0.01. Next, let's encode the categorical variable to be a set of dummy variables and fit the model again:
+
+```{r}
+rpartTune2 <- caret::train(trainx2, trainy, method = "rpart",
+                       tuneLength = 30,
+                       metric = "ROC", 
+                       trControl = trainControl(method = "cv",
+                                                summaryFunction = twoClassSummary,
+                                                classProbs = TRUE,
+                                                savePredictions = TRUE))
+```
+
+Compare the results of the two approaches.
+
+```{r}
+rpartRoc <- roc(response = rpartTune1$pred$obs,
+                predictor = rpartTune1$pred$Female,
+                levels = rev(levels(rpartTune1$pred$obs)))
+
+rpartFactorRoc <- roc(response = rpartTune2$pred$obs,
+                      predictor = rpartTune2$pred$Female,
+                      levels = rev(levels(rpartTune1$pred$obs)))
+
+plot(rpartRoc, type = "s", print.thres = c(.5),
+     print.thres.pch = 3,
+     print.thres.pattern = "",
+     print.thres.cex = 1.2,
+     col = "red", legacy.axes = TRUE,
+     print.thres.col = "red")
+
+plot(rpartFactorRoc,
+     type = "s",
+     add = TRUE,
+     print.thres = c(.5),
+     print.thres.pch = 16, legacy.axes = TRUE,
+     print.thres.pattern = "",
+     print.thres.cex = 1.2)
+legend(.75, .2,
+       c("Grouped Categories", "Independent Categories"),
+       lwd = c(1, 1),
+       col = c("black", "red"),
+       pch = c(16, 3))
+```
+
+You can see that in this case, the two approaches lead to similar model performance. 
+
+Single tree is straightforward and easy to interpret but it has problems:
+
+1. Low accuracy 
+2. Unstable: little change in the training data leads to very different trees.
+
+One way to overcome those is to use an ensemble of trees. In the rest of this chapter, we will introduce three ensemble methods: bagging tree, random forest, and gradient boosted machine. Those ensemble approaches have significant higher accuracy and stability. However, it comes with the cost of interpretability.
+
 ## Bagging Tree
+
+
 
 ## Random Forest
 
