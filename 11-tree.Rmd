@@ -440,11 +440,19 @@ Single tree is straightforward and easy to interpret but it has problems:
 1. Low accuracy 
 2. Unstable: little change in the training data leads to very different trees.
 
-One way to overcome those is to use an ensemble of trees. In the rest of this chapter, we will introduce three ensemble methods: bagging tree, random forest, and gradient boosted machine. Those ensemble approaches have significant higher accuracy and stability. However, it comes with the cost of interpretability.
+One way to overcome those is to use an ensemble of trees. In the rest of this chapter, we will introduce three ensemble methods (combine many models’ predictions): bagging tree, random forest, and gradient boosted machine. Those ensemble approaches have significant higher accuracy and stability. However, it comes with the cost of interpretability.
 
 ## Bagging Tree
 
+As mentioned before, a single tree is unstable. If you randomly separate the sample to be two parts and fit tree model on each, you can get two very different trees. A stable model should give a similar result on different random samples. Some traditional statistical models have high stability, such as linear regression. *Ensemble methods* appeared in the 1990s which can effectively stabilize the model. *Bootstrapping* is a type of process where you repeated draw samples of the same size from a single original sample with replacement [@Efron1986].  *Bootstrap aggregation* (Bagged) is an ensemble technique proposed by Leo Breiman (Breiman 1996a). It uses bootstrapping in conjunction with any model to construct an ensemble.  The process is very straightforward:
 
+1. Build a model on different bootstrap samples to form an ensemble, say $B$ samples
+2. For a new sample, each model will give a prediction: $\hat{f}^1(x),\hat{f}^2(x)\dots,\hat{f}^B(x)$
+3. The bagged model's prediction is the average of all the predictions:
+
+$$\hat{f}_{avg}(x)=\frac{1}{B}\Sigma^B_{b=1}\hat{f}^b(x)$$
+
+Assume that there are $n$ independent random variables $Z_1,\dots,Z_n$ with variance $\sigma^2$. Then the variance of the mean $\bar{Z}$ is $\frac{\sigma^2}{n}$. It is easy to see why bagged models have less variance. Since bootstrapping is to sample with replacement, it means some samples are selected multiple times and some not at all. Those left out samples are called out-of-bag. You can use the out-of-bag sample to access the model performance. For regression, the prediction is a simple average. For classification, the prediction is the category with the most "votes". Here, the number of trees, $B$ is a parameter you need to decide, i.e. tuning parameter.
 
 ## Random Forest
 
