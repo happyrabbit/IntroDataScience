@@ -462,7 +462,58 @@ The advantages of bagging tree are:
 
 - Bagging can use out-of-bag samples to evaluate model performance. For each model in the ensemble, we can calculate the value of the model performance metric (you can decide what metric to use). You can use the average of all the out-of-bag performance values to gauge the predictive performance of the entire ensemble. This correlates well with either cross-validation estimates or test set estimates. On average, each tree uses about 2/3 of the samples, and the rest 1/3 is used as out-of-bag. When the number of bootstrap samples is large enough, the out-of-bag performance estimate approximates that from leave one out cross-validation.
 
+You need to choose the number of bootstrap samples. The author of "Applied Predictive Modeling"  [@APM] points out that often people see an exponential decrease in predictive improvement as the number of iterations increases. Most of the predictive power is from a small portion of the trees. Based on their experience, model performance can have small improvements up to 50 bagging iterations. If it is still not satisfying,  they suggest trying other more powerfully predictive ensemble methods such as random forests and boosting which will be described in the following sections.
+
+The disadvantages of bagging tree are:
+
+- As the number of bootstrap samples increases, the computation and memory requirements increase as well. You can mitigate this disadvantage by parallel computing. Since each bootstrap sample and modeling is independent of any other sample and model, you can easily parallelize the bagging process by building those models separately and bring back the results in the ed to generate the prediction.
+
+- The bagged model is difficult to explain which is common for all ensemble approaches. However, you can still get variable importance by combining measures of importance across the ensemble. For example, we can calculate the RSS decrease for each variable across all trees and use the average as the measurement of the importance.
+
+- Since the bagging tree uses all of the original predictors as everey split of every tree, those trees are related with each other.  The tree correlation prevents bagging from optimally reducing the variance of the predicted values. See [@Hastie2008] for a mathematical illustration of the tree correlation phenomenon.
+
+Let's look at how to use R to build bagging tree. Get the predictors and response variable first:
+
+```{r}
+dat <- read.csv("http://bit.ly/2P5gTw4")
+# use the 10 survey questions as predictors
+trainx <- dat[, grep("Q", names(dat))]
+# add segment as a predictor 
+# don't need to encode it to dummy variables
+trainx$segment <- dat$segment
+# use gender as the response variable
+trainy <- as.factor(dat$gender)
+```
+
+Then fit the model using train function in caret package. Here we just set the number of trees to be 1000. You can tune that parameter. 
+
+```r
+set.seed(100)
+bagTune <- caret::train(trainx, trainy, 
+                           method = "treebag",
+                           nbagg = 2000,
+                           metric = "ROC",
+                           trControl = trainControl(method = "cv",
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           savePredictions = TRUE))
+```
+
+```{r, echo=FALSE}
+load("../../../Dropbox/Book_DS/Data/bagTune.RData")
+```
+
+The model results are:
+
+```{r}
+bagTune
+```
+
+Since we only have a handful of variables in this example, the maximum AUC doesn't improve by using bagging tree. But it makes a difference when we have more predictors.
+
 ## Random Forest
+
+
 
 ## Gradient Boosted Machine
 
