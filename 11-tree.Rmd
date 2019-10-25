@@ -513,6 +513,75 @@ Since we only have a handful of variables in this example, the maximum AUC doesn
 
 ## Random Forest
 
+Since the tree correlation prevents bagging from optimally reducing the variance of the predicted values, a natural way to improve the model performance is to reduce the correlation among trees. That is what random forest aims to do: improve the performance of bagging by de-correlating trees.
+
+From a statistical perspective, you can de-correlate trees by introducing randomness when you build each tree. One approach [@Ho1998; @amit1997] is to randomly choose $m$ variables to use each time you build a tree.  Dietterich[@Dietterich2000] came up with the idea of random split selection which is to randomly choose $m$ variables to use at each splitting node. Based on the different generalizations to the original bagging algorithm, Breiman [@Breiman2001] came up with a unified algorithm called *random forest.* 
+
+When building a tree, the algorithm randomly chooses $m$ variables to use at each splitting node. Then choose the best one out of the $m$ to use at that node. In general, people use $m=\sqrt{p}$. For example, if we use 10 questions from the questionnaire as predictors, then at each node, the algorithm will randomly choose 4 candidate variables. Since those trees in the forest don't always use the same variables, tree correlation is less than that in bagging. It tends to work better when there are more predictors. Since we only have 10 predictors here, the improvement from the random forest is marginal. The number of randomly selected predictors is a tuning parameter in the random forest.  Since random forest is computationally intensive, we suggest starting with 5 value around $m=\sqrt{p}$. Another tuning parameter is the number of trees in the forest. You can start with 1000 trees and then increase the number until performance levels off.
+
+The basic random forest is as follows:
+
+ 
+1. Select the number of trees, B
+2. **for** _i=1 to B_ **do**
+    - generate a bootstrap sample of the original data
+    - train a tree on this sample
+         - **for** _each split_ **do**
+              - randomly select m（<p）predictors
+              - choose the best one out of the $m$ and partition the data
+         - **end**
+    - use typical tree model stopping criteria to determine when a tree is complete without pruning
+3. **end**
+
+When $m=p$, random forest is equal to the bagging tree. When the predictors are highly correlated, then smaller $m$ tends to work better. Let's use the `caret` package to train a random forest:
+
+```r
+# tune across a list of numbers of predictors
+mtryValues <- c(1:5)
+set.seed(100)
+rfTune <- train(x = trainx, 
+               y = trainy,
+               # set the model to be random forest
+               method = "rf",
+               ntree = 1000,
+               tuneGrid = data.frame(.mtry = mtryValues),
+               importance = TRUE,
+               metric = "ROC",
+               trControl = trainControl(method = "cv",
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           savePredictions = TRUE))
+```
+
+```{r, echo=FALSE}
+load("../../../Dropbox/Book_DS/Data/rfTune.RData")
+```
+
+```{r}
+rfTune
+```
+
+In this example, since the number of predictors is small, the result of the model indicates that the optimal number of candidate variables at each node is 1.  The optimal AUC is not too much higher than that from bagging tree: 
+
+If you have selected the values of tuning parameters, you can also use the randomForest package to fit a random forest. 
+
+```{r}
+library(randomForest)
+rfit = randomForest(trainy ~ ., trainx, mtry = 1, ntree = 1000)
+```
+
+Since bagging tree is a special case of random forest, you can fit the bagging tree by setting $mtry=p$. Function `importance()` can return the importance of each predictor:
+
+```{r}
+importance(rfit)
+```
+
+You can use varImpPlot() function to visualize the predictor importance:
+
+```{r}
+varImpPlot(rfit)
+```
+It is easy to see from the plot that `segment` and `Q4` are the top two variables to classify gender.
 
 
 ## Gradient Boosted Machine
