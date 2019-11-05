@@ -585,6 +585,35 @@ It is easy to see from the plot that `segment` and `Q4` are the top two variable
 
 ## Gradient Boosted Machine
 
+Boosting models were developed in the 1980s [@Valiant1984; @KV1989] and were originally for classification problems. Due to the excellent model performance, they were widely used for a variety of applications, such as gene expression [@dudoit2002; @ben-dor2000], chemical substructure classification [@Varmuza2003], music classification [@Bergstra2006], etc. The first effective implementation of boosting is Adaptive Boosting (AdaBoost) algorithm came up by Yoav Freund and Robert Schapire in 1996 [@Schapire1999]. After that, some researchers [@Friedman2000] started to connect the boosting algorithm with some statistical concepts, such as loss function, additive model, logistic regression. Friedman pointed out that boosting can be considered as a forward stagewise additive model that minimizes exponential loss. The new view of boosting in a statistical framework enabled the method to be extended to regression problems. 
 
+The idea is to combine a group of weak learners (a classifier that is marginally better than random guess) to produce a strong learner.  Like bagging, boosting is a general approach that can be applied to different learners. Here we focus on the decision tree. Recall that both bagging and random forest create multiple copies of the original training data using the bootstrap, fitting a separate decision tree to each copy and combining all the results to create a single prediction. Boosting also creates different trees but the trees are grown sequentially and each tree is a weak learner. Any modeling technique with tuning parameters can produce a range of learners, from weak to strong. You can easily make a weak learner by restricting the depth of the tree. There are different types of boosting. Here we introduce two main types: adaptive boosting and stochastic gradient boosting.
 
+### Adaptive Boosting
 
+Yoav Freund and Robert Schapire [@Freund1997] came up the AdaBoost.M1 algorithm. Consider a binary classification problem where the response variable has two categories $Y \in \{-1, 1\}$. Given predictor matrix, $X$, construct a classifier $G(X)$ that predicts $1$ or $-1$. The corresponding error rate in the training set is:
+
+$$\bar{err}=\frac{1}{N}\Sigma_{i=1}^NI(y_i\neq G(x_i))$$
+
+The algorithm produces a series of classifiers $G_m(x),\ m=1,2,...,M$ from different iterations. In each iteration, it finds the best classifier based on the current weights. The misclassified samples in the $m^{th}$ iteration will have higher weights in the $m+1^{th}$ iteration and the correctly classified samples will have lower weights. As it moves on, the algorithm will put more effort into the "difficult" samples until it can correctly classify them. So it requires the algorithm to change focus at each iteration. At each iteration, the algorithm will calculate a stage weight based on the error rate. The final prediction is a weighted average of all those weak classifiers using stage weights from all the iterations:
+
+$$G(x)=sign ( \Sigma_{m=1}^M \alpha_{m}G_m(x))$$
+where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations.
+
+**AdaBoost.M1**
+
+1. Response variables have two values: +1 and -1
+2. Initialize the observation to have the same weights:  $w_i=\frac{1}{N},i=1,...,N$
+3. for m = 1 to M:
+
+    (a) Fit a classifier $G_m(x)$ to the training data using weights $w_i$
+
+    (b) Compute the error rate for the $m^th$ classifier: $err_m=\frac{\Sigma_{i=1}^Nw_i I(y_i\neq G_m(x_i))}{\Sigma_{i=1}^Nw_i}$
+
+    (c) Compute the stage weight for $m^{th}$ iteration: $\alpha_m=log\frac{1-err_m}{err_m}$
+
+    (d) Update $w_i = w_i\cdot exp[\alpha_m\cdot I(y_i \neq G_m(x_i))],\ i=1,2,\dots,N$
+
+4. Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$，where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
+
+Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm is known as  “Discrete AdaBoost” [@Friedman2000]. You can revise the above algorithm if it returns continuous value, for example, a probability[@Friedman2000].  As mentioned before, boosting is a general approach that can be applied to different learners. Since you can easily create weak learners by limiting the depth of the tree, the boosting tree is a common method. Since the classification tree is a low bias/high variance technique, ensemble decreases model variance and lead to low bias/low variance model. See Breinman[@Breiman1998] for more explanation about why the boosting tree performs well in general. However, boosting can not significantly improve the low variance model. So applying boosting to Latent Dirichlet Allocation (LDA) or K-Nearest Neighbor (KNN) doesn't lead to as good improvement as applying boosting to statistical learning methods like naive Bayes [@Bauer1999]. 
