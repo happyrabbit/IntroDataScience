@@ -585,7 +585,7 @@ It is easy to see from the plot that `segment` and `Q4` are the top two variable
 
 ## Gradient Boosted Machine
 
-Boosting models were developed in the 1980s [@Valiant1984; @KV1989] and were originally for classification problems. Due to the excellent model performance, they were widely used for a variety of applications, such as gene expression [@dudoit2002; @ben-dor2000], chemical substructure classification [@Varmuza2003], music classification [@Bergstra2006], etc. The first effective implementation of boosting is Adaptive Boosting (AdaBoost) algorithm came up by Yoav Freund and Robert Schapire in 1996 [@Schapire1999]. After that, some researchers [@Friedman2000] started to connect the boosting algorithm with some statistical concepts, such as loss function, additive model, logistic regression. Friedman pointed out that boosting can be considered as a forward stagewise additive model that minimizes exponential loss. The new view of boosting in a statistical framework enabled the method to be extended to regression problems. 
+Boosting models were developed in the 1980s [@Valiant1984; @KV1989] and were originally for classification problems. Due to the excellent model performance, they were widely used for a variety of applications, such as gene expression [@dudoit2002; @bendor2000], chemical substructure classification [@Varmuza2003], music classification [@Bergstra2006], etc. The first effective implementation of boosting is Adaptive Boosting (AdaBoost) algorithm came up by Yoav Freund and Robert Schapire in 1996 [@Schapire1999]. After that, some researchers [@Friedman2000] started to connect the boosting algorithm with some statistical concepts, such as loss function, additive model, logistic regression. Friedman pointed out that boosting can be considered as a forward stagewise additive model that minimizes exponential loss. The new view of boosting in a statistical framework enabled the method to be extended to regression problems. 
 
 The idea is to combine a group of weak learners (a classifier that is marginally better than random guess) to produce a strong learner.  Like bagging, boosting is a general approach that can be applied to different learners. Here we focus on the decision tree. Recall that both bagging and random forest create multiple copies of the original training data using the bootstrap, fitting a separate decision tree to each copy and combining all the results to create a single prediction. Boosting also creates different trees but the trees are grown sequentially and each tree is a weak learner. Any modeling technique with tuning parameters can produce a range of learners, from weak to strong. You can easily make a weak learner by restricting the depth of the tree. There are different types of boosting. Here we introduce two main types: adaptive boosting and stochastic gradient boosting.
 
@@ -624,7 +624,7 @@ As mentioned before, Friedman [@Friedman2000] provided a statistical framework f
 
 Consider a 2-class classification problem. You have the response $y \in \{0, 1\}$ and the sample proportion of class 1 from the training set is $p$. $f(x)$ is the model prediction in the range of $[-\infty, +\infty]$ and the predicted event probability is $\hat{p}=\frac{1}{1+exp[-f(x)]}$. The gradient boosting for this problem is as follows:
 
-1. Initialize all  predictions to the sample log-odds: $f_{i}^{(0)} = log \frac{\hat{p}}{1- \hat{p}}$
+1. Initialize all  predictions to the sample log-odds: $f_{i} = log \frac{\hat{p}}{1- \hat{p}}$
 2. **for**  j=1 ... M **do**
     - Compute predicted event probability:  $\hat{p}_i=\frac{1}{1+exp[-f_{i}(x)]}$.
     - Compute the residual (i.e. gradient): $z_i=y_i-\hat{p}_i$
@@ -633,3 +633,119 @@ Consider a 2-class classification problem. You have the response $y \in \{0, 1\}
     - Compute the terminal node estimates of the Pearson residuals: $r_i=\frac{1/n\Sigma_i^n(y_i-\hat{p}_i)}{1/n\Sigma_i^n\hat{p}_i(1-\hat{p}_i)}$
     - Update f：$f_i=f_i+\lambda f_i^{(j)}$
 3. end
+
+When using the tree as the base learner, basic gradient boosting has two tuning parameters: tree depth and the number of iterations. You can further customize the algorithm by selecting a different loss function and gradient[@Hastie2008].  The final line of the loop includes a regularization strategy. Instead of adding $f_i^{(j)}$ to the previous iteration's $f_i$, only a fraction of the value is added. This fraction is called learning rate which is $\lambda$ in the algorithm. It can take values between 0 and 1 which is another tuning parameter of the model.
+
+The way to calculate variable importance in boosting is similar to a bagging model. You get variable importance by combining measures of importance across the ensemble. For example, we can calculate the Gini index improvement for each variable across all trees and use the average as the measurement of the importance.
+
+Boosting is a very popular method for classification. It is one of the methods that can be directly applied to the data without requiring a great deal of time-consuming data preprocessing. Applying boosting on tree models significantly improves predictive accuracy. Some advantages of trees that are sacrificed by boosting are speed and interpretability. 
+
+Let's look at the R implementation. 
+
+```r
+gbmGrid <- expand.grid(interaction.depth = c(1, 3, 5, 7, 9),
+                       n.trees = 1:5,
+                       shrinkage = c(.01, .1),
+                       n.minobsinnode = c(1:10))
+
+set.seed(100)
+gbmTune <- train(x = trainx, 
+                y = trainy,
+                method = "gbm",
+                tuneGrid = gbmGrid,
+                metric = "ROC",
+                verbose = FALSE,
+                trControl = trainControl(method = "cv",
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           savePredictions = TRUE))
+```
+
+```{r, echo=FALSE}
+load("../../../Dropbox/Book_DS/Data/gbmTune.RData")
+```
+
+```{r, results=FALSE}
+# only show part of the output
+gbmTune
+```
+
+```html
+Stochastic Gradient Boosting 
+
+1000 samples
+  11 predictor
+   2 classes: 'Female', 'Male' 
+
+No pre-processing
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 899, 900, 900, 899, 899, 901, ... 
+Resampling results across tuning parameters:
+
+  shrinkage  interaction.depth  n.minobsinnode  n.trees  ROC     Sens    Spec    
+  0.01       1                   1              1        0.6821  1.0000  0.000000
+  0.01       1                   1              2        0.6882  1.0000  0.000000
+  0.01       1                   1              3        0.6936  1.0000  0.000000
+  .
+  .
+  .
+  0.01       5                   8              2        0.7127  1.0000  0.000000
+  0.01       5                   8              3        0.7148  1.0000  0.000000
+  0.01       5                   8              4        0.7096  1.0000  0.000000
+  0.01       5                   8              5        0.7100  1.0000  0.000000
+  0.01       5                   9              1        0.7006  1.0000  0.000000
+  0.01       5                   9              2        0.7055  1.0000  0.000000
+ [ reached getOption("max.print") -- omitted 358 rows ]
+
+ROC was used to select the optimal model using the largest value.
+The final values used for the model were n.trees = 4, interaction.depth = 3, shrinkage
+ = 0.01 and n.minobsinnode = 6.
+```
+
+The results show that the tuning parameter settings that lead to the best ROC are `n.trees = 4` (number of trees), `interaction.depth = 3` (depth of tree),  `shrinkage = 0.01` (learning rate)  and `n.minobsinnode = 6` (minimum number of observations in each node).
+
+Now, let's compare the results from the three tree models.
+
+```{r}
+treebagRoc <- roc(response = bagTune$pred$obs,
+                        predictor = bagTune$pred$Female,
+                        levels = rev(levels(bagTune$pred$obs)))
+
+rfRoc <- roc(response = rfTune$pred$obs,
+             predictor = rfTune$pred$Female,
+             levels = rev(levels(rfTune$pred$obs)))
+
+gbmRoc <- roc(response = gbmTune$pred$obs,
+              predictor = gbmTune$pred$Female,
+              levels = rev(levels(gbmTune$pred$obs)))
+
+plot(rpartRoc, type = "s", print.thres = c(.5),
+     print.thres.pch = 16,
+     print.thres.pattern = "",
+     print.thres.cex = 1.2,
+     col = "black", legacy.axes = TRUE,
+     print.thres.col = "black")
+
+plot(treebagRoc, type = "s", add = TRUE, print.thres = c(.5), 
+     print.thres.pch = 3, legacy.axes = TRUE, print.thres.pattern = "", 
+     print.thres.cex = 1.2,
+     col = "red", print.thres.col = "red")
+
+plot(rfRoc, type = "s", add = TRUE, print.thres = c(.5), 
+     print.thres.pch = 1, legacy.axes = TRUE, print.thres.pattern = "", 
+     print.thres.cex = 1.2,
+     col = "green", print.thres.col = "green")
+
+plot(gbmRoc, type = "s", add = TRUE, print.thres = c(.5), 
+     print.thres.pch = 10, legacy.axes = TRUE, print.thres.pattern = "", 
+     print.thres.cex = 1.2,
+     col = "blue", print.thres.col = "blue")
+
+legend(0.2, 0.5, cex = 0.8,
+       c("Single Tree", "Bagged Tree", "Random Forest", "Boosted Tree"),
+       lwd = c(1, 1, 1, 1),
+       col = c("black", "red", "green", "blue"),
+       pch = c(16, 3, 1, 10))
+```
+
+Since the data here doesn't have many variables, we don't see a significant difference among the models. But you can still see those ensemble methods are better than a single tree. In most of the real applications, ensemble methods perform much better.  Random forest and boosting trees can be a baseline model. Before exploring different models, you can quickly run a random forest to see the performance and then try to improve that performance. If the performance you got from the random forest is not too much better than guessing, you should consider collecting more data or reviewing the problem to frame it a different way instead of trying other models. Because it usually means the current data is not enough to solve the problem.
