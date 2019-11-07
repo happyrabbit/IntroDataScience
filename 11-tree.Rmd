@@ -617,3 +617,19 @@ where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations
 4. Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$，where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
 
 Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm is known as  “Discrete AdaBoost” [@Friedman2000]. You can revise the above algorithm if it returns continuous value, for example, a probability[@Friedman2000].  As mentioned before, boosting is a general approach that can be applied to different learners. Since you can easily create weak learners by limiting the depth of the tree, the boosting tree is a common method. Since the classification tree is a low bias/high variance technique, ensemble decreases model variance and lead to low bias/low variance model. See Breinman[@Breiman1998] for more explanation about why the boosting tree performs well in general. However, boosting can not significantly improve the low variance model. So applying boosting to Latent Dirichlet Allocation (LDA) or K-Nearest Neighbor (KNN) doesn't lead to as good improvement as applying boosting to statistical learning methods like naive Bayes [@Bauer1999]. 
+
+### Stochastic Gradient Boosting
+
+As mentioned before, Friedman [@Friedman2000] provided a statistical framework for the AdaBoost algorithm and pointed out that boosting can be considered as a forward stagewise additive model that minimizes exponential loss. The framework led to some generalized algorithms such as Real AdaBoost, Gentle AdaBoost, and LogitBoost. Those algorithms later were unified under a framework called gradient boosting machine. The last section of the chapter illustrates how boosting can be considered as an additive model. 
+
+Consider a 2-class classification problem. You have the response $y \in \{0, 1\}$ and the sample proportion of class 1 from the training set is $p$. $f(x)$ is the model prediction in the range of $[-\infty, +\infty]$ and the predicted event probability is $\hat{p}=\frac{1}{1+exp[-f(x)]}$. The gradient boosting for this problem is as follows:
+
+1. Initialize all  predictions to the sample log-odds: $f_{i}^{(0)} = log \frac{\hat{p}}{1- \hat{p}}$
+2. **for**  j=1 ... M **do**
+    - Compute predicted event probability:  $\hat{p}_i=\frac{1}{1+exp[-f_{i}(x)]}$.
+    - Compute the residual (i.e. gradient): $z_i=y_i-\hat{p}_i$
+    - Randomly sample the training data
+    - Train a tree model on the random subset using the residuals as the outcome
+    - Compute the terminal node estimates of the Pearson residuals: $r_i=\frac{1/n\Sigma_i^n(y_i-\hat{p}_i)}{1/n\Sigma_i^n\hat{p}_i(1-\hat{p}_i)}$
+    - Update f：$f_i=f_i+\lambda f_i^{(j)}$
+3. end
