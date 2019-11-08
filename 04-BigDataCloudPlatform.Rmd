@@ -20,3 +20,14 @@ In the past, users need to write code (such as MPI) to distribute data and do pa
 
 ## Evolution of Cluster Computing
 
+Using computer clusters to solve general-purpose data and analytics problems needs a lot of effort if we have to specifically control every element and steps such as data storage, memory allocation, and parallel computation. Fortunately, high tech companies and open source communities have developed the entire ecosystem based on Hadoop and Spark. Users need only to know high-level scripting languages such as Python and R to leverage computer clusters' distributed storage, memory and parallel computation power.
+
+### Hadoop
+
+The very first problem internet companies face is that a lot of data has been collected and how to better store these data for future analysis. Google developed its own file system to provide efficient, reliable access to data using large clusters of commodity hardware. The open-source version is known as Hadoop Distributed File System (HDFS). Both systems use Map-Reduce to allocate computation across computation nodes on top of the file system. Hadoop is written in Java and writing map-reduce job using Java is a direct way to interact with Hadoop which is not familiar to many in the data and analytics community. To help better use the Hadoop system, an SQL-like data warehouse system called Hive, and a scripting language for analytics interface called Pig were introduced for people with analytics background to interact with Hadoop system. Within Hive, we can create user-defined functions through R or Python to leverage the distributed and parallel computing infrastructure. Map-reduce on top of HDFS is the main concept of the Hadoop ecosystem. Each map-reduce operation requires retrieving data from hard disk, then performing the computation, and storing the result onto the disk again. So, jobs on top of Hadoop require a lot of disk operation which may slow down the entire computation process.
+
+### Spark
+
+Spark works on top of a distributed file system including HDFS with better data and analytics efficiency by leveraging in-memory operations. Spark is more tailored for data processing and analytics and the need to interact with Hadoop directly is greatly reduced. The spark system includes an SQL-like framework called Spark SQL and a parallel machine learning library called MLib. Fortunately for many in the analytics community, Spark also supports R and Python. We can interact with data stored in a distributed file system using parallel computing across nodes easily with R and Python through the Spark API and do not need to worry about lower-level details of distributed computing. We will introduce how to use an R notebook to drive Spark computations.
+
+## Introduction of Cloud Environment

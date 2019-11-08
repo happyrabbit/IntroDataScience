@@ -749,3 +749,108 @@ legend(0.2, 0.5, cex = 0.8,
 ```
 
 Since the data here doesn't have many variables, we don't see a significant difference among the models. But you can still see those ensemble methods are better than a single tree. In most of the real applications, ensemble methods perform much better.  Random forest and boosting trees can be a baseline model. Before exploring different models, you can quickly run a random forest to see the performance and then try to improve that performance. If the performance you got from the random forest is not too much better than guessing, you should consider collecting more data or reviewing the problem to frame it a different way instead of trying other models. Because it usually means the current data is not enough to solve the problem.
+
+### Boosting as Additive Model
+
+This section illustrates how boosting is a forward stagewise additive model that minimizes exponential loss [@Friedman2000]. Many seemingly different models can be represented as a **basis expansion model**. Recall the classifier  obtained by the AdaBoost.M1 algorithm:
+
+$$G(x)=sign ( \Sigma_{m=1}^M \alpha_{m}G_m(x))$$
+
+The above expression fits in the framework of basis expansion which is as following:
+
+\begin{equation}
+f(x)=\Sigma_{m=1}^M \beta_m b(x,\gamma_m)
+(\#eq:basisexp)
+\end{equation}
+
+where $\beta_m,\ m=1,\dots,M$ is expansion coefficient and $b(x,\gamma)\in \mathbb{R}$ is basis function.  Many of the learning methods fit into this additive framework. Hastie et al discuss basis expansion in detail in Chapter 5 of the book [@Hastie2008]  and cover the additive expansion for different learning techniques [@Hastie2008], such as single-hidden-layer neural networks (Chapter 11) and MARS (Section 9.4). These models are fit by minimizing a designated loss function averaged over the training data:
+
+\begin{equation}
+\underset{\{\beta_m,\gamma_m\}_i^M}{min}\Sigma_{i=1}^N L\left(y_i,\Sigma_{m=1}^M\beta_{m}b(x_i;\gamma_m)\right)
+(\#eq:additiveloss)
+\end{equation}
+
+Different models have different basis function $b(x_i;\gamma_m)$. You can also customize loss function $L(\cdot)$, such as squared-error loss, or likelihood-based loss. Optimizing the loss function across the whole training set is usually computation costly no matter the choice of basis and loss. The good news is that the problem can be simplified as fitting a single basis function. 
+
+$$\underset{\beta,\gamma}{min}=\Sigma_{i=1}^N L(y_i,\beta b(x_i;\gamma))$$
+
+The forward stagewise algorithm approximates the optimal solution of equation \@ref(eq:additiveloss). It adds new basis functions to the expansion without adjusting the previous ones. The forward stagewise additive algorithm is as following (section 10.2, [@Hastie2008]):
+
+1. Initialize $f_0(x)=0$
+2. **for**  $m=1,\dots,M$ **do**：
+    - compute
+    $$(\beta_m,\gamma_m)=\underset{\beta,\gamma}{argmin}\Sigma_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\gamma))$$
+    - set $f_m(x)=f_{m-1}(x)+\beta_m b(x;\gamma_m)$
+
+At iteration m, it will search for the optimal $b(x;\gamma_m)$ and $\beta_m$ based on the previous basis function $f_{m-1}(x)$. And then add the new basis $b(x;\gamma_m)\beta_m$ to the previous basis function to get a new basis function $f_m(x)$ without changing any parameters from previous steps. Assume we use squared-error loss:
+
+$$L(y,f(x))=(y-f(x))^2$$
+
+Then we have: 
+
+$$L(y_i,f_{m-1}(x_i)+\beta b(x_i;\gamma))=(y_i-f_{m-1}(x_i)-\beta b(x_i;\gamma))^2$$
+
+where $y_i-f_{m-1}(x_i)$ is the residual for sample i based on the previous model. That is to say, it is fitting the new basis using the residual of the previous step. 
+
+However, the squared-error loss is generally not a good choice. For a regression problem, it is susceptible to outliers. It doesn't fit the classification problem since the response is categorical. Hence we often consider other loss functions.
+
+Now let is go back to the AdaBoost.M1 algorithm. It is actually a special case of the above forward stagewise model when the loss function is: 
+
+$$L(y,f(x))=exp(-yf(x))$$
+
+In AdaBoost.M1, the basis function is the classifier from each iteration $G_m(x)\in \{-1,1\}$. If we use the exponential loss, the optimization problem is 
+
+\begin{equation}
+\begin{array}{ccc}
+(\beta_m,G_m) & = & \underset{\beta,G}{argmin}\Sigma_{i=1}^N exp[-y_i(f_{m-1}(x_i)+\beta G(x_i))]\\
+& = & \underset{\beta, G}{argmin}\Sigma_{i=1}^N exp[-y_i \beta G(x_i)]\cdot exp[-y_if_{m-1}(x_i)]\\
+& = & \underset{\beta, G}{argmin}\Sigma_{i=1}^N w_i^m exp[-y_i\beta G(x_i)]
+\end{array}
+(\#eq:explossadaboost1)
+\end{equation}
+
+
+where  $w_i^m= exp[-y_if_{m-1}(x_i)]$. It does not depend on $\beta$ and $G(x)$. So we can consider it as the weight for each sample. Since the weight is related to $f_{m-1}(x_i)$, it changes each iteration. We can further decompose  equation \@ref(eq:explossadaboost1): 
+
+\begin{equation}
+\begin{array}{ccc}
+(\beta_{m},G_{m}) & = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}w_{i}^{m}exp[-y_{i}\beta G(x_{i})]\\
+& = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}I(y_{i}=G(x))+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
+& = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}[1-I(y_{i}\neq G(x))]+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
+& = & \underset{\beta,G}{argmin}\left\{ (e^{\beta}-e^{-\beta})\cdot\Sigma_{i=1}^{N}w_{i}^{m}I(y_{i}\neq G(x_{i}))+e^{-\beta}\cdot\Sigma_{i=1}^{N}w_{i}^{m}\right\}
+\end{array}
+(\#eq:explossadaboost2)
+\end{equation}
+
+when $\beta >0$, the solution for equation \@ref(eq:explossadaboost2) is:
+
+$$G_{m} = \underset{G}{argmin}\Sigma_{i=1}^{N}w_{i}^{m}I(y_{i}\neq G(x))$$
+
+It is the classifier that minimizes the weighted error.  Plug the above $G_m$ into equation \@ref(eq:explossadaboost2). Take the derivative with respect to $\beta$ and set it to be 0 to solve the optimal $\beta_m$: 
+
+$$\beta_m =\frac{1}{2}ln\frac{1-err_m}{err_m}$$
+
+where
+
+$$err_m = \frac{\Sigma_{i=1}^N w_i^{m}I(y_i \neq G_m(x_i))}{\Sigma_{i=1}^N w_i^{m}}$$
+
+According to the forward stagewise algorithm, the result is updated as:
+
+$$f_m(x)=f_{m-1}(x)+\beta_m G_m(x)$$
+
+We can go ahead and get the weight for the next iteration:
+
+\begin{equation}
+\begin{array}{ccc}
+w_i^{m+1} & = & exp[-y_if_m (x_i)]\\
+& = & exp[-y_if_{m-1}(x)-y_i \beta_m G_m(x)]\\
+& = & w_{i}^{m}\cdot exp[-\beta_m y_i G_m(x_i)]
+\end{array}
+(\#eq:explossadaboost3)
+\end{equation}
+
+Since $-y_i G_m(x_i)=2\cdot I(y_i \neq G_m(x_i))-1$,  equation \@ref(eq:explossadaboost2) can be written as:
+
+$$w_i^{m+1}=w_i^m \cdot exp[\alpha_mI(y_i\neq G_m(x_i))] \cdot exp[-\beta_m]$$
+
+where  $\alpha_m=2\beta_m=log\frac{1-err_m}{err_m}$ is the same with the $\alpha_m$ in AdaBoost.M1 algorithm we showed before. So AdaBoost.M1 is a special case of a forward stagewise additive model using exponential loss. For comparing and selecting different loss functions, you can refer to section 10.5 and 10.6 in [@Hastie2008].
