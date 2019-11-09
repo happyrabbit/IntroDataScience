@@ -8,7 +8,10 @@ This chapter will illustrate the practical aspects of model tuning. We will talk
 
 Assume $\mathbf{X}$ is $n \times p$ observation matrix and $\mathbf{y}$ is response variable, we have:
 
-$$\mathbf{y}=f(\mathbf{X})+\mathbf{\epsilon}$$
+\begin{equation}
+\mathbf{y}=f(\mathbf{X})+\mathbf{\epsilon}
+(\#eq:generalmodeleq)
+\end{equation}
 
 where $\mathbf{\epsilon}$ is the random error with a mean of zero. The function $f(\cdot)$ is our modeling target, which represents the information in the response variable that predictors can explain. The main goal of estimating $f(\cdot)$ is inference or prediction, or sometimes both. In general, there is a trade-off between flexibility and interpretability of the model. So data scientists need to comprehend the delicate balance between these two. 
 
@@ -17,8 +20,10 @@ Depending on the modeling purposes, the requirement for interpretability varies.
 There are two kinds of application problems: complete information problem and incomplete information problem. The complete information problem has all the information you need to know the correct response. Take the famous cat recognition, for example, all the information you need to identify a cat is in the picture. In this situation, the algorithm that penetrates the data the most wins. There are some other similar problems such as the self-driving car, chess game, facial recognition and speech recognition. But in most of the data science applications, the information is incomplete. If you want to know whether a customer is going to purchase again or not, it is unlikely to have 360-degree of the customer's information. You may have their historical purchasing record, discounts and service received. But you don't know if the customer sees your advertisement, or has a friend recommends competitor's product, or encounters some unhappy purchasing experience somewhere. There could be a myriad of factors that will influence the customer's purchase decision while what you have as data is only a small part. To make things worse, in many cases, you don't even know what you don't know. Deep learning doesn't have any advantage in solving those problems. Instead, some parametric models often work better in this situation. You will comprehend this more after learning the different types of model error. 
 Assume we have $\hat{f}$ which is an estimator of $f$. Then we can further get  $\mathbf{\hat{y}}=\hat{f}(\mathbf{X})$. The predicted error is divided into two parts, systematic error, and random error:
 
-$$E(\mathbf{y}-\hat{\mathbf{y}})^{2}=E[f(\mathbf{X})+\mathbf{\epsilon}-\hat{f}(\mathbf{X})]^{2}=\underset{\text{(1)}}{\underbrace{E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}}}+\underset{\text{(2)}}{\underbrace{Var(\mathbf{\epsilon})}}
-\label{eq:error}$$
+\begin{equation}
+E(\mathbf{y}-\hat{\mathbf{y}})^{2}=E[f(\mathbf{X})+\mathbf{\epsilon}-\hat{f}(\mathbf{X})]^{2}=\underset{\text{(1)}}{\underbrace{E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}}}+\underset{\text{(2)}}{\underbrace{Var(\mathbf{\epsilon})}}
+(\#eq:error)
+\end{equation}
 
 It is also called Mean Square Error (MSE) where (1) is the systematic error. It exists because $\hat{f}$  usually does not entirely describe the "systematic relation" between X and y which refers to the stable relationship that exists across different samples or time. Model improvement can help reduce this kind of error; (2) is the random error which represents the part of y that cannot be explained by X. A more complex model does not reduce the error. There are three reasons for random error:
 
@@ -31,15 +36,19 @@ Deep learning has significant success solving problems with complete information
 
 ![Types of Model Error](images/ModelError.png)
 
+
+###  Variance-Bias Trade-Off {#vbtradeoff}
+
 The systematic error can be further decomposed as:
 
-\[
+\begin{equation}
 \begin{array}{ccc}
 E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2} & = & E\left(f(\mathbf{X})-E[\hat{f}(\mathbf{X})]+E[\hat{f}(\mathbf{X})]-\hat{f}(\mathbf{X})\right)^{2}\\
  & = & E\left(E[\hat{f}(\mathbf{X})]-f(\mathbf{X})\right)^{2}+E\left(\hat{f}(\mathbf{X})-E[\hat{f}(\mathbf{X})]\right)^{2}\\
  & = & [Bias(\hat{f}(\mathbf{X}))]^{2}+Var(\hat{f}(\mathbf{X}))
 \end{array}
-\]
+(\#eq:biasvariance)
+\end{equation}
 
 The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $Var (\hat{f}(\mathbf{X}))$. To minimize the systematic error, we need to minimize both. The bias represents the error caused by the model's approximation of the reality, i.e., systematic relation, which may be very complex. For example, linear regression assumes a linear relationship between the predictors and the response, but rarely is there a perfect linear relationship in real life. So linear regression is more likely to have a high bias.
 

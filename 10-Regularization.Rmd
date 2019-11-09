@@ -1,5 +1,9 @@
 # Regularization Methods
 
+The regularization method is also known as the shrinkage method. It is a technique that constrains or regularizes the coefficient estimates. By imposing a penalty on the size of coefficients, it shrinks the coefficient estimates towards zero. It also intrinsically conduct feature selection and is naturally resistant to non-informative predictors. It may not be obvious why this technique improves model performance, but it turns out to be a very effective modeling technique. In this chapter, we will introduce two best-known regularization methods: ridge regression and lasso.  The elastic net is a combination of ridge and lasso, or it is a general representation of the two. 
+
+For ordinary linear regression, under the standard model assumption, the least square estimator is the best-unbiased estimator. Here "best" means it has the smallest variance among all unbiased estimators. We talked about the variance bias trade-off in section \@ref(vbtradeoff). 
+
 ## Ridge Regression
 
 ## LASSO
