@@ -48,6 +48,13 @@ ridgeRegTune <- train(trainx, trainy,
 ridgeRegTune
 ```
 
+The results show that the best value of $\lambda$ is 0.005 and the RMSE and $R^{2}$ are 1744 and 0.7954 correspondingly. You can see from the figure \@ref(fig:ridgeregtune), as the $\lambda$ increase, the RMSE  first slightly decreases and then increases.
+
+```{r ridgeregtune, fig.cap='Test mean squared error for the ridge regression', out.width='80%', fig.asp=.75, fig.align='center'}
+
+plot(ridgeRegTune)
+```
+
 
 ## LASSO
 
