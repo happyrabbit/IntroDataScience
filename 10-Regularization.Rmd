@@ -19,6 +19,36 @@ Ridge regression [@Hoerl1970] is similar but it finds $\hat{\beta}^{R}$ that opt
 
 where  $\lambda >0$ is a tuning parameter. As with the least squares, ridge regression considers minimizing RSS. However, it adds a shrinkage penalty $\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}$ that takes account of the number of parameters in the model. When $\lambda = 0$, it is identical to least squares. As $\lambda$ gets larger, the coefficients start shrinking towards 0. When $\lambda\rightarrow\infty$, the rest of the coefficients $\beta_{1},...,\beta_{p}$ are close to 0. Here, the penalty is not applied to $\beta_{0}$. The tuning parameter $\lambda$ is used to adjust the impact of the two parts in equation \@ref(eq:ridge). Every value of $\lambda$ corresponds to a set of parameter estimates. 
 
+There are many R packages for ridge regression, such as lm.ridge() function from MASS, function enet() from, elasticnet. If you know the value of $\lambda$, you can use either of the function to fit ridge regression. A more convenient way is to use train() function from caret. Let's use the 10 survey questions to predict the total purchase amount (sum of online and store purchase).
+
+```{r}
+dat <- read.csv("http://bit.ly/2P5gTw4")
+# data cleaning: delete wrong observations since expense can't be negative
+dat <- subset(dat, store_exp > 0 & online_exp > 0)
+# get predictors
+trainx <- dat[ , grep("Q", names(dat))]
+# get response
+trainy <- dat$store_exp + dat$online_exp
+```
+
+Use `train()` function to tune parameter. Since ridge regression adds the penalty parameter $\lambda$ in front of the sum of squares of the parameters, the scale of the parameters matters. So here it is better to center and scale the predictors. This preprocessing is recommended for all techniques that put penalty to parameter estimates. In this example, the 10 survey questions are already with the same scale so data preprocessing doesn't make too much different. It is a good idea to set the preprocessing as a standard.
+
+```{r}
+# set cross validation
+ctrl <- trainControl(method = "cv", number = 10)
+# set the parameter range 
+ridgeGrid <- data.frame(.lambda = seq(0, .1, length = 20))
+set.seed(100)
+ridgeRegTune <- train(trainx, trainy,
+                      method = "ridge",
+                      tuneGrid = ridgeGrid,
+                      trControl = ctrl,
+                      ## center and scale predictors
+                      preProc = c("center", "scale"))
+ridgeRegTune
+```
+
+
 ## LASSO
 
 ## Elastic Net
