@@ -2,9 +2,22 @@
 
 The regularization method is also known as the shrinkage method. It is a technique that constrains or regularizes the coefficient estimates. By imposing a penalty on the size of coefficients, it shrinks the coefficient estimates towards zero. It also intrinsically conduct feature selection and is naturally resistant to non-informative predictors. It may not be obvious why this technique improves model performance, but it turns out to be a very effective modeling technique. In this chapter, we will introduce two best-known regularization methods: ridge regression and lasso.  The elastic net is a combination of ridge and lasso, or it is a general representation of the two. 
 
-For ordinary linear regression, under the standard model assumption, the least square estimator is the best-unbiased estimator. Here "best" means it has the smallest variance among all unbiased estimators. We talked about the variance bias trade-off in section \@ref(vbtradeoff). 
+We talked about the variance bias trade-off in section \@ref(vbtradeoff). The variance of a learning model is the amount by which $\hat{f}$ would change if we estimated it using a different training data set.  In general, model variance increases as flexibility increases. The regularization technique decreases the model flexibility by shrinking the coefficient and hence significantly reduce the model variance.  
 
 ## Ridge Regression
+
+Recall that the least square estimates minimize RSS:
+
+$$RSS=\Sigma_{i=1}^{n}(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij})^{2}$$
+
+Ridge regression [@Hoerl1970] is similar but it finds $\hat{\beta}^{R}$ that optimizes a slightly different function:
+
+\begin{equation}
+\Sigma_{i=1}^{n}(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij})^{2}+\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}=RSS+\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}
+(\#eq:ridge)
+\end{equation}
+
+where  $\lambda >0$ is a tuning parameter. As with the least squares, ridge regression considers minimizing RSS. However, it adds a shrinkage penalty $\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}$ that takes account of the number of parameters in the model. When $\lambda = 0$, it is identical to least squares. As $\lambda$ gets larger, the coefficients start shrinking towards 0. When $\lambda\rightarrow\infty$, the rest of the coefficients $\beta_{1},...,\beta_{p}$ are close to 0. Here, the penalty is not applied to $\beta_{0}$. The tuning parameter $\lambda$ is used to adjust the impact of the two parts in equation \@ref(eq:ridge). Every value of $\lambda$ corresponds to a set of parameter estimates. 
 
 ## LASSO
 
