@@ -104,8 +104,18 @@ It also returns a list and the estimates are in the  `coefficients` item:
 RidgeCoef=ridgeCoef$coefficients
 ```
 
+Comparing to the least square regression, ridge regression performs better because of the bias-variance-trade-off we mentioned in section \@ref(vbtradeoff). As the penalty parameter $\lambda$ increases, the flexibility of the ridge regression decreases. It decreases the variance of the model but increases the bias at the same time.
 
 ## LASSO
+
+Even though the ridge regression shrinks the parameter estimates towards 0, it won't shink any estimates to be exactly 0 which means it includes all predictors in the final model. So it can't select variables. It may not be a problem for prediction but it is a huge disadvantage if you want to interpret the model especially when the number of variables is large. A popular alternative to the ridge penalty is the **Least Absolute Shrinkage and Selection Operator** (LASSO) [@Tibshirani1996].
+
+Similar to ridge regression, lasso adds a penalty. The lasso coefficients $\hat{\beta}_{\lambda}^{L}$ minimize the following: 
+
+\begin{equation}
+\Sigma_{i=1}^{n}(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij})^{2}+\lambda\Sigma_{j=1}^{p}|\beta_{j}|=RSS+\lambda\Sigma_{j=1}^{p}|\beta_{j}|
+(\#eq:lasso)
+\end{equation}
 
 ## Elastic Net
 
