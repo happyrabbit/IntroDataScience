@@ -21,6 +21,19 @@ where  $\lambda >0$ is a tuning parameter. As with the least squares, ridge regr
 
 There are many R packages for ridge regression, such as lm.ridge() function from MASS, function enet() from, elasticnet. If you know the value of $\lambda$, you can use either of the function to fit ridge regression. A more convenient way is to use train() function from caret. Let's use the 10 survey questions to predict the total purchase amount (sum of online and store purchase).
 
+```{r, message=FALSE,results="hide"}
+# install packages from CRAN
+p_needed <- c('caret', 'elasticnet', 'glmnet', 'devtools')
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
+
+
 ```{r}
 dat <- read.csv("http://bit.ly/2P5gTw4")
 # data cleaning: delete wrong observations since expense can't be negative
@@ -53,6 +66,42 @@ The results show that the best value of $\lambda$ is 0.005 and the RMSE and $R^{
 ```{r ridgeregtune, fig.cap='Test mean squared error for the ridge regression', out.width='80%', fig.asp=.75, fig.align='center'}
 
 plot(ridgeRegTune)
+```
+
+Once you have the tuning parameter value, there are different functions to fit a ridge regression. Let's look at how to use `enet()` in `elasticnet` package.
+
+```{r}
+ridgefit = enet(x = as.matrix(trainx), y = trainy, lambda = 0.01,
+                # center and scale predictors
+                normalize = TRUE)
+```
+
+Note here `ridgefit` only assigns the value of the tuning parameter for ridge regression. Since the elastic net model include both ridge and lasso penalty, we need to use `predict()` function to get the model fit. You can get the fitted results by setting `s = 1` and `mode = "fraction"`. Here `s = 1` means we only use the ridge parameter. We will come back to this when we get to lasso regression.
+
+```{r}
+ridgePred <- predict(ridgefit, newx = as.matrix(trainx), 
+                     s = 1, mode = "fraction", type = "fit")
+```
+
+By setting type = "fit", the above returns a list object. The  fit item has the predictions:
+
+```{r}
+names(ridgePred)
+head(ridgePred$fit)
+```
+
+If you want to check the estimated coefficients, you can set `type="coefficients"`: 
+
+```{r}
+ridgeCoef<-predict(ridgefit,newx = as.matrix(trainx), 
+                   s=1, mode="fraction", type="coefficients")
+```
+
+It also returns a list and the estimates are in the  `coefficients` item:
+
+```{r}
+# didn't show the results
+RidgeCoef=ridgeCoef$coefficients
 ```
 
 

@@ -30,6 +30,9 @@ ids_url = function(file) {
          'happyrabbit/DataScientistR/',
          'raw/master/', file)
 }
+
+package_list = c("svglite", "RANN", "proxy", "partykit", "pROC","plot3D")
+# install.packages("plot3D")
 #bookdown::render_book("index.Rmd", "bookdown::gitbook")
 #bookdown::render_book("index.Rmd", "bookdown::pdf_book")
 ```
