@@ -83,7 +83,7 @@ ridgePred <- predict(ridgefit, newx = as.matrix(trainx),
                      s = 1, mode = "fraction", type = "fit")
 ```
 
-By setting type = "fit", the above returns a list object. The  fit item has the predictions:
+By setting `type = "fit"`, the above returns a list object. The `fit` item has the predictions:
 
 ```{r}
 names(ridgePred)
@@ -116,6 +116,46 @@ Similar to ridge regression, lasso adds a penalty. The lasso coefficients $\hat{
 \Sigma_{i=1}^{n}(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij})^{2}+\lambda\Sigma_{j=1}^{p}|\beta_{j}|=RSS+\lambda\Sigma_{j=1}^{p}|\beta_{j}|
 (\#eq:lasso)
 \end{equation}
+
+The only difference between lasso and ridge is the penalty. Ridge uses $L_2$ penalty ($\beta_{j}^{2}$) and lasso uses $L_1$ penalty ($|\beta_{j}|$). $L_1$ penalty can shrink the estimates to 0 when $\lambda$ is big enough. So lasso can be used as a feature selection tool. It is a huge advantage because it leads to a more explainable model.
+
+Similar to other models with tuning parameters,  lasso regression requires cross-validation to tune the parameter.  You can use `train()` in a similar way as we showed in the ridge regression section. To tune parameter, we need to set cross-validation and parameter range. Also, it is advised to standardize the predictors:
+
+```{r}
+ctrl <- trainControl(method = "cv", number = 10)
+lassoGrid <- data.frame(fraction = seq(.8, 1, length = 20))
+set.seed(100)
+lassoTune <- train(trainx, trainy,
+                      ## set the method to be lasso
+                      method = "lars",
+                      tuneGrid = lassoGrid,
+                      trControl = ctrl,
+                      ## standardize the predictors
+                      preProc = c("center", "scale"))
+lassoTune
+```
+
+The results show that the best value of the tuning parameter (`fraction` from the output) is 0.957 and the RMSE and $R^{2}$ are  1742 and 0.7954 correspondingly. The performance is nearly the same with ridge regression. You can see from the figure \@ref(fig:lassoregtune), as the $\lambda$ increase, the RMSE first decreases and then increases.
+
+```{r lassoregtune, fig.cap='Test mean squared error for the lasso regression', out.width='80%', fig.asp=.75, fig.align='center'}
+plot(lassoTune)
+```
+
+Once you select a value for tuning parameter, there are different functions to fit lasso regression, such as `lars()` in  `lars`, `enet()` in  `elasticnet`, `glmnet()` in  `glmnet`. They all have very similar syntax.
+
+Here we continue using `enet()`.  The syntax is similar to ridge regression. The only difference is that you need to set `lambda = 0` because the argument `lambda` here is to control the ridge penalty. When it is 0, the function will return the lasso model object.
+
+```{r}
+lassoModel<- enet(x = as.matrix(trainx), y = trainy, lambda = 0, normalize = TRUE)
+```
+
+Set the fraction value to be 0.957 (the value we got above):
+
+```{r}
+lassoFit <- predict(lassoModel, newx = as.matrix(trainx), s = 0.957, mode = "fraction",type = "fit")
+```
+
+Again by setting `type = "fit"`, the above returns a list object. The `fit` item has the predictions:
 
 ## Elastic Net
 
