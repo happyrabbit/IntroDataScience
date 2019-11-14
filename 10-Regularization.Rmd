@@ -101,7 +101,7 @@ It also returns a list and the estimates are in the  `coefficients` item:
 
 ```{r}
 # didn't show the results
-RidgeCoef=ridgeCoef$coefficients
+RidgeCoef = ridgeCoef$coefficients
 ```
 
 Comparing to the least square regression, ridge regression performs better because of the bias-variance-trade-off we mentioned in section \@ref(vbtradeoff). As the penalty parameter $\lambda$ increases, the flexibility of the ridge regression decreases. It decreases the variance of the model but increases the bias at the same time.
@@ -117,7 +117,7 @@ Similar to ridge regression, lasso adds a penalty. The lasso coefficients $\hat{
 (\#eq:lasso)
 \end{equation}
 
-The only difference between lasso and ridge is the penalty. Ridge uses $L_2$ penalty ($\beta_{j}^{2}$) and lasso uses $L_1$ penalty ($|\beta_{j}|$). $L_1$ penalty can shrink the estimates to 0 when $\lambda$ is big enough. So lasso can be used as a feature selection tool. It is a huge advantage because it leads to a more explainable model.
+The only difference between lasso and ridge is the penalty. In statistical parlance, ridge uses $L_2$ penalty ($\beta_{j}^{2}$) and lasso uses $L_1$ penalty ($|\beta_{j}|$). $L_1$ penalty can shrink the estimates to 0 when $\lambda$ is big enough. So lasso can be used as a feature selection tool. It is a huge advantage because it leads to a more explainable model.
 
 Similar to other models with tuning parameters,  lasso regression requires cross-validation to tune the parameter.  You can use `train()` in a similar way as we showed in the ridge regression section. To tune parameter, we need to set cross-validation and parameter range. Also, it is advised to standardize the predictors:
 
@@ -157,6 +157,50 @@ lassoFit <- predict(lassoModel, newx = as.matrix(trainx), s = 0.957, mode = "fra
 
 Again by setting `type = "fit"`, the above returns a list object. The `fit` item has the predictions:
 
-## Elastic Net
+```{r}
+head(lassoFit$fit)
+```
+
+You need to set type="coefficients" to get parameter estimates: 
+
+```{r}
+lassoCoef<-predict(lassoModel,newx = as.matrix(trainx),s=0.95, mode="fraction", type="coefficients")
+```
+
+It also returns a list and the estimates are in the  `coefficients` item:
+
+```{r}
+# didn't show the results
+LassoCoef = lassoCoef$coefficients
+```
+
+Many researchers applied lasso to other learning methods, such as linear discriminant analysis [@Clem2011], partial least squares regression[@chun2010]. However, since the $L_1$ norm is not differentiable, optimization for lasso regression is more complicated. People come up with different algorithms to solve the computation problem. The biggest breakthrough is Least Angle Regression [LARS] from Bradley Efron etc. This algorithm works well for lasso regression especially when the dimension is high.
+
+## Variable selection property of the lasso
 
 ## LASSO Generalized Linear Model
+
+## Elastic Net
+
+Elastic Net is a generalization of lasso and ridge regression[@zou2005]. It combines the two penalties. The estimates of coefficients optimize the following function:
+
+\begin{equation}
+\Sigma_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}+\lambda_{1}\Sigma_{j=1}^{p}\beta_{j}^{2}+\lambda_{2}\Sigma_{j=1}^{p}|\beta_{j}|
+(\#eq:elasticnet)
+\end{equation}
+
+Lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property.  The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
+
+We can still use train() function to tune the parameters in the elastic net. As before, set the cross-validation and parameter range. Standardize the predictors: 
+
+```{r}
+enetGrid <- expand.grid(.lambda = seq(0,0.2,length=20), 
+                        .fraction = seq(.8, 1, length = 20))
+set.seed(100)
+enetTune <- train(trainx, trainy,
+                  method = "enet",
+                  tuneGrid = enetGrid,
+                  trControl = ctrl,
+                  preProc = c("center", "scale"))
+```
+
