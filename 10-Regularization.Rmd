@@ -152,7 +152,7 @@ lassoModel<- enet(x = as.matrix(trainx), y = trainy, lambda = 0, normalize = TRU
 Set the fraction value to be 0.957 (the value we got above):
 
 ```{r}
-lassoFit <- predict(lassoModel, newx = as.matrix(trainx), s = 0.957, mode = "fraction",type = "fit")
+lassoFit <- predict(lassoModel, newx = as.matrix(trainx), s = 0.957, mode = "fraction", type = "fit")
 ```
 
 Again by setting `type = "fit"`, the above returns a list object. The `fit` item has the predictions:
@@ -161,13 +161,13 @@ Again by setting `type = "fit"`, the above returns a list object. The `fit` item
 head(lassoFit$fit)
 ```
 
-You need to set type="coefficients" to get parameter estimates: 
+You need to set `type = "coefficients"` to get parameter estimates: 
 
 ```{r}
-lassoCoef<-predict(lassoModel,newx = as.matrix(trainx),s=0.95, mode="fraction", type="coefficients")
+lassoCoef <- predict(lassoModel, newx = as.matrix(trainx), s = 0.95, mode = "fraction", type = "coefficients")
 ```
 
-It also returns a list and the estimates are in the  `coefficients` item:
+It also returns a list and the estimates are in the `coefficients` item:
 
 ```{r}
 # didn't show the results
@@ -189,11 +189,11 @@ Elastic Net is a generalization of lasso and ridge regression[@zou2005]. It comb
 (\#eq:elasticnet)
 \end{equation}
 
-Lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property.  The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
+Lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property. The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
 
 We can still use train() function to tune the parameters in the elastic net. As before, set the cross-validation and parameter range. Standardize the predictors: 
 
-```{r}
+```{r, results= FALSE}
 enetGrid <- expand.grid(.lambda = seq(0,0.2,length=20), 
                         .fraction = seq(.8, 1, length = 20))
 set.seed(100)
@@ -202,5 +202,45 @@ enetTune <- train(trainx, trainy,
                   tuneGrid = enetGrid,
                   trControl = ctrl,
                   preProc = c("center", "scale"))
+enetTune
 ```
+
+```{r, echo=FALSE}
+res = enetTune$results
+res = res[which(res$RMSE == min(res$RMSE)), ]
+```
+
+```pre
+Elasticnet 
+
+999 samples
+ 10 predictor
+
+Pre-processing: centered (10), scaled (10) 
+Resampling: Cross-Validated (10 fold) 
+Summary of sample sizes: 899, 899, 899, 899, 899, 900, ... 
+Resampling results across tuning parameters:
+
+  lambda   fraction  RMSE  Rsquared  MAE  
+  0.00000  0.8000    1763  0.7921    787.5
+  0.00000  0.8105    1760  0.7924    784.1
+  .
+  .
+  .
+  0.09474  0.9158    1760  0.7945    782.5
+  0.09474  0.9263    1761  0.7947    782.5
+  0.09474  0.9368    1761  0.7949    782.7
+  0.09474  0.9474    1763  0.7950    783.3
+  0.09474  0.9579    1764  0.7951    784.3
+  0.09474  0.9684    1766  0.7953    785.7
+  0.09474  0.9789    1768  0.7954    787.1
+  0.09474  0.9895    1770  0.7954    788.8
+  0.09474  1.0000    1772  0.7955    790.4
+ [ reached getOption("max.print") -- omitted 200 rows ]
+
+RMSE was used to select the optimal model using the smallest value.
+The final values used for the model were fraction = 0.9579 and lambda = 0.
+```
+
+The results show that the best values of the tuning parameters are fraction is `r res$fraction` and lambda is `r res$lambda` It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
 
