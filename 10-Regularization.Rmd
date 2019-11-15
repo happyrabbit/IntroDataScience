@@ -178,6 +178,12 @@ Many researchers applied lasso to other learning methods, such as linear discrim
 
 ## Variable selection property of the lasso
 
+You may ask why lasso ($L_1$ penalty) has the feature selection property but not the ridge ($L_2$ penalty). To answer that question, let's look at the alternative representations of the optimization problem for lasso and ridge.  For lasso regression, it is identical to optimize the following two functions:
+
+$$\Sigma_{i=1}^{n}(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij})^{2}+\lambda\Sigma_{j=1}^{p}|\beta_{j}|=RSS+\lambda\Sigma_{j=1}^{p}|\beta_{j}|$$
+
+$$\underset{\beta}{min}\left\{ \Sigma_{i=1}^{n}\left(y_{i}-\beta_{0}-\Sigma_{j=1}^{p}\beta_{j}x_{ij}\right)^{2}\right\} ,\ \Sigma_{j=1}^{p}|\beta_{j}|\leq s$$
+
 ## LASSO Generalized Linear Model
 
 ## Elastic Net
