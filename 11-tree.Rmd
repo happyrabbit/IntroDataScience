@@ -45,7 +45,7 @@ $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
 <center>
-![](../linhui.org/book/Figure/giniEN.PNG)
+![](images/giniEN.PNG)
 </center>
 
 Let's calculate the Gini impurity for splitting node "Gender": 
@@ -64,7 +64,7 @@ The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is 
 Looking at the samples in the following three nodes, which one is the easiest to describe? It is obviously C. Because all the samples in C are of the same type, so the description requires the least amount of information. On the contrary, B needs more information, and A needs the most information. In other words, C has the highest purity, B is the second, and A has the lowest purity. We need less information to describe nodes with lower purity. 
 
 <center>
-![](../linhui.org/book/Figure/InfoGainEN.PNG)
+![](images/InfoGainEN.PNG)
 </center>
 
 A measure of the degree of disorder is entropy which is defined as:
