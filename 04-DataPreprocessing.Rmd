@@ -286,14 +286,15 @@ Skewness=0 means that the destribution is symmetric, i.e. the probability of fal
 # need skewness() function from e1071 package
 set.seed(1000)
 par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
-# random sample 1000 chi-square distribution with df=2 right skew
+# random sample 1000 chi-square distribution with df=2
+# right skew
 x1 <- rchisq(1000, 2, ncp = 0)
 # get left skew variable x2 from x1
 x2 <- max(x1) - x1
-plot(density(x2), main = paste("left skew, skewnwss =", round(skewness(x2), 
-    2)), xlab = "X2")
-plot(density(x1), main = paste("right skew, skewness =", round(skewness(x1), 
-    2)), xlab = "X1")
+plot(density(x2), main = paste("left skew, skewnwss =", 
+    round(skewness(x2), 2)), xlab = "X2")
+plot(density(x1), main = paste("right skew, skewness =", 
+    round(skewness(x1), 2)), xlab = "X1")
 ```
 
 <!--You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). -->
@@ -345,8 +346,10 @@ The last line of the output shows the estimates of $\lambda$ for each variable. 
 ```{r}
 transformed <- predict(trans, dat_bc)
 par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))
-hist(dat_bc$store_trans, main = "Before Transformation", xlab = "store_trans")
-hist(transformed$store_trans, main = "After Transformation", xlab = "store_trans")
+hist(dat_bc$store_trans, main = "Before Transformation", 
+    xlab = "store_trans")
+hist(transformed$store_trans, main = "After Transformation", 
+    xlab = "store_trans")
 ```
 
 Before the transformation, the `stroe_trans` is skewed right. 
@@ -368,12 +371,13 @@ The estimate of $\lambda$ is the same as before (0.1). The skewness of the origi
 
 Even under certain assumptions we can statistically define outliers, it can be hard to define in some situations.  Box plot, histogram and some other basic visualizations can be used to initially check whether there are outliers. For example, we can visualize numerical non-survey variables in `sim.dat`:
 
-```{r}
+```{r, warning=FALSE}
 # select numerical non-survey data
-sdat<-subset(sim.dat,select=c("age","income","store_exp","online_exp","store_trans","online_trans" ))
+sdat <- subset(sim.dat, select = c("age", "income", "store_exp", 
+    "online_exp", "store_trans", "online_trans"))
 # use scatterplotMatrix() function from car package
-par(oma=c(2,2,1,2))
-scatterplotMatrix(sdat,diagonal="boxplot",smoother=FALSE)
+par(oma = c(2, 2, 1, 2))
+scatterplotMatrix(sdat, diagonal = "boxplot", smoother = FALSE)
 ```
 
 <!--As figure \@ref(fig:scm) shows, `store_exp` has outliers. -->
@@ -432,8 +436,8 @@ It is probably the technical term known by the most un-technical people. When tw
 
 ```{r, warning=FALSE}
 # select non-survey numerical variables
-sdat <- subset(sim.dat, select = c("age", "income", "store_exp", "online_exp", 
-    "store_trans", "online_trans"))
+sdat <- subset(sim.dat, select = c("age", "income", "store_exp", 
+    "online_exp", "store_trans", "online_trans"))
 # use bagging imputation here
 imp <- preProcess(sdat, method = "bagImpute")
 sdat <- predict(imp, sdat)
@@ -441,7 +445,8 @@ sdat <- predict(imp, sdat)
 correlation <- cor(sdat)
 # plot
 par(oma = c(2, 2, 2, 2))
-corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", upper = "ellipse")
+corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", 
+    upper = "ellipse")
 ```
 
 <!--Here use `corrplot.mixed()` function to visualize the correlation matrix (figure \@ref(fig:corp)).-->

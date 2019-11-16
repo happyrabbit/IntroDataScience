@@ -202,15 +202,13 @@ For any value of tuning parameter $\lambda$, there exists a $s$ such that the co
 (\#eq:ridge2)
 \end{equation}
 
+When $p＝2$, lasso estimates ($\hat{\beta}_{lasso}$ in figure \@ref(fig:lassoridge)) have the smallest RSS among all points that satisfy $|\beta*{1}|+|\beta_{2}|\leq s$ (i.e. within the diamond in figure \@ref(fig:lassoridge)). Ridge estimates have the smallest RSS among all points that satisfy $\beta_{1}^{2}+\beta_{2}^{2}\leq s$ (i.e. within the circle in figure \@ref(fig:lassoridge)). As s increases, the diamond and circle regions expand and get less restrictive. If s is large enough, the restrictive region will cover the least squares estimate ($\hat{\beta}_{LSE}$). Then, equations \@ref(eq:lasso2) and \@ref(eq:ridge2) will simply yield the least squares estimate. In contrast, if s is small, the grey region in figure \@ref(fig:lassoridge) will be small and hence restrict the magnitude of $\beta$. With the alternative formulations, we can answer the question of feature selection property.
+
 ```{r lassoridge, fig.cap = "Contours of the RSS and constrain functions for the lasso (left) and ridge regression (right)", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/LassoRidge.png")
 ```
 
-When $p＝2$, lasso estimates ($\hat{\beta}*{lasso}$ in figure \@ref(fig:lassoridge)) have the smallest RSS among all points that satisfy $|\beta*{1}|+|\beta_{2}|\leq s$ (i.e. within the diamond in figure \@ref(fig:lassoridge)). Ridge estimates have the smallest RSS among all points that satisfy $\beta_{1}^{2}+\beta_{2}^{2}\leq s$ (i.e. within the circle in figure \@ref(fig:lassoridge)). As s increases, the diamond and circle regions expand and get less restrictive. If s is large enough, the restrictive region will cover the least squares estimate ($\hat{\beta}_{LSE}$). Then, equations \@ref(eq:lasso2) and \@ref(eq:ridge2) will simply yield the least squares estimate. In contrast, if s is small, the grey region in figure \@ref(fig:lassoridge)) will be small and hence restrict the magnitude of $\beta$. With the alternative formulations, we can answer the question of feature selection property.
-
-Figure \@ref(fig:lassoridge)) illustrates the situations for lasso (left) and ridge (right). The least square estimate is marked as $\hat{\beta}$. The restrictive regions are in grey, the diamond region is for the lasso, the circle region is for the ridge. The least square estimates lie outside the grey region, so they are different from the lasso and ridge estimates. The ellipses centered around $\hat{\beta}$ represent contours of RSS. All the points on a given ellipse share an RSS. As the ellipses expand, the RSS increases. The lasso and ridge estimates are the first points at which an ellipse contracts the grey region. Since ridge regression has a circular restrictive region that doesn't have a sharp point, the intersecting point can't drop on the axis. But it is possible for lasso since it has corners at each of the axes.   When the intersecting point is on an axis, one of the parameter estimates is 0. If p > 2, the restrictive regions become sphere or hypersphere. In that case, when the intersecting point drops on an axis, multiple coefficient estimates can equal 0 simultaneously.
-
-## LASSO Generalized Linear Model
+Figure \@ref(fig:lassoridge) illustrates the situations for lasso (left) and ridge (right). The least square estimate is marked as $\hat{\beta}$. The restrictive regions are in grey, the diamond region is for the lasso, the circle region is for the ridge. The least square estimates lie outside the grey region, so they are different from the lasso and ridge estimates. The ellipses centered around $\hat{\beta}$ represent contours of RSS. All the points on a given ellipse share an RSS. As the ellipses expand, the RSS increases. The lasso and ridge estimates are the first points at which an ellipse contracts the grey region. Since ridge regression has a circular restrictive region that doesn't have a sharp point, the intersecting point can't drop on the axis. But it is possible for lasso since it has corners at each of the axes.   When the intersecting point is on an axis, one of the parameter estimates is 0. If p > 2, the restrictive regions become sphere or hypersphere. In that case, when the intersecting point drops on an axis, multiple coefficient estimates can equal 0 simultaneously.
 
 ## Elastic Net
 
@@ -221,7 +219,7 @@ Elastic Net is a generalization of lasso and ridge regression[@zou2005]. It comb
 (\#eq:elasticnet)
 \end{equation}
 
-Lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property. The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
+Ridge penalty shrinks the coefficients of correlated predictors towards each other while the lasso tends to pick one and discard the others. So lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property. The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
 
 We can still use train() function to tune the parameters in the elastic net. As before, set the cross-validation and parameter range. Standardize the predictors: 
 
@@ -276,3 +274,14 @@ The final values used for the model were fraction = 0.9579 and lambda = 0.
 
 The results show that the best values of the tuning parameters are fraction is `r res$fraction` and lambda is `r res$lambda` It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
 
+## Penalized Generalized Linear Model
+
+Adding penalties is a general technique that can be applied to many methods other than linear regression. In this section, we will introduce the penalized generalized linear model. It is to fit the generalized linear model by minimizing a penalized maximum likelihood. The penalty can be $L_1$, $L_2$ or a combination of the two. The estimates of coefficients minimize the following: 
+
+$$\underset{\beta_{0},\mathbf{\beta}}{min}\frac{1}{N}\Sigma_{i=1}^{N}w_{i}l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})+\lambda[(1-\alpha)\parallel\mathbf{\beta}\parallel_{2}^{2}/2+\alpha\parallel\mathbf{\beta}\parallel_{1}]$$
+
+where
+
+$$l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})=-log[\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})]$$
+
+It is the negative logarithm of the likelihood, $\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$. Maximize likelihood is to minimize $l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$.
