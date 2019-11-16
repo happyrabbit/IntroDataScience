@@ -288,7 +288,7 @@ It is the negative logarithm of the likelihood, $\mathcal{L}(y_{i},\beta_{0}+\ma
 
 Parameter $\alpha$ decides the penalty, i.e, between $L_2$ ($\alpha=0$) and $L_1$ ($\alpha=1$).  $\lambda$ controls the weight of the whole penalty item. The higher $\lambda$ is, the more weight the penalty carries comparing to likelihood. As discussed above, the ridge penalty shrinks the coefficients towards 0 but can't be exactly 0. The lasso penalty can set 0 estimates so it has the property of feature selection. The elastic net combines both. Here we have two tuning parameters, $\alpha$ and $\lambda$. 
 
-### Introduction to glmnet package
+### Introduction to `glmnet` package
 
 `glmnet` is a package that fits a penalized generalized linear model using *cyclical coordinate descent*. It successively optimizes the objective function over each parameter with others fixed, and cycles repeatedly until convergence. Since the linear model is a special case of the generalized linear model, `glmnet` can also fit a penalized linear model. Other than that, it can also fit penalized logistic regression, multinomial, Poisson, and Cox regression models.
 
@@ -305,4 +305,36 @@ trainx <- dat[, grep("Q", names(dat))]
 trainy <- dat$store_exp + dat$online_exp
 glmfit = glmnet(as.matrix(trainx), trainy)
 ```
+
+The object glmfit returned by glmnet() has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on glmfit, such as plot(), print(), coef() and predict() . For example, the following code visualizes the path of coefficients as penalty increases:
+
+```{r}
+plot(glmfit, label = T)
+```
+
+Each curve in the plot represents one predictor. The default setting is $\alpha=1$ which means there is only lasso penalty. From left to right, $L_I$ norm is increasing which means $\lambda$ is decreasing. The bottom x-axis is $L_1$ norm (i.e. $\parallel\mathbf{\beta}\parallel_{1}$). The upper x-axis is the effective degrees of freedom (df) for the lasso. You can check the detail for every step by:  
+
+```r
+print(glmfit)
+```
+
+```pre
+Call:  glmnet(x = as.matrix(trainx), y = trainy) 
+
+   Df  %Dev Lambda
+1   0 0.000   3040
+2   2 0.104   2770
+3   2 0.192   2530
+4   2 0.265   2300
+5   3 0.326   2100
+6   3 0.389   1910
+7   3 0.442   1740
+8   3 0.485   1590
+9   3 0.521   1450
+...
+```
+
+
+
+
 
