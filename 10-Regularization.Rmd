@@ -285,3 +285,24 @@ where
 $$l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})=-log[\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})]$$
 
 It is the negative logarithm of the likelihood, $\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$. Maximize likelihood is to minimize $l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$.
+
+Parameter $\alpha$ decides the penalty, i.e, between $L_2$ ($\alpha=0$) and $L_1$ ($\alpha=1$).  $\lambda$ controls the weight of the whole penalty item. The higher $\lambda$ is, the more weight the penalty carries comparing to likelihood. As discussed above, the ridge penalty shrinks the coefficients towards 0 but can't be exactly 0. The lasso penalty can set 0 estimates so it has the property of feature selection. The elastic net combines both. Here we have two tuning parameters, $\alpha$ and $\lambda$. 
+
+### Introduction to glmnet package
+
+`glmnet` is a package that fits a penalized generalized linear model using *cyclical coordinate descent*. It successively optimizes the objective function over each parameter with others fixed, and cycles repeatedly until convergence. Since the linear model is a special case of the generalized linear model, `glmnet` can also fit a penalized linear model. Other than that, it can also fit penalized logistic regression, multinomial, Poisson, and Cox regression models.
+
+The default family option in the function `glmnet()` is `gaussian`. It is the linear regression we discussed so far in this chapter. But the parameterization is a little different in the generalized linear model framework (we have $\alpha$ and $\lambda$). Let's start from our previous example, using the same training data but `glmnet()` to fit model:
+
+```{r}
+library(glmnet)
+dat <- read.csv("http://bit.ly/2P5gTw4")
+# data cleaning: delete wrong observations since expense can't be negative
+dat <- subset(dat, store_exp > 0 & online_exp > 0)
+# get predictors
+trainx <- dat[, grep("Q", names(dat))]
+# get response
+trainy <- dat$store_exp + dat$online_exp
+glmfit = glmnet(as.matrix(trainx), trainy)
+```
+

@@ -10,11 +10,15 @@ bookdown::gitbook:
         <li><a href="http://scientistcafe.com">Homepage</a></li>
       after: |
         <li><a href="https://github.com/rstudio/bookdown" target="blank">Published with bookdown</a></li>
+    fontsettings:
+      theme: sepia
+      family: sans
     download: [pdf, epub, mobi]
     edit: https://github.com/happyrabbit/IntroDataScience/%s
     sharing:
       github: true
-      facebook: false
+      linkedin: true
+      all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:
