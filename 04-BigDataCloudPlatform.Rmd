@@ -60,3 +60,55 @@ knitr::include_graphics("images/dbxmarkdown.png")
 ## Leverage Spark Using R Notebook
 
 R is a powerful tool for data analysis given the data can be fit into memory. Because of the memory bounded dataset limit, R itself cannot be used directly for big data analysis where the data is likely stored in Hadoop and Spark system. By leverage the `sparklyr` package created by RStudio, we can use Databricks' R notebook to analyze data stored in the Spark system. As the data are stored across different nodes, Spark enables parallel computation using the collection of memory and CPU across all nodes. The fundamental data element in the Spark system is called Spark DataFrames (SDF). In this section, we will illustrate how to use Databricks' R notebook for big data analysis on top of the Spark environment through `sparklyr` package.
+
+**Install pacakge**
+
+First, we need to install `sparklyr` package which enables the connection between master or local node to Spark cluster environments. As it will install more than 10 dependencies, it may take more than 10 minutes to finish. Be patient while it is installing! Once the installation finishes, load the `sparklyr` package as illustrated by the following code:
+
+```r
+# Install sparklyr
+if (!require("sparklyr")) {
+install.packages("sparklyr")
+}
+# Load sparklyr package
+library(sparklyr)
+```
+
+**Create a Spark Connection**
+
+Once the library is loaded, we need to create a Spark Connection to link the computing node (i.e. local node) running the R notebook to the Spark environment. Here we use the `"databricks"` option for parameter `method` which is specific for databricks' cloud system. In other enterprise environments, please consult your administrator for details. The Spark Connection (i.e. `sc`) is the pipe to connect R notebook in the local node with the Spark Cluster. We can think of the R notebook is running on a local node that has its memory and CPU; the Spark system has a cluster of connected computation nodes, and the Spark Connection creates a mechanism to connect both systems. The Spark Connection can be established with:
+
+```r
+# create a sparklyr connection
+sc <- spark_connect(method = "databricks")
+```
+
+To simplify the learning process, let us use a very familiar small dataset: the iris dataset. It is part of the `dplyr` library and we can load that library to use the `iris` data frame. Now the `iris` dataset is still on the local node where the R notebook is running on. And we can check the first a few lines of the `iris` dataset using the code below:
+
+```{r}
+library(dplyr)
+head(iris)
+```
+
+**IMPORTANT - Copy Data to Spark Environment**
+
+In real applications, the data set may be massive and cannot fit in a single hard disk and most likely such data are already stored in the Spark system. If the data is already in Hadoop/Spark ecosystem in the form of SDF, we can create a local R object to link to the SDF by the `tbl()` function where `my_sdf` is the SDF in the Spark system, and `my_sdf_tbl` is the R local object that referring to `my_sdf`:
+
+```r
+my_sdf_tbl <- tbl(sc = sc, my_sdf)
+```
+
+As we just created a brand new Spark computing environment, there is no SDF in the system yet. We will need to copy a local dataset to the Spark environment. As we have already created the Spark Connection `sc`, it is easy to copy data to spark system using `sdf_copy_to()` function as below:
+
+```r
+iris_tbl <- sdf_copy_to(sc = sc, x = iris, overwrite = T)
+```
+
+The above one-line code copies iris dataset from the local node to Spark cluster environment. "`sc`" is the Spark Connection we just created; "**x**" is the data frame that we want to copy; "`overwrite`" is the option whether we want to overwrite the target object if the same name SDF exists in the Spark environment. Finally, `sdf_copy_to()` function will return an R object representing the copied SDF (i.e. creating a "pointer" to the SDF such that we can refer `iris_tbl` in the R notebook to operate `iris` SDF). Now `irir_tbl` in the local R environment can be used to refer to the `iris` SDF in the Spark system.
+
+To check whether the `iris` data was copied to the Spark environment successfully or not, we can use `src_tbls()` function to the Spark Connection (`sc`):
+
+```r
+## code to return all the data frames associated with sc
+src_tbls(sc) 
+```

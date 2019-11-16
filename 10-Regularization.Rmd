@@ -204,7 +204,7 @@ For any value of tuning parameter $\lambda$, there exists a $s$ such that the co
 
 When $p＝2$, lasso estimates ($\hat{\beta}_{lasso}$ in figure \@ref(fig:lassoridge)) have the smallest RSS among all points that satisfy $|\beta*{1}|+|\beta_{2}|\leq s$ (i.e. within the diamond in figure \@ref(fig:lassoridge)). Ridge estimates have the smallest RSS among all points that satisfy $\beta_{1}^{2}+\beta_{2}^{2}\leq s$ (i.e. within the circle in figure \@ref(fig:lassoridge)). As s increases, the diamond and circle regions expand and get less restrictive. If s is large enough, the restrictive region will cover the least squares estimate ($\hat{\beta}_{LSE}$). Then, equations \@ref(eq:lasso2) and \@ref(eq:ridge2) will simply yield the least squares estimate. In contrast, if s is small, the grey region in figure \@ref(fig:lassoridge) will be small and hence restrict the magnitude of $\beta$. With the alternative formulations, we can answer the question of feature selection property.
 
-```{r lassoridge, fig.cap = "Contours of the RSS and constrain functions for the lasso (left) and ridge regression (right)", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r lassoridge, fig.cap = "Contours of the RSS and constrain functions for the lasso (left) and ridge regression (right)", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/LassoRidge.png")
 ```
 
