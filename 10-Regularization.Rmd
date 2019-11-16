@@ -334,7 +334,11 @@ Call:  glmnet(x = as.matrix(trainx), y = trainy)
 ...
 ```
 
+The first column `Df` is the degree of freedom (i.e. the number of non-zero coefficients),  `%Dev` is the percentage of deviance explained and `Lambda` is the value of tuning parameter $\lambda$. By default, the function will try 100 different values of $\lambda$. However, if as $\lambda$ changes, the `%Dev` doesn't change sufficiently, the algorithm will stop before it goes through all the values of $\lambda$. We didn't show the full output above. But it only uses 68 different values of $\lambda$. You can also set the value of $\lambda$ using `s=` :
 
+```{r}
+coef(glmfit, s = 1200)
+```
 
 
 
