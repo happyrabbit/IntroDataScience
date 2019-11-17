@@ -359,7 +359,6 @@ We can plot the object using `plot()`. The red dotted line is the cross-validati
 plot(cvfit)
 ```
 
-
 You can check the two selected $\lambda$ values by: 
 
 ```{r}
@@ -377,5 +376,40 @@ You can look at the coefficient estimates for different $\lambda$ by:
 coef(cvfit, s = "lambda.1se")
 ```
 
+### Penalized logistic regression
+
+#### Multivariate logistic regression model
+
+Logistic regression is a traditional statistical method for a two-category classification problem. It is simple yet useful.  Here we use the swine disease breakout data as an example to illustrate the learning method and code implementation. Refer to section \@ref(swinediseasedata) for more details about the dataset. The goal is to predict if a farm will have a swine disease outbreak (i.e build a risk scoring system). 
+
+Consider risk scoring system construction using a sample of $n$ observations, with information collected for $G$ categorical predictors and one binary response variable for each observation. The predictors are 120 survey questions (i.e. G=120). There were three possible answers for each question (A, B and C). So each predictor is encoded to two dummy variables (we consider C as the baseline.). Let $\mathbf{x_{i,g}}$ be the vector of dummy variables associated with the $g^{th}$ categorical predictor for the $i^{th}$  observation, where $i=1,\cdots,n$, $g=1,\cdots,G$. For example, if the first farm chooses B for question 2, then the corresponding observation is $\mathbf{x_{12}}=(0,1)^{T}$. Each question has a degree of freedom of 2. 
+
+We denote the degrees of freedom of the $g^{th}$ predictor by $df_g$, which is also the length of vector $\mathbf{x_{i,g}}$. Let $y_i$ (= 1, diseased; or 0, not diseased) be the binary response for the $i$th observation. Denote the probability
+of disease for $i$th subject by $\theta_i$, the model can be formulated as:
+
+$$y_{i}\sim Bounoulli(\theta_{i})$$
+
+$$log\left(\frac{\theta_{i}}{1-\theta_{i}}\right)=\eta_{\mathbf{\beta}}(x_{i})=\beta_{0}+\sum_{g=1}^{G}\mathbf{x_{i,g}}^{T}\mathbf{\mathbf{\beta_{g}}}$$
+
+where $\beta_{0}$ is the intercept and $\mathbf{\beta_{g}}$ is the parameter vector corresponding to the $g^{th}$ predictor. As we mentioned, here $\mathbf{\beta_{g}}$ has length 2.
+
+Traditional estimation of logistic
+parameters $\mathbf{\beta}=(\beta_{0}^{T},\mathbf{\beta_{1}}^{T},\mathbf{\beta_{2}}^{T},...,\mathbf{\beta_{G}}^{T})^{T}$ is done through maximizing the log-likelihood
+
+\begin{eqnarray*}
+l(\mathbf{\beta})&=&log[\prod_{i=1}^{n}\theta_{i}^{y_{i}}(1-\theta_{i})^{1-y_{i}}]\\
+&=&\sum_{i=1}^{n}\{y_{i}log(\theta_{i})+(1-y_{i})log(1-\theta_{i})\}\\
+&=&\sum_{i=1}^{n}\{\ y_{i}\eta_{\mathbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\mathbf{\beta}}(\mathbf{x_{i}}))]\ \}
+(\#eq:logisticlikelihood)
+\end{eqnarray*}
+
+For logistic regression analysis with a large number of explanatory variables, complete- or quasi-complete-separation may result which makes
+the maximum likelihood estimation unstable [@Wed1976], [@albert1984]. For example: 
+
+```{r}
+library(MASS)
+dat <- read.csv("http://bit.ly/2KXb1Qi")
+fit <- glm(y~., dat, family = "binomial")
+```
 
 

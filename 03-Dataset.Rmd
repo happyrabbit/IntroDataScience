@@ -98,7 +98,7 @@ str(rating,vec.len=3)
 
 Refer to Appendix for the simulation code.
 
-## Swine Disease Breakout Data
+## Swine Disease Breakout Data {#swinediseasedata}
 
 The swine disease data includes simulated 120 survey questions from 800 farms. There are three choices for each question. The outbreak status for the $i^{th}$ farm is generated from a $Bernoulli(1, p_i)$ distribution with $p_i$ being a function of the question answers: 
 
@@ -124,7 +124,7 @@ $$\mathbf{\beta^{T}}=\left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-
 For each value of $\gamma$, 20 data sets are simulated. The bigger $\gamma$ is, the larger the corresponding parameter. We provided the data sets with $\gamma = 2$. Let's check the data:
 
 ```{r}
-disease_dat<-read.csv("http://bit.ly/2KXb1Qi")
+disease_dat <- read.csv("http://bit.ly/2KXb1Qi")
 # only show the last 7 columns here
 head(subset(disease_dat,select=c("Q118.A","Q118.B","Q119.A",
                                  "Q119.B","Q120.A","Q120.B","y"))) 
