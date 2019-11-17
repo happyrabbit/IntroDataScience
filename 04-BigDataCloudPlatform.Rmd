@@ -112,3 +112,83 @@ To check whether the `iris` data was copied to the Spark environment successfull
 ## code to return all the data frames associated with sc
 src_tbls(sc) 
 ```
+
+**Analyzing the Data**
+
+Now we have successfully copied the `iris` dataset to the Spark environment as a SDF. This means that `iris_tbl` is an R object representing the `iris` SDF and we can use `iris_tbl` in R to refer the `iris` dataset in the Spark system (i.e. the `iris` SDF). With the `sparklyr` packages, we can nearly all the functions in `dplyr` to Spark DataFrame directly through `iris_tbl`, same as we are applying `dplyr` functions to a local R data frame in our laptop. For example, we can use the `%>%` operator to pass `iris_tbl` to the `count()` function:
+
+```r
+iris_tbl %>% count
+```
+
+or using the `head()` function to return the first few rows in `iris_tbl`:
+
+```r
+head(iris_tbl)
+```
+
+or applying more advanced data manipulation directly to `iris_tbl`:
+
+```r
+iris_tbl %>%
+  mutate(Sepal_Width = round(Sepal_Width * 2) / 2) %>%
+  group_by(Species, Sepal_Width) %>%
+  summarize(count = n(), Sepal_Length = mean(Sepal_Length), 
+            stdev = sd(Sepal_Length))
+```
+
+**Collect Results Back to Master Node**
+
+Even though we can run nearly all of the `dplyr` functions on SDF, we cannot apply functions from other packages directly to SDF (such as `ggplot()`). For functions that can only work on local R data frames, we must copy the SDF back to the local node as an R data frame. To copy SDF back to the local node, we use the `collect()` function. The following code using `collect()` will collect the results of a few operations and assign the collected data to `iris_summary`, a local R data frame:
+
+```r
+iris_summary <- iris_tbl %>%
+  mutate(Sepal_Width = round(Sepal_Width * 2) / 2) %>%
+  group_by(Species, Sepal_Width) %>%
+  summarize(count = n(), 
+              Sepal_Length = mean(Sepal_Length), 
+              stdev = sd(Sepal_Length)) %>%
+  collect()
+```
+
+Now, `iris_summary` is a local R object to the R notebook and we can use any R packages and functions to it. In the following code, we will apply `ggplot()` to it, exactly the same as a stand along R console:
+
+
+```r
+library(ggplot2)
+ggplot(iris_summary, aes(Sepal_Width, Sepal_Length, color = Species)) +
+  geom_line(size = 1.2) +
+  geom_errorbar(aes(ymin = Sepal_Length - stdev, 
+                    ymax = Sepal_Length + stdev), width = 0.05) +
+  geom_text(aes(label = count), vjust = -0.2, hjust = 1.2, color = "black") +
+  theme(legend.position="top")
+```
+
+
+In most cases, the heavy-duty data preprocessing and aggregation is done in Spark using functions in ·dplyr·. Once the data is aggregated, the size is usually dramatically reduced and such reduced data can be collected to an R local object for downstream analysis.
+
+**Fit Regression to SDF**
+
+One of the advantages of the Spark system is the parallel machine learning algorithm. There are many statistical and machine learning algorithms developed to run in parallel across many CPUs with data across many memory units for SDF. In this example, we have already uploaded the `iris` data to the Spark system, and the data in the SDF can be referred through `iris_tbl` as in the last section. The linear regression algorithm implemented in the Spark system can be called through `ml_linear_regression()` function. The syntax to call the function is to define the local R object that representing the SDF (i.e. `iris_tbl` (local R object) for `iris` (SDF)), response variable (i.e. the y variable in linear regression in the SDF) and features (i.e. the x variables in linear regression in the SDF). Now, we can easily fit a linear regression for large dataset far beyond the memory limit of one single computer, and it is truly scalable and only constrained by the resource of the Spark cluster. Below is an illustration of how to fit a linear regression to SDF using R notebook:
+
+```r
+fit1 <- ml_linear_regression(x = iris_tbl, response = "Sepal_Length",
+        features = c("Sepal_Width", "Petal_Length", "Petal_Width"))
+summary(fit1)
+```
+
+In the above code, `x` is the R object pointing to the SDF; `response` is y-variable, `features` are the collection of explanatory variables. For this function, both the data and computation are in the Spark cluster which leverages multiple CPUs, distributed memories and parallel computing.
+
+**Fit a K-means Cluster**
+
+Through the `sparklyr` package, we can use an R notebook to access many Spark Machine Learning Library (MLlib) algorithms such as Linear Regression, Logistic Regression, Survival Regression, Generalized Linear Regression, Decision Trees, Random Forests, Gradient-Boosted Trees, Principal Components Analysis, Naive-Bayes, K-Means Clustering, and a few other methods. Below codes fit a k-means cluster algorithm:
+
+```r
+## Now fit a k-means clustering using iris_tbl data
+## with only two out of four features in iris_tbl
+fit2 <- ml_kmeans(x = iris_tbl, centers = 3,
+                    features = c("Petal_Length", "Petal_Width"))
+# print our model fit
+print(fit2)
+```
+
