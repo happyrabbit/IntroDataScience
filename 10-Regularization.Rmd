@@ -412,4 +412,13 @@ dat <- read.csv("http://bit.ly/2KXb1Qi")
 fit <- glm(y~., dat, family = "binomial")
 ```
 
+There is an error saying "`algorithm did not converge`". It is because there is complete separation. Adding a penalty can solve this problem. 
+
+#### Penalized logistic regression
+
+Penalized logistic regression adds penalty to the likelihood function:
+
+$$
+\underset{\mathbf{\beta}\in \mathbb{R}^{p+1}}{min} -\sum_{i=1}^{n}\{\ y_{i}\eta_{\mathbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\mathbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda [(1-\alpha) \parallel \mathbf{\beta}\parallel _{2}^{2}/2] + \alpha \parallel \mathbf{\beta}\parallel _{1} ]
+$$
 

@@ -219,8 +219,6 @@ prediction %>%
        membership with the iris dataset")
 ```
 
-
-=======
 So far, we have illustrated
 
 1. the relationship between a local node (i.e. where R notebook is running) and Spark Clusters (i..e where data are stored and computation are done);
@@ -230,4 +228,4 @@ So far, we have illustrated
 5. how to collect information from Spark DataFrames back to a local R object (i.e. local R data frame) for future analysis.
 
 These procedures cover the basics of big data analysis that a data scientist needs to know as a beginner. We have an R notebook on the book website that contains the contents of this chapter. We also have a Python notebook on the book website.
->>>>>>> d911b60534faf1b24124a66ee451e72973cee2fb
+
