@@ -192,3 +192,30 @@ fit2 <- ml_kmeans(x = iris_tbl, centers = 3,
 print(fit2)
 ```
 
+After fitting the k-means model, we can apply the model to predict other datasets through `sdf_predict()` function. Following code applies the model to `iris_tbl` again to predict the cluster and collect the results as a local R object (i.e. `prediction`) using `collect()` function:
+
+```r
+prediction = collect(sdf_predict(fit2, iris_tbl))
+```
+
+As `prediction` is a local R object, we can apply any R functions from any libraries to it. For example:
+
+```r
+prediction %>%
+  ggplot(aes(Petal_Length, Petal_Width)) +
+  geom_point(aes(Petal_Width, Petal_Length, 
+                 col = factor(prediction + 1)),
+             size = 2, alpha = 0.5) +
+  geom_point(data = fit2$centers, aes(Petal_Width, Petal_Length),
+             col = scales::muted(c("red", "green", "blue")),
+             pch = 'x', size = 12) +
+  scale_color_discrete(name = "Predicted Cluster",
+                       labels = paste("Cluster", 1:3)) + 
+  labs(x = "Petal Length", 
+       y = "Petal Width", 
+       title = "K-Means Clustering",
+       subtitle = "Use Spark ML to predict cluster 
+       membership with the iris dataset")
+```
+
+
