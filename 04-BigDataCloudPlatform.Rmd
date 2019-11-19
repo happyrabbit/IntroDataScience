@@ -192,3 +192,12 @@ fit2 <- ml_kmeans(x = iris_tbl, centers = 3,
 print(fit2)
 ```
 
+So far, we have illustrated
+
+1. the relationship between a local node (i.e. where R notebook is running) and Spark Clusters (i..e where data are stored and computation are done);
+2. how to copy a local data frame to a Spark DataFrames (please note if your data is already in Spark environment, there is no need to copy and we only need to build the connection. This is likely to be the case for enterprise environment);
+3. how to manipulate Spark DataFrames for data cleaning and preprocessing through `dplyr` functions with the installation of `sparklyr` package;
+4. how to fit statistical and machine learning models to Spark DataFrame in a truly parallel manner;
+5. how to collect information from Spark DataFrames back to a local R object (i.e. local R data frame) for future analysis.
+
+These procedures cover the basics of big data analysis that a data scientist needs to know as a beginner. We have an R notebook on the book website that contains the contents of this chapter. We also have a Python notebook on the book website.
