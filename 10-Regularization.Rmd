@@ -422,3 +422,11 @@ $$
 \underset{\mathbf{\beta}\in \mathbb{R}^{p+1}}{min} -\sum_{i=1}^{n}\{\ y_{i}\eta_{\mathbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\mathbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda [(1-\alpha) \parallel \mathbf{\beta}\parallel _{2}^{2}/2] + \alpha \parallel \mathbf{\beta}\parallel _{1} ]
 $$
 
+```{r}
+dat <- read.csv("http://bit.ly/2KXb1Qi")
+trainx = dplyr::select(dat, -y)
+trainy = dat$y
+fit <- glmnet(as.matrix(trainx), trainy, family = "binomial")
+```
+
+
