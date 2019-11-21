@@ -306,7 +306,7 @@ trainy <- dat$store_exp + dat$online_exp
 glmfit = glmnet(as.matrix(trainx), trainy)
 ```
 
-The object glmfit returned by glmnet() has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on glmfit, such as plot(), print(), coef() and predict() . For example, the following code visualizes the path of coefficients as penalty increases:
+The object `glmfit` returned by `glmnet()` has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on `glmfit`, such as `plot()`, `print()`, `coef()` and `predict()` . For example, the following code visualizes the path of coefficients as penalty increases:
 
 ```{r}
 plot(glmfit, label = T)
