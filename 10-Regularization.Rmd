@@ -436,3 +436,43 @@ The error message is gone when we use penalized regression. We can visualize the
 - `class`: return the category (0/1)
 - `coefficients`: return the coefficient estimates
 - `nonzero`: return an indicator for non-zero estimates (i.e. which variables are selected)
+
+The default setting is to predict the probability of the second level of the response variable. For example, the second level of the response variable for `trainy` here is: 
+
+```{r}
+levels(as.factor(trainy))
+```
+
+The first column of the above output is the predicted link function value when $\lambda=0.02833$. The second column of the output is the predicted link function when $\lambda=0.0311$. Similarly, you can change the setting for `type` to produce different outputs. You can use the `cv.glmnet()` function to tune parameters. The parameter setting is nearly the same as before, the only difference is the setting of `type.measure`. Since the response is categorical, not continuous, we have different performance measurements.  The most common settings of  `type.measure` for classification are:
+
+- `class`: error rate
+- `auc`: it is the area under the ROC for the dichotomous problem
+So the model is to predict the probability of outcome "1".  Take a baby example of 3 observations and 2 values of $\lambda$ to show the usage of `predict()` function:
+
+```{r}
+newdat = as.matrix(trainx[1:3, ])
+predict(fit, newdat, type = "link", s = c(2.833e-02, 3.110e-02))
+```
+
+For example:
+
+```{r}
+cvfit = cv.glmnet(as.matrix(trainx), trainy, family = "binomial", type.measure = "class")
+plot(cvfit)
+```
+
+The above uses error rate as performance criteria and use 10-fold cross-validation. Similarly, you can get the $\lambda$ value for the minimum error rate and the error rate that is 1 standard error from the minimum: 
+
+```{r}
+cvfit$lambda.min
+cvfit$lambda.1se
+```
+
+You can use the same way to get the parameter estimates and make prediction.
+
+#### Group lasso logistic regression
+
+
+
+
+
