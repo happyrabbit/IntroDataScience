@@ -429,4 +429,10 @@ trainy = dat$y
 fit <- glmnet(as.matrix(trainx), trainy, family = "binomial")
 ```
 
+The error message is gone when we use penalized regression. We can visualize the shrinking path of coefficients as penalty increases. The use of `predict()` function is a little different. For the generalized linear model, you can return different results by setting the `type` argument. The choices are:
 
+- `link`: return the link function value
+- `response`: return the probability
+- `class`: return the category (0/1)
+- `coefficients`: return the coefficient estimates
+- `nonzero`: return an indicator for non-zero estimates (i.e. which variables are selected)
