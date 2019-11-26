@@ -472,7 +472,7 @@ You can use the same way to get the parameter estimates and make prediction.
 
 #### Group lasso logistic regression
 
-
+A newer lasso technique to perform model selection and parameter estimation is the group lasso algorithm of Meier et al. [@Meier2008]. Group lasso provides an attractive solution to this question because of its ability to achieve group variable selection and stabilize parameter estimates at the same time. 
 
 
 
