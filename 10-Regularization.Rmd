@@ -485,7 +485,7 @@ where $\lambda$ is a tuning parameter for the penalty and $s(\cdot)$ is a functi
 Here we consider selection of the tuning parameter $\lambda$ from a multiplicative grid of 148 values $\{0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{148}\lambda_{max}\}$, as in Meier et al. [@Meier2008]. Here $\lambda_{max}$ is defined as
 
 \begin{equation}
-\lambda_{max}=\underset{g\in\{1,...,G\}}{max}\left\{\frac{1}{s(df_{g})}\parallel \bx_{g}^{T}(\by-\bar{\by})\parallel_{2}\right\},
+\lambda_{max}=\underset{g\in\{1,...,G\}}{max}\left\{\frac{1}{s(df_{g})}\parallel \mathbf{x_{g}}^{T}(\mathbf{y}-\bar{\mathbf{y}} )\parallel_{2}\right\},
 \end{equation}
 
 such that when $\lambda=\lambda_{max}$, only the intercept is
