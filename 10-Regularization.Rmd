@@ -412,7 +412,7 @@ dat <- read.csv("http://bit.ly/2KXb1Qi")
 fit <- glm(y~., dat, family = "binomial")
 ```
 
-There is an error saying "`algorithm did not converge`". It is because there is complete separation. Adding a penalty can solve this problem. 
+There is an error saying "`algorithm did not converge`". It is because there is complete separation. It happens when there are a large number of explanatory variables which makes the estimation of the coefficients unstable. To stabilize the estimation of parameter coefficients, one popular approach is the lasso algorithm with $L_1$ norm penalty proposed by Tibshirani[@Tibshirani1996]. Because the lasso algorithm can estimate some variable coefficients to be 0, it can also be used as a variable selection tool. 
 
 #### Penalized logistic regression
 
@@ -472,7 +472,23 @@ You can use the same way to get the parameter estimates and make prediction.
 
 #### Group lasso logistic regression
 
-A newer lasso technique to perform model selection and parameter estimation is the group lasso algorithm of Meier et al. [@Meier2008]. Group lasso provides an attractive solution to this question because of its ability to achieve group variable selection and stabilize parameter estimates at the same time. 
+For models with categorical survey questions (explanatory variables), however, the original lasso algorithm only selects individual dummy variables instead of sets of the dummy variables grouped by the question in the survey. Another disadvantage of applying lasso to grouped variables is that the estimates are affected by the way dummy variables are encoded. Thus the group lasso [@Yuan2007] method has been proposed to enable variable selection in linear regression models on groups of variables, instead of on single variables. For logistic regression models, the group lasso algorithm was first studied by Kim et al. [@Kim2006]. They proposed a gradient descent algorithm to solve the corresponding constrained problem, which does, however, depend on unknown constants. Meier et al. [@Meier2008] proposed a new algorithm that could work directly on the penalized problem and its convergence property does not depend on unknown constants. The algorithm is especially suitable for high-dimensional problems. It can also be applied to solve the corresponding convex optimization problem in generalized linear models. The group lasso estimator proposed by Meier et al. [@Meier2008] for logistic regression has been shown to be statistically consistent, even with a large number of categorical predictors.
 
+In this section, we illustrate how to use the logistic group lasso algorithm to construct risk scoring systems for predicting disease. Instead of maximizing the log-likelihood in the maximum likelihood method, the logistic group lasso estimates are calculated by minimizing the convex function: 
 
+$$
+S_{\lambda}(\mathbf{\beta})=-l(\mathbf{\beta})+\lambda\sum_{g=1}^{G}s(df_{g})\parallel\mathbf{\beta_{g}}\parallel_{2}
+$$
+
+where $\lambda$ is a tuning parameter for the penalty and $s(\cdot)$ is a function to rescale the penalty. In lasso algorithms, the selection of $\lambda$ is usually determined by cross-validation using data. For $s(\cdot)$, we use the square root function $s(df_g)=df_g^{0.5}$ as suggested in Meier et al.[@Meier2008]. It ensures the penalty is of the order of the number of parameters $df_g$ as used in [@Yuan2007].
+
+Here we consider selection of the tuning parameter $\lambda$ from a multiplicative grid of 148 values $\{0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{148}\lambda_{max}\}$, as in Meier et al. [@Meier2008]. Here $\lambda_{max}$ is defined as
+
+\begin{equation}
+\lambda_{max}=\underset{g\in\{1,...,G\}}{max}\left\{\frac{1}{s(df_{g})}\parallel \bx_{g}^{T}(\by-\bar{\by})\parallel_{2}\right\},
+\end{equation}
+
+such that when $\lambda=\lambda_{max}$, only the intercept is
+in the model. When $\lambda$ goes to $0$, the model is equivalent to ordinary
+logistic regression.
 
