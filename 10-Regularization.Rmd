@@ -482,7 +482,7 @@ $$
 
 where $\lambda$ is a tuning parameter for the penalty and $s(\cdot)$ is a function to rescale the penalty. In lasso algorithms, the selection of $\lambda$ is usually determined by cross-validation using data. For $s(\cdot)$, we use the square root function $s(df_g)=df_g^{0.5}$ as suggested in Meier et al.[@Meier2008]. It ensures the penalty is of the order of the number of parameters $df_g$ as used in [@Yuan2007].
 
-Here we consider selection of the tuning parameter $\lambda$ from a multiplicative grid of 148 values $\{0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{148}\lambda_{max}\}$, as in Meier et al. [@Meier2008]. Here $\lambda_{max}$ is defined as
+Here we consider selection of the tuning parameter $\lambda$ from a multiplicative grid of 100 values $\{0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{100}\lambda_{max}\}$. Here $\lambda_{max}$ is defined as
 
 \begin{equation}
 \lambda_{max}=\underset{g\in\{1,...,G\}}{max}\left\{\frac{1}{s(df_{g})}\parallel \mathbf{x_{g}}^{T}(\mathbf{y}-\bar{\mathbf{y}} )\parallel_{2}\right\},
@@ -491,4 +491,88 @@ Here we consider selection of the tuning parameter $\lambda$ from a multiplicati
 such that when $\lambda=\lambda_{max}$, only the intercept is
 in the model. When $\lambda$ goes to $0$, the model is equivalent to ordinary
 logistic regression.
+
+Three criteria may be used to select the optimal value of $\lambda$. One is AUC which you should have seem many times in this book by now. The log-likelihood score used in Meier et al. [@Meier2008] is taken as the average of log-likelihood of the validation data overall cross-validation sets. Another one is the maximum correlation coefficient in Yeo and Burge [@Yeo2004] that is defined as:
+
+$$
+\rho_{max}=max\{\rho_{\tau}|\tau\in(0,1)\},
+$$
+
+where $\tau\in(0,1)$ is a threshold to classify the predicted probability into binary disease status and $\rho_\tau$ is the Pearson correlation coefficient between the true binary disease status and the predictive disease status with threshold $\tau$. 
+
+You can use the following package to implement the model. Install the package using:
+
+```{r}
+devtools::install_github("netlify/NetlifyDS")
+```
+
+Load the package:
+
+```{r}
+library("NetlifyDS")
+```
+
+The package includes the swine disease breakout data and you can load the data by:
+
+```{r}
+data("sim1_da1")
+```
+
+You can use `cv_glasso()` function to tune the parameters: 
+
+```{r}
+# the last column of sim1_da1 response variable y
+# trainx is the explanatory variable matrix
+trainx = dplyr::select(sim1_da1, -y)
+# save response variable as as trainy
+trainy = sim1_da1$y
+# get the group indicator
+index <- gsub("\\..*", "", names(trainx))
+```
+
+Dummy variables from the same question are in the same group:
+
+```{r}
+index[1:50]
+```
+
+Set a series of tuning parameter values. nlam is the number of values we want to tune.  It is the parameter $m$ in {0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{m}\lambda_{max}\}$. The tuning process returns a long output and we will not report all:
+
+```r
+# Tune over 100 values
+nlam <- 100
+# set the type of prediction
+# - `link`: return the predicted link function
+# - `response`: return the predicted probability
+# number of cross-validation folds
+kfold <- 10
+cv_fit <- cv_glasso(trainx, trainy, nlam = nlam, kfold = kfold, type = "link")
+# 只展示部分结果
+str(cv_fit)
+```
+
+Here we only show part of the output: 
+
+```html
+...
+ $ auc               : num [1:100] 0.573 0.567 0.535 0.484 0.514 ...
+ $ log_likelihood    : num [1:100] -554 -554 -553 -553 -552 ...
+ $ maxrho            : num [1:100] -0.0519 0.00666 0.04631 0.0486 0.06269 ...
+ $ lambda.max.auc    : Named num [1:2] 0.922 0.94
+  ..- attr(*, "names")= chr [1:2] "lambda" "auc"
+ $ lambda.1se.auc    : Named num [1:2] 16.74 0.81
+  ..- attr(*, "names")= chr [1:2] "" "se.auc"
+ $ lambda.max.loglike: Named num [1:2] 1.77 -248.86
+  ..- attr(*, "names")= chr [1:2] "lambda" "loglike"
+ $ lambda.1se.loglike: Named num [1:2] 9.45 -360.13
+  ..- attr(*, "names")= chr [1:2] "lambda" "se.loglike"
+ $ lambda.max.maxco  : Named num [1:2] 0.922 0.708
+  ..- attr(*, "names")= chr [1:2] "lambda" "maxco"
+ $ lambda.1se.maxco  : Named num [1:2] 14.216 0.504
+  ..- attr(*, "names")= chr [1:2] "lambda" "se.maxco"
+```
+
+```{r, echo=FALSE}
+load("../DataScientistR/Data/cv_fit.RData")
+```
 
