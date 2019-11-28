@@ -576,3 +576,54 @@ Here we only show part of the output:
 load("../DataScientistR/Data/cv_fit.RData")
 ```
 
+In the returned results:
+
+- `$ auc`: the AUC values
+- `$ log_likelihood`: log-likelihood
+- `$ maxrho`: maximum correlation coefficient
+- `$ lambda.max.auc`: the max AUC and the corresponding value of $\lambda$
+- `$ lambda.1se.auc`: one standard error to the max AUC and the corresponding $\lambda$
+- `$ lambda.max.loglike`: max log-likelihood and the corresponding $\lambda$
+- `$ lambda.1se.loglike`: one standard error to the max log-likelihood and the corresponding $\lambda$
+- `$ lambda.max.maxco`: maximum correlation coefficient and the corresponding $\lambda$
+- `$ lambda.1se.maxco`: one standard error to the maximum correlation coefficient and the corresponding $\lambda$
+
+The most common criterion is AUC. You can compare the selections from different criteria. If they all point to the same value of the tuning parameter, you can have more confidence about the choice. If they suggest very different values, then you need to concern if the tuning process is stable. You can visualize the cross validation result:
+
+```{r}
+plot(cv_fit)
+```
+
+The x-axis is the value of the tuning parameter, the y-axis is AUC. The two dash lines are the value of $\lambda$ for max AUC and the value for the one standard deviation to the max AUC. Once you choose the value of the tuning parameter, you can use `fitglasso()` to fit the model. For example, we can fit the model using the parameter value that gives the max AUC, which is $\lambda=0.922$: 
+
+```r
+fitgl <- fitglasso(trainx, trainy, lambda = 0.922, na_action = na.pass)
+```
+
+```html
+Lambda: 0.922  nr.var: 229
+```
+
+You can use `coef()` to get the estimates of coefficients:
+
+```r
+coef(fitgl)
+```
+
+```pre
+               0.922
+Intercept -5.318e+01
+Q1.A       1.757e+00
+Q1.B       1.719e+00
+Q2.A       2.170e+00
+Q2.B       6.939e-01
+Q3.A       2.102e+00
+Q3.B       1.359e+00
+...
+```
+
+Use `predict_glasso()` to predict new samples: 
+
+```r
+prey <- predict_glasso(fitgl, trainx)
+```
