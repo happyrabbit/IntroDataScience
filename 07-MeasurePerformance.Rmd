@@ -21,7 +21,7 @@ fit<- lm(formula = income ~ store_exp + online_exp + store_trans +
 summary(fit)
 ```
 
-The fitted results `fit` shows the RMSE is `r round(summary(fit)$sigma,0)` (at the bottom of the output after `Residual standard error:`).
+The fitted results `fit` shows the RMSE is `r as.integer(round(summary(fit)$sigma,0))` (at the bottom of the output after `Residual standard error:`).
 
 Another common performance measure for the regression model is R-Squared, often denoted as $R^2$. It is the square of the correlation between the fitted value and the observed value. It is often explained as the percentage of the information in the data that can be explained by the model. The above model returns a R-squared＝`r round(summary(fit)$adj.r.squared,2)`, which indicates the model can explain `r round((summary(fit)$adj.r.squared)*100,0)`% of the variance in variable `income`.  While $R^2$ is easy to explain, it is not a direct measure of model accuracy but correlation. Here the $R^2$ value is not low but the RMSE is  `r round(summary(fit)$adj.r.squared,2)`  which means the average difference between model fitting and the observation is  `r round(summary(fit)$sigma,0)`. It is a big discrepancy from an application point of view. When the response variable has a large scale and high variance, a high $R^2$ doesn't mean the model has enough accuracy. It is also important to remember that $R^2$ is dependent on the variation of the outcome variable. If the data has a response variable with a higher variance, the model based on it tends to have a higher $R^2$.
 
@@ -33,6 +33,22 @@ where $RSS=\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}$ and $TSS=\sum_{i=1}^{n}(y_{i}-
 
 Since RSS is always decreasing as the number of parameters increases, $R^2$ increases as a result.  For a model with $p$ parameters, the adjusted $R^2$ is defined as:
 
-$$Adjusted R^{2}=1-\frac{RSS/(n-p-1)}{TSS/(n-1)}$$
+$$Adjusted\ R^{2}=1-\frac{RSS/(n-p-1)}{TSS/(n-1)}$$
+
+To maximize the adjusted $R^{2}$ is identical to minimize $RSS/(n-p-1)$. Since the number of parameters $p$ is reflected in the equation, $RSS/(n-p-1)$ can increase or decrease as $p$ increases. The idea behind this is that the adjusted R-squared increases if the new variable improves the model more than would be expected by chance. It decreases when a predictor improves the model by less than expected by chance. While values are usually positive, they can be negative as well. 
+
+Another measurement is $C_{p}$. For a least squared model with $p$ parameters:
+
+$$C_{p}=\frac{1}{n}(RSS+2p\hat{\sigma}^{2})$$
+
+where $\hat{\sigma}^{2}$ is the estimator of the model random effect $\epsilon$. $C_{p}$ is to add penalty $2p\hat{\sigma}^{2}$ to the training set $RSS$. The goal is to adjust the over-optimistic measurement based on training data. As the number of parameters increases, the penalty increases.  It counteracts the decrease of $RSS$ due to increasing the number of parameters. We choose the model with a smaller $C_{p}$.
+
+Both AIC and BIC are based on the maximum likelihood. In linear regression, the maximum likelihood estimate is the least squared estimate. The definitions of the two are:
+
+$$AIC=n+nlog(2\pi)+nlog(RSS/n)+2(p+1)$$
+
+$$BIC=n+nlog(2\pi)+nlog(RSS/n)+log(n)(p+1)$$
+
+R function AIC() and BIC() will calculate the AIC and BIC value according to the above equations. Many textbooks ignore content item $n+nlog(2\pi)$, and use $p$ instead of $p+1$. Those slightly different versions give the same results since we are only interested in the relative value. Comparing to AIC, BIC puts a heavier penalty on the number of parameters. 
 
 ## Classification Model Performance

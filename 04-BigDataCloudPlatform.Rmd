@@ -229,3 +229,10 @@ So far, we have illustrated
 
 These procedures cover the basics of big data analysis that a data scientist needs to know as a beginner. We have an R notebook on the book website that contains the contents of this chapter. We also have a Python notebook on the book website.
 
+## Databases and SQL
+
+### History
+
+Databases have been around for many years to efficiently organize, store, retrieve, and update data systematically. In the past, statisticians and analysts usually dealt with small datasets stored in text or Excel files and often did not interact with database systems. Students from the traditional statistics department usually lack the necessary database knowledge. However, as data grow bigger, database knowledge becomes essential and required for statisticians, analysts and data scientists in an enterprise environment where data are stored in some form of database systems. Databases often contain a collection of tables and the relationship among these tables (i.e. schema). The table is the fundamental structure for databases that contain rows and columns similar to data frames in R or Python. Database management systems (DBMS) ensure data integration and security in real time operations. There are many different DBMS such as Oracle, SQL Server, MySQL, Teradata, Hive, Redshift and Hana. The majority of database operations are very similar among different DBMS, and Structured Query Language (SQL) is the standard language to use these systems.
+
+
