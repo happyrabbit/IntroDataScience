@@ -1,4 +1,4 @@
-# Model Tuning Strategy
+# Model Tuning Strategy {#modeltuningstrategy}
 
 When training a machine learning model, there are many decisions to make. For example, when training a random forest, you need to decide the number of trees and the number of variables at each node. For lasso method, you need to determine the penalty parameter. There may be standard settings for some of the parameters, but it's unlikely to guess the right values for all of these correctly. Other than that, making good choices on how you split the data into training and testing sets can make a huge difference in helping you find a high-performance model efficiently. 
 

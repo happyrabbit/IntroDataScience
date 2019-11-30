@@ -502,7 +502,7 @@ where $\tau\in(0,1)$ is a threshold to classify the predicted probability into b
 
 You can use the following package to implement the model. Install the package using:
 
-```{r}
+```r
 devtools::install_github("netlify/NetlifyDS")
 ```
 
