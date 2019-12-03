@@ -1,4 +1,4 @@
-# Tree-Based Methods
+# Tree-Based Methods {#treemodel}
 
 The tree-based models can be used for regression and classification. The goal is to stratify or segment the predictor space into a number of sub-regions. For a given observation, use the mean or the mode of the training observations in the sub-region as the prediction. Tree-based methods are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
 

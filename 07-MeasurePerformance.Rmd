@@ -4,7 +4,6 @@ To compare different models, we need a way to measure model performance. There a
 
 ## Regression Model Performance
 
-
 **MSE and RMSE**
 
 Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values and the actual value. The Root Mean Squared Error (RMSE) is the root square of the MSE. 
@@ -52,3 +51,73 @@ $$BIC=n+nlog(2\pi)+nlog(RSS/n)+log(n)(p+1)$$
 R function AIC() and BIC() will calculate the AIC and BIC value according to the above equations. Many textbooks ignore content item $n+nlog(2\pi)$, and use $p$ instead of $p+1$. Those slightly different versions give the same results since we are only interested in the relative value. Comparing to AIC, BIC puts a heavier penalty on the number of parameters. 
 
 ## Classification Model Performance
+
+This section focuses on performance measurement for models with a categorical response. The metrics in the previous section are for models with a continuous response and they are not appropriate in the context of classification. Most of the classification problems are dichotomous, such as an outbreak of disease, spam email, etc. There are also cases with more than two categories as the segments in the clothing company data. We use swine disease data to illustrate different metrics. Let's train a random forest model as an example. We will discuss the model in Chapter \@ref(treemodel).
+
+```{r}
+library(dplyr)
+library(randomForest)
+library(caret)
+library(readr)
+disease_dat <- read.csv("http://bit.ly/2KXb1Qi")
+# you can check the data using glimpse()
+# glimpse(disease_dat)
+```
+
+Separate the data to be training and testing sets.  Fit model using training data (`xTrain` and `yTrain`) and applied the trained model on testing data (`xTest` and `yTest`) to evaluate model performance. We use 70% of the sample as training and the rest 30% as testing.
+
+```{r}
+# separate the data to be training and testing
+trainIndex <- createDataPartition(disease_dat$y, p = 0.8, 
+    list = F, times = 1)
+xTrain <- disease_dat[trainIndex, ] %>% dplyr::select(-y)
+xTest <- disease_dat[-trainIndex, ] %>% dplyr::select(-y)
+# the response variable need to be factor
+yTrain <- disease_dat$y[trainIndex] %>% as.factor()
+yTest <- disease_dat$y[-trainIndex] %>% as.factor()
+```
+
+Train a random forest model: 
+
+```r
+train_rf <- randomForest(yTrain ~ ., data = xTrain, mtry = trunc(sqrt(ncol(xTrain) - 
+    1)), ntree = 1000, importance = T)
+```
+
+```{r, echo=FALSE}
+load("../../GitHub/DataScientistR/Data/train_rf.RData")
+```
+
+Apply the trained random forest model to the testing data to get two types of predictions:
+
+- probability (a value between 0 to 1)
+
+```{r}
+yhatprob <- predict(train_rf, xTest, "prob")
+set.seed(100)
+car::some(yhatprob)
+```
+
+- category prediction (0 or 1)
+
+```{r}
+yhat <- predict(train_rf, xTest)
+car::some(yhat)
+```
+
+We will use the above two types of predictions to show different performance metrics.
+
+**Kappa Statistics**
+
+**Confusion Matrix** is a counting table to describe the performance of a classification model. For the true response `yTest` and prediction `yhat`, the confusion matrix is:
+
+```{r}
+table(yhat,yTest)
+```
+
+The top-left and bottom-right are the numbers of correctly classified samples. The top-right and bottom-left are the numbers of wrongly classified samples.  A general confusion matrix for a binary classifier is following: 
+
+|   | Predicted Yes  | Predicted No | 
+|---|---|---|
+| Actual Yes  |  TP | FN  |
+| Actual No  | FP  |  TN | 

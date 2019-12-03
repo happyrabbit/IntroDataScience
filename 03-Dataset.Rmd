@@ -2,7 +2,7 @@
 
 Before tackling analytics problem, we start by introducing data to be analyzed in later chapters. 
 
-## Customer Data for Clothing Company
+## Customer Data for A Clothing Company
 
 Our first data set represents customers of a clothing company who sells products in physical stores and online. This data is typical of what one might get from a company's marketing data base (the data base will have more data than the one we show here). This data includes 1000 customers: 
 
