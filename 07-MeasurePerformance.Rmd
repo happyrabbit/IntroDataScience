@@ -118,6 +118,6 @@ table(yhat,yTest)
 The top-left and bottom-right are the numbers of correctly classified samples. The top-right and bottom-left are the numbers of wrongly classified samples.  A general confusion matrix for a binary classifier is following: 
 
 |   | Predicted Yes  | Predicted No | 
-|---|---|---|
+|:---:|:---:|:---:|
 | Actual Yes  |  TP | FN  |
 | Actual No  | FP  |  TN | 

@@ -245,22 +245,20 @@ A database is a collection of tables that are related to each other. A database 
 
 Tables within a specific database contain related information and the schema of a database illustrates all fields in every table as well as how these tables and fields relate to each other (i.e. the structure of a database). Tables can be filtered, joined and aggregated to return specific information. The view is a virtual table composed of fields from one or more base tables. The view does not store data and only store table structure. The view is also referred to as a saved query. The view is typically used to protect the data stored in the table and users can only query information from a view and cannot change or update its contents.
 
-#### Sample Tables
-
-We will use two simple tables to illustrate basic SQL operations. These two tables are from an R dataset which contains the 50 states' population and income (https://stat.ethz.ch/R-manual/R-patched/library/datasets/html/state.html). The first table is called "divisions" which has two columns: state and division and the first few rows are shown in the following table:
+We will use two simple tables to illustrate basic SQL operations. These two tables are from an R dataset which contains the 50 states' population and income (https://stat.ethz.ch/R-manual/R-patched/library/datasets/html/state.html). The first table is called `divisions` which has two columns: `state` and `division` and the first few rows are shown in the following table:
 
 | state      | division           |
-|------------|--------------------|
+|:------------:|:--------------------:|
 | Alabama    | East South Central |
 | Alaska     | Pacific            |
 | Arizona    | Mountain           |
 | Arkansas   | West South Central |
 | California | Pacific            |	
 
-The second table is called metrics which contains three columns: state, population and income and first few rows of the table is shown below:
+The second table is called `metrics` which contains three columns: `state`, `population` and `income` and first few rows of the table are shown below:
 
 | state      | population | income |
-|------------|------------|--------|
+|:------------:|:------------:|:--------:|
 | Alabama    | 3615       | 3624   |
 | Alaska     | 365        | 6315   |
 | Arizona    | 2212       | 4530   |
@@ -268,4 +266,45 @@ The second table is called metrics which contains three columns: state, popula
 | California | 21198      | 5114   |
 	
 To illustrate missing information, three more rows are added at the end of the original division table with state Alberta, Ontario, and Quebec with their corresponding division NULL. We first creat these two tables and save them as csv files, and then we upload these two files as Databricks tables.
+
+### Basic SQL Statement
+
+After logging into Databricks and creating two tables, we can now create a notebook and choose the default language of the notebook to be SQL. There are a few very easy SQL statements to help us understand the database and table structure:
+
+- `show database`: show current databases in the system
+- `create database db_name`: create a new database with name `db_name`
+- `drop database db_name`: delete database `db_name` (be careful when using it!)
+- `use db_name`: set up the current database to be used
+- `show tables`: show all the tables within the currently used database
+- `describe tbl_name`: show the structure of table with name `tbl_name` (i.e. list of column name and data type)
+- `drop tbl_name`: delete a table with name `tbl_name` (be careful when using it!)
+- `select * from metrics limit 10`: show the first 10 rows of a table
+
+If you are familiar with a procedural programming language such as C and FORTRAN or scripting languages such as R and Python, you may find SQL code a little bit strange. We should view SQL code by each specific chunk where it defines a specific task. SQL codes descript a specific task and DBMS will run and finish the task. SQL does not follow typical procedure program rules and we can think SQL is "descriptive" (i.e. we describe what we want using SQL and DBMS figures out how to do it).
+
+#### `SELECT` Statement
+
+`SELECT` is the most used statement in SQL, especially for database users and business analysts. It is used to extract specific information (i.e. column or columns) `FROM` one or multiple tables. It can be used to combine multiple tables. `WHERE` can be used in the `SELECT` statement to selected rows with specific conditions (i.e. filters). `ORDER BY` can be used in the `SELECT` statement to order the results in descending or ascending order of one or multiple columns. We can use `*` after `SELECT` to represent all columns in the table, or specifically write the column names separated by a comma. Below is the basic structure of a `SELECT` statement:
+
+```sql
+SELECT Col_Name1, Col_Name2
+FROM Table_Name
+WHERE Specific_Condition
+ORDER BY Col_Name1, Col_Name2;
+```
+
+Here `Specific_Condition` is the typical logical conditions and only columns with `TRUE` for this condition will be chosen. For example, if we want to choose states and its total income where the population larger than 10000 and individual income less than 5000 with the result order by state name, we can use the following query:
+
+```sql
+select state, income*population as total_income
+from metrics
+where population > 10000 and income < 5000
+order by state
+```
+
+The `SELECT` statement is used to slicing and dicing the dataset as well as create new columns of interest (such as `total_income`) using basic computation functions.
+
+
+#### Aggregation Functions and `GROUP BY`
+
 
