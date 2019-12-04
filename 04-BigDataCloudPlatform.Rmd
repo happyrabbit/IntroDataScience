@@ -249,5 +249,23 @@ Tables within a specific database contain related information and the schema of 
 
 We will use two simple tables to illustrate basic SQL operations. These two tables are from an R dataset which contains the 50 states' population and income (https://stat.ethz.ch/R-manual/R-patched/library/datasets/html/state.html). The first table is called "divisions" which has two columns: state and division and the first few rows are shown in the following table:
 
+| state      | division           |
+|------------|--------------------|
+| Alabama    | East South Central |
+| Alaska     | Pacific            |
+| Arizona    | Mountain           |
+| Arkansas   | West South Central |
+| California | Pacific            |	
 
+The second table is called metrics which contains three columns: state, population and income and first few rows of the table is shown below:
+
+| state      | population | income |
+|------------|------------|--------|
+| Alabama    | 3615       | 3624   |
+| Alaska     | 365        | 6315   |
+| Arizona    | 2212       | 4530   |
+| Arkansas   | 2110       | 3378   |
+| California | 21198      | 5114   |
+	
+To illustrate missing information, three more rows are added at the end of the original division table with state Alberta, Ontario, and Quebec with their corresponding division NULL. We first creat these two tables and save them as csv files, and then we upload these two files as Databricks tables.
 
