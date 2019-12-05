@@ -124,4 +124,21 @@ The top-left and bottom-right are the numbers of correctly classified samples. T
 
 where  TP is true positive, FP is false positive, TN is true negative, FN is false negative. The cells along the diagonal line from top-left to bottom-right contain the counts of correctly classified samples. The cells along the other diagonal line contain the counts of wrongly classified samples. The most straightforward performance measure is the **total accuracy** which is the percentage of correctly classified samples: 
 
-$$total accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
+$$Total\ accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
+
+You can calculate the total accuracy when there are more than two categories. This statistic is straightforward but has some disadvantages. First, it doesn't differentiate different error types. In a real application, different types of error may have different impacts. For example, it is much worse to tag an important email as spam and miss it than failing to filter out a spam email.  Provost et al. [@Provost1998] discussed in detail the problem of using total accuracy on different classifiers. There are some other metrics based on the confusion matrix that measure different types of error. P**recision** is a metric to measure how accurate positive predictions are (i.e. among those emails predicted as spam, how many percentages of them are spam emails?):
+
+$$precision = \frac{TP}{TP+FP}$$
+
+**Recall sensitivity** is to measure the coverage of actual positive samples (i.e. among those spam emails, how many percentages of them are predicted as spam) :
+
+$$Recall\ sensitivity = \frac{TP}{TP+FN}$$
+
+Specificity is to measure the coverage of actual negative samples (i.e. among those non-spam emails, how many percentages of them pass the filter):
+
+$$Specificity = \frac{TN}{TN+FP}$$
+
+Since wrongly tagging an important email as spam has a bigger impact, in the spam email case, we want to make sure the model specificity is high enough.
+
+Second, total accuracy doesn't reflect the natural frequencies of each class. For example, the percentage of fraud cases for insurance may be very low, like 0.1%. A model can achieve nearly perfect accuracy (99.9%) by predicting all samples to be negative. The percentage of the largest class in the training set is also called the no-information rate. In this example, the no-information rate is 99.9%. You need to get a model that at least beats this rate. 
+
