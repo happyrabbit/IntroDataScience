@@ -307,4 +307,58 @@ The `SELECT` statement is used to slicing and dicing the dataset as well as crea
 
 #### Aggregation Functions and `GROUP BY`
 
+We can also use aggregation functions in the `SELECT` statement to summarize the data. For example, `count(col_name)` function will return the total number of not `NULL` rows for a specific column. Other aggregation function on numerical values include `min(col_name)`, `max(col_name)`, `avg(col_name)`. Let's use the `metrics` table again to illustrate aggregation functions. For aggregation function, it takes all the rows that match WHERE condition (if any) and return one number. The following statement will calculate the maximum, minimum, and average population for all states starts with letter A to E.
 
+```sql        
+select sum(population) as sum_pop, max(population) as
+max_pop, min(population) as min_pop, avg(population)
+as avg_pop, count(population) as count_pop
+from metrics
+where substring(state, 1, 1) in ('A', 'B', 'C', 'D', 'E')
+```
+
+The results from the above query only return one row as expected. Sometimes we want to find the aggregated value based on groups that can be defined by one or more columns. Instead of writing multiple SQL to calculate the aggregated value for each group, we can easily use the GROUP BY to calculate the aggregated value for each group in the `SELECT` statement. For example, if we want to find how many states in each division, we can use the following:
+
+```sql
+select division, count(state) as number_of_states
+from divisions
+group by division
+```
+
+Another special aggregation function is to return distinct values for one column or a combination of multiple columns. Simple use `SELECT DISTINCT col_name1, col_name2` in the first line of the `SELECT` statement.
+
+#### Join Multiple Tables
+
+The database system is usually designed such that each table contains a piece of specific information and oftentimes we need to JOIN multiple tables to achieve a specific task. There are few types typically JOINs: inner join (keep only rows that match the join condition from both tables), left outer join (rows from inner join + unmatched rows from the first table), right outer join (rows from inner join + unmatched rows from the second table) and full outer join (rows from inner join + unmatched rows from both tables). The typical `JOIN` statement is illustrated below:
+
+```sql
+SELECT a.col_name1 as var1, b.col_name2 as var2
+FROM tbl_one as a
+LEFT JOIN tabl_two as b
+ON a.col_to_match = b.col_to_match
+```
+
+For example, let us join the division table and metrics table to find what is the average population and income for each division, and the results order by division names:
+
+```sql
+select a.division, avg(b.population) as avg_pop,
+avg(b.income) as avg_inc
+from divisions as a
+inner join metrics as b
+on a.state = b.state
+group by division
+order by division
+```
+
+#### Add More Content into a Table
+
+We can use the `INSERT` statement to add additional rows into a particular table, for example, we can add one more row to the metrics table by using the following query:
+
+```sql
+insert into metrics
+values ('Alberta', 4146, 7370)
+```
+
+### Advanced Topics in Database
+
+There are many advanced topics such as how to efficiently query data using index; how to take care of data integrity when multiple users are using the same table; algorithm behind data storage (i.e. column-wise or row-wise data storage); how to design the database schema. Users can learn these advanced topics gradually. We hope the basic knowledge covered in this section will kick off the initial momentum to learn SQL. As you can see, it is easy to write SQL statement to retrieve, join, slice, dice and aggregate data. The SQL notebook that contains all the above operations is included in the book’s website.
