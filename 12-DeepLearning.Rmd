@@ -6,6 +6,25 @@ output:
 
 # Deep Learning
 
+## Deep Learning Introduction and History
+
+With everyday applications in language, voice, image and automatic driving cars, deep learning becomes a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the concept of binary classifier of perceptron used a linear combination of input signals and a step activation function. It is basically the same as the single neuron in a modern deep learning framework that uses the exact same linear combination of input signals from neurons at previously layer and a more efficient non-linear activation function. The perceptron model was further defined by minimizing the classification error and it was trained by using one data point at a time to update the model parameters during the optimization process. In the modern neural network framework, there is a loss function to be minimized based on the problem to solve and the stochastics gradience descent and its variations are the major optimization algorithms.
+
+Even though the theoretical foundation of deep learning has gradually developed in the past few decades, real-world applications of deep learning started in the past few years primarily due to the following constraints: data, network structure, algorithm, and computation power.
+
+**Data**
+
+We are all familiar with all sorts of data today: structured tabulated data in database tables or CSV files, free form text, images, and other unstructured datasets. However, historical data are relatively small in size, especially for data with accurately labeled ground truth. Statisticians have been working on datasets that only have a few thousand rows and a few dozen columns for decades to solve business problems. Even with modern computers, the size of the data is usually limited to the memory of a computer. Now we know, to enable deep learning applications, the algorithm needs a much larger dataset than traditional machine learning methods. It is usually at the order of millions of samples with high-quality ground truth labels for supervised deep learning models.
+
+The first widely used large dataset with accurate labels is the ImageNet dataset which was first created in 2010. It now contains more than 14 million images with more than 20k synsets (i.e. meaningful categories). Every image in the dataset was human-annotated with quality control to ensure the ground truth labels are accurate. One of the direct results of ImageNet was the Large Scale Visual Recognition Challenge (ILSVRC) which evaluated different algorithms in image-related tasks. The ILSVRC competition provided a perfect stage for deep learning applications to debut to the general public. For 2010 and 2011, the best record of error from traditional image classifications methods was around 26%. In 2012, a method based on the convolutional neural network became the state of the art with an error rate of around 16%, a dramatic improvement from the traditional methods.
+
+With the prevalence of consumer internet, users created much high-quality content and historical text, voice, image, and video were digitized. The quality and quantity of data for deep learning applications became available and it exceeded the threshold of the requirement for many deep learning applications such as image classification, voice recognition, and natural language understanding. Data is the fuel for deep learning engines. With more and more varieties of data created, captured, and saved, there will be more deep learning applications to create values across many business sectors.
+
+**Network Structure**
+
+Lacking high-quality high-volume data was not the only constraint for early deep learning years. For perceptron with just one single neural, it is just a linear classifier. Real applications are nearly always non-linear. To solve that problem, we have to grow one neural to multiple layers of neural network with multiple neurons per layer - the multiple layer perceptron (MLP) and it is called feedforward neural network. In the 1990s, the universal approximation theorem was proved and it assured us that a feedforward network with a single hidden layer containing a finite number of neurons can approximate continuous functions. Even though the one-layer neural network theoretically can solve a general non-linear problem, the reality is that we have grown the neural network to many layers of neural network. The number of layers in the network is the “depth” of a network. Loosely speaking, deep learning is a neural network with the many layers (i.e. the depth is deep).
+
+
 ## Projection Pursuit Regression
 
 Before moving onto neural networks, let us start with a broader framework, Projection Pursuit Regression (PPR). It has a form of **additive model** of the derived features rather than the inputs themselves. Another widely used algorithm, AdaBoost, also fits an additive model in a base learner.

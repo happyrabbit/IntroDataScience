@@ -112,6 +112,8 @@ We will use the above two types of predictions to show different performance met
 **Confusion Matrix** is a counting table to describe the performance of a classification model. For the true response `yTest` and prediction `yhat`, the confusion matrix is:
 
 ```{r}
+yhat = as.factor(yhat) %>% relevel("1")
+yTest = as.factor(yTest) %>% relevel("1")
 table(yhat,yTest)
 ```
 
@@ -142,3 +144,18 @@ Since wrongly tagging an important email as spam has a bigger impact, in the spa
 
 Second, total accuracy doesn't reflect the natural frequencies of each class. For example, the percentage of fraud cases for insurance may be very low, like 0.1%. A model can achieve nearly perfect accuracy (99.9%) by predicting all samples to be negative. The percentage of the largest class in the training set is also called the no-information rate. In this example, the no-information rate is 99.9%. You need to get a model that at least beats this rate. 
 
+Another metric is the Kappa statistic. It measures the agreement between the observed and predicted classes. It was originally come up by Cohen etc. [@Cohen1960]. Kappa takes into account the accuracy generated simply by chance. It is defined as:
+
+$$Kappa=\frac{P_{0}+P_{e}}{1-P_{e}}$$
+
+Let $n=TP+TN+FP+FN$ be the total number of samples, where $P_{0}=\frac{TP+TN}{n}$ is the observed accuracy, $P_{e}=\frac{(TP+FP)(TP+FN)+(FN+TN)(FP+TN)}{n^{2}}$ is the expected accuracy based on the marginal totals of the confusion matrix.  Kappa can take on a value from  -1 to 1. The higher the value,  the higher the agreement. A value of 0 means there is no agreement between the observed and predicted classes, while a value of 1 indicates perfect agreement. A negative value indicates that the prediction is in the opposite direction of the observed value. The following table may help you "visualize" the interpretation of kappa [@landis1977]:
+
+| Kappa | Agreement |
+|:-----:|:-----:|
+| < 0 | Less than chance agreement |
+| 0.01–0.20 | Slight agreement |
+| 0.21– 0.40 | Fair agreement |
+| 0.41–0.60 | Moderate agreement |
+| 0.61–0.80 | Substantial agreement | 
+| 0.81–0.99 | Almost perfect agreement |
+  
