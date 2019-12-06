@@ -24,6 +24,19 @@ With the prevalence of consumer internet, users created much high-quality conten
 
 Lacking high-quality high-volume data was not the only constraint for early deep learning years. For perceptron with just one single neural, it is just a linear classifier. Real applications are nearly always non-linear. To solve that problem, we have to grow one neural to multiple layers of neural network with multiple neurons per layer - the multiple layer perceptron (MLP) and it is called feedforward neural network. In the 1990s, the universal approximation theorem was proved and it assured us that a feedforward network with a single hidden layer containing a finite number of neurons can approximate continuous functions. Even though the one-layer neural network theoretically can solve a general non-linear problem, the reality is that we have grown the neural network to many layers of neural network. The number of layers in the network is the “depth” of a network. Loosely speaking, deep learning is a neural network with the many layers (i.e. the depth is deep).
 
+The MLP is the basic structure for the modern deep learning applications. MLP can be used for classification problems or regression problems with response variables as the output and a collection of explanatory variables as the input (i.e. the traditionally structured datasets). Many of the problems that can be solved using classical classification methods such as random forest can be solved by MLP. However, MLP is not the best option for image and language-related tasks. For image-related tasks, pixels for a local neighbor region collectively provide useful information to solve a task. To take advantage of the 2D spatial relationship among pixels, the convolutional neural network (CNN) structure is a better choice. For language-related tasks, the sequence of the text provides additional information than just a collection of single words. The recurrent neural network (RNN) is a better structure for such sequence-related data. There are other more complicated neural network structures and it is still a fast-developing area. MLP, CNN, and RNN are just the starting point of deep learning methods.
+
+**Algorithm**
+
+In addition to data and neural network structure, there were a few key algorithm breakthroughs before deep learning became a household terminology. For an entry-level neural network structure, there are hundreds of thousands of parameters to be estimated from the data. With a large amount of training data, stochastic gradience decent and mini-batch gradience decent are efficient ways to utilize a subset of training data to update the model parameters. Within the process, one of the key steps is back-propagation which was introduced in the 1980s for efficient weight update. There is a non-linear activation for each neuron in deep learning models, and **sigmoid** or **hyperbolic tangent** functions were often used. However, it has the problem of gradient vanishing when the number of layers of the network grows large (i.e. deeper network). To solve this problem, the **rectified linear unit (ReLu)** was introduced to deep learning in the 2000s and it increases the convergence speed dramatically. ReLu is so simple (i.e. y = x when x >= 0 and y = 0 otherwise), but it indeed cleverly solved one of the big headaches in deep learning. With hundreds of thousands of parameters in the model, deep learning is easy to get overfitted. The dropout concept was introduced in 2012 to mitigate overfitting. It randomly drops out a certain percentage of neurons in the network during the optimization process to achieve more robust model performance. It is similar to the concept of random forest where features and training data are randomly chosen. There are many other algorithm improvements to get better models such as batch normalization and using residuals from previous layers. With backpropagation in stochastic gradience decent, ReLu activation function, dropout, and other technics, modern deep learning methods begin to outperform traditional machine learning methods.
+
+**Computation Power**
+
+With data, network structure and algorithms ready, it still requires certain computation power to train a deep learning model. The entire framework involves heavy linear algebra operations with large matrixes and tensors. The general CPU architecture is not the ideal platform and GPU is a much faster choice. With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of well-trained software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demo deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
+
+In summary, deep learning applications are not developed just in the past few years and it has been ongoing research in the past few decades. The accumulation of data, the advance of algorithm and the improvement of computation power finally enable every day deep learning applications. In the foreseeable future, deep learning will continue to revolutionize machine learning methods across more areas to provide significant improvement.
+
+
 
 ## Projection Pursuit Regression
 
@@ -51,11 +64,13 @@ Here is how you can simulate the data and plot it using R:
 ```{r nnet_simulate_data}
 # use plot3D package to generate 3D plot
 library(plot3D)
-# get x1 and x2 note here x1 and x2 need to be matrix if you check the
-# two objects, you will find: columns in x1 are identical rows in x2
-# are identical mesh() is funciton from plot3D package you may need to
-# think a little here
-M <- mesh(seq(-13.2, 13.2, length.out = 50), seq(-37.4, 37.4, length.out = 50))
+# get x1 and x2 note here x1 and x2 need to be matrix if
+# you check the two objects, you will find: columns in
+# x1 are identical rows in x2 are identical mesh() is
+# funciton from plot3D package you may need to think a
+# little here
+M <- mesh(seq(-13.2, 13.2, length.out = 50), seq(-37.4, 
+    37.4, length.out = 50))
 x1 <- M$x
 x2 <- M$y
 ## setting 1 map X using w to get v
@@ -63,23 +78,23 @@ v <- (1/2) * x1 + (sqrt(3)/2) * x2
 # apply g() on v
 g1 <- 1/(1 + exp(-v))
 par(mfrow = c(2, 2), mar = c(0, 0, 1, 0))
-surf3D(x1, x2, g1, colvar = g1, border = "black", colkey = FALSE, box = FALSE, 
-    main = "Setting 1")
+surf3D(x1, x2, g1, colvar = g1, border = "black", colkey = FALSE, 
+    box = FALSE, main = "Setting 1")
 ## setting 2
 v <- x1
 g2 <- (v + 5) * sin(1/(v/3 + 0.1))
-surf3D(x1, x2, g2, colvar = g2, border = "black", colkey = FALSE, box = FALSE, 
-    main = "Setting 2")
+surf3D(x1, x2, g2, colvar = g2, border = "black", colkey = FALSE, 
+    box = FALSE, main = "Setting 2")
 ## setting 3
 v <- x2
 g3 <- exp(v^2/5)
-surf3D(x1, x2, g3, colvar = g3, border = "black", colkey = FALSE, box = FALSE, 
-    main = "Setting 3")
+surf3D(x1, x2, g3, colvar = g3, border = "black", colkey = FALSE, 
+    box = FALSE, main = "Setting 3")
 ## setting 4
 v <- x1
 g4 <- (v + 0.1) * sin(1/(v/3 + 0.1))
-surf3D(x1, x2, g4, colvar = g4, border = "black", colkey = FALSE, box = FALSE, 
-    main = "Setting 4")
+surf3D(x1, x2, g4, colvar = g4, border = "black", colkey = FALSE, 
+    box = FALSE, main = "Setting 4")
 ```
 
 You can see that this framework is very flexible. In essence, it is to do a non-linear transformation of the linear combination. You can use this way to capture varies of relationships. For example,$x_{1}x_{2}$ can be written as $\frac{(x_{1}+x_{2})^{2}-(x_{1}-x_{2})^{2}}{4}$, where $M=2$. All the higher order factors of $x_1$ and $x_2$ can be represented similarly. If $M$ is large enough, this framework can approximate any continuous function on $\mathbb{R}^{p}$. So the model family covers a board area, but with a price. That is the interpretability. Because the number of parameters increases with M and the mode is nested. 
