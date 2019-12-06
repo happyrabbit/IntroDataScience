@@ -146,7 +146,7 @@ Second, total accuracy doesn't reflect the natural frequencies of each class. Fo
 
 Another metric is the Kappa statistic. It measures the agreement between the observed and predicted classes. It was originally come up by Cohen etc. [@Cohen1960]. Kappa takes into account the accuracy generated simply by chance. It is defined as:
 
-$$Kappa=\frac{P_{0}+P_{e}}{1-P_{e}}$$
+$$Kappa=\frac{P_{0}-P_{e}}{1-P_{e}}$$
 
 Let $n=TP+TN+FP+FN$ be the total number of samples, where $P_{0}=\frac{TP+TN}{n}$ is the observed accuracy, $P_{e}=\frac{(TP+FP)(TP+FN)+(FN+TN)(FP+TN)}{n^{2}}$ is the expected accuracy based on the marginal totals of the confusion matrix.  Kappa can take on a value from  -1 to 1. The higher the value,  the higher the agreement. A value of 0 means there is no agreement between the observed and predicted classes, while a value of 1 indicates perfect agreement. A negative value indicates that the prediction is in the opposite direction of the observed value. The following table may help you "visualize" the interpretation of kappa [@landis1977]:
 
@@ -158,4 +158,12 @@ Let $n=TP+TN+FP+FN$ be the total number of samples, where $P_{0}=\frac{TP+TN}{n}
 | 0.41–0.60 | Moderate agreement |
 | 0.61–0.80 | Substantial agreement | 
 | 0.81–0.99 | Almost perfect agreement |
-  
+
+In general, a value between 0.3 to 0.5 indicates a reasonable agreement. If a model has a high accuracy of 90%, while the expected accuracy is also high, say 85%. The Kappa statistics is $\frac{1}{3}$.  It means the prediction and the observation have a fair agreement. You can calculate Kappa when the number of categories is larger than 2. The package `fmsb` has a function  `Kappa.test()` to calculate Cohen's Kappa statistics. The function can also return the hypothesis test result and a confidence interval. Use the above observation vector `yTest` and prediction vector `yhat` as an example, you can calculate the statistics:
+
+```{r}
+# install.packages("fmsb")
+kt<-fmsb::Kappa.test(table(yhat,yTest))
+kt$Result$estimate
+```
+
