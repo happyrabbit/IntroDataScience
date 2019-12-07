@@ -107,7 +107,7 @@ car::some(yhat)
 
 We will use the above two types of predictions to show different performance metrics.
 
-**Kappa Statistics**
+### Confusion Matrix
 
 **Confusion Matrix** is a counting table to describe the performance of a classification model. For the true response `yTest` and prediction `yhat`, the confusion matrix is:
 
@@ -132,9 +132,9 @@ You can calculate the total accuracy when there are more than two categories. Th
 
 $$precision = \frac{TP}{TP+FP}$$
 
-**Recall sensitivity** is to measure the coverage of actual positive samples (i.e. among those spam emails, how many percentages of them are predicted as spam) :
+**Sensitivity** is to measure the coverage of actual positive samples (i.e. among those spam emails, how many percentages of them are predicted as spam) :
 
-$$Recall\ sensitivity = \frac{TP}{TP+FN}$$
+$$Sensitivity = \frac{TP}{TP+FN}$$
 
 Specificity is to measure the coverage of actual negative samples (i.e. among those non-spam emails, how many percentages of them pass the filter):
 
@@ -143,6 +143,8 @@ $$Specificity = \frac{TN}{TN+FP}$$
 Since wrongly tagging an important email as spam has a bigger impact, in the spam email case, we want to make sure the model specificity is high enough.
 
 Second, total accuracy doesn't reflect the natural frequencies of each class. For example, the percentage of fraud cases for insurance may be very low, like 0.1%. A model can achieve nearly perfect accuracy (99.9%) by predicting all samples to be negative. The percentage of the largest class in the training set is also called the no-information rate. In this example, the no-information rate is 99.9%. You need to get a model that at least beats this rate. 
+
+### Kappa Statistic
 
 Another metric is the Kappa statistic. It measures the agreement between the observed and predicted classes. It was originally come up by Cohen etc. [@Cohen1960]. Kappa takes into account the accuracy generated simply by chance. It is defined as:
 
@@ -164,6 +166,35 @@ In general, a value between 0.3 to 0.5 indicates a reasonable agreement. If a mo
 ```{r}
 # install.packages("fmsb")
 kt<-fmsb::Kappa.test(table(yhat,yTest))
-kt$Result$estimate
+kt$Result
 ```
+
+The output of the above function contains an object named `Judgement`: 
+
+```{r}
+kt$Judgement
+```
+
+Receiver Operating Characteristic (ROC) curve uses the predicted class probabilities and determines an effective threshold such that values above the threshold are indicative of a specific event. We have shown the definitions of sensitivity and specificity above. The sensitivity is the true positive rate and specificity is true negative rate. "1 - specificity" is the false negative rate.  ROC is a graph of pairs of true positive rate (sensitivity) and false positive rate (1-specificity) values that result as the test’s cutoff value is varied. The Area Under the Curve(AUC) is a common measure for two-class problem. There is usually a trade-off between sensitivity and specificity. If the threshold is set lower, then there are more samples predicted as positive and hence the sensitivity is higher. Let's look at the predicted probability `yhatprob` in the swine disease example. The predicted probability object `yhatprob` has two columns, one is the predicted probability that a farm will have an outbreak, the other is the probability that farm will NOT have an outbreak. So the two add up to have value 1. We use the probability of outbreak (the 2nd column) for further illustration. You can use `roc()` function to get an ROC object (`rocCurve`) and then apply different functions on that object to get needed plot or ROC statistics. For example, the following code produces the ROC curve:
+
+```{r}
+library(pROC)
+rocCurve<-roc(response=yTest,predictor=yhatprob[,2])
+plot(rocCurve,legacy.axes=T)
+```
+
+The first argument of the `roc()` is, `response`, the observation vector. The second argument is `predictor` is the continuous prediction (probability or link function value).  The x-axis of ROC curve is "1 - specificity" and the y-axis is "sensitivity". ROC curve starts from (0, 0) and ends with (1, 1). A perfect model that correctly identifies all the samples will have 100% sensitivity and specificity which corresponds to the curve that also goes through (0, 1). The area under the perfect curve is 1.  A model that is totally useless corresponds to a curve that is close to the diagonal line and an area under the curve about 0.5. 
+
+You can visually compare different models by putting their ROC curves on one plot. Or use the AUC to compare them.  DeLong et al. came up a statistic test to compare AUC based on U-statistics [@delong1988] which can give a p-value and confidence interval. You can also use  bootstrap to get a confidence interval for AUC [@hall2004].
+
+We can use the following code in R to get an estimate of AUC and its confidence interval:
+
+```{r}
+# get the estimate of AUC
+auc(rocCurve)
+# get a confidence interval based on DeLong et al.
+ci.auc(rocCurve)
+```
+
+AUC is robust to class imbalance[@Provost1998;@Fawcett2006] hence a popular measurement. But it still boils a lot of information down to one number so there is inevitably a loss of information. It is better to double check by comparing the curve at the same time.  If you care more about getting a model that will have high specificity, which is the lower part of the curve, as in the spam filtering case, you can use the area of the lower part of the curve as the performance measurement [@McClish1989].  ROC is only for two-class case. Some researchers generalized it to situations with more than two categories [@Hand2001;@Lachiche2003;@Li2008].
 
