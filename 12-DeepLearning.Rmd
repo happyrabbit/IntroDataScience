@@ -164,7 +164,56 @@ Before people coined the term _deep learning_, a neural network refers to _singl
 
 You need to choose activation function in the hidden layers. Logistic regression only uses sigmoid activation function. But there are other choices. Intermediate layers usually use different activation function than the last layer. Let's first look at some of the common options other than sigmoid.
 
+### Deal with Overfitting
+
+The biggest problem for deep learning is overfitting.
+
+#### Regularization
+
+For logistic regression,
+
+$$\underset{w,b}{min}J(w,b)= \frac{1}{m} \Sigma_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)}) + penalty$$
+
+Common penalties are L1 or L2 as follows:
+
+$$L_2\ penalty=\frac{\lambda}{2m}\parallel w \parallel_2^2 = \frac{\lambda}{2m}\Sigma_{i=1}^{n_x}w_i^2$$
+
+$$L_1\ penalty = \frac{\lambda}{m}\Sigma_{i=1}^{n_x}|w|$$
+
+For neural network,
+
+$$J(w^{[1]},b^{[1]},\dots,w^{[L]},b^{[L]})=\frac{1}{m}\Sigma_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)}) + \frac{\lambda}{2m}\Sigma_{l=1}^{L} \parallel w^{[l]} \parallel^2_F$$
+
+where
+
+$$\parallel w^{[l]} \parallel^2_F = \Sigma_{i=1}^{l}\Sigma_{j=1}^{l-1} (w^{[l]}_{ij})^2$$
+
+Many people call it "Frobenius Norm" instead of L2-norm.
+
+#### Dropout
+
+### Optimization 
+
+#### Batch, Mini-batch, Stochastic Gradient Descent
+
+$$\begin{array}{ccc} x= & [\underbrace{x^{(1)},x^{(2)},\cdots,x^{(1000)}}/ & \cdots/\cdots x^{(m)}]\\ (n_{x},m) & mini-batch\ 1 \end{array}$$
+
+$$\begin{array}{ccc} y= & [\underbrace{y^{(1)},y^{(2)},\cdots,y^{(1000)}}/ & \cdots/\cdots y^{(m)}]\\ (1,m) & mini-batch\ 1 \end{array}$$
+
+- Mini-batch size = m: batch gradient descent, too long per iteration
+- Mini-batch size = 1: stochastic gradient descent, lose speed from vectorization
+- Mini-batch size in between: mini-batch gradient descent, make progress without processing all training set, typical batch sizes are $2^6=64$, $2^7=128$, $2^7=256$, $2^8=512$
+
+#### Optimization Algorithms
+
+In the history of deep learning, researchers proposed different optimization algorithms and showed that they worked well in a specific scenario.  But the optimization algorithms didn't generalize well to a wide range of neural networks.  So you will need to try different optimizers in your application. We will introduce three commonly used optimizers here. 
+
+**Exponentially Weighted Averages**
+
 ## Convolutional Neural Network
+
+This section introduces the Convolutional Neural Network (CNN), the deep learning model that is almost universally used in computer vision applications. Computer vision has been advancing rapidly which enables many new applications such as self-driving cars and unlock a phone using face. 
+
 
 ## Recurrent Neural Network
 
