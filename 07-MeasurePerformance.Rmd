@@ -67,6 +67,7 @@ disease_dat <- read.csv("http://bit.ly/2KXb1Qi")
 Separate the data to be training and testing sets.  Fit model using training data (`xTrain` and `yTrain`) and applied the trained model on testing data (`xTest` and `yTest`) to evaluate model performance. We use 70% of the sample as training and the rest 30% as testing.
 
 ```{r}
+set.seed(100)
 # separate the data to be training and testing
 trainIndex <- createDataPartition(disease_dat$y, p = 0.8, 
     list = F, times = 1)
@@ -128,7 +129,9 @@ where  TP is true positive, FP is false positive, TN is true negative, FN is fal
 
 $$Total\ accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
 
-You can calculate the total accuracy when there are more than two categories. This statistic is straightforward but has some disadvantages. First, it doesn't differentiate different error types. In a real application, different types of error may have different impacts. For example, it is much worse to tag an important email as spam and miss it than failing to filter out a spam email.  Provost et al. [@Provost1998] discussed in detail the problem of using total accuracy on different classifiers. There are some other metrics based on the confusion matrix that measure different types of error. P**recision** is a metric to measure how accurate positive predictions are (i.e. among those emails predicted as spam, how many percentages of them are spam emails?):
+You can calculate the total accuracy when there are more than two categories. This statistic is straightforward but has some disadvantages. First, it doesn't differentiate different error types. In a real application, different types of error may have different impacts. For example, it is much worse to tag an important email as spam and miss it than failing to filter out a spam email.  Provost et al. [@Provost1998] discussed in detail the problem of using total accuracy on different classifiers. There are some other metrics based on the confusion matrix that measure different types of error. 
+
+**Precision** is a metric to measure how accurate positive predictions are (i.e. among those emails predicted as spam, how many percentages of them are spam emails?):
 
 $$precision = \frac{TP}{TP+FP}$$
 
@@ -136,7 +139,7 @@ $$precision = \frac{TP}{TP+FP}$$
 
 $$Sensitivity = \frac{TP}{TP+FN}$$
 
-Specificity is to measure the coverage of actual negative samples (i.e. among those non-spam emails, how many percentages of them pass the filter):
+**Specificity** is to measure the coverage of actual negative samples (i.e. among those non-spam emails, how many percentages of them pass the filter):
 
 $$Specificity = \frac{TN}{TN+FP}$$
 
@@ -175,17 +178,21 @@ The output of the above function contains an object named `Judgement`:
 kt$Judgement
 ```
 
-Receiver Operating Characteristic (ROC) curve uses the predicted class probabilities and determines an effective threshold such that values above the threshold are indicative of a specific event. We have shown the definitions of sensitivity and specificity above. The sensitivity is the true positive rate and specificity is true negative rate. "1 - specificity" is the false negative rate.  ROC is a graph of pairs of true positive rate (sensitivity) and false positive rate (1-specificity) values that result as the test’s cutoff value is varied. The Area Under the Curve(AUC) is a common measure for two-class problem. There is usually a trade-off between sensitivity and specificity. If the threshold is set lower, then there are more samples predicted as positive and hence the sensitivity is higher. Let's look at the predicted probability `yhatprob` in the swine disease example. The predicted probability object `yhatprob` has two columns, one is the predicted probability that a farm will have an outbreak, the other is the probability that farm will NOT have an outbreak. So the two add up to have value 1. We use the probability of outbreak (the 2nd column) for further illustration. You can use `roc()` function to get an ROC object (`rocCurve`) and then apply different functions on that object to get needed plot or ROC statistics. For example, the following code produces the ROC curve:
+### ROC
+
+Receiver Operating Characteristic (ROC) curve uses the predicted class probabilities and determines an effective threshold such that values above the threshold are indicative of a specific event. We have shown the definitions of sensitivity and specificity above. The sensitivity is the true positive rate and specificity is true negative rate. "1 - specificity" is the false negative rate. ROC is a graph of pairs of true positive rate (sensitivity) and false positive rate (1-specificity) values that result as the test’s cutoff value is varied. The Area Under the Curve(AUC) is a common measure for two-class problem. There is usually a trade-off between sensitivity and specificity. If the threshold is set lower, then there are more samples predicted as positive and hence the sensitivity is higher. Let's look at the predicted probability `yhatprob` in the swine disease example. The predicted probability object `yhatprob` has two columns, one is the predicted probability that a farm will have an outbreak, the other is the probability that farm will NOT have an outbreak. So the two add up to have value 1. We use the probability of outbreak (the 2nd column) for further illustration. You can use `roc()` function to get an ROC object (`rocCurve`) and then apply different functions on that object to get needed plot or ROC statistics. For example, the following code produces the ROC curve:
 
 ```{r}
 library(pROC)
-rocCurve<-roc(response=yTest,predictor=yhatprob[,2])
-plot(rocCurve,legacy.axes=T)
+rocCurve<-roc(response=yTest,
+              predictor=yhatprob[,2])
+plot(rocCurve)
 ```
 
-The first argument of the `roc()` is, `response`, the observation vector. The second argument is `predictor` is the continuous prediction (probability or link function value).  The x-axis of ROC curve is "1 - specificity" and the y-axis is "sensitivity". ROC curve starts from (0, 0) and ends with (1, 1). A perfect model that correctly identifies all the samples will have 100% sensitivity and specificity which corresponds to the curve that also goes through (0, 1). The area under the perfect curve is 1.  A model that is totally useless corresponds to a curve that is close to the diagonal line and an area under the curve about 0.5. 
 
-You can visually compare different models by putting their ROC curves on one plot. Or use the AUC to compare them.  DeLong et al. came up a statistic test to compare AUC based on U-statistics [@delong1988] which can give a p-value and confidence interval. You can also use  bootstrap to get a confidence interval for AUC [@hall2004].
+The first argument of the `roc()` is, `response`, the observation vector. The second argument is `predictor` is the continuous prediction (probability or link function value). The x-axis of ROC curve is "1 - specificity" and the y-axis is "sensitivity". ROC curve starts from (0, 0) and ends with (1, 1). A perfect model that correctly identifies all the samples will have 100% sensitivity and specificity which corresponds to the curve that also goes through (0, 1). The area under the perfect curve is 1. A model that is totally useless corresponds to a curve that is close to the diagonal line and an area under the curve about 0.5.
+
+You can visually compare different models by putting their ROC curves on one plot. Or use the AUC to compare them. DeLong et al. came up a statistic test to compare AUC based on U-statistics [@delong1988] which can give a p-value and confidence interval. You can also use bootstrap to get a confidence interval for AUC [@hall2004].
 
 We can use the following code in R to get an estimate of AUC and its confidence interval:
 
@@ -196,5 +203,37 @@ auc(rocCurve)
 ci.auc(rocCurve)
 ```
 
-AUC is robust to class imbalance[@Provost1998;@Fawcett2006] hence a popular measurement. But it still boils a lot of information down to one number so there is inevitably a loss of information. It is better to double check by comparing the curve at the same time.  If you care more about getting a model that will have high specificity, which is the lower part of the curve, as in the spam filtering case, you can use the area of the lower part of the curve as the performance measurement [@McClish1989].  ROC is only for two-class case. Some researchers generalized it to situations with more than two categories [@Hand2001;@Lachiche2003;@Li2008].
+
+AUC is robust to class imbalance[@Provost1998;@Fawcett2006] hence a popular measurement. But it still boils a lot of information down to one number so there is inevitably a loss of information. It is better to double check by comparing the curve at the same time. If you care more about getting a model that will have high specificity, which is the lower part of the curve, as in the spam filtering case, you can use the area of the lower part of the curve as the performance measurement [@McClish1989]. ROC is only for two-class case. Some researchers generalized it to situations with more than two categories [@Hand2001;@Lachiche2003;@Li2008].
+
+### Gain and Lift Charts
+
+Gain and lift chart is a visual tool for evaluating the performance of a classification model. In the previous swine disease example, there are `r nrow(xTest)` samples in the testing data and `r sum(as.numeric(yTest)-1)` of them have a positive outcome. 
+
+```{r}
+table(yTest)
+```
+
+If we order the testing samples by the predicted probability, one would hope that the positive samples are ranked higher than the negative ones. That is what the lift charts do: rank the samples by their scores and calculate the cumulative positive rate as more samples are evaluated. In the perfect scenario, the highest-ranked `r sum(yTest%>%as.character()%>% as.numeric())` samples would contain all `r sum(yTest%>%as.character()%>% as.numeric())` positive samples. When the model is totally random, the highest-ranked x% of the data would contain about x% of the positive sample. The gain/lift charts compare the ratio between the results obtained with and without a model.
+
+Let's plot the lift charts to compare the predicted outbreak probability (`modelscore <- yhatprob[ ,2]`) from random forest model we fit before with some random scores generated from a uniform distribution (`randomscore <- runif(length(yTest))`).
+
+```{r}
+# predicted outbreak probability
+modelscore <- yhatprob[ ,2]
+# randomly sample from a uniform distribution
+randomscore <- runif(length(yTest))
+labs<-c(modelscore="Random Forest Prediction",
+        randomscore="Random Number")
+liftCurve <- caret::lift(yTest ~ modelscore + randomscore,
+                  class = "1", 
+                  labels = labs)
+xyplot(liftCurve, auto.key = list(columns = 2, lines = T, points = F))
+```
+
+
+The x-axis is the percentage of samples tested and the y-axis is the percentage of positive samples that are detected by the model. For example, the point on the curve of random forest prediction, （`r liftCurve$data$CumTestedPct[10]`,`r round(liftCurve$data$Sn[10]*100,2)`）, indicates that if you order the testing samples by the predicted probability from high to low, the top `r liftCurve$data$CumTestedPct[10]`% of the samples contain `r liftCurve$data$Sn[10]`% of the total positive outcomes. 
+
+Similar to the ROC curve, we can choose the model by comparing their lift charts. Some parts of the lift curves may be more interesting than the rest.  For example, if you only have a budget to clean 50% of the farms, then you should pick the model that gives the highest point when the x-axis is 50%.
+
 
