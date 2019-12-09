@@ -77,7 +77,8 @@ for (i in seq_along(group_name)) {
     cat(i, group_name[i], "\n")
     
     # create an empty matrix to store relevent data
-    seg <- data.frame(matrix(NA, nrow = group_size[i], ncol = length(vars)))
+    seg <- data.frame(matrix(NA, nrow = group_size[i], 
+    ncol = length(vars)))
     
     # Simulate data within segment i
     for (j in seq_along(vars)) {
@@ -184,13 +185,16 @@ sim.dat$segment <- factor(rep(group_name, times = group_size))
 ## Customer Satisfaction Survey Data from Airline Company
 
 ```r
-# Create a matrix of factor loadings This pattern is
-# called bifactor because it has a general factor for
-# separate components.  For example, 'Ease of making
-# reservation' has general factor loading 0.33, specific
-# factor loading 0.58 The outcome variables are formed
-# as combinations of these general and specific factors
-loadings <- matrix(c ( # Ticketing
+# Create a matrix of factor loadings This pattern
+# is called bifactor because it has a general
+# factor for separate components.  For example,
+# 'Ease of making reservation' has general factor
+# loading 0.33, specific factor loading 0.58 The
+# outcome variables are formed as combinations of
+# these general and specific factors
+
+loadings <- matrix(c ( 
+  # Ticketing
   .33, .58, .00, .00,  # Ease of making reservation 
   .35, .55, .00, .00,  # Availability of preferred seats
   .30, .52, .00, .00,  # Variety of flight options
@@ -210,15 +214,15 @@ loadings <- matrix(c ( # Ticketing
   .35, .50, .40, .20,  # Purchase again
   .25, .50, .50, .20), # Willingness to recommend
   nrow=15,ncol=4, byrow=TRUE)
-  
-# Matrix multiplication produces the correlation matrix
-# except for the diagonal
+
+# Matrix multiplication produces the correlation
+# matrix except for the diagonal
 cor_matrix <- loadings %*% t(loadings)
 # Diagonal set to ones
 diag(cor_matrix) <- 1
 
-# use the mvtnorm package to randomly generate a data
-# set with a given correlation pattern
+# use the mvtnorm package to randomly generate a
+# data set with a given correlation pattern
 
 library(mvtnorm)
 # mean vectors of the 3 airline companies
@@ -259,20 +263,21 @@ rating <- rbind(rating1, rating2, rating3)
 
 # assign names to the variables in the data frame
 names(rating) <- c("Easy_Reservation", "Preferred_Seats", 
-"Flight_Options", "Ticket_Prices", "Seat_Comfort", "Seat_Roominess", 
-    "Overhead_Storage", "Clean_Aircraft", "Courtesy", "Friendliness", 
-    "Helpfulness", "Service", "Satisfaction", "Fly_Again", 
-    "Recommend", "ID", "Airline")
+    "Flight_Options", "Ticket_Prices", "Seat_Comfort", 
+    "Seat_Roominess", "Overhead_Storage", "Clean_Aircraft", 
+    "Courtesy", "Friendliness", "Helpfulness", "Service", 
+    "Satisfaction", "Fly_Again", "Recommend", "ID", 
+    "Airline")
 ```
 
 ## Swine Disease Breakout Data
 
 ```r
-# sim1_da1.csv the 1st simulated data similar sim1_da2
-# and sim1_da3 sim1.csv simulated data, the first
-# simulation dummy.sim1.csv dummy variables for the
-# first simulated data with all the baseline code for
-# simulation
+# sim1_da1.csv the 1st simulated data similar
+# sim1_da2 and sim1_da3 sim1.csv simulated data,
+# the first simulation dummy.sim1.csv dummy
+# variables for the first simulated data with all
+# the baseline code for simulation
 
 nf <- 800
 for (j in 1:20) {
@@ -290,8 +295,8 @@ for (j in 1:20) {
     colnames(sim.da1) <- col
     rownames(sim.da1) <- row
     
-    # use class.ind() function in nnet package to encode
-    # dummy variables
+    # use class.ind() function in nnet package to
+    # encode dummy variables
     library(nnet)
     dummy.sim1 <- NULL
     for (k in 1:ncol(sim.da1)) {
@@ -301,16 +306,17 @@ for (j in 1:20) {
     }
     dummy.sim1 <- data.frame(dummy.sim1)
     
-    # set 'C' as the baseline delete baseline dummy variable
+    # set 'C' as the baseline delete baseline dummy
+    # variable
     
     base.idx <- 3 * c(1:120)
     dummy1 <- dummy.sim1[, -base.idx]
     
-    # simulate independent variable for different values of
-    # r simulate based on one value of r each time r=0.1,
-    # get the link function
-    s1 <- c(rep(c(1/10, 0, -1/10), 40), rep(c(1/10, 0, 0), 
-        40), rep(c(0, 0, 0), 40))
+    # simulate independent variable for different
+    # values of r simulate based on one value of r each
+    # time r=0.1, get the link function
+    s1 <- c(rep(c(1/10, 0, -1/10), 40), rep(c(1/10, 
+        0, 0), 40), rep(c(0, 0, 0), 40))
     link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/10
     
     # r=0.25
@@ -337,13 +343,14 @@ for (j in 1:20) {
     # variable: res
     res <- rep(9, nf)
     for (i in 1:nf) {
-        res[i] <- sample(c(1, 0), 1, prob = c(hp1[i], 1 - 
-            hp1[i]))
+        res[i] <- sample(c(1, 0), 1, prob = c(hp1[i], 
+            1 - hp1[i]))
     }
     
-    # da1 with response variable, without group indicator
-    # da2 without response variable, with group indicator
-    # da3 without response variable, without group indicator
+    # da1 with response variable, without group
+    # indicator da2 without response variable, with
+    # group indicator da3 without response variable,
+    # without group indicator
     
     dummy1$y <- res
     da1 <- dummy1
@@ -357,12 +364,12 @@ for (j in 1:20) {
     da3 <- da1[, 1:240]
     
     # save simulated data
-    write.csv(da1, paste("sim", j, "_da", 1, ".csv", sep = ""), 
-        row.names = F)
-    write.csv(da2, paste("sim", j, "_da", 2, ".csv", sep = ""), 
-        row.names = F)
-    write.csv(da3, paste("sim", j, "_da", 3, ".csv", sep = ""), 
-        row.names = F)
+    write.csv(da1, paste("sim", j, "_da", 1, ".csv", 
+        sep = ""), row.names = F)
+    write.csv(da2, paste("sim", j, "_da", 2, ".csv", 
+        sep = ""), row.names = F)
+    write.csv(da3, paste("sim", j, "_da", 3, ".csv", 
+        sep = ""), row.names = F)
     write.csv(sim.da1, paste("sim", j, ".csv", sep = ""), 
         row.names = F)
     write.csv(dummy.sim1, paste("dummy.sim", j, ".csv", 

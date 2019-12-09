@@ -103,7 +103,7 @@ PPR in 1981 was a new idea then which lead to the debut of the neural network mo
 
 First, thanks to the digitalization where lots of human activities are now in the digital realm and captured as data. So in the last 10 year, for many problems, we went from having a relatively small amount of data to accumulating a large amount of data. The traditional learning algorithms, like Logistic Regression, Support Vector Machine, Random Forest cannot effectively take advantage of such big data.  Second, the increasing computation power enables us to train a large neural network either on a CPU or GPU using big data. The scale of data and computation ability lead to much progress, but tremendous algorithmic innovation is also an important driver. Many of the innovations are about speeding up the optimization of neural network. One of the examples is to use ReLU as intermediate layer activation function instead of the previous sigmoid function. The change has made the optimization process much faster because the previous sigmoid function suffers from vanishing gradient. We will talk more about that in the following sections. Here we just want to show an example of the impact of algorithmic innovation.  
 
-## Standard Neural Network
+## Feedforward Neural Network
 
 ### Logistic Regression as Neural Network {#logistic_reg_as_neural_network}
 
@@ -136,11 +136,19 @@ where $\sigma(z) = \frac{1}{1+e^{-z}}$. The following figure summarizes the proc
 There are two types of layers. The last layer connects directly to the output. All the rest are _intermediate layers_. Depending on your definition, we call it "0-layer neural network" where the layer count only considers _intermediate layers_. To train the model, you need a cost function which is defined as equation \@ref(eq:costlogistic).
 
 \begin{equation}
-J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)}) = \frac{1}{m} \Sigma_{i=1}^{m} \{\ -y^{(i)}log(\hat{y}^{(i)})-(1-y^{(i)})log(1-\hat{y}^{(i)}) \}
+J(w,b)=\frac{1}{m} \Sigma_{i=1}^m L(\hat{y}^{(i)}, y^{(i)})
 (\#eq:costlogistic)
 \end{equation}
 
-The general approach to minimize  $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. Let's look at the gradient descent for logistic regression across m sample. The non-vectorized process is as follows.
+where
+
+$$L(\hat{y}^{(i)}, y^{(i)}) =  -y^{(i)}log(\hat{y}^{(i)})-(1-y^{(i)})log(1-\hat{y}^{(i)})$$
+
+To fit the model is to minimize the cost function.
+
+### Gradient Descent
+
+The general approach to minimize $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. Let's look at the gradient descent for logistic regression across m sample. The non-vectorized process is as follows.
 
 <center>
 ![](images/GradientDescent.png){width=100%}
@@ -154,11 +162,16 @@ Repeat the progapation process using the updated parameter until the cost $J$ st
 
 ### Deep Neural Network
 
-Before people coined the term _deep learning_, a neural network refers to _single hidden layer network_. Neural networks with more than one layers are called _deep learning_. 
+Before people coined the term _deep learning_, a neural network refers to _single hidden layer network_. Neural networks with more than one layers are called _deep learning_. Network with the structure in figure \@ref(fig:ffnn) is the **multiple layer perceptron (MLP)** or **feedforward neural network (FFNN)**.
 
-<center>
-![](images/dnn_str.png)
-</center>
+```{r ffnn, fig.cap = "Feedforward Neural Network", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/dnn_str.png")
+```
+
+
+```{r onelayernn, fig.cap = "1-layer Neural Network", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/onelayerNN.png")
+```
 
 ### Activation Function
 
