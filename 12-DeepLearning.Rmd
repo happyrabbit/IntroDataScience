@@ -168,10 +168,42 @@ Before people coined the term _deep learning_, a neural network refers to _singl
 knitr::include_graphics("images/dnn_str.png")
 ```
 
+Let's look at a simple one-layer neural network (figure \@ref(fig:onelayernn)). First only consider one sample, an input sample vector $x$ with 3 features ($x_1, x_2, x_3$) and an output value $y$. The neural network has one hidden layer with four neurons in the layer and output later to produce a prediction $\hat{y}$.
 
 ```{r onelayernn, fig.cap = "1-layer Neural Network", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/onelayerNN.png")
 ```
+
+**From input to the first hidden layer**
+
+Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for layer one. We use `[]` on top right to indicate a layer and the bottom-right subscript to indicate a neuron or feature. Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$. 
+
+**From the first hidden layer to the output**
+
+Next, do a linear combination of the activated neurons from the first layer to get inactivated output, $z^{[2]}_1$. And then activate the neuron to get the predicted output $\hat{y}$. The parameters to estimate in this step are $w^{[2]}$ and $b_1^{[2]}$.
+
+If you fully write out the process, it is the bottom right of figure \@ref(fig:onelayernn). You can vectorize each step and get the following representation:
+
+$$\begin{array}{cc}
+z^{[1]}=W^{[1]}x+b^{[1]} & \ \ \sigma^{[1]}(z^{[1]})=a^{[1]}\\
+z^{[2]}=W^{[2]}a^{[1]}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(z^{[2]})=a^{[2]}=\hat{y}
+\end{array}$$
+
+This is the process of forward propagation for one sample. You need to do the same calculation for all  $m$ samples. 
+
+For i = 1 to m, do:
+
+$$\begin{array}{cc}
+z^{[1](i)}=W^{[1]}x^(i)+b^{[1]} & \ \ \sigma^{[1]}(z^{[1](i)})=a^{[1](i)}\\
+z^{[2](i)}=W^{[2]}a^{[1](i)}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(z^{[2](i)})=a^{[2](i)}=\hat{y}^{(i)}
+\end{array}$$
+
+You can further use matrix representation as following:
+
+$$\begin{array}{cc}
+Z^{[1]}=W^{[1]}X+b^{[1]} & \ \ \sigma^{[1]}(Z^{[1]})=A^{[1]}\\
+Z^{[2]}=W^{[2]}A^{[1]}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(Z^{[2]})=A^{[2]}=\hat{Y}
+\end{array}$$
 
 ### Activation Function
 
