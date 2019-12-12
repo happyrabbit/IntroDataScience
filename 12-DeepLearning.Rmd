@@ -168,7 +168,7 @@ Before people coined the term _deep learning_, a neural network refers to _singl
 knitr::include_graphics("images/dnn_str.png")
 ```
 
-Let's look at a simple one-layer neural network (figure \@ref(fig:onelayernn)). First only consider one sample, an input sample vector $x$ with 3 features ($x_1, x_2, x_3$) and an output value $y$. The neural network has one hidden layer with four neurons in the layer and output later to produce a prediction $\hat{y}$.
+Let's look at a simple one-layer neural network (figure \@ref(fig:onelayernn)). First only consider one sample. From left to right, there is an input layer with 3 features ($x_1, x_2, x_3$), a hidden layer with four neurons and an output later to produce a prediction $\hat{y}$.
 
 ```{r onelayernn, fig.cap = "1-layer Neural Network", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/onelayerNN.png")
@@ -176,20 +176,29 @@ knitr::include_graphics("images/onelayerNN.png")
 
 **From input to the first hidden layer**
 
-Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for layer one. We use `[]` on top right to indicate a layer and the bottom-right subscript to indicate a neuron or feature. Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$. 
+Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. We use superscript [] to indicate a layer and the subscript to indicate a neuron or feature. Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$.
 
 **From the first hidden layer to the output**
 
 Next, do a linear combination of the activated neurons from the first layer to get inactivated output, $z^{[2]}_1$. And then activate the neuron to get the predicted output $\hat{y}$. The parameters to estimate in this step are $w^{[2]}$ and $b_1^{[2]}$.
 
-If you fully write out the process, it is the bottom right of figure \@ref(fig:onelayernn). You can vectorize each step and get the following representation:
+If you fully write out the process, it is the bottom right of figure \@ref(fig:onelayernn). When you implement a neural network, you need to do similar calculation four times to get the activated neurons in the first hidden layer. Doing this with a `for` loop is inefficient. So people vectorize the four equations. Take an input and compute the corresponding $z$ and $a$ as a vector. You can vectorize each step and get the following representation:
 
 $$\begin{array}{cc}
 z^{[1]}=W^{[1]}x+b^{[1]} & \ \ \sigma^{[1]}(z^{[1]})=a^{[1]}\\
 z^{[2]}=W^{[2]}a^{[1]}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(z^{[2]})=a^{[2]}=\hat{y}
 \end{array}$$
 
-This is the process of forward propagation for one sample. You need to do the same calculation for all  $m$ samples. 
+$b^{[1]}$ is the column vector of the four bias parameters shown above. $z^{[1]}$ is a column vector of the four non-active neurons. When you apply an activation function to a matrix or vector, you apply it element-wise. $W^{[1]}$ is the matrix by stacking the four row-vectors:
+
+$$W^{[1]}=\left[\begin{array}{c}
+w_{1}^{[1]T}\\
+w_{2}^{[1]T}\\
+w_{3}^{[1]T}\\
+w_{4}^{[1]T}
+\end{array}\right]$$
+
+This is the process of forward propagation for one sample. You need to do the same calculation for all $m$ samples. 
 
 For i = 1 to m, do:
 
