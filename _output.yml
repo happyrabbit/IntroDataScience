@@ -18,7 +18,7 @@ bookdown::gitbook:
     sharing:
       github: true
       linkedin: true
-      all: ['facebook', 'google', 'twitter', 'linkedin', 'weibo', 'instapaper']
+      all: ['facebook',  'twitter', 'linkedin', 'weibo', 'instapaper']
 bookdown::html_chapters:
   css: [css/style.css, css/toc.css]
 bookdown::pdf_book:

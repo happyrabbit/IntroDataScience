@@ -198,7 +198,7 @@ w_{3}^{[1]T}\\
 w_{4}^{[1]T}
 \end{array}\right]$$
 
-So if you have one sample, you can go through the above forward propagation process to calculate the output $\hat{y}$ for that example. If you have $m$ training examples, you need to repeat this process each of the $m$ samples. **We use superscript `(i)` to denote a quantity associated with $i^{th}$ sample.** You need to do the same calculation for all $m$ samples.
+So if you have one sample, you can go through the above forward propagation process to calculate the output $\hat{y}$ for that sample. If you have $m$ training samples, you need to repeat this process each of the $m$ samples. **We use superscript `(i)` to denote a quantity associated with $i^{th}$ sample.** You need to do the same calculation for all $m$ samples.
 
 For i = 1 to m, do:
 
@@ -207,7 +207,7 @@ z^{[1](i)}=W^{[1]}x^{(i)}+b^{[1]} & \ \ \sigma^{[1]}(z^{[1](i)})=a^{[1](i)}\\
 z^{[2](i)}=W^{[2]}a^{[1](i)}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(z^{[2](i)})=a^{[2](i)}=\hat{y}^{(i)}
 \end{array}$$
 
-Recall that we defined the matrix X to be equal to our training examples stacked up as column vectors in equation \@ref(eq:input). We do a similar thing here to stack vectors with the superscript (i) together across $m$ samples. This way, the neural network computes the outputs on all the examples on at the same time:
+Recall that we defined the matrix X to be equal to our training samples stacked up as column vectors in equation \@ref(eq:input). We do a similar thing here to stack vectors with the superscript (i) together across $m$ samples. This way, the neural network computes the outputs on all the samples on at the same time:
 
 $$\begin{array}{cc}
 Z^{[1]}=W^{[1]}X+b^{[1]} & \ \ \sigma^{[1]}(Z^{[1]})=A^{[1]}\\
@@ -239,6 +239,62 @@ When build a neural network with many layers, one of the choices you get to make
 
 ### Activation Function
 
+We have used the sigmoid (or logistic) activation function. The function is S-shape with an output value between 0 to 1. Therefore it is used as the output layer activation function to predict the probability **when the response $y$ is binary**. However, it is rarely used as an intermediate layer activation function. One of the main reasons is that when $z$ is away from 0, then the derivative of the function drops fast which slows down the optimization process through gradient descent. Even the fact that it is differentiable provides some convenience, the decreasing slope can cause a neural network to get stuck at the training time.
+
+```{r activationsigmoid, fig.cap = "Sigmoid Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+z = seq(-8, 8, 0.1)
+fz = 1/(1+exp(-z))
+plot(z, fz, type = "l",
+     col="blue",
+     ylab= expression(paste (sigma, "(z)")))
+#     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ) 
+text(x = -5,y = 0.8,labels = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ))
+```
+
+- Hyperbolic Tangent Function (tanh)
+
+Another activation function with a similar S-shape is the hyperbolic tangent function. It works better than the sigmoid function as the intermediate layer [^1].
+
+[^1]: "The tanh function is almost always strictly superior." ---- by Andrew Ng from his coursera course "Neural Networks and Deep Learning" 
+
+\begin{equation}
+tanh(z) = \frac{e^{z} - e^{-z}}{e^{z} + e^{-z}}
+(\#eq:tanh)
+\end{equation}
+
+
+```{r activationtanh, fig.cap = "Hyperbolic Tangent Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+z = seq(-8, 8, 0.1)
+fz = 1/(1+exp(-z))
+fz_tanh = (exp(z) - exp(-z))/(exp(z)+exp(-z))
+plot(z, fz_tanh, type = "l",
+     col="blue",
+     ylab= "")
+#     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ) 
+text(x = -5, y = 0.5,labels = expression(paste("tanh(z) = ",frac(e^{z} - e^{-z},e^{z} + e^{-z}),sep='') ))
+```
+
+The tanh function crosses point (0, 0) and the value of the function is between 1 and -1 which makes the mean of the activated neurons closer to 0. The sigmoid function doesn't have that property. When you preprocess the training input data, you sometimes center the data so that the mean is 0. The tanh function is kind of doing that data processing for you which makes learning for the next layer a little easier. This activation function is used a lot in the recurrent neural networks where you want to polarize the results.
+
+- Rectified Linear Unit (ReLU) Function
+
+The most popular activation function is the Rectified Linear Unit (ReLU) function. It is a piecewise function, or a half rectified function:
+
+$$R(z) = max(0, z)$$
+
+The derivative is 1 when z is positive and 0 when z is negative. You can define the derivative as either 0 or 1 when z is 0. When you implement this, it is unlikely that z equals to exactly 0 even it can be very close to 0.
+
+```{r activationrelu, fig.cap = "Rectified Linear Unit Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+z = seq(-8, 8, 0.1)
+relu = function(z){
+  return (max(0, z))
+}
+rz = sapply(z, relu)
+plot(z, rz, type = "l",
+     col="blue",
+     ylab= "")
+text(x = -5, y = 6,labels = "R(z) = max(0, z)" )
+```
 
 
 ### Deal with Overfitting
