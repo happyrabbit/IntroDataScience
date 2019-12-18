@@ -239,6 +239,8 @@ When build a neural network with many layers, one of the choices you get to make
 
 ### Activation Function
 
+- Sigmoid and Softmax Function
+
 We have used the sigmoid (or logistic) activation function. The function is S-shape with an output value between 0 to 1. Therefore it is used as the output layer activation function to predict the probability **when the response $y$ is binary**. However, it is rarely used as an intermediate layer activation function. One of the main reasons is that when $z$ is away from 0, then the derivative of the function drops fast which slows down the optimization process through gradient descent. Even the fact that it is differentiable provides some convenience, the decreasing slope can cause a neural network to get stuck at the training time.
 
 ```{r activationsigmoid, fig.cap = "Sigmoid Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
@@ -250,6 +252,11 @@ plot(z, fz, type = "l",
 #     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ) 
 text(x = -5,y = 0.8,labels = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ))
 ```
+
+When the output has more than 2 categories, people use softmax function as the output layer activation function. 
+
+$$f_i(\mathbf{z}) = \frac{e^{z_i}}{\Sigma_{j=1}^{J} e^{z_j} } $$
+where $\mathbf{z}$ is a vector.
 
 - Hyperbolic Tangent Function (tanh)
 
@@ -278,7 +285,7 @@ The tanh function crosses point (0, 0) and the value of the function is between 
 
 - Rectified Linear Unit (ReLU) Function
 
-The most popular activation function is the Rectified Linear Unit (ReLU) function. It is a piecewise function, or a half rectified function:
+The most popular activation function is the Rectified Linear Unit (ReLU) function. It is a piecewise function, or a half rectified function:
 
 $$R(z) = max(0, z)$$
 
@@ -296,6 +303,31 @@ plot(z, rz, type = "l",
 text(x = -5, y = 6,labels = "R(z) = max(0, z)" )
 ```
 
+The advantage of the ReLU is that when z is positive, the derivative doesn't vanish as z getting larger. However, the disadvantage is that when z is negative, the derivative is 0. It may not map the negative values appropriately. In practice, this doesn't cause too much trouble but there is another version of ReLu called leaky ReLu that attempts to solve the dying ReLU problem. The leaky ReLu is
+
+$$R(z)_{Leaky}=\begin{cases}
+\begin{array}{c}
+z\\
+az
+\end{array} & \begin{array}{c}
+z\geq0\\
+z<0
+\end{array}\end{cases}$$
+
+Instead of being 0 when z is negative, it adds a slight slope such as $a=0.01$ as shown in figure \@ref(fig:activationleakyrelu) (can you see the leaky part there? : ).
+
+```{r activationleakyrelu, fig.cap = "Rectified Linear Unit Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+z = seq(-8, 8, 0.1)
+leakyrelu = function(z){
+  if (z>=0) {res = z}
+  else {res = 0.01*z}
+  return(res)
+}
+leakyrz = sapply(z, leakyrelu)
+plot(z, leakyrz, type = "l",
+     col="blue",
+     ylab= "")
+```
 
 ### Deal with Overfitting
 
