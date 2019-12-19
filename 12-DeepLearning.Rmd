@@ -329,10 +329,9 @@ plot(z, leakyrz, type = "l",
      ylab= "")
 ```
 
-To sum up, for intermediate layers:
+You may notice that all activation functions are non-linear. Since the composition of two linear functions is still linear, using a linear activation function doesn't help to capture more information.  That is why you don't see people use a linear activation function in the intermediate layer. One exception is when the output $y$ is continuous, you may use linear activation function at the output layer. To sum up, for intermediate layers:
 
 - ReLU is usually a good choice. If you don't know what to choose, then start with ReLU. Leaky ReLu usually works better than the ReLU but it is not used as much in practice. Either one works fine. Also, people usually use a=0.01 as the slope for leaky ReLU. You can try different parameters but most of the people a = 0.01.
-
 - tanh is used sometimes especially in recurrent neural network. But you nearly never see people use sigmoid function as intermediate layer activation function.
 
 For the output layer:
@@ -340,6 +339,8 @@ For the output layer:
 - When it is binary classification, use sigmoid with binary cross-entropy as loss function
 - When there are multiple classes, use softmax function with categorical cross-entropy as loss function
 - When the response is continuous, use identity function (i.e. y = x)
+
+
 
 ### Deal with Overfitting
 
