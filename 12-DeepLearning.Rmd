@@ -388,10 +388,27 @@ In the history of deep learning, researchers proposed different optimization alg
 
 **Exponentially Weighted Averages**
 
+### Image Recognition Using FFNN
+
+In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development. We are using the Databrick community edition with the following consideration:
+
+- Minimum language barrier in coding for most users
+- Zero setup to save time using cloud environment
+- Help you get familiar with current trend of cloud computing in corporate setup
+
+Refer to section \@ref(CloudEnvironment) for how to set up an account, create a notebook (R or Python) and start a cluster.
+
 ## Convolutional Neural Network
 
 This section introduces the Convolutional Neural Network (CNN), the deep learning model that is almost universally used in computer vision applications. Computer vision has been advancing rapidly which enables many new applications such as self-driving cars and unlocking a phone using face. The application is not limited to the tech industry but some traditional industries such as agriculture and healthcare. Precision agriculture utilizes advanced hardware and computer vision algorithms to increase efficiency and reduce costs for farmers. For example, analyze images from cameras in the greenhouse to track plant growth state. Use sensory data from drones, satellites, and tractors to track soil conditions, detect herbs and pests, automate irrigation, etc. In health care, computer vision helps clinicians to diagnose disease, identify cancer sites with high accuracy [@gloria2019]. Even if you don't work on computer vision, you may find some of the ideas inspiring and borrow them into your area.
 
+Some popular computer vision problems are:
+
+- Image classification (or image recognition): Recognize the object in the image. Is there a cat in the image? Who is this person?
+- Object detection: Detect the position and boarder of a specific object. For example, if you are building a self-driving car, you need to know the positions of other cars around you.
+- Neural Style Transfer (NST): Given a "content" image and a "style" image, generate an image that merges the two.
+
+In this chapter, we illustrate the fundamentals of CNN using the example of image classification. 
 
 ## Recurrent Neural Network
 

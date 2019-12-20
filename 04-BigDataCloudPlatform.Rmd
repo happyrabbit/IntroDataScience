@@ -28,7 +28,7 @@ The very first problem internet companies face is that a lot of data has been co
 
 Spark works on top of a distributed file system including HDFS with better data and analytics efficiency by leveraging in-memory operations. Spark is more tailored for data processing and analytics and the need to interact with Hadoop directly is greatly reduced. The spark system includes an SQL-like framework called Spark SQL and a parallel machine learning library called MLib. Fortunately for many in the analytics community, Spark also supports R and Python. We can interact with data stored in a distributed file system using parallel computing across nodes easily with R and Python through the Spark API and do not need to worry about lower-level details of distributed computing. We will introduce how to use an R notebook to drive Spark computations.
 
-## Introduction of Cloud Environment
+## Introduction of Cloud Environment {#CloudEnvironment}
 
 Even though Spark provides a solution for big data analytics, the maintenance of the computing cluster and Spark system requires a dedicated team. Historically for each organization the IT departments own the hardware and the regular maintenance. It usually takes months for a new environment to be built and the cost is high. Luckily, the time to deployment and cost are dramatically down due to the cloud computation trend. Now we can create a Spark computing cluster in the cloud in a few minutes with the desired configuration and the user only pay when the cluster is up. Cloud computing environments enable smaller organizations to adopt big data analytics.
 
