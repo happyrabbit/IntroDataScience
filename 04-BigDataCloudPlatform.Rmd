@@ -192,7 +192,6 @@ fit2 <- ml_kmeans(x = iris_tbl, centers = 3,
 print(fit2)
 ```
 
-<<<<<<< HEAD
 After fitting the k-means model, we can apply the model to predict other datasets through `sdf_predict()` function. Following code applies the model to `iris_tbl` again to predict the cluster and collect the results as a local R object (i.e. `prediction`) using `collect()` function:
 
 ```r

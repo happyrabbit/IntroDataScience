@@ -255,7 +255,13 @@ text(x = -5,y = 0.8,labels = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),se
 
 When the output has more than 2 categories, people use softmax function as the output layer activation function. 
 
-$$f_i(\mathbf{z}) = \frac{e^{z_i}}{\Sigma_{j=1}^{J} e^{z_j} } $$
+
+
+\begin{equation}
+f_i(\mathbf{z}) = \frac{e^{z_i}}{\Sigma_{j=1}^{J} e^{z_j} }
+(\#eq:softmax)
+\end{equation}
+
 where $\mathbf{z}$ is a vector.
 
 - Hyperbolic Tangent Function (tanh)
@@ -287,7 +293,11 @@ The tanh function crosses point (0, 0) and the value of the function is between 
 
 The most popular activation function is the Rectified Linear Unit (ReLU) function. It is a piecewise function, or a half rectified function:
 
-$$R(z) = max(0, z)$$
+
+\begin{equation}
+R(z) = max(0, z)
+(\#eq:relu)
+\end{equation}
 
 The derivative is 1 when z is positive and 0 when z is negative. You can define the derivative as either 0 or 1 when z is 0. When you implement this, it is unlikely that z equals to exactly 0 even it can be very close to 0.
 
@@ -397,6 +407,20 @@ In this section, we will walk through a toy example of image classification prob
 - Help you get familiar with current trend of cloud computing in corporate setup
 
 Refer to section \@ref(CloudEnvironment) for how to set up an account, create a notebook (R or Python) and start a cluster.
+
+### Image Data
+
+What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. Each each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network(CNN). Or, you can vectorize the array as the input for FFNN as shown in the figure.
+
+```{r grayscaleimage, fig.cap = "Grayscale image is a set of pixels on 2-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/grayscaleimage.png")
+```
+
+A color image is a set of pixels on 3-d space and each pixel has a value between 0 to 255. There are three 2-d panels which represent the color red, blue and green accordingly. Similarly, You can process the image as a 3-d array. Or you can vectorize the array as shown in figure \@ref(fig:colorimage). 
+
+```{r colorimage, fig.cap = "Color image is a set of pixels on 3-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/colorimage.png")
+```
 
 ## Convolutional Neural Network
 
