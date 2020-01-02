@@ -408,8 +408,6 @@ In this section, we will walk through a toy example of image classification prob
 
 Refer to section \@ref(CloudEnvironment) for how to set up an account, create a notebook (R or Python) and start a cluster.
 
-### Image Data
-
 What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. Each each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network(CNN). Or, you can vectorize the array as the input for FFNN as shown in the figure.
 
 ```{r grayscaleimage, fig.cap = "Grayscale image is a set of pixels on 2-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
@@ -424,6 +422,8 @@ knitr::include_graphics("images/colorimage.png")
 
 ## Convolutional Neural Network
 
+There are some challenges using a feedforward neural network to solve computer vision problems.  One of the challenges is that the inputs can get really big after you vectorize the image array. A 64 x 64 x 3 image gives you an input vector of 12288! And that is a very small image. So you can expect the number of parameters grows fast and it is difficult to get enough data to fit the model. Also as the input image size grows, the computational requirements to train a feedforward neural network will soon become infeasible. Also, after vectorization, you lose most of the spacial information of the image. To overcome these, people instead use the convolutional neural network for computer vision problems. 
+
 This section introduces the Convolutional Neural Network (CNN), the deep learning model that is almost universally used in computer vision applications. Computer vision has been advancing rapidly which enables many new applications such as self-driving cars and unlocking a phone using face. The application is not limited to the tech industry but some traditional industries such as agriculture and healthcare. Precision agriculture utilizes advanced hardware and computer vision algorithms to increase efficiency and reduce costs for farmers. For example, analyze images from cameras in the greenhouse to track plant growth state. Use sensory data from drones, satellites, and tractors to track soil conditions, detect herbs and pests, automate irrigation, etc. In health care, computer vision helps clinicians to diagnose disease, identify cancer sites with high accuracy [@gloria2019]. Even if you don't work on computer vision, you may find some of the ideas inspiring and borrow them into your area.
 
 Some popular computer vision problems are:
@@ -432,7 +432,21 @@ Some popular computer vision problems are:
 - Object detection: Detect the position and boarder of a specific object. For example, if you are building a self-driving car, you need to know the positions of other cars around you.
 - Neural Style Transfer (NST): Given a "content" image and a "style" image, generate an image that merges the two.
 
-In this chapter, we illustrate the fundamentals of CNN using the example of image classification. 
+A fundamental building block of the convolution neural network is, as the name indicates, the convolution operation. In this chapter, we illustrate the fundamentals of CNN using the example of image classification. 
+
+How do you do convolution? For example, you have a 5 x 5 2-d image (figure \@ref(fig:convolution1). You apply a 3 x 3 filter and convolute over the image. The output of this convolution operator will be a 3 x 3 matrix, which you can consider as a 3 x 3 image and visualize it (top right of figure \@ref(fig:convolution1)).
+
+```{r convolution1, fig.cap = "There are an input image (left), a filter (middel), and an output image (right).", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/convolution1.png")
+```
+
+You start from the top left corner of the image and put the filter on the top left 3 x3 sub-matrix of the input image and take the element-wise product. Then you add up the 9 numbers.  Move forward one step each time until it gets to the bottom right. The detailed process is shown in figure \@ref(fig:convolutionsbs).
+
+
+```{r convolutionsbs, fig.cap = "Convolution step by step", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/convolutionsbs.png")
+```
+
 
 ## Recurrent Neural Network
 
