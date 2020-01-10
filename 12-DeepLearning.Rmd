@@ -459,7 +459,7 @@ kernel_vertical
 The following code implements the convolution process. The result is shown as the middle of figure \@ref(fig:edgedetection).
 
 ```r
-image = magick::image_read("http://bit.ly/2R0pC0o")
+image = magick::image_read("images/edgedet4.jpg")
 kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
                        nrow = 3, ncol = 3)
 
@@ -477,7 +477,7 @@ plot(image_edge_horizontal)
 ```
 
 ```{r edgedetection, fig.cap = "Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
-knitr::include_graphics("images/edgedet2.png")
+knitr::include_graphics("images/edgedet5.png")
 ```
 
 Why can `kernel_vertical` detect vertical edge? Let's look at a simpler example. The following 8 x b matrix where half of the matrix is 10 and the other half is 0. The corresponding image is shown as the left of the figure \@ref(fig:simpleedge). 
@@ -505,7 +505,7 @@ image(t(output_image),
       col = grey.colors(255, start = 0, end = 1))
 ```
 
-So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 640 x 640, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image.
+So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 1020 x 711, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image.
 
 
 ## Recurrent Neural Network
