@@ -447,7 +447,65 @@ You start from the top left corner of the image and put the filter on the top le
 knitr::include_graphics("images/convolutionsbs.png")
 ```
 
+Let's use edge detection as an example to see how convolution operation works. Given a picture as the left of figure \@ref(fig:edgedetection), you want to detect the vertical lines. For example, there are vertical lines along with the hair and the edges of the bookcase. How do you do that? There are standard filters for operations like blurring, sharpening, and edge detection.  To get the edge, you can use the following 3 x 3 filter to convolute over the image. 
+
+```{r}
+kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1),
+nrow = 3, ncol = 3)
+
+kernel_vertical
+```
+
+The following code implements the convolution process. The result is shown as the middle of figure \@ref(fig:edgedetection).
+
+```r
+image = magick::image_read("images/edgedet1.jpg")
+kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
+                       nrow = 3, ncol = 3)
+
+kernel_horizontal = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
+                       nrow = 3, ncol = 3, byrow = T)
+
+image_edge_vertical = magick::image_convolve(image, kernel_vertical)
+image_edge_horizontal = magick::image_convolve(image, kernel_horizontal)
+
+par(mfrow = c(1, 3))
+
+plot(image)
+plot(image_edge_vertical)
+plot(image_edge_horizontal)
+```
+
+```{r edgedetection, fig.cap = "Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/edgedet2.png")
+```
+
+Why can `kernel_vertical` detect vertical edge? Let's look at a simpler example. The following 8 x b matrix where half of the matrix is 10 and the other half is 0. The corresponding image is shown as the left of the figure \@ref(fig:simpleedge). 
+
+```{r}
+input_image = matrix(rep(c(200, 200, 200, 200, 0, 0, 0, 0), 8), 
+                     nrow = 8, byrow = T)
+input_image
+```
+
+If we use the above filter kernel_vertical , the output matrix is shown below and the corresponding image is shown as the right of the figure \@ref(fig:simpleedge).
+
+```{r}
+output_image = matrix(rep(c(0, 0, 200, 200, 0, 0), 6), 
+                      nrow = 6, byrow = T)
+output_image
+```
+
+
+```{r simpleedge, fig.cap = "Simple Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
+par(mfrow = c(1, 2))
+image(t(input_image), 
+      col = grey.colors(255, start = 0, end = 1))
+image(t(output_image), 
+      col = grey.colors(255, start = 0, end = 1))
+```
+
+So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 640 x 640, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image.
+
 
 ## Recurrent Neural Network
-
-
