@@ -459,7 +459,7 @@ kernel_vertical
 The following code implements the convolution process. The result is shown as the middle of figure \@ref(fig:edgedetection).
 
 ```r
-image = magick::image_read("images/edgedet1.jpg")
+image = magick::image_read("http://bit.ly/2R0pC0o")
 kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
                        nrow = 3, ncol = 3)
 
