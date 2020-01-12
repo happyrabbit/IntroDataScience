@@ -432,6 +432,8 @@ Some popular computer vision problems are:
 - Object detection: Detect the position and boarder of a specific object. For example, if you are building a self-driving car, you need to know the positions of other cars around you.
 - Neural Style Transfer (NST): Given a "content" image and a "style" image, generate an image that merges the two.
 
+### Convolution Layer
+
 A fundamental building block of the convolution neural network is, as the name indicates, the convolution operation. In this chapter, we illustrate the fundamentals of CNN using the example of image classification. 
 
 How do you do convolution? For example, you have a 5 x 5 2-d image (figure \@ref(fig:convolution1). You apply a 3 x 3 filter and convolute over the image. The output of this convolution operator will be a 3 x 3 matrix, which you can consider as a 3 x 3 image and visualize it (top right of figure \@ref(fig:convolution1)).
@@ -459,7 +461,7 @@ kernel_vertical
 The following code implements the convolution process. The result is shown as the middle of figure \@ref(fig:edgedetection).
 
 ```r
-image = magick::image_read("images/edgedet4.jpg")
+image = magick::image_read("http://bit.ly/2Nh5ANX")
 kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
                        nrow = 3, ncol = 3)
 
@@ -476,7 +478,7 @@ plot(image_edge_vertical)
 plot(image_edge_horizontal)
 ```
 
-```{r edgedetection, fig.cap = "Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
+```{r edgedetection, fig.cap = "Edge Detection Example", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/edgedet5.png")
 ```
 
@@ -505,7 +507,16 @@ image(t(output_image),
       col = grey.colors(255, start = 0, end = 1))
 ```
 
-So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 1020 x 711, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image.
+So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 1020 x 711, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image. 
 
+The parameters for the convolution operation are the elements in the filter. For a 3x3 filter shown below, the parameters to estimate are $w_1$ to $w_9$. So far, we move the filter one step each time when we convolve. You can do more than 1 step as well. For example, you can hop 2 steps each time after the sum of the element-wise product. It is called strided-convolution. 
+
+![](images/convlayer.png)
+
+### Padding Layer
+
+Assume the stride is $s$ and we have a $n \times n$ input image to involve with a $f \times f$ filter, the output image is $(\frac{n-f}{s} + 1) \times (\frac{n-f}{s} + 1)$.
+
+### Pooling Layer
 
 ## Recurrent Neural Network
