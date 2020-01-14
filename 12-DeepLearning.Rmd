@@ -498,7 +498,6 @@ output_image = matrix(rep(c(0, 0, 200, 200, 0, 0), 6),
 output_image
 ```
 
-
 ```{r simpleedge, fig.cap = "Simple Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
 par(mfrow = c(1, 2))
 image(t(input_image), 
@@ -511,12 +510,24 @@ So the output image has a lighter region in the middle that corresponds to the v
 
 The parameters for the convolution operation are the elements in the filter. For a 3x3 filter shown below, the parameters to estimate are $w_1$ to $w_9$. So far, we move the filter one step each time when we convolve. You can do more than 1 step as well. For example, you can hop 2 steps each time after the sum of the element-wise product. It is called strided-convolution. 
 
-![](images/convlayer.png)
+```{r convolutionlayer, fig.cap = "Convolution Layer Parameters", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/convlayer.png")
+```
+
 
 ### Padding Layer
 
-Assume the stride is $s$ and we have a $n \times n$ input image to involve with a $f \times f$ filter, the output image is $(\frac{n-f}{s} + 1) \times (\frac{n-f}{s} + 1)$.
+Assume the stride is $s$ and we have a $n \times n$ input image to convolve with a $f \times f$ filter, the output image is $(\frac{n-f}{s} + 1) \times (\frac{n-f}{s} + 1)$. After each convolution, the dimension of the output shrinks. Depending on the size of the input image, the output size may get too small after a few rounds. Also, the pixel at the corner is used less than the pixel in the middle. So it overlooks some information in the image. To overcome these problems, you can add a padding layer during the process. To keep the output the same size as the input image in figure \@ref(fig:convolutionlayer), you can pad two pixels on each side of the image with 0 (figure \@ref(fig:padding) ).
+
+
+```{r padding, fig.cap = "Padding Layer", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/padding.png")
+```
+
+Still assume the stride is $s$ and we have a $n \times n$ input image to convolve with a $f \times f$ filter. This time we pad $p$ pixels in each side, then the output size becomes $(\frac{n + 2p -f}{s} + 1) \times (\frac{n + 2p -f}{s} + 1)$. You can specify the value for p and also the pixel value used. Or you can just use 0 to pad and make the output the same size with input. 
 
 ### Pooling Layer
+
+### Convolutions Over Volume
 
 ## Recurrent Neural Network
