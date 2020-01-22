@@ -404,7 +404,7 @@ rpartTune2 <- caret::train(trainx2, trainy, method = "rpart",
 Compare the results of the two approaches.
 
 ```{r}
-rpartRoc <- roc(response = rpartTune1$pred$obs,
+rpartRoc <- pROC::roc(response = rpartTune1$pred$obs,
                 predictor = rpartTune1$pred$Female,
                 levels = rev(levels(rpartTune1$pred$obs)))
 
@@ -412,20 +412,23 @@ rpartFactorRoc <- roc(response = rpartTune2$pred$obs,
                       predictor = rpartTune2$pred$Female,
                       levels = rev(levels(rpartTune1$pred$obs)))
 
-plot(rpartRoc, type = "s", print.thres = c(.5),
+plot.roc(rpartRoc, 
+     type = "s", 
+     print.thres = c(.5),
      print.thres.pch = 3,
      print.thres.pattern = "",
      print.thres.cex = 1.2,
      col = "red", legacy.axes = TRUE,
      print.thres.col = "red")
 
-plot(rpartFactorRoc,
+plot.roc(rpartFactorRoc,
      type = "s",
      add = TRUE,
      print.thres = c(.5),
      print.thres.pch = 16, legacy.axes = TRUE,
      print.thres.pattern = "",
      print.thres.cex = 1.2)
+
 legend(.75, .2,
        c("Grouped Categories", "Independent Categories"),
        lwd = c(1, 1),
@@ -719,24 +722,32 @@ gbmRoc <- roc(response = gbmTune$pred$obs,
               predictor = gbmTune$pred$Female,
               levels = rev(levels(gbmTune$pred$obs)))
 
-plot(rpartRoc, type = "s", print.thres = c(.5),
+plot.roc(rpartRoc, 
+     type = "s", 
+     print.thres = c(.5),
      print.thres.pch = 16,
      print.thres.pattern = "",
      print.thres.cex = 1.2,
      col = "black", legacy.axes = TRUE,
      print.thres.col = "black")
 
-plot(treebagRoc, type = "s", add = TRUE, print.thres = c(.5), 
+plot.roc(treebagRoc, 
+     type = "s", 
+     add = TRUE, print.thres = c(.5), 
      print.thres.pch = 3, legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "red", print.thres.col = "red")
 
-plot(rfRoc, type = "s", add = TRUE, print.thres = c(.5), 
+plot.roc(rfRoc, 
+     type = "s", 
+     add = TRUE, print.thres = c(.5), 
      print.thres.pch = 1, legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "green", print.thres.col = "green")
 
-plot(gbmRoc, type = "s", add = TRUE, print.thres = c(.5), 
+plot.roc(gbmRoc, 
+     type = "s", 
+     add = TRUE, print.thres = c(.5), 
      print.thres.pch = 10, legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "blue", print.thres.col = "blue")

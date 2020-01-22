@@ -514,7 +514,6 @@ The parameters for the convolution operation are the elements in the filter. For
 knitr::include_graphics("images/convlayer.png")
 ```
 
-
 ### Padding Layer
 
 Assume the stride is $s$ and we have a $n \times n$ input image to convolve with a $f \times f$ filter, the output image is $(\frac{n-f}{s} + 1) \times (\frac{n-f}{s} + 1)$. After each convolution, the dimension of the output shrinks. Depending on the size of the input image, the output size may get too small after a few rounds. Also, the pixel at the corner is used less than the pixel in the middle. So it overlooks some information in the image. To overcome these problems, you can add a padding layer during the process. To keep the output the same size as the input image in figure \@ref(fig:convolutionlayer), you can pad two pixels on each side of the image with 0 (figure \@ref(fig:padding) ).
@@ -527,7 +526,11 @@ If the stride is $s$ and we have a $n \times n$ input image to convolve with a $
 
 ### Pooling Layer
 
+People sometimes use the pooling layer to reduce the size of the representation and make some of the feature detection more robust. If you have a $4 \times 4$ input, the max and mean pooling operation are shown in the figure \@ref(fig:poolinglayer). The process is quite simple. In the example, the filter is $2 \times 2$ and stride is 2, so break the input into four $2 \times 2$  regions (shown in the figure with different shaded colors). For max pooling, each of the outputs is the maximum from the corresponding shaded sub-region. Mean pooling layer works in the same way except for getting the mean instead of maximum of the sub-region. The pooling layer has hyperparameters ($f$ and $s$) but it has no parameter for gradient descent to learn. 
 
+```{r poolinglayer, fig.cap = "Pooling Layer", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/poolinglayer.png")
+```
 
 ### Convolutions Over Volume
 
