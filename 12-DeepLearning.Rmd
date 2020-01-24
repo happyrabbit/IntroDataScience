@@ -634,7 +634,7 @@ gray_eggshell_mean = pooling(type = "mean",
                              filter = 10, stride = 10)
 ```
 
-You can see the result by plotting the output image. 
+You can see the result by plotting the output image (figure \@ref(fig:eggshellconv)). The top left is the original color picture. The top right is the 2D grayscale picture. The bottom left is the result of max pooling. The bottom right is the result of mean pooling. The max-pooling gives you the value of the largest pixel and the mean-pooling gives the average of the patch. You can consider it as a representation of features, looking at the maximal or average presence of different features. In general, max-pooling works better. You can gain some intuition from the example (figure \@ref(fig:eggshellconv)). The max-pooling "picks" more distinct features and average-pooling blurs out features evenly.
 
 ```r
 par(mfrow = c(2,2), oma = c(1, 1, 1, 1))
@@ -644,12 +644,12 @@ plot(as.Image(gray_eggshell_max))
 plot(as.Image(gray_eggshell_mean))
 ```
 
-```{r eggshell conv, fig.cap = "Example of max and mean pooling", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
+```{r eggshellconv, fig.cap = "Example of max and mean pooling", out.width="70%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/eggshellconv.png")
 ```
 
-
-
 ### Convolutions Over Volume
+
+So far, we have shown different types of layers on 2D inputs. If you have a 3D input (such as a color image), then the filters will have 3 channels to produce an output with the same dimension. 
 
 ## Recurrent Neural Network
