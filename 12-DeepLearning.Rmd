@@ -648,8 +648,12 @@ plot(as.Image(gray_eggshell_mean))
 knitr::include_graphics("images/eggshellconv.png")
 ```
 
-### Convolutions Over Volume
+### Convolution Over Volume
 
-So far, we have shown different types of layers on 2D inputs. If you have a 3D input (such as a color image), then the filters will have 3 channels to produce an output with the same dimension. 
+So far, we have shown different types of layers on 2D inputs. If you have a 3D input (such as a color image), then the filters will have 3 channels too. For example, if you have a $6 \times 6$ color image, the input dimension is $6 \times 6 \times 3$. We call them the height, width, and the number of channels. The filter itself has 3 channels corresponding to the red, green, and blue channels of the input. You can consider it as a 3D cube with 27 parameters. Apply each channel of the filter to the corresponding channel of the input.  Multiply each of the 27 numbers with the corresponding numbers from the top left region of the color input image and add them up. Add a bias parameter and apply an activation function which gives you the first number of the output image. Then slide it over to calculate the next one. The final output is 2D $4 \times 4$. If you want to detect features in the red channel only, you can use a filter with the second and third channels to be all 0s. With different choices of the parameters, you can get different feature detectors. You can use more than one filter and each filter has multiple channels. For example, you can use one $3 \times 3 \times 3$ filter to detect the horizontal edge and another to detect the vertical edge. Figure \@ref(fig:eggshellconv) shows an example of one layer with two filters. Each filter has a dimension of $3 \times 3 \times 3$. The output dimension is $4 \times 4 \times 2$. The output has two channels because we have two filters on the layer. The total number of parameters is 58 (each filter has one bias parameter $b$). 
+
+```{r ConvOverVolume, fig.cap = "Example of convolution over volume", out.width="70%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/ConvOverVolume.png")
+```
 
 ## Recurrent Neural Network
