@@ -1,8 +1,54 @@
 #  Regression Models
 
-In this chapter, we will cover ordinary linear regression and a few more advanced regression methods. First, we will introduce multivariate linear regression (i.e. the typical least square regression) which is one of the simplest supervised learning methods. Even though it is simple, the general ideas and procedures of fitting a regression model are applied to a boarder scope. Having a solid understanding of the basic linear regression model enables us to learn more advanced models easily. For example, we will introduce two “shrinkage” versions of linear regression: ridge regression and LASSO regression. While the parameters are fitted by the least square method, the extra penalty can effectively shrink model parameters towards zero. It mediates overfitting and maintains the robustness of the model when data size is small compared to the number of explanatory variables. We first introduce basic knowledge of each model and then provide R codes to show how to fit the model. We only cover the major properties of these models and the listed reference will provide more in-depth discussion.
+In this chapter, we will cover ordinary linear regression and a few more advanced regression methods. The linear combination of variables seems simple compared to many of today’s machine learning models. However, many advanced models use linear combinations of variables as one of its major components or steps. For example, for each neuron in the deep neural network, all the input signals are first linearly combined before feeding to a non-linear activation function. To understand many of today's machine learning models, it is helpful to understand the key ideas across different modeling frameworks. 
 
-## Ordinary Least Squares
+First, we will introduce multivariate linear regression (i.e. the typical least square regression) which is one of the simplest supervised learning methods. Even though it is simple, the general ideas and procedures of fitting a regression model are applied to a boarder scope. Having a solid understanding of the basic linear regression model enables us to learn more advanced models easily. For example, we will introduce two “shrinkage” versions of linear regression: ridge regression and LASSO regression. While the parameters are fitted by the least square method, the extra penalty can effectively shrink model parameters towards zero. It mediates overfitting and maintains the robustness of the model when data size is small compared to the number of explanatory variables. We first introduce basic knowledge of each model and then provide R codes to show how to fit the model. We only cover the major properties of these models and the listed reference will provide more in-depth discussion.
+
+We will use the clothing company data as an example. We want to answer business questions such as “which variables are the driving factor of total revenue (both online and in-store purchase)?” The answer to this question can help the company to decide where to invest (such as design, quality, etc.). Note that the driving factor here does not guarantee a causal relationship. Linear regression models reveal correlation rather than causation. For example, if a survey on car purchase shows a positive correlation between price and customer satisfaction, does it suggest the car dealer should increase the price? Probably not! It is more likely that a more expensive car has better performance or quality. It is more likely that the customer satisfaction is impacted by quality. Causal inference is much more difficult to establish and we have to be very careful when interpreting regression model results.
+
+## Ordinary Least Square
+
+For a typical linear regression with $p$ explanatory variables, we have a linear combinations of these variables:
+
+$$f(\mathbf{X})=\mathbf{X}\mathbf{\beta}=\beta_{0}+\sum_{j=1}^{p}\mathbf{x_{.j}}\beta_{j}$$
+
+where $\mathbf{\beta}$ is the parameter vector with length $p+1$. Least square is the method to find a set of value for $\mathbf{\beta^{T}}=(\beta_{0},\beta_{1},...,\beta_{p})$ such that it minimizes the residual sum of square (RSS):
+
+$$RSS(\beta)=\sum_{i=1}^{N}(y_{i}-f(\mathbf{x_{i.}}))^{2}=\sum_{i=1}^{N}(y_{i}-\beta_{0}-\sum_{j=1}^{p}x_{ij}\beta_{j})^{2}$$
+
+The process of finding a set of values has been implemented in R. Now let's load the data:
+
+```{r}
+dat <- read.csv("http://bit.ly/2P5gTw4")
+```
+
+Before fitting the model, we need to clean the data, such as removing bad data points that are not logical (negative expense).
+
+```{r}
+dat <- subset(dat, store_exp > 0 & online_exp > 0)
+```
+
+Use 10 survey question variables as our explanatory variables.
+
+```{r}
+modeldat <- dat[, grep("Q", names(dat))]
+```
+
+The response variable is the sum of in-store spending and online spending.
+
+```{r}
+# total expense = in store expense + online expense
+modeldat$total_exp <- dat$store_exp + dat$online_exp
+```
+
+To fit a linear regression model, let us first check if there are any missing values or outliers:
+
+```{r}
+par(mfrow = c(1, 2))
+hist(modeldat$total_exp, main = "", xlab = "total_exp")
+boxplot(modeldat$total_exp)
+```
+
 
 ## Multivariate Adaptive Regression Splines
 
