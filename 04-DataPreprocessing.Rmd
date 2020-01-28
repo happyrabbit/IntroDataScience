@@ -367,7 +367,7 @@ skewness(transformed)
 
 The estimate of $\lambda$ is the same as before (0.1). The skewness of the original observation is 1.1, and -0.2 after transformation. Although it is not strictly 0, it is greatly improved. 
 
-## Resolve Outliers
+## Resolve Outliers {#outliers}
 
 Even under certain assumptions we can statistically define outliers, it can be hard to define in some situations.  Box plot, histogram and some other basic visualizations can be used to initially check whether there are outliers. For example, we can visualize numerical non-survey variables in `sim.dat`:
 

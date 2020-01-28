@@ -49,6 +49,15 @@ hist(modeldat$total_exp, main = "", xlab = "total_exp")
 boxplot(modeldat$total_exp)
 ```
 
+There is no missing value in the response variable, but there are outliers. Outliers are usually best described by the problem to solve itself such that we know from domain knowledge that it is not possible to have such values. We can also use a statistical threshold to remove extremely large or small outlier values from the data. We use the Z-score to find and remove outliers described in section \@ref(outliers). Readers can refer to the section for more detail.
+
+```{r}
+y <- modeldat$total_exp
+# Find data points with Z-score larger than 3.5
+zs <- (y - mean(y))/mad(y)
+modeldat <- modeldat[-which(zs > 3.5), ]
+```
+
 
 ## Multivariate Adaptive Regression Splines
 

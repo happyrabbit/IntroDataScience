@@ -656,4 +656,20 @@ So far, we have shown different types of layers on 2D inputs. If you have a 3D i
 knitr::include_graphics("images/ConvOverVolume.png")
 ```
 
+We use the following notations for layer $l$:
+
+- Use $n_W^{[l]}$, $n_H^{[l]}$ and $n_C^{[l]}$ to denote the width, height and number of channels of the input
+- $f^{[l]}$ is the filter size
+- $p^{[l]}$ is the padding size
+- $s^{[l]}$ is the stride
+
+The number of filters for layer $l$ is the number of channels of the output of layer $l$. Since the output of layer $l$ is the input of layer $l+1$, the number of filters for layer $l$ is $n_C^{[l+1]}$. The number of channels of the filter of layer $l$ should equal the number of channels of the input of layer $l$ which is the output of layer $l-1$ (i.e. $n_C^{[l-1]}$). So the dimensions of some key elements of layer $l$ are:
+
+- Each filter: $f^{[l]} \times f^{[l]} \times n^{[l-1]}_C$
+- Activations: $a^{[l]} \rightarrow n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$
+- Weights: $f^{[l]} \times f^{[l]} \times n^{[l-1]}_C \times n^{[l]}_C$
+- bias: $b^{[l]}_C$
+- Input: $n^{[l-1]}_H \times n^{[l-1]}_W \times n^{[l-1]}_C$
+- Output: $n^{[l]}_H \times n^{[l]}_W \times n^{[l]}_C$
+
 ## Recurrent Neural Network
