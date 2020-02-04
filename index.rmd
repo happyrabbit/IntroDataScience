@@ -47,25 +47,19 @@ This is an introductory book to data science with a specific focus on the applic
 
 Some key features of this book are as follows:
 
-- It is comprehensive. It covers not only technical skills but also soft skills and big data environment in the industry.
+- It covers not only technical skills but also soft skills and big data environment in the industry.
 
 - It is hands-on. We provide the data and repeatable R and Python code. You can repeat the analysis in the book using the data and code provided. We also suggest you perform the analyses with your data whenever possible. You can only learn data science by doing it!
 
-- It is based on context. We put methods in the context of industrial data science questions. 
-
-- Where appropriate, we point you to more advanced materials on models to dive deeper
+- It is based on context. We put methods in the context of industrial data science questions.
 
 ## Who This Book Is For {-}
 
-Non-mathematical readers will appreciate the emphasis on problem-solving with real data across a wide variety of applications and the reproducibility of the companion R and python code.
-
-Readers should know basic statistical ideas, such as correlation and linear regression analysis. While the text is biased against complex equations, a mathematical background is needed for advanced topics.
+Non-mathematical readers will appreciate  the reproducibility of the companion R and python code. Readers should know basic statistical ideas, such as correlation and linear regression analysis. While the text is biased against complex equations, a mathematical background is needed for advanced topics.
 
 ## What This Book Covers {-}
 
 Based on industry experience, this book outlines the real world scenario and points out pitfalls data science practitioners should avoid. It also covers big data cloud platform and the art of data science such as soft skills. We use R as the main tool and provide code for both R and Python.
-
-## Conventions {-}
 
 ## Acknowledgements  {-}
 

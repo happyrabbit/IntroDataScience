@@ -420,6 +420,159 @@ A color image is a set of pixels on 3-d space and each pixel has a value between
 knitr::include_graphics("images/colorimage.png")
 ```
 
+We will walk through how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  Please check the `keras` R package website for most recent development: https://keras.rstudio.com/. `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left. 
+
+```r
+install.packages("keras")
+```
+
+As `keras` is just an interface to popular deep learning frameworks, we have to install the deep learning backend. The default and recommended backend is TensorFlow. By calling `install_keras()`, it will install all the needed dependencies for TensorFlow. 
+
+```r
+library(keras)
+install_keras()
+```
+
+Now we are all set to explore deep learning! As simple as three lines of R code, but there are quite a lot going on behind the scene. If you are using a cloud environment, you do not need to worry about these behind scene setup and maintenance.
+
+We will use the widely used MNIST handwritten digit image dataset. More information about the dataset and benchmark results from various machine learning methods can be found at http://yann.lecun.com/exdb/mnist/ and https://en.wikipedia.org/wiki/MNIST_database.
+
+This dataset is already included in the keras/TensorFlow installation and we can simply load the dataset as described in the following cell. It takes less than a minute to load the dataset.
+
+```r
+mnist <- dataset_mnist()
+```
+
+The data structure of the MNIST dataset is straight forward and well prepared for R, which has two pieces: 
+
+(1) training set: x (i.e. features): 60000x28x28 tensor which corresponds to 60000 28x28 pixel greyscale images (i.e. all the values are integers between 0 and 255 in each 28x28 matrix), and y (i.e. responses): a length 60000 vector which contains the corresponding digits with integer values between 0 and 9. 
+
+(2) testing set: same as the training set, but with only 10000 images and responses. The detailed structure for the dataset can be seen with `str(mnist)` below.
+
+```r
+str(mnist)
+```
+
+```html
+List of 2
+ $ train:List of 2
+  ..$ x: int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...
+  ..$ y: int [1:60000(1d)] 5 0 4 1 9 2 1 3 1 4 ...
+ $ test :List of 2
+  ..$ x: int [1:10000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...
+  ..$ y: int [1:10000(1d)] 7 2 1 0 4 1 4 9 5 9 ...
+```
+
+Now we prepare the features (x) and the response variable (y) for both the training and testing dataset, and we can check the structure of the `x_train` and `y_train` using `str()` function.
+
+```r
+x_train <- mnist$train$x
+y_train <- mnist$train$y
+x_test <- mnist$test$x
+y_test <- mnist$test$y
+
+str(x_train)
+str(y_train)
+```
+
+```html
+int [1:60000, 1:28, 1:28] 0 0 0 0 0 0 0 0 0 0 ...
+int [1:60000(1d)] 5 0 4 1 9 2 1 3 1 4 ...
+```
+
+Now let's plot a chosen 28x28 matrix as an image using R's `image()` function. In R's `image()` function, the way of showing an image is rotated 90 degree from the matrix representation. So there is additional steps to rearrange the matrix such that we can use `image()` function to show it in the actual orientation.
+
+```r
+index_image = 28  ## change this index to see different image.
+input_matrix <- x_train[index_image, 1:28, 1:28]
+output_matrix <- apply(input_matrix, 2, rev)
+output_matrix <- t(output_matrix)
+image(1:28, 1:28, output_matrix, col = gray.colors(256), 
+    xlab = paste("Image for digit of: ", y_train[index_image]), 
+    ylab = "")
+```
+
+<center>
+![](images/mnist_image3.png){width=70%}
+</center>
+
+Here is the original 28x28 matrix for the above image:
+
+```r
+input_matrix
+```
+
+```html
+     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
+ [1,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+ [2,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+ [3,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+ [4,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+ [5,]    0    0    0    0    0    0    0    0    0     0     0     0     0
+ [6,]    0    0    0    0    0    0    0    0    0     0     9    80   207
+ [7,]    0    0    0    0    0    0   39  158  158   158   168   253   253
+ [8,]    0    0    0    0    0    0  226  253  253   253   253   253   253
+ [9,]    0    0    0    0    0    0  139  253  253   253   238   113   215
+[10,]    0    0    0    0    0    0   39   34   34    34    30     0    31
+[11,]    0    0    0    0    0    0   91    0    0     0     0     0     0
+[12,]    0    0    0    0    0    0    0    0    0     0     0    11    33
+[13,]    0    0    0    0    0    0    0    0    0     0    11   167   253
+[14,]    0    0    0    0    0    0    0    0    0     0    27   253   253
+[15,]    0    0    0    0    0    0    0    0    0     0    18   201   253
+[16,]    0    0    0    0    0    0    0    0    0     0     0    36    87
+...
+```
+
+There are multiple deep learning methods to solve the handwritten digits problem and we will start from the simple and generic one, feedforward neural network (FFNN). FFNN contains a few fully connected layers and information is flowing from a front layer to a back layer without any feedback loop from the back layer to the front layer. It is the most common deep learning models to start with.
+
+#### Data preprocessing
+
+In this section, we will walk through the needed steps of data preprocessing. For the MNIST dataset that we just loaded, some preprocessing is already done. So we have a relatively "clean" data, but before we feed the data into FFNN, we still need to do some additional preparations.
+
+First, for each digits, we have a scalar response and a 28x28 integer matrix with value between 0 and 255. To use the out of box DNN functions, for each response, all the features are one row of all features. For an image in MNIST dataet, the input for one response y is a 28x28 matrix, not a single row of many columns and we need to convet the 28x28 matrix into a single row by appending every row of the matrix to the first row using `reshape()` function.
+
+In addition, we also need to scale all features to be between (0, 1) or (-1, 1) or close to (-1, 1) range. Scale or normalize every feature will improve numerical stability in the optimization procedure as there are a lot of parameters to be optimized.
+
+We first reshape the 28x28 image for each digit (i.e each row) into 784 columns (i.e. features), and then rescale the value to be between 0 and 1 by dividing the original pixel value by 255, as described in the cell below.
+
+```R
+# step 1: reshape
+x_train <- array_reshape(x_train, c(nrow(x_train), 784))
+x_test <- array_reshape(x_test, c(nrow(x_test), 784))
+
+# step 2: rescale
+x_train <- x_train / 255
+x_test <- x_test / 255
+```
+
+And here is the structure of the reshaped and rescaled features for training and testing dataset. Now for each digit, there are 784 columns of features.
+
+```r
+str(x_train)
+str(x_test)
+```
+
+```html
+num [1:60000, 1:784] 0 0 0 0 0 0 0 0 0 0 ...
+num [1:10000, 1:784] 0 0 0 0 0 0 0 0 0 0 ...
+```
+
+In this example, though the response variable is an integer (i.e. the corresponding digits for an image), there is no order or rank for these integers and they are just an indication of one of the 10 categories. So we also convert the response variable y to be categorical.
+
+```r
+y_train <- to_categorical(y_train, 10)
+y_test <- to_categorical(y_test, 10)
+str(y_train)
+```
+
+```html
+num [1:60000, 1:10] 0 1 0 0 0 0 0 0 0 0 ...
+```
+
+#### Fit model
+
+
+
 ## Convolutional Neural Network
 
 There are some challenges using a feedforward neural network to solve computer vision problems.  One of the challenges is that the inputs can get really big after you vectorize the image array. A 64 x 64 x 3 image gives you an input vector of 12288! And that is a very small image. So you can expect the number of parameters grows fast and it is difficult to get enough data to fit the model. Also as the input image size grows, the computational requirements to train a feedforward neural network will soon become infeasible. Also, after vectorization, you lose most of the spacial information of the image. To overcome these, people instead use the convolutional neural network for computer vision problems. 
