@@ -82,7 +82,9 @@ To ensure a successful data science project, a data-driven and fact-based planni
 
 (1) the business team which may include members from the business operation team, business analyst, insight and reporting team; 
 
-(2) technology team which may include members from database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team; (3) project management team which may include program management team and product management team depending on the scope of the data science project.
+(2) technology team which may include members from database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team; 
+
+(3) project management team which may include program management team and product management team depending on the scope of the data science project.
 
 To start the conversation, we can ask the following questions to everyone in the team:
 
@@ -91,9 +93,9 @@ To start the conversation, we can ask the following questions to everyone in the
 - What might be the most significant impacts of a data science project?
 - Are there any negative impact to other teams?
 - What computation resources are available for model training and model execution?
-- Can we define key metrics to compare and quantity business value?
+- Can we define key metrics to compare and quantify business value?
 - Are there any data security, privacy and legal concerns?
-- What are the desired milestones, check points and timeline?
+- What are the desired check points and timeline?
 - Is the final application online or offline?
 - Are the data online or offline?
 
@@ -101,7 +103,7 @@ It is likely to have a series of intense meetings and heated discussions to fram
 
 ### At the Modeling Stage
 
-Even though at the planning stage we already set some strategy, milestone, and timeline, data science projects are dynamic in nature and there could be uncertainties along the road. As a data scientist, clearly communicate any newly encountered difficulties during the modeling stage to the entire team is essential to keep the data science project progress. With the available data source identified at the planning stage, data clearing, data wrangling, and exploratory data analysis are great starting points toward modeling. Meanwhile, abstracting the business problem to be a set of statistical and machine learning problems is an iterative process. It is rare that business problems can be solved by using just one statistical or machine learning model. The ability to use a sequence of methods to decompose the business problem is one of the key responsibility for a senior data scientist. The process requires iterative rounds of discussions with the business team and data engineering team based on the new learning from each iteration. Each iteration includes both data related and model related part.
+Even though at the planning stage we already set some strategy, milestone, and timeline, data science projects are dynamic in nature and there could be uncertainties along the road. As a data scientist, clearly communicate any newly encountered difficulties during the modeling stage to the entire team is essential to keep the data science project progress. With the available data source identified at the planning stage, data cleaning, data wrangling, and exploratory data analysis are great starting points toward modeling. Meanwhile, abstracting the business problem to be a set of statistical and machine learning problems is an iterative process. It is rare that business problems can be solved by using just one statistical or machine learning model. The ability to use a sequence of methods to decompose the business problem is one of the key responsibility for a senior data scientist. The process requires iterative rounds of discussions with the business team and data engineering team based on the new learning from each iteration. Each iteration includes both data related and model related part.
 
 #### Data related
 
