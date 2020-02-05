@@ -398,7 +398,7 @@ In the history of deep learning, researchers proposed different optimization alg
 
 **Exponentially Weighted Averages**
 
-### Image Recognition Using FFNN
+### Image Recognition Using FFNN {#ffnnexample}
 
 In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development. We are using the Databrick community edition with the following consideration:
 
@@ -420,7 +420,7 @@ A color image is a set of pixels on 3-d space and each pixel has a value between
 knitr::include_graphics("images/colorimage.png")
 ```
 
-We will walk through how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  Please check the `keras` R package website for most recent development: https://keras.rstudio.com/. `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left. 
+Let's look at how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left. 
 
 ```r
 install.packages("keras")
@@ -1008,5 +1008,31 @@ The number of filters for layer $l$ is the number of channels of the output of l
 - bias: $b^{[l]}_C$
 - Input: $n^{[l-1]}_H \times n^{[l-1]}_W \times n^{[l-1]}_C$
 - Output: $n^{[l]}_H \times n^{[l]}_W \times n^{[l]}_C$
+
+Now you know the basic building blocks of CNN. Let's look at how to use the keras R package to solve the same handwritten digits image recognition problem as in section \@ref(ffnnexample). You will see the CNN is better at handling image recognition problem. 
+
+### Image Recognition Using CNN {#cnnexample}
+
+CNN leverages the relationship among neighbor pixels in the 2D image for better performance. It also avoids generating thousands or millions of features for high resolution images with full color. Now let's import the MNIST dataset again as we have done some preprocessing specifically for FFNN before. CNN requires different preprocessing steps. Let's start with a few parameters to be used later.
+
+```r
+# Load the mnist data's training and testing dataset
+mnist <- dataset_mnist()
+x_train <- mnist$train$x
+y_train <- mnist$train$y
+x_test <- mnist$test$x
+y_test <- mnist$test$y
+
+# Define a few parameters to be used in the CNN model
+batch_size <- 128
+num_classes <- 10
+epochs <- 10
+
+# Input image dimensions
+img_rows <- 28
+img_cols <- 28
+```
+
+For CNN, the input is a $n_H \times n_W \times n_C$ 3D array with $n_C$ channels. For example, a greyscale $n_H \times n_W$ image has only one channel, and the input is $n_H \times n_W \times 1$   tensor. A $n_H \times n_W$ 8-bit per channel RGB image has three channels with 3 $n_H \times n_W$ array with values between 0 and 255, so the input is $n_H \times n_W \times 3$ tensor. For the problem that we have now, the image is greyscaled, but we need to specifically define there is one channel by reshaping the 2D array into 3D tensor using `array_reshape()`. The `input_shape` variable will be used in the CNN model later. For an RGB color image, the number of channels is 3 and we need to replace "1" with "3" for the code cell below if the input image is RGB format.
 
 ## Recurrent Neural Network
