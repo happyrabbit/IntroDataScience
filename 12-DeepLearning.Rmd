@@ -571,7 +571,191 @@ num [1:60000, 1:10] 0 1 0 0 0 0 0 0 0 0 ...
 
 #### Fit model
 
+Now we are ready to fit the model. It is straight forward to build a deep neural network using keras. For this example, the number of input features is 784 (i.e. scaled value of each pixel in the 28x28 image) and the number of class for the output is 10 (i.e. one of the ten categories). So the input size for the first layer is 784 and the output size for the last layer is 10. And we can add any number of compatible layers in between.
 
+In keras, it is easy to define a DNN model: (1) use `keras_model_sequential()` to initiate a model placeholder and all model structures are attached to this model object, (2) layers are added in sequence by calling the `layer_dense()` function, (3) add arbitrary layers to the model based on the sequence of calling `layer_dense()`. For a dense layer, all the nodes from the previous layer are connected with each and every node to the next layer. In `layer_dense()` function, we can define how many nodes in that layer through the `units` parameter. The activation function can be defined through the `activation` parameter. For the first layer, we also need to define the input features' dimension through `input_shape` parameter. For our preprocessed MNIST dataset, there are 784 columns in the input data. A common way to reduce overfitting is to use the dropout method, which randomly drops a proportion of the nodes in a layer. We can define the dropout proportion through `layer_dropout()` function immediately after the `layer_dense()` function.
+
+```r
+dnn_model <- keras_model_sequential() 
+dnn_model %>% 
+  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
+  layer_dropout(rate = 0.4) %>% 
+  layer_dense(units = 128, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 64, activation = 'relu') %>%
+  layer_dropout(rate = 0.3) %>%
+  layer_dense(units = 10, activation = 'softmax')
+```
+
+The above `dnn_model` has 4 layers with first layer 256 nodes, 2nd layer 128 nodes, 3rd layer 64 nodes, and last layer 10 nodes. The activation function for the first 3 layers is `relu` and the activation function for the last layer is `softmax` which is typical for classification problems. The model detail can be obtained through summary() function. The number of parameter of each layer can be calculated as: (number of input features +1) times (numbe of nodes in the layer). For example, the first layer has (784+1)x256=200960 parameters; the 2nd layer has (256+1)x128=32896 parameters. Please note, dropout only randomly drop certain proportion of parameters for each batch, it will not reduce the number of parameters in the model. The total number of parameters for the `dnn_model` we just defined has 242762 parameters to be estimated.
+
+```r
+summary(dnn_model)
+```
+
+```html
+________________________________________________________________________________
+Layer (type)                        Output Shape                    Param #     
+================================================================================
+dense_1 (Dense)                     (None, 256)                     200960      
+________________________________________________________________________________
+dropout_1 (Dropout)                 (None, 256)                     0           
+________________________________________________________________________________
+dense_2 (Dense)                     (None, 128)                     32896       
+________________________________________________________________________________
+dropout_2 (Dropout)                 (None, 128)                     0           
+________________________________________________________________________________
+dense_3 (Dense)                     (None, 64)                      8256        
+________________________________________________________________________________
+dropout_3 (Dropout)                 (None, 64)                      0           
+________________________________________________________________________________
+dense_4 (Dense)                     (None, 10)                      650         
+================================================================================
+Total params: 242,762
+Trainable params: 242,762
+Non-trainable params: 0
+________________________________________________________________________________
+```
+
+Once a model is defined, we need to compile the model with a few other hyper-parameters including (1) loss function, (2) optimizer, and (3) performance metrics. For multi-class classification problems, people usually use the `categorical_crossentropy` loss function and `optimizer_rmsprop()`  as the optimizer which performs batch gradient descent.
+
+```r
+dnn_model %>% compile(
+  loss = 'categorical_crossentropy',
+  optimizer = optimizer_rmsprop(),
+  metrics = c('accuracy')
+)
+```
+
+Now we can feed data (x and y) into the neural network that we just built to estimate all the parameters in the model. Here we define three hyperparameters: `epochs`, `batch_size`, and `validation_split`, for this model. It just takes a couple of minutes to finish.
+
+```r
+dnn_history <- dnn_model %>% fit(
+  x_train, y_train, 
+  epochs = 15, batch_size = 128, 
+  validation_split = 0.2
+)
+```
+
+There is some useful information stored in the output object `dnn_history` and the details can be shown by using `str()`. We can plot the training and validation accuracy and loss as function of epoch by simply calling `plot(dnn_history)`.
+
+```r
+str(dnn_history)
+```
+
+```html
+List of 2
+ $ params :List of 8
+  ..$ metrics           : chr [1:4] "loss" "acc" "val_loss" "val_acc"
+  ..$ epochs            : int 15
+  ..$ steps             : NULL
+  ..$ do_validation     : logi TRUE
+  ..$ samples           : int 48000
+  ..$ batch_size        : int 128
+  ..$ verbose           : int 1
+  ..$ validation_samples: int 12000
+ $ metrics:List of 4
+  ..$ acc     : num [1:15] 0.83 0.929 0.945 0.954 0.959 ...
+  ..$ loss    : num [1:15] 0.559 0.254 0.195 0.165 0.148 ...
+  ..$ val_acc : num [1:15] 0.946 0.961 0.967 0.969 0.973 ...
+  ..$ val_loss: num [1:15] 0.182 0.137 0.122 0.113 0.104 ...
+ - attr(*, "class")= chr "keras_training_history"
+```
+
+```r
+plot(dnn_history)
+```
+
+<center>
+![](images/dnn_history.png){width=70%}
+</center>
+
+#### Prediction
+
+```r
+dnn_model %>% evaluate(x_test, y_test)
+```
+
+```html
+   32/10000 [..............................] - ETA: 3s
+  416/10000 [>.............................] - ETA: 1s
+  800/10000 [=>............................] - ETA: 1s
+ 1184/10000 [==>...........................] - ETA: 1s
+ 1472/10000 [===>..........................] - ETA: 1s
+ 1728/10000 [====>.........................] - ETA: 1s
+ 2016/10000 [=====>........................] - ETA: 1s
+ 2464/10000 [======>.......................] - ETA: 1s
+ 2912/10000 [=======>......................] - ETA: 1s
+ 3360/10000 [=========>....................] - ETA: 0s
+ 3744/10000 [==========>...................] - ETA: 0s
+ 4192/10000 [===========>..................] - ETA: 0s
+ 4704/10000 [=============>................] - ETA: 0s
+ 5088/10000 [==============>...............] - ETA: 0s
+ 5568/10000 [===============>..............] - ETA: 0s
+ 6080/10000 [=================>............] - ETA: 0s
+ 6592/10000 [==================>...........] - ETA: 0s
+ 7008/10000 [====================>.........] - ETA: 0s
+ 7488/10000 [=====================>........] - ETA: 0s
+ 7968/10000 [======================>.......] - ETA: 0s
+ 8288/10000 [=======================>......] - ETA: 0s
+ 8704/10000 [=========================>....] - ETA: 0s
+ 9120/10000 [==========================>...] - ETA: 0s
+ 9600/10000 [===========================>..] - ETA: 0s
+10000/10000 [==============================] - 1s 128us/step
+$loss
+[1] 0.093325
+
+$acc
+[1] 0.981
+```
+
+```r
+dnn_pred <- dnn_model %>% 
+              predict_classes(x_test)
+head(dnn_pred, n=50)
+```
+
+```html
+ [1] 7 2 1 0 4 1 4 9 5 9 0 6 9 0 1 5 9 7 3 4 9 6 6 5 4 0 7 4 0 1 3 1 3 4 7 2 7 1
+[39] 2 1 1 7 4 2 3 5 1 2 4 4
+```
+
+Let's check a few misclassified images. A number of misclassified images can be found using the following code. And we can plot these misclassified images to see whether a human can correctly read it out. 
+
+```r
+## total number of mis-classcified images
+sum(dnn_pred != mnist$test$y)
+```
+
+```html
+[1] 190
+```
+
+```r
+missed_image = mnist$test$x[dnn_pred != mnist$test$y,,]
+missed_digit = mnist$test$y[dnn_pred != mnist$test$y]
+missed_pred = dnn_pred[dnn_pred != mnist$test$y]
+
+index_image = 34 
+
+## change this index to see different image.
+input_matrix <- missed_image[index_image,1:28,1:28]
+output_matrix <- apply(input_matrix, 2, rev)
+output_matrix <- t(output_matrix)
+
+image(1:28, 1:28, output_matrix, col = gray.colors(256), 
+    xlab = paste("Image for digit ", missed_digit[index_image], 
+        ", wrongly predicted as ", missed_pred[index_image]), 
+    ylab = "")
+```
+
+<center>
+![](images/misclassified_img.png){width=70%}
+</center>
+
+Now we finish this simple tutorial of using deep neural networks for handwritten digit recognition using the MNIST dataset. We illustrate how to reshape the original data into the right format and scaling; how to define a deep neural network with arbitrary number of layers; how to choose activation function, optimizer, and loss function; how to use dropout to limit overfitting; how to setup hyperparameters; and how to fit the model and using a fitted model to predict. Finally, we illustrate how to plot the accuracy/loss as functions of the epoch. It shows the end-to-end cycle of how to fit a deep neural network model.
+
+On the other hand, the image can be better dealt with Convolutional Neural Network (CNN) and we are going to walk through the exact same problem using CNN in the next section. 
 
 ## Convolutional Neural Network
 
