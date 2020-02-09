@@ -712,12 +712,11 @@ $acc
 ```r
 dnn_pred <- dnn_model %>% 
               predict_classes(x_test)
-head(dnn_pred, n=50)
+head(dnn_pred)
 ```
 
 ```html
- [1] 7 2 1 0 4 1 4 9 5 9 0 6 9 0 1 5 9 7 3 4 9 6 6 5 4 0 7 4 0 1 3 1 3 4 7 2 7 1
-[39] 2 1 1 7 4 2 3 5 1 2 4 4
+ [1] 7 2 1 0 4 1
 ```
 
 Let's check a few misclassified images. A number of misclassified images can be found using the following code. And we can plot these misclassified images to see whether a human can correctly read it out. 
@@ -1000,7 +999,7 @@ We use the following notations for layer $l$:
 - $p^{[l]}$ is the padding size
 - $s^{[l]}$ is the stride
 
-The number of filters for layer $l$ is the number of channels of the output of layer $l$. Since the output of layer $l$ is the input of layer $l+1$, the number of filters for layer $l$ is $n_C^{[l+1]}$. The number of channels of the filter of layer $l$ should equal the number of channels of the input of layer $l$ which is the output of layer $l-1$ (i.e. $n_C^{[l-1]}$). So the dimensions of some key elements of layer $l$ are:
+The number of filters for layer $l$ is the number of channels of the output of layer $l$. Since the output of layer $l$ is the input of layer $l+1$, the number of filters for layer $l$ is $n_C^{[l+1]}$. The number of channels of the filter of layer $l$ should be equal to the number of channels of the input of layer $l$ which is the output of layer $l-1$ (i.e. $n_C^{[l-1]}$). So the dimensions of some key elements of layer $l$ are:
 
 - Each filter: $f^{[l]} \times f^{[l]} \times n^{[l-1]}_C$
 - Activations: $a^{[l]} \rightarrow n_H^{[l]} \times n_W^{[l]} \times n_C^{[l]}$
@@ -1009,7 +1008,9 @@ The number of filters for layer $l$ is the number of channels of the output of l
 - Input: $n^{[l-1]}_H \times n^{[l-1]}_W \times n^{[l-1]}_C$
 - Output: $n^{[l]}_H \times n^{[l]}_W \times n^{[l]}_C$
 
-Now you know the basic building blocks of CNN. Let's look at how to use the keras R package to solve the same handwritten digits image recognition problem as in section \@ref(ffnnexample). You will see the CNN is better at handling image recognition problem. 
+After a series of 3D convolutional layers, we need to 'flatten' the 3D tensor to a 1D tensor, and add one or several dense layers to connect the output to the response variable.
+
+Now you know the basic building blocks of CNN. Let's look at how to use the keras R package to solve the same handwritten digits image recognition problem as in section \@ref(ffnnexample). You will see the CNN is better at handling image recognition problem.
 
 ### Image Recognition Using CNN {#cnnexample}
 
@@ -1033,6 +1034,199 @@ img_rows <- 28
 img_cols <- 28
 ```
 
+#### Data preprocessing
+
 For CNN, the input is a $n_H \times n_W \times n_C$ 3D array with $n_C$ channels. For example, a greyscale $n_H \times n_W$ image has only one channel, and the input is $n_H \times n_W \times 1$   tensor. A $n_H \times n_W$ 8-bit per channel RGB image has three channels with 3 $n_H \times n_W$ array with values between 0 and 255, so the input is $n_H \times n_W \times 3$ tensor. For the problem that we have now, the image is greyscaled, but we need to specifically define there is one channel by reshaping the 2D array into 3D tensor using `array_reshape()`. The `input_shape` variable will be used in the CNN model later. For an RGB color image, the number of channels is 3 and we need to replace "1" with "3" for the code cell below if the input image is RGB format.
 
+```r
+x_train <- array_reshape(x_train, c(nrow(x_train), img_rows, img_cols, 1))
+x_test <- array_reshape(x_test, c(nrow(x_test), img_rows, img_cols, 1))
+input_shape <- c(img_rows, img_cols, 1)
+```
+
+Here is the structure of the reshaped image, the first dimension is the image index, the 2-4 dimension is a 3D tensor even though there is only one channel.
+
+```r
+str(x_train)
+```
+
+```html
+int [1:60000, 1:28, 1:28, 1] 0 0 0 0 0 0 0 0 0 0 ...
+```
+Same as the FFNN model, we scale the input values to be between 0 and 1 for the same numerical stability consideration in the optimization process.
+
+```r
+x_train <- x_train / 255
+x_test <- x_test / 255
+```
+
+Encode the response variable to binary vectors.
+
+```r
+# Convert class vectors to binary class matrices
+y_train <- to_categorical(y_train, num_classes)
+y_test <- to_categorical(y_test, num_classes)
+```
+
+#### Fit model
+
+CNN model contains a series of 3D convolutional layers which contains a few parameters:   
+
+(1) the kernal_size which is typically 3x3 or 5x5;   
+
+(2) the number of filters, which is equal to the number of channels of the output;   
+
+(3) activation function.   
+
+For the first layer, there is also an input_shape parameter which is the input image size and channel. To prevent overfitting and speed up computation, a pooling layer is usually applied after one or a few convolutional layers. A maximum pooling layer with pool_size = 2x2 reduces the size to half. Dropout can be used as well in addition to pooling neighbor values. After a few 3D convolutional layers, we also need to 'flatten' the 3D tensor output into 1D tensor, and then add one or a couple of dense layers to connect the output to the target response classes.
+
+Let's define the CNN model structure. Now we define a CNN model with two convolutional layers, two max-pooling layers, and two dropout layers to mediate overfitting. There are three dense layers after flattening the 3D tensor. The last layer is a dense layer that connects to the response. 
+
+```r
+# define model structure 
+cnn_model <- keras_model_sequential() %>%
+  layer_conv_2d(filters = 32, kernel_size = c(5,5), activation = 'relu', input_shape = input_shape) %>% 
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
+  layer_conv_2d(filters = 64, kernel_size = c(5,5), activation = 'relu') %>% 
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
+  layer_dropout(rate = 0.2) %>% 
+  layer_flatten() %>% 
+  layer_dense(units = 120, activation = 'relu') %>% 
+  layer_dropout(rate = 0.5) %>% 
+  layer_dense(units = 84, activation = 'relu') %>% 
+  layer_dense(units = num_classes, activation = 'softmax')
+```
+
+```r
+summary(cnn_model)
+```
+
+```html
+Model: "sequential_5"
+____________________________________________________________________________________________
+Layer (type)                             Output Shape                         Param #       
+============================================================================================
+conv2d_11 (Conv2D)                       (None, 24, 24, 32)                   832           
+____________________________________________________________________________________________
+max_pooling2d_9 (MaxPooling2D)           (None, 12, 12, 32)                   0             
+____________________________________________________________________________________________
+conv2d_12 (Conv2D)                       (None, 8, 8, 64)                     51264         
+____________________________________________________________________________________________
+max_pooling2d_10 (MaxPooling2D)          (None, 4, 4, 64)                     0             
+____________________________________________________________________________________________
+dropout_6 (Dropout)                      (None, 4, 4, 64)                     0             
+____________________________________________________________________________________________
+flatten_5 (Flatten)                      (None, 1024)                         0             
+____________________________________________________________________________________________
+dense_15 (Dense)                         (None, 120)                          123000        
+____________________________________________________________________________________________
+dropout_7 (Dropout)                      (None, 120)                          0             
+____________________________________________________________________________________________
+dense_16 (Dense)                         (None, 84)                           10164         
+____________________________________________________________________________________________
+dense_17 (Dense)                         (None, 10)                           850           
+============================================================================================
+Total params: 186,110
+Trainable params: 186,110
+Non-trainable params: 0
+____________________________________________________________________________________________
+```
+
+Similar to before, we need to compile the defined CNN model.
+
+```r
+cnn_model %>% compile(
+  loss = loss_categorical_crossentropy,
+  optimizer = optimizer_adadelta(),
+  metrics = c('accuracy')
+)
+```
+
+Train the model and save each epochs's history. Please note, as we are not using GPU, it takes a few minutes to finish. Please be patient while waiting for the results. The training time can be significantly reduced if running on GPU.
+
+```r
+cnn_history <- cnn_model %>% fit(
+  x_train, y_train,
+  batch_size = batch_size,
+  epochs = epochs,
+  validation_split = 0.2
+)
+```
+
+<center>
+![](images/cnn_history.png){width=70%}
+</center>
+
+The trained model accuracy can be evaluated on the testing dataset which is pretty good.
+
+```r
+cnn_model %>% evaluate(x_test, y_test)
+```
+
+```html
+...
+
+ 9248/10000 [==========================>...] - ETA: 0s
+ 9568/10000 [===========================>..] - ETA: 0s
+ 9888/10000 [============================>.] - ETA: 0s
+10000/10000 [==============================] - 2s 189us/sample - loss: 0.0120 - accuracy: 0.9928
+$loss
+[1] 0.02399249
+
+$accuracy
+[1] 0.9928
+```
+
+#### Prediction
+
+We can apply the trained model to predict new image.
+
+```r
+# model prediction
+cnn_pred <- cnn_model %>% 
+              predict_classes(x_test)
+head(cnn_pred)
+```
+
+```html
+[1] 7 2 1 0 4 1
+```
+
+Now let's check a few misclassified images to see whether a human can do a better job than this simple CNN model.
+
+```r
+## number of mis-classcified images
+sum(cnn_pred != mnist$test$y)
+```
+
+```html
+[1] 72
+```
+
+```r
+index_image = 10 ## change this index to see different image.
+input_matrix <- missed_image[index_image,1:28,1:28]
+output_matrix <- apply(input_matrix, 2, rev)
+output_matrix <- t(output_matrix)
+image(1:28, 1:28, output_matrix, col=gray.colors(256), 
+xlab=paste('Image for digit ', missed_digit[index_image], ', 
+wrongly predicted as ', missed_pred[index_image]), ylab="")
+```
+
+<center>
+![](images/misclassified_img_cnn.png){width=70%}
+</center>
+
 ## Recurrent Neural Network
+
+Traditional neural networks don't have a framework that can handle sequential events where the later events are based on the previous ones. For example, map an input audio clip to a text transcript where the input is voice over time, and the output is the corresponding sequence of words over time. Recurrent Neural Network is a deep-learning model that can process this type of sequential data.  Here are some applications of RNN:
+
+- Machine translation
+- Voice recognition
+- Music generation
+- Sentiment analysis
+
+<center>
+![](images/rnnapplication.png){width=70%}
+</center>
+
