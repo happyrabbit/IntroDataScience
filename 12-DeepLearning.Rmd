@@ -1257,3 +1257,29 @@ The rectangle represents a vector and the arrow represents matrix multiplication
 ### Long Short Term Memory
 
 We are going to walk through LSTM step by step. The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state". 
+
+<center>
+![](images/lstm1.png){width=50%}
+</center>
+
+The next step is to decide what new information we're going to add to the cell state. This step includes two parts:
+
+1. input gate ($\Gamma_{u}$): a sigmoid function that decides how much we want to update
+2. a vector of new candidate value ($\tilde{c}^{<t>}$)
+
+<center>
+![](images/lstm2.png){width=50%}
+</center>
+
+The multiplication of the above two parts $\Gamma_{u}*\tilde{c}^{<t>}$ is the new candidate scaled by the input gate. We then combine the results we get so far to get new cell state $c^{<t>}$.
+
+
+<center>
+![](images/lstm3.png){width=50%}
+</center>
+
+Finally, we need to decide what we are going to output. The output is a filtered version of the new cell state $c^{<t>}$. 
+
+<center>
+![](images/lstm4.png){width=50%}
+</center>
