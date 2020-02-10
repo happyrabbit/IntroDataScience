@@ -1221,7 +1221,19 @@ wrongly predicted as ', missed_pred[index_image]), ylab="")
 
 Traditional neural networks don't have a framework that can handle sequential events where the later events are based on the previous ones. For example, map an input audio clip to a text transcript where the input is voice over time, and the output is the corresponding sequence of words over time. Recurrent Neural Network is a deep-learning model that can process this type of sequential data.  
 
-There are incredible success applying RNNs to a variety of problems:
+The recurrent neural network allows information to flow from one step to the next with a repetitive structure. Figure \@ref(fig:rnnunit) shows the basic chunk of an RNN network. You combine the activated neuro from the previous step with the current input $x^{<t>}$ to produce an output $\hat{y}^{<t>}$ and an updated activated neuro to support the next input at $t+1$. 
+
+```{r rnnunit, fig.cap = "Recurrent Neural Network Unit", fig.align="center", echo = F}
+knitr::include_graphics("images/rnnunit.png")
+```
+
+So the whole process repeats a similar pattern. If we unroll the loop:
+
+```{r unrolledrnn, fig.cap = "An Unrolled Recurrent Neural Network",out.width="70%", fig.asp=.75, fig.align="center", echo = F}
+knitr::include_graphics("images/rnnrollout.png")
+```
+
+The chain-like recurrent nature makes it the natural architecture for sequential data. There is incredible success applying RNNs to this type of problems:
 
 - Machine translation
 - Voice recognition
@@ -1232,16 +1244,16 @@ There are incredible success applying RNNs to a variety of problems:
 ![](images/rnnapplication.png){width=70%}
 </center>
 
-The recurrent neural network allows information to flow from one step to the next with a repetitive structure. Figure \@ref(fig:rnnunit) shows the basic chunk of an RNN network. You combine the activated neuro from the previous step with the current input $x^{<t>}$ to produce an output $\hat{y}^{<t>}$ and an updated activated neuro to support the next input at $t+1$. 
-
-```{r rnnunit, fig.cap = "Recurrent Neural Network Unit", fig.align="center", echo = F}
-knitr::include_graphics("images/rnnunit.png")
-```
-
-So the whole process repeats a similar pattern. If we unroll the loop:
+A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ image) and produces a fixed-sized vector as output (such as the probabilities of being one the ten digits). RNN has a much more flexible structure.  It can operate over sequences of vectors and produces sequences of outputs and they can vary in size. To understand what it means, let's look at some RNN structure examples. 
 
 <center>
-![](images/rnnrollout.png){width=70%}
+![](images/rnnstrs.png){width=100%}
 </center>
 
+The rectangle represents a vector and the arrow represents matrix multiplications. The input vector is in green and the output vector is in blue. The red rectangle holds the intermediate state. 
 
+### Word Embedding
+
+### Long Short Term Memory
+
+We are going to walk through LSTM step by step. The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state". 
