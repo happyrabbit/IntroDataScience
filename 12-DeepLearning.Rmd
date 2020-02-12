@@ -6,8 +6,6 @@ output:
 
 # Deep Learning
 
-## Deep Learning Introduction and History
-
 With everyday applications in language, voice, image and automatic driving cars, deep learning becomes a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the concept of binary classifier of perceptron used a linear combination of input signals and a step activation function. It is basically the same as the single neuron in a modern deep learning framework that uses the exact same linear combination of input signals from neurons at previously layer and a more efficient non-linear activation function. The perceptron model was further defined by minimizing the classification error and it was trained by using one data point at a time to update the model parameters during the optimization process. In the modern neural network framework, there is a loss function to be minimized based on the problem to solve and the stochastics gradience descent and its variations are the major optimization algorithms.
 
 Even though the theoretical foundation of deep learning has gradually developed in the past few decades, real-world applications of deep learning started in the past few years primarily due to the following constraints: data, network structure, algorithm, and computation power.
@@ -1250,7 +1248,14 @@ A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ imag
 ![](images/rnnstrs.png){width=100%}
 </center>
 
-The rectangle represents a vector and the arrow represents matrix multiplications. The input vector is in green and the output vector is in blue. The red rectangle holds the intermediate state. 
+The rectangle represents a vector and the arrow represents matrix multiplications. The input vector is in green and the output vector is in blue. The red rectangle holds the intermediate state. From left to right,
+
+- one-to-one: model takes a fixed size input and produces a fixed size output, such as CNN. it is not sequential.
+- one-to-many: model takes one input and generate a sequence of output, such as the music generation.
+- many-to-one: model takes a sequence of input and produces a single output, such as sentiment analysis.
+- many-to-many: model takes a sequence of input and produces a sequence of output. The input size can be the same with the output size (such as name entity recognition) or it can be different (such as machine translation).
+
+### RNN Model
 
 ### Word Embedding
 
