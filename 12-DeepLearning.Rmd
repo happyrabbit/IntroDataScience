@@ -1248,7 +1248,7 @@ A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ imag
 ![](images/rnnstrs.png){width=100%}
 </center>
 
-The rectangle represents a vector and the arrow represents matrix multiplications. The input vector is in green and the output vector is in blue. The red rectangle holds the intermediate state. From left to right,
+The rectangle represents a vector and the arrow represents matrix multiplications. The input vector is in green and the output vector is in blue. The red rectangle holds the intermediate state. From left to right:
 
 - one-to-one: model takes a fixed size input and produces a fixed size output, such as CNN. it is not sequential.
 - one-to-many: model takes one input and generate a sequence of output, such as the music generation.
@@ -1257,9 +1257,9 @@ The rectangle represents a vector and the arrow represents matrix multiplication
 
 ### RNN Model
 
-To further understand the RNN model, let's look at an entity recognition example.  Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo".  It is a name recognition problem which is used by the research company to index different company names in the articles. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic. 
+To further understand the RNN model, let's look at an entity recognition example. Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo". It is a name recognition problem which is used by the research company to index different company names in the articles. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic. 
 
-Given input sentence x, you want a model to produce one output for each word in x that tells you if that word is the name for something. So in this example, the input is a sequence of 5 words including the period in the end. The output is a sequence of 0/1 with the same length that indicates whether the input word is a name (1) or not (0). We use superscript $<t>$ to denote the element position of input and output; use superscript $(i)$ to denote the $i^{th}$ sample (you will have different sentences in the training data); Use $T_x^{(i)}$ to denote the length of $i^{th}$ input, $T_y^{(i)}$  for output. In this case, $T_x^{(i)}$ is equal to $T_y^{(i)}$.
+Given input sentence x, you want a model to produce one output for each word in x that tells you if that word is the name for something. So in this example, the input is a sequence of 5 words including the period in the end. The output is a sequence of 0/1 with the same length that indicates whether the input word is a name (1) or not (0). We use superscript $<t>$ to denote the element position of input and output; use superscript $(i)$ to denote the $i^{th}$ sample (you will have different sentences in the training data); Use $T_x^{(i)}$ to denote the length of $i^{th}$ input, $T_y^{(i)}$ for output. In this case, $T_x^{(i)}$ is equal to $T_y^{(i)}$.
 
 <center>
 ![](images/rnn_notation.png){width=50%}
