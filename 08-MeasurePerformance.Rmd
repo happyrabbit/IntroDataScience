@@ -1,0 +1,239 @@
+# Measuring Performance
+
+To compare different models, we need a way to measure model performance. There are various metrics to use. To better understand the strengths and weaknesses of a model, you need to look at it through multiple metrics. In this chapter, we will introduce some of the most common performance measurement metrics.
+
+## Regression Model Performance
+
+**MSE and RMSE**
+
+Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values and the actual value. The Root Mean Squared Error (RMSE) is the root square of the MSE. 
+
+$$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}*{i})^{2}$$
+$$RMSE=\sqrt{\frac{1}{n}\sum*{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}}$$
+
+Both are the common measurements for the regression model performance.  Let's use the previous `income` prediction as an example. Fit a simple linear model:
+
+```{r}
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
+fit<- lm(formula = income ~ store_exp + online_exp + store_trans + 
+    online_trans, data = sim.dat)
+summary(fit)
+```
+
+The fitted results `fit` shows the RMSE is `r as.integer(round(summary(fit)$sigma,0))` (at the bottom of the output after `Residual standard error:`).
+
+Another common performance measure for the regression model is R-Squared, often denoted as $R^2$. It is the square of the correlation between the fitted value and the observed value. It is often explained as the percentage of the information in the data that can be explained by the model. The above model returns a R-squared＝`r round(summary(fit)$adj.r.squared,2)`, which indicates the model can explain `r round((summary(fit)$adj.r.squared)*100,0)`% of the variance in variable `income`.  While $R^2$ is easy to explain, it is not a direct measure of model accuracy but correlation. Here the $R^2$ value is not low but the RMSE is  `r round(summary(fit)$adj.r.squared,2)`  which means the average difference between model fitting and the observation is  `r round(summary(fit)$sigma,0)`. It is a big discrepancy from an application point of view. When the response variable has a large scale and high variance, a high $R^2$ doesn't mean the model has enough accuracy. It is also important to remember that $R^2$ is dependent on the variation of the outcome variable. If the data has a response variable with a higher variance, the model based on it tends to have a higher $R^2$.
+
+We used $R^2$ to show the impact of the error from independent and response variables in Chapter \@ref(modeltuningstrategy) where we didn't consider the impact of the number of parameters (because the number of parameters is very small compared to the number of observations).  However, $R^2$ increases as the number of parameters increases. So people usually use Adjusted R-squared which is designed to mitigate the issue. The original $R^2$ is defined as: 
+
+$$R^{2}=1-\frac{RSS}{TSS}$$
+
+where $RSS=\sum_{i=1}^{n}(y_{i}-\hat{y_{i}})^{2}$ and $TSS=\sum_{i=1}^{n}(y_{i}-\bar{y})^{2}$.
+
+Since RSS is always decreasing as the number of parameters increases, $R^2$ increases as a result.  For a model with $p$ parameters, the adjusted $R^2$ is defined as:
+
+$$Adjusted\ R^{2}=1-\frac{RSS/(n-p-1)}{TSS/(n-1)}$$
+
+To maximize the adjusted $R^{2}$ is identical to minimize $RSS/(n-p-1)$. Since the number of parameters $p$ is reflected in the equation, $RSS/(n-p-1)$ can increase or decrease as $p$ increases. The idea behind this is that the adjusted R-squared increases if the new variable improves the model more than would be expected by chance. It decreases when a predictor improves the model by less than expected by chance. While values are usually positive, they can be negative as well. 
+
+Another measurement is $C_{p}$. For a least squared model with $p$ parameters:
+
+$$C_{p}=\frac{1}{n}(RSS+2p\hat{\sigma}^{2})$$
+
+where $\hat{\sigma}^{2}$ is the estimator of the model random effect $\epsilon$. $C_{p}$ is to add penalty $2p\hat{\sigma}^{2}$ to the training set $RSS$. The goal is to adjust the over-optimistic measurement based on training data. As the number of parameters increases, the penalty increases.  It counteracts the decrease of $RSS$ due to increasing the number of parameters. We choose the model with a smaller $C_{p}$.
+
+Both AIC and BIC are based on the maximum likelihood. In linear regression, the maximum likelihood estimate is the least squared estimate. The definitions of the two are:
+
+$$AIC=n+nlog(2\pi)+nlog(RSS/n)+2(p+1)$$
+
+$$BIC=n+nlog(2\pi)+nlog(RSS/n)+log(n)(p+1)$$
+
+R function AIC() and BIC() will calculate the AIC and BIC value according to the above equations. Many textbooks ignore content item $n+nlog(2\pi)$, and use $p$ instead of $p+1$. Those slightly different versions give the same results since we are only interested in the relative value. Comparing to AIC, BIC puts a heavier penalty on the number of parameters. 
+
+## Classification Model Performance
+
+This section focuses on performance measurement for models with a categorical response. The metrics in the previous section are for models with a continuous response and they are not appropriate in the context of classification. Most of the classification problems are dichotomous, such as an outbreak of disease, spam email, etc. There are also cases with more than two categories as the segments in the clothing company data. We use swine disease data to illustrate different metrics. Let's train a random forest model as an example. We will discuss the model in Chapter \@ref(treemodel).
+
+```{r}
+library(dplyr)
+library(randomForest)
+library(caret)
+library(readr)
+disease_dat <- read.csv("http://bit.ly/2KXb1Qi")
+# you can check the data using glimpse()
+# glimpse(disease_dat)
+```
+
+Separate the data to be training and testing sets.  Fit model using training data (`xTrain` and `yTrain`) and applied the trained model on testing data (`xTest` and `yTest`) to evaluate model performance. We use 70% of the sample as training and the rest 30% as testing.
+
+```{r}
+set.seed(100)
+# separate the data to be training and testing
+trainIndex <- createDataPartition(disease_dat$y, p = 0.8, 
+    list = F, times = 1)
+xTrain <- disease_dat[trainIndex, ] %>% dplyr::select(-y)
+xTest <- disease_dat[-trainIndex, ] %>% dplyr::select(-y)
+# the response variable need to be factor
+yTrain <- disease_dat$y[trainIndex] %>% as.factor()
+yTest <- disease_dat$y[-trainIndex] %>% as.factor()
+```
+
+Train a random forest model: 
+
+```r
+train_rf <- randomForest(yTrain ~ ., data = xTrain, mtry = trunc(sqrt(ncol(xTrain) - 
+    1)), ntree = 1000, importance = T)
+```
+
+```{r, echo=FALSE}
+load("../../GitHub/DataScientistR/Data/train_rf.RData")
+```
+
+Apply the trained random forest model to the testing data to get two types of predictions:
+
+- probability (a value between 0 to 1)
+
+```{r}
+yhatprob <- predict(train_rf, xTest, "prob")
+set.seed(100)
+car::some(yhatprob)
+```
+
+- category prediction (0 or 1)
+
+```{r}
+yhat <- predict(train_rf, xTest)
+car::some(yhat)
+```
+
+We will use the above two types of predictions to show different performance metrics.
+
+### Confusion Matrix
+
+**Confusion Matrix** is a counting table to describe the performance of a classification model. For the true response `yTest` and prediction `yhat`, the confusion matrix is:
+
+```{r}
+yhat = as.factor(yhat) %>% relevel("1")
+yTest = as.factor(yTest) %>% relevel("1")
+table(yhat,yTest)
+```
+
+The top-left and bottom-right are the numbers of correctly classified samples. The top-right and bottom-left are the numbers of wrongly classified samples.  A general confusion matrix for a binary classifier is following: 
+
+|   | Predicted Yes  | Predicted No | 
+|:---:|:---:|:---:|
+| Actual Yes  |  TP | FN  |
+| Actual No  | FP  |  TN | 
+
+where  TP is true positive, FP is false positive, TN is true negative, FN is false negative. The cells along the diagonal line from top-left to bottom-right contain the counts of correctly classified samples. The cells along the other diagonal line contain the counts of wrongly classified samples. The most straightforward performance measure is the **total accuracy** which is the percentage of correctly classified samples: 
+
+$$Total\ accuracy = \frac{TP+TN}{TP+TN+FP+FN}$$
+
+You can calculate the total accuracy when there are more than two categories. This statistic is straightforward but has some disadvantages. First, it doesn't differentiate different error types. In a real application, different types of error may have different impacts. For example, it is much worse to tag an important email as spam and miss it than failing to filter out a spam email.  Provost et al. [@Provost1998] discussed in detail the problem of using total accuracy on different classifiers. There are some other metrics based on the confusion matrix that measure different types of error. 
+
+**Precision** is a metric to measure how accurate positive predictions are (i.e. among those emails predicted as spam, how many percentages of them are spam emails?):
+
+$$precision = \frac{TP}{TP+FP}$$
+
+**Sensitivity** is to measure the coverage of actual positive samples (i.e. among those spam emails, how many percentages of them are predicted as spam) :
+
+$$Sensitivity = \frac{TP}{TP+FN}$$
+
+**Specificity** is to measure the coverage of actual negative samples (i.e. among those non-spam emails, how many percentages of them pass the filter):
+
+$$Specificity = \frac{TN}{TN+FP}$$
+
+Since wrongly tagging an important email as spam has a bigger impact, in the spam email case, we want to make sure the model specificity is high enough.
+
+Second, total accuracy doesn't reflect the natural frequencies of each class. For example, the percentage of fraud cases for insurance may be very low, like 0.1%. A model can achieve nearly perfect accuracy (99.9%) by predicting all samples to be negative. The percentage of the largest class in the training set is also called the no-information rate. In this example, the no-information rate is 99.9%. You need to get a model that at least beats this rate. 
+
+### Kappa Statistic
+
+Another metric is the Kappa statistic. It measures the agreement between the observed and predicted classes. It was originally come up by Cohen etc. [@Cohen1960]. Kappa takes into account the accuracy generated simply by chance. It is defined as:
+
+$$Kappa=\frac{P_{0}-P_{e}}{1-P_{e}}$$
+
+Let $n=TP+TN+FP+FN$ be the total number of samples, where $P_{0}=\frac{TP+TN}{n}$ is the observed accuracy, $P_{e}=\frac{(TP+FP)(TP+FN)+(FN+TN)(FP+TN)}{n^{2}}$ is the expected accuracy based on the marginal totals of the confusion matrix.  Kappa can take on a value from  -1 to 1. The higher the value,  the higher the agreement. A value of 0 means there is no agreement between the observed and predicted classes, while a value of 1 indicates perfect agreement. A negative value indicates that the prediction is in the opposite direction of the observed value. The following table may help you "visualize" the interpretation of kappa [@landis1977]:
+
+| Kappa | Agreement |
+|:-----:|:-----:|
+| < 0 | Less than chance agreement |
+| 0.01–0.20 | Slight agreement |
+| 0.21– 0.40 | Fair agreement |
+| 0.41–0.60 | Moderate agreement |
+| 0.61–0.80 | Substantial agreement | 
+| 0.81–0.99 | Almost perfect agreement |
+
+In general, a value between 0.3 to 0.5 indicates a reasonable agreement. If a model has a high accuracy of 90%, while the expected accuracy is also high, say 85%. The Kappa statistics is $\frac{1}{3}$.  It means the prediction and the observation have a fair agreement. You can calculate Kappa when the number of categories is larger than 2. The package `fmsb` has a function  `Kappa.test()` to calculate Cohen's Kappa statistics. The function can also return the hypothesis test result and a confidence interval. Use the above observation vector `yTest` and prediction vector `yhat` as an example, you can calculate the statistics:
+
+```{r}
+# install.packages("fmsb")
+kt<-fmsb::Kappa.test(table(yhat,yTest))
+kt$Result
+```
+
+The output of the above function contains an object named `Judgement`: 
+
+```{r}
+kt$Judgement
+```
+
+### ROC
+
+Receiver Operating Characteristic (ROC) curve uses the predicted class probabilities and determines an effective threshold such that values above the threshold are indicative of a specific event. We have shown the definitions of sensitivity and specificity above. The sensitivity is the true positive rate and specificity is true negative rate. "1 - specificity" is the false negative rate. ROC is a graph of pairs of true positive rate (sensitivity) and false positive rate (1-specificity) values that result as the test’s cutoff value is varied. The Area Under the Curve(AUC) is a common measure for two-class problem. There is usually a trade-off between sensitivity and specificity. If the threshold is set lower, then there are more samples predicted as positive and hence the sensitivity is higher. Let's look at the predicted probability `yhatprob` in the swine disease example. The predicted probability object `yhatprob` has two columns, one is the predicted probability that a farm will have an outbreak, the other is the probability that farm will NOT have an outbreak. So the two add up to have value 1. We use the probability of outbreak (the 2nd column) for further illustration. You can use `roc()` function to get an ROC object (`rocCurve`) and then apply different functions on that object to get needed plot or ROC statistics. For example, the following code produces the ROC curve:
+
+```{r}
+library(pROC)
+rocCurve<-roc(response=yTest,
+              predictor=yhatprob[,2])
+plot(rocCurve)
+```
+
+
+The first argument of the `roc()` is, `response`, the observation vector. The second argument is `predictor` is the continuous prediction (probability or link function value). The x-axis of ROC curve is "1 - specificity" and the y-axis is "sensitivity". ROC curve starts from (0, 0) and ends with (1, 1). A perfect model that correctly identifies all the samples will have 100% sensitivity and specificity which corresponds to the curve that also goes through (0, 1). The area under the perfect curve is 1. A model that is totally useless corresponds to a curve that is close to the diagonal line and an area under the curve about 0.5.
+
+You can visually compare different models by putting their ROC curves on one plot. Or use the AUC to compare them. DeLong et al. came up a statistic test to compare AUC based on U-statistics [@delong1988] which can give a p-value and confidence interval. You can also use bootstrap to get a confidence interval for AUC [@hall2004].
+
+We can use the following code in R to get an estimate of AUC and its confidence interval:
+
+```{r}
+# get the estimate of AUC
+auc(rocCurve)
+# get a confidence interval based on DeLong et al.
+ci.auc(rocCurve)
+```
+
+
+AUC is robust to class imbalance[@Provost1998;@Fawcett2006] hence a popular measurement. But it still boils a lot of information down to one number so there is inevitably a loss of information. It is better to double check by comparing the curve at the same time. If you care more about getting a model that will have high specificity, which is the lower part of the curve, as in the spam filtering case, you can use the area of the lower part of the curve as the performance measurement [@McClish1989]. ROC is only for two-class case. Some researchers generalized it to situations with more than two categories [@Hand2001;@Lachiche2003;@Li2008].
+
+### Gain and Lift Charts
+
+Gain and lift chart is a visual tool for evaluating the performance of a classification model. In the previous swine disease example, there are `r nrow(xTest)` samples in the testing data and `r sum(as.numeric(yTest)-1)` of them have a positive outcome. 
+
+```{r}
+table(yTest)
+```
+
+If we order the testing samples by the predicted probability, one would hope that the positive samples are ranked higher than the negative ones. That is what the lift charts do: rank the samples by their scores and calculate the cumulative positive rate as more samples are evaluated. In the perfect scenario, the highest-ranked `r sum(yTest%>%as.character()%>% as.numeric())` samples would contain all `r sum(yTest%>%as.character()%>% as.numeric())` positive samples. When the model is totally random, the highest-ranked x% of the data would contain about x% of the positive sample. The gain/lift charts compare the ratio between the results obtained with and without a model.
+
+Let's plot the lift charts to compare the predicted outbreak probability (`modelscore <- yhatprob[ ,2]`) from random forest model we fit before with some random scores generated from a uniform distribution (`randomscore <- runif(length(yTest))`).
+
+```{r}
+# predicted outbreak probability
+modelscore <- yhatprob[ ,2]
+# randomly sample from a uniform distribution
+randomscore <- runif(length(yTest))
+labs<-c(modelscore="Random Forest Prediction",
+        randomscore="Random Number")
+liftCurve <- caret::lift(yTest ~ modelscore + randomscore,
+                  class = "1", 
+                  labels = labs)
+xyplot(liftCurve, auto.key = list(columns = 2, lines = T, points = F))
+```
+
+
+The x-axis is the percentage of samples tested and the y-axis is the percentage of positive samples that are detected by the model. For example, the point on the curve of random forest prediction, （`r liftCurve$data$CumTestedPct[10]`,`r round(liftCurve$data$Sn[10]*100,2)`）, indicates that if you order the testing samples by the predicted probability from high to low, the top `r liftCurve$data$CumTestedPct[10]`% of the samples contain `r liftCurve$data$Sn[10]`% of the total positive outcomes. 
+
+Similar to the ROC curve, we can choose the model by comparing their lift charts. Some parts of the lift curves may be more interesting than the rest.  For example, if you only have a budget to clean 50% of the farms, then you should pick the model that gives the highest point when the x-axis is 50%.
+
+

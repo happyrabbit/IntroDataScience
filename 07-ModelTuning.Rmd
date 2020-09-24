@@ -1,0 +1,375 @@
+# Model Tuning Strategy {#modeltuningstrategy}
+
+When training a machine learning model, there are many decisions to make. For example, when training a random forest, you need to decide the number of trees and the number of variables at each node. For lasso method, you need to determine the penalty parameter. There may be standard settings for some of the parameters, but it's unlikely to guess the right values for all of these correctly. Other than that, making good choices on how you split the data into training and testing sets can make a huge difference in helping you find a high-performance model efficiently. 
+
+This chapter will illustrate the practical aspects of model tuning. We will talk about different types of model error, sources of model error, hyperparameter tuning, how to set up your data and how to make sure your model implementation is correct.  In practice applying machine learning is a highly iterative process. 
+
+##  Variance-Bias Trade-Off {#vbtradeoff}
+
+Assume $\mathbf{X}$ is $n \times p$ observation matrix and $\mathbf{y}$ is response variable, we have:
+
+\begin{equation}
+\mathbf{y}=f(\mathbf{X})+\mathbf{\epsilon}
+(\#eq:generalmodeleq)
+\end{equation}
+
+where $\mathbf{\epsilon}$ is the random error with a mean of zero. The function $f(\cdot)$ is our modeling target, which represents the information in the response variable that predictors can explain. The main goal of estimating $f(\cdot)$ is inference or prediction, or sometimes both. In general, there is a trade-off between flexibility and interpretability of the model. So data scientists need to comprehend the delicate balance between these two. 
+
+Depending on the modeling purposes, the requirement for interpretability varies. If the prediction is the only goal, then as long as the prediction is accurate enough,  the interpretability is not under consideration. In this case, people can use "black box" model, such as random forest, boosting tree, neural network and so on. These models are very flexible but nearly impossible to explain. Their accuracy is usually higher on the training set, but not necessary when it predicts. It is not surprising since those models have a huge number of parameters and high flexibility that they can "memorize" the entire training data. A paper by Chiyuan Zhang et al. in 2017 pointed out that "Deep neural networks (even just two-layer net) easily fit random labels" [@rethinkDL]. The traditional forms of regularization, such as weight decay, dropout, and data augmentation, fail to control generalization error. It poses a conceptual challenge to statistical theory and also calls our attention when we use such black-box models. 
+
+There are two kinds of application problems: complete information problem and incomplete information problem. The complete information problem has all the information you need to know the correct response. Take the famous cat recognition, for example, all the information you need to identify a cat is in the picture. In this situation, the algorithm that penetrates the data the most wins. There are some other similar problems such as the self-driving car, chess game, facial recognition and speech recognition. But in most of the data science applications, the information is incomplete. If you want to know whether a customer is going to purchase again or not, it is unlikely to have 360-degree of the customer's information. You may have their historical purchasing record, discounts and service received. But you don't know if the customer sees your advertisement, or has a friend recommends competitor's product, or encounters some unhappy purchasing experience somewhere. There could be a myriad of factors that will influence the customer's purchase decision while what you have as data is only a small part. To make things worse, in many cases, you don't even know what you don't know. Deep learning doesn't have any advantage in solving those problems. Instead, some parametric models often work better in this situation. You will comprehend this more after learning the different types of model error. 
+Assume we have $\hat{f}$ which is an estimator of $f$. Then we can further get  $\mathbf{\hat{y}}=\hat{f}(\mathbf{X})$. The predicted error is divided into two parts, systematic error, and random error:
+
+\begin{equation}
+E(\mathbf{y}-\hat{\mathbf{y}})^{2}=E[f(\mathbf{X})+\mathbf{\epsilon}-\hat{f}(\mathbf{X})]^{2}=\underset{\text{(1)}}{\underbrace{E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}}}+\underset{\text{(2)}}{\underbrace{Var(\mathbf{\epsilon})}}
+(\#eq:error)
+\end{equation}
+
+It is also called Mean Square Error (MSE) where (1) is the systematic error. It exists because $\hat{f}$  usually does not entirely describe the "systematic relation" between X and y which refers to the stable relationship that exists across different samples or time. Model improvement can help reduce this kind of error; (2) is the random error which represents the part of y that cannot be explained by X. A more complex model does not reduce the error. There are three reasons for random error:
+
+1. the current sample is not representative, so the pattern in one sample set does not generalize to a broader scale. 
+1. The information is incomplete. In other words, you don't have all variables needed to explain the response. 
+1. Measurement error in the variables. 
+
+Deep learning has significant success solving problems with complete information and usually low measurement error. As mentioned before, in a task like image recognition, all you need are the pixels in the pictures. So in deep learning applications, increasing the sample size can improve the model performance significantly. But it may not perform well in problems with incomplete information. The biggest problem with the black-box model is that it fits random error, i.e., over-fitting. The notable feature of random error is that it varies over different samples. So one way to determine whether overfitting happens is to reserve a part of the data as the test set and then check the performance of the trained model on the test data. Note that overfitting is a general problem from which any model could suffer. However, since black-box models usually have a large number of parameters,  it is much more suspectable to over-fitting. 
+
+
+![Types of Model Error](images/ModelError.png)
+
+The systematic error can be further decomposed as:
+
+\begin{equation}
+\begin{array}{ccc}
+E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2} & = & E\left(f(\mathbf{X})-E[\hat{f}(\mathbf{X})]+E[\hat{f}(\mathbf{X})]-\hat{f}(\mathbf{X})\right)^{2}\\
+ & = & E\left(E[\hat{f}(\mathbf{X})]-f(\mathbf{X})\right)^{2}+E\left(\hat{f}(\mathbf{X})-E[\hat{f}(\mathbf{X})]\right)^{2}\\
+ & = & [Bias(\hat{f}(\mathbf{X}))]^{2}+Var(\hat{f}(\mathbf{X}))
+\end{array}
+(\#eq:biasvariance)
+\end{equation}
+
+The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $Var (\hat{f}(\mathbf{X}))$. To minimize the systematic error, we need to minimize both. The bias represents the error caused by the model's approximation of the reality, i.e., systematic relation, which may be very complex. For example, linear regression assumes a linear relationship between the predictors and the response, but rarely is there a perfect linear relationship in real life. So linear regression is more likely to have a high bias. In general, the more flexible the model is, the higher the variance. However, this does not guarantee complex models will outperform a much simpler one, such as linear regression. If the real relationship $f$ is linear, then linear regression is unbiased. It is difficult for a more flexible model to compete. Good learning method requires low variance and bias. However, it is easy to find a model with extremely low bias but high variance (by fitting a tree) or a method with low variance but high variance (by fitting a straight line). That why we call it trade-off.
+
+To explore bias and variance, let's begin with a simple simulation. We will simulate a data with a non-linear relationship and fit different models on it. An intuitive way to show these is to compare the plots of various models. 
+
+The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear.  
+
+```{r}
+source(ids_url('R/multiplot.r'))
+# randomly simulate some non-linear samples
+x = seq(1, 10, 0.01) * pi
+e = rnorm(length(x), mean = 0, sd = 0.2)
+fx <- sin(x) + e + sqrt(x)
+dat = data.frame(x, fx)
+```
+
+Then fit a simple linear regression on these data:
+
+```{r linearbias, fig.cap= "High bias model", out.width="80%", fig.asp=.75, fig.align="center"}
+# plot fitting result
+library(ggplot2)
+ggplot(dat, aes(x, fx)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+```
+
+Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
+
+Since the estimated parameters will be somewhat different for different samples, there is the variance of estimates. Intuitively, it gives you some sense that if we fit the same model with different samples (presumably, they are from the same population), how much will the estimates change. Ideally, the change is trivial. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. To overcome that problem, the Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained from different samples. 
+
+Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
+
+```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center", message=FALSE}
+ggplot(dat, aes(x, fx)) + geom_smooth(span = 0.03)
+```
+
+The resulting plot (Fig. \@ref(fig:linearvar)) indicates the smoothing method fit the data much better and it has a much smaller bias. However, this method has a high variance. If we simulate different subsets of the sample, the result curve will change significantly:
+
+```{r, warning=FALSE, message=FALSE}
+# set random seed
+set.seed(2016)
+# sample part of the data to fit model sample 1
+idx1 = sample(1:length(x), 100)
+dat1 = data.frame(x1 = x[idx1], fx1 = fx[idx1])
+p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(span = 0.03)
+# sample 2
+idx2 = sample(1:length(x), 100)
+dat2 = data.frame(x2 = x[idx2], fx2 = fx[idx2])
+p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(span = 0.03)
+# sample 3
+idx3 = sample(1:length(x), 100)
+dat3 = data.frame(x3 = x[idx3], fx3 = fx[idx3])
+p3 = ggplot(dat3, aes(x3, fx3)) + geom_smooth(span = 0.03)
+# sample 4
+idx4 = sample(1:length(x), 100)
+dat4 = data.frame(x4 = x[idx4], fx4 = fx[idx4])
+p4 = ggplot(dat4, aes(x4, fx4)) + geom_smooth(span = 0.03)
+multiplot(p1, p2, p3, p4, cols = 2)
+```
+
+The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
+
+```{r,warning=FALSE}
+p1 = ggplot(dat1, aes(x1, fx1)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p2 = ggplot(dat2, aes(x2, fx2)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p3 = ggplot(dat3, aes(x3, fx3)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+p4 = ggplot(dat4, aes(x4, fx4)) + geom_point() + geom_smooth(method = "lm", 
+    se = FALSE)
+multiplot(p1, p2, p3, p4, cols = 2)
+```
+
+In general, the variance ($Var(\hat{f}(\mathbf{X}))$) **increases** and the bias ($Bias(\hat{f}(\mathbf{X}))$) **decreases** as the model flexibility increases. Variance and bias together determine the systematic error. As we increase the flexibility of the model, at first the rate at which $Bias(\hat{f}(\mathbf{X}))$ decreases is faster than $Var (\hat{f} (\mathbf{X}))$, so the MSE decreases. However, to some degree, higher flexibility has little effect on $Bias(\hat{f}(\mathbf{X}))$ but $Var(\hat{f} (\mathbf{X}))$ increases significantly, so the MSE increases. 
+
+## Data Splitting and Resampling {#datasplittingresampling}
+
+Those highly adaptable models can model complex relationships. However, they tend to overfit which leads to the poor prediction by learning too much from the data. It means that the model is susceptible to the specific sample used to fit it. When future data is not exactly like the past data, the model prediction may have big mistakes. A simple model like ordinary linear regression tends instead to underfit which leads to a bad prediction by learning too little from the data. It systematically over-predicts or under-predicts the data regardless of how well future data resemble past data. Without evaluating models, the modeler will not know about the problem before the future samples. Data splitting and resampling are fundamental techniques to build sound models for prediction. 
+
+### Data Splitting
+
+_Data splitting_ is to put part of the data aside as testing set (or Hold-outs, out of bag samples) and use the rest for model training. Training samples are also called in-sample. Model performance metrics evaluated using in-sample are retrodictive, not predictive. 
+
+The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
+
+- What is the monthly sales of a product in 2015? 
+- What is the number of visits to our site in the past month?  
+- What is the sales difference in 2015 for two different product designs? 
+
+There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
+
+Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimized value. Tuning parameters often control the complexity of the model. A poor choice can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
+
+To get a reasonable precision of the performance based on a single test set, the size of the test set may need to be large. So a conventional approach is to use a subset of samples to fit the model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
+
+-  Define a set of candidate values for tuning parameter(s)
+    - For each candidate value in the set
+        - Resample data
+        - Fit model
+        - Predict hold-out
+        - Calculate performance
+- Aggregate the results
+- Determine the final tuning parameter
+- Refit the model with the entire data set
+
+![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
+
+The above is an outline of the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. Ideally, we should evaluate model using samples that were not used to build or fine-tune the model. So it provides an unbiased sense of model effectiveness. When the sample size is large, it is a good practice to set aside part of the samples to evaluate the final model. People use "training" data to indicate samples used to fit or fine-tune the model and "test" or "validation" data set is used to validate performance. 
+
+The first decision to make for data splitting is to decide the proportion of data in the test set. There are two factors to consider here: (1) sample size; (2) computation intensity. If the sample size is large enough which is the most common situation according to my experience, you can try to use 20%, 30% and 40% of the data as the test set, and see which one works the best. If the model is computationally intense, then you may consider starting from a smaller sample of data to train the model hence will have a higher portion of data in the test set.  Depending on how it performs, you may need to increase the training set. If the sample size is small, you can use cross-validation or bootstrap which is the topic in the next section.  
+
+The next decision is to decide which samples are in the test set. There is a desire to make the training and test sets as similar as possible. A simple way is to split data by random sampling which, however, does not control for any of the data attributes, such as the percentage of the retained customer in the data. So it is possible that the distribution of outcomes is substantially different between the training and test sets. There are three main ways to split the data that account for the similarity of resulted data sets. We will describe the three approaches using the clothing company customer data as examples.
+
+(1) Split data according to the outcome variable 
+
+Assume the outcome variable is customer segment (column `segment`) and we decide to use 80% as training and 20% test. The goal is to make the proportions of the categories in the two sets as similar as possible. The `createDataPartition()` function in `caret` will return a balanced splitting based on assigned variable.
+
+```{r}
+# load data
+sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+library(caret)
+# set random seed to make sure reproducibility
+set.seed(3456)
+trainIndex <- createDataPartition(sim.dat$segment, p = 0.8, list = FALSE, 
+    times = 1)
+head(trainIndex)
+```
+
+The `list = FALSE` in the call to `createDataPartition` is to return a data frame.  The `times = 1` tells R how many times you want to split the data. Here we only do it once, but you can repeat the splitting multiple times. In that case, the function will return multiple vectors indicating the rows to training/test.  You can set `times＝2` and rerun the above code to see the result.  Then we can use the returned indicator vector `trainIndex` to get training and test sets:
+
+```{r}
+# get training set
+datTrain <- sim.dat[trainIndex, ]
+# get test set
+datTest <- sim.dat[-trainIndex, ]
+```
+
+According to the setting, there are 800 samples in the training set and 200 in test set. Let's check the distribution of the two sets:
+
+```{r}
+library(plyr)
+ddply(datTrain, "segment", summarise, count = length(segment), 
+    percentage = round(length(segment)/nrow(datTrain), 2))
+
+ddply(datTest, "segment", summarise, count = length(segment), 
+    percentage = round(length(segment)/nrow(datTest), 2))
+```
+
+The percentages are the same for these two sets. In practice, it is possible that the distributions are not exactly identical but should be close.
+
+(2) Divide data according to predictors  
+
+An alternative way is to split data based on the predictors.  The goal is to get a diverse subset from a dataset so that the sample is representative. In other words, we need an algorithm to identify the $n$ most diverse samples from a dataset with size $N$. However, the task is generally infeasible for non-trivial values of $n$ and $N$ [@willett].  And hence practicable approaches to dissimilarity-based selection involve approximate methods that are sub-optimal. A major class of algorithms split the data on _maximum dissimilarity sampling_.  The process starts from:
+
+- Initialize a single sample as starting test set
+- Calculate the dissimilarity between this initial sample and each remaining samples in the dataset
+- Add the most dissimilar unallocated sample to the test set
+
+To move forward, we need to define the dissimilarity between groups. Each definition results in a different version of the algorithm and hence a different subset. It is the same problem as in hierarchical clustering where you need to define a way to measure the distance between clusters. The possible approaches are to use minimum, maximum, sum of all distances, the average of all distances, etc. Unfortunately, there is not a single best choice, and you may have to try multiple methods and check the resulted sample sets. R users can implement the algorithm using `maxDissim()` function from `caret` package. The `obj` argument is to set the definition of dissimilarity. Refer to the help documentation for more details (`?maxDissim`).
+
+Let's use two variables (`age` and `income`) from the customer data as an example to illustrate how it works in R and compare maximum dissimilarity sampling with random sampling.
+
+```{r, message=F}
+library(lattice)
+# select variables
+testing <- subset(sim.dat, select = c("age", "income"))
+```
+
+Random select 5 samples as initial subset (`start`) , the rest will be in `samplePool`: 
+
+```{r}
+set.seed(5)
+# select 5 random samples
+startSet <- sample(1:dim(testing)[1], 5)
+start <- testing[startSet, ]
+# save the rest in data frame 'samplePool'
+samplePool <- testing[-startSet, ]
+```
+
+Use `maxDissim()` to select another 5 samples from `samplePool` that are as different as possible with the initical set `start`:
+
+```{r}
+selectId <- maxDissim(start, samplePool, obj = minDiss, n = 5)
+minDissSet <- samplePool[selectId, ]
+```
+
+The `obj = minDiss` in the above code tells R to use minimum dissimilarity to define the distance between groups.  Next, random select 5 samples from `samplePool` in data frame `RandomSet`: 
+
+```{r}
+selectId <- sample(1:dim(samplePool)[1], 5)
+RandomSet <- samplePool[selectId, ]
+```
+
+Plot the resulted set to compare different sampling methods:
+
+```{r maxdis, fig.cap='Compare Maximum Dissimilarity Sampling with  Random Sampling', out.width='80%', fig.asp=.75, fig.align='center'}
+start$group <- rep("Initial Set", nrow(start))
+minDissSet$group <- rep("Maximum Dissimilarity Sampling", nrow(minDissSet))
+RandomSet$group <- rep("Random Sampling", nrow(RandomSet))
+xyplot(age ~ income, data = rbind(start, minDissSet, RandomSet), grid = TRUE, 
+    group = group, auto.key = TRUE)
+```
+
+The points from maximum dissimilarity sampling are far away from the initial samples ( Fig. \@ref(fig:maxdis), while the random samples are much closer to the initial ones.  Why do we need a diverse subset? Because we hope the test set to be representative. If all test set samples are from respondents younger than 30, model performance on the test set has a high risk to fail to tell you how the model will perform on more general population.
+
+- Divide data according to time
+
+For time series data, random sampling is usually not the best way. There is an approach to divide data according to time-series. Since time series is beyond the scope of this book,  there is not much discussion here. For more detail of this method, see [@Hyndman]. We will use a simulated first-order autoregressive model [AR (1)] time-series data with 100 observations to show how to implement using the function `createTimeSlices ()` in the `caret` package. 
+
+```{r times, fig.cap='Divide data according to time', out.width='80%', fig.asp=.75, fig.align='center'}
+# simulte AR(1) time series samples
+timedata = arima.sim(list(order=c(1,0,0), ar=-.9), n=100)
+# plot time series
+plot(timedata, main=(expression(AR(1)~~~phi==-.9)))     
+```
+
+Fig. \@ref(fig:times) shows 100 simulated time series observation. The goal is to make sure both training and test set to cover the whole period. 
+
+```{r}
+timeSlices <- createTimeSlices(1:length(timedata), 
+                   initialWindow = 36, horizon = 12, fixedWindow = T)
+str(timeSlices,max.level = 1)
+```
+
+There are three arguments in the above `createTimeSlices()`. 
+
+- `initialWindow`: The initial number of consecutive values in each training set sample
+- `horizon`: the number of consecutive values in test set sample
+- `fixedWindow`: if FALSE, all training samples start at 1
+
+The function returns two lists, one for the training set, the other for the test set. Let's look at the first training sample:
+
+```{r}
+# get result for the 1st training set
+trainSlices <- timeSlices[[1]]
+# get result for the 1st test set
+testSlices <- timeSlices[[2]]
+# check the index for the 1st training and test set
+trainSlices[[1]]
+testSlices[[1]]
+```
+
+The first training set is consist of sample 1-36 in the dataset (`initialWindow = 36`).  Then sample 37-48 are in the first test set ( `horizon = 12`). Type `head(trainSlices)` or `head(testSlices)` to check the later samples. If you are not clear about the argument `fixedWindow`, try to change the setting to be `F` and check the change in `trainSlices` and `testSlices`. 
+
+Understand and implement data splitting is not difficult. But there are two things to note:
+ 
+1. The randomness in the splitting process will lead to uncertainty in performance measurement.
+2.  When the dataset is small, it can be too expensive to leave out test set. In this situation, if collecting more data is just not possible, the best shot is to use leave-one-out cross-validation which is in the next section.
+
+### Resampling
+
+You can consider resampling as repeated splitting. The basic idea is: use part of the data to fit model and then use the rest of data to calculate model performance. Repeat the process multiple times and aggregate the results. The differences in resampling techniques usually center around the ways to choose subsamples. There are two main reasons that we may need resampling:
+
+1. Estimate tuning parameters through resampling. Some examples of models with such parameters are Support Vector Machine (SVM), models including the penalty (LASSO) and random forest.
+
+2. For models without tuning parameter, such as ordinary linear regression and partial least square regression, the model fitting doesn't require resampling. But you can study the model stability through resampling.
+
+We will introduce three most common resampling techniques: k-fold cross-validation, repeated training/test splitting, and bootstrap.
+
+#### k-fold cross-validation
+
+k-fold cross-validation is to partition the original sample into $k$ equal size subsamples (folds). Use one of the $k$ folds to validate the model and the rest $k-1$ to train model. Then repeat the process $k$ times with each of the $k$ folds as the test set. Aggregate the results into a performance profile.  
+
+Denote by $\hat{f}^{-\kappa}(X)$ the fitted function, computed with the $\kappa^{th}$ fold removed and $x_i^\kappa$ the predictors for samples in left-out fold. The process of k-fold cross-validation is as follows:
+
+> 
+1. Partition the original sample into $k$ equal size folds
+2. for $\kappa=1…k$
+    - Use data other than fold $\kappa$ to train the model $\hat{f}^{-\kappa}(X)$
+    - Apply $\hat{f}^{-\kappa}(X)$ to predict fold $\kappa$ to get $\hat{f}^{-\kappa}(x_i^\kappa)$
+3. Aggregate the results 
+$$\hat{Error} = \frac{1}{N}\Sigma_{\kappa=1}^k\Sigma_{x_i^{\kappa}}L(y_i^{\kappa},\hat{f}^{-\kappa}(x_i^\kappa))$$
+
+It is a standard way to find the value of tuning parameter that gives you the best performance. It is also a way to study the variability of model performance. 
+
+
+The following figure represents a  5-fold cross-validation example. 
+
+![5-fold cross-validation](images/cv5fold.png)
+
+A special case of k-fold cross-validation is Leave One Out Cross Validation (LOOCV) where $k=1$. When sample size is small, it is desired to use as many data to train the model. Most of the functions have default setting $k=10$. The choice is usually 5-10 in practice, but there is no standard rule. The more folds to use,  the more samples are used to fit model, and then the performance estimate is closer to the theoretical performance. Meanwhile, the variance of the performance is larger since the samples to fit model in different iterations are more similar. However, LOOCV has high computational cost since the number of interactions is the same as the sample size and each model fit uses a subset that is nearly the same size of the training set. On the other hand, when k is small (such as 2 or 3), the computation is more efficient, but the bias will increase.  When the sample size is large, the impact of $k$ becomes marginal.  
+
+Chapter 7 of [@Hastie2008] presents a more in-depth and more detailed discussion about the bias-variance trade-off in k-fold cross-validation. 
+ 
+You can implement k-fold cross-validation using `createFolds()` in `caret`: 
+ 
+```{r}
+library(caret)
+class<-sim.dat$segment
+# creat k-folds
+set.seed(1)
+cv<-createFolds(class,k=10,returnTrain=T)
+str(cv)
+```
+ 
+The above code creates ten folds (`k=10`) according to the customer segments (we set `class` to be the categorical variable `segment`). The function returns a list of 10 with the index of rows in training set. 
+
+#### Repeated Training/Test Splits
+
+In fact, this method is nothing but repeating the training/test set division on the original data. Fit the model with the training set, and evaluate the model with the test set. Unlike k-fold cross-validation, the test set generated by this procedure may have duplicate samples. A sample usually shows up in more than one test sets. There is no standard rule for split ratio and number of repetitions. The most common choice in practice is to use 75% to 80% of the total sample for training. The remaining samples are for validation. The more sample in the training set, the less biased the model performance estimate is. Increasing the repetitions can reduce the uncertainty in the performance estimates.  Of course, it is at the cost of computational time when the model is complex. The number of repetitions is also related to the sample size of the test set. If the size is small, the performance estimate is more volatile. In this case, the number of repetitions needs to be higher to deal with the uncertainty of the evaluation results.
+
+We can use the same function (`createDataPartition ()`) as before.   If you look back, you will see `times = 1`. The only thing to change is to set it to the number of repetitions.
+
+```{r}
+trainIndex <- createDataPartition(sim.dat$segment, p = .8, list = FALSE, times = 5)
+dplyr::glimpse(trainIndex)
+```
+
+Once know how to split the data, the repetition comes naturally.
+
+#### Bootstrap Methods
+
+Bootstrap is a powerful statistical tool (a little magic too). It can be used to analyze the uncertainty of parameter estimates [@bootstrap1986] quantitatively. For example, estimate the standard deviation of linear regression coefficients. The power of this method is that the concept is so simple that it can be easily applied to any model as long as the computation allows. However, you can hardly obtain the standard deviation for some models by using the traditional statistical inference. 
+
+Since it is with replacement, a sample can be selected multiple times, and the bootstrap sample size is the same as the original data. So for every bootstrap set, there are some left-out samples, which is also called "out-of-bag samples." The out-of-bag sample is used to evaluate the model. Efron points out that under normal circumstances [@efron1983], bootstrap estimates the error rate of the model with more certainty.The probability of an observation $i$ in bootstrap sample B is:
+
+$\begin{array}{ccc}
+Pr{i\in B} & = & 1-\left(1-\frac{1}{N}\right)^{N}\\
+ & \approx & 1-e^{-1}\\
+ & = & 0.632
+\end{array}$
+
+On average, 63.2% of the observations appeared at least once in a bootstrap sample, so the estimation bias is similar to 2-fold cross-validation. As mentioned earlier, the smaller the number of folds, the larger the bias. Increasing the sample size will ease the problem. In general, bootstrap has larger bias and smaller uncertainty than cross-validation. Efron came up the following ".632 estimator" to alleviate this bias:
+
+$$(0.632 × original\ bootstrap\ estimate) + (0.368 × apparent\ error\ rate)$$
+
+The apparent error rate is the error rate when the data is used twice, both to fit the model and to check its accuracy and it is apparently over-optimistic. The modified bootstrap estimate reduces the bias but can be unstable with small samples size. This estimate can also be unduly optimistic when the model severely over-fits since the apparent error rate will be close to zero. Efron and Tibshirani [@b632plus] discuss another technique, called the “632+ method,” for adjusting the bootstrap estimates.
+

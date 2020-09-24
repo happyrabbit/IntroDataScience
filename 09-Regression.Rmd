@@ -58,10 +58,310 @@ zs <- (y - mean(y))/mad(y)
 modeldat <- modeldat[-which(zs > 3.5), ]
 ```
 
+We will not perform log-transformation for the response variable at this stage. Let us first check the correlation among explanatory variables: 
 
-## Multivariate Adaptive Regression Splines
+```{r corplotlm, fig.cap= "Correlation Matrix Plot for Explanatory Variables", out.width="80%", fig.asp=.75, fig.align="center"}
+library(corrplot)
+correlation <- cor(modeldat[, grep("Q", names(modeldat))])
+corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", upper = "ellipse")
+```
 
-## Generalized Linear Model
+As shown in fig @ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section @ref(collinearity) to remove highly correlated explanatory variables with a threshold of 0.75:
+
+```{r}
+highcor <- findCorrelation(correlation, cutoff = 0.75)
+modeldat <- modeldat[, -highcor]
+```
+
+The dataset is now ready to fit a linear regression model. The standard format to define a regression in R is: 
+
+(1) response variable is at the left side of `~`   
+
+(2) the explanatory variables are at the right side of `~`   
+
+(3) if all the variables in the dataset except the response variable are included in the model, we can use `.` at the right side of `~` 
+
+(4) if we want to consider the interaction between two variables such as Q1 and Q2, we can add an interaction term `Q1*Q2` 
+
+(5) transformation of variables can be added directly to variable names such as `log(total_exp)`.
+
+
+```{r}
+lmfit <- lm(log(total_exp) ~ ., data = modeldat)
+summary(lmfit)
+```
+
+The `summary(lmfit)` presents a summary of the model fit. It shows the point estimate of each explanatory variable (the `Estimate` column), their corresponding standard error (the `Std. Error` column), t values (`t value`), and p values (`Pr(>|t|)`). 
+
+### The Magic P-value
+
+Let us pause a little to have a short discussion about p-value. Misuse of p-value is common in many research fields. There were heated discussions about P-value in the past. Siegfried commented in his 2010 Science News article: 
+
+> "It's science's dirtiest secret: The scientific method of testing hypotheses by statistical analysis stands on a flimsy foundation." 
+
+American Statistical Association (i.e., ASA) released an official statement on p-value in 2016 [@ASA_P]. It was the first time to have an organization level announcement about p-value. ASA stated that the goal to release this guidance was to 
+
+> "improve the conduct and interpretation of quantitative science and inform the growing emphasis on reproducibility of science research." 
+
+The statement also noted that 
+
+> "the increased quantification of scientific research and a proliferation of large, complex data sets has expanded the scope for statistics and the importance of appropriately chosen techniques, properly conducted analyses, and correct interpretation."
+
+The statement’s six principles, many of which address misconceptions and misuse of the P-value, are the following:
+
+1. P-values can indicate how incompatible the data are with a specified statistical model.
+2. P-values do not measure the probability that the studied hypothesis is true or the probability that the data were produced by random chance alone.
+3. Scientific conclusions and business or policy decisions should not be based only on whether a p-value passes a specific threshold.
+4. Proper inference requires full reporting and transparency.
+5. A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.
+6. By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.
+
+Now let us come back to our example. We will not spend too much time on p-values, while we will focus on the confidence interval for the parameter estimate for each explanatory variable. In R, the function `confint()` can produce the confidence interval for each parameter: 
+
+```{r}
+confint(lmfit,level=0.9)
+```
+
+The above output is for a 90% confidence level as `level=0.9` indicated in the function call. We can change the confidence level by adjusting the level setting.
+Fitting a linear regression is so easy using R that many analysts directly write reports without thinking about whether the model is meaningful. On the other hand, we can easily use R to check model assumptions. In the following sections, we will introduce a few commonly used diagnostic methods for linear regression to check whether the model assumptions are reasonable.
+
+### Diagnostics for Linear Regression 
+
+In linear regression, we would like the Ordinary Least Square (OLS) estimate to be the Best Linear Unbiased Estimate (BLUE). In other words, we hope the expected value of the estimate is the actual parameter value (i.e., unbiased) and achieving minimized residual (i.e., best). Based on the Gauss-Markov theorem, the OLS estimate is BLUE under the following conditions:
+
+1. Explanatory variables ($\mathbf{x_{.j}}$) and random error ($\mathbf{\epsilon}$) are independent:  $cov(\mathbf{x_{.j},\epsilon})=0$ for $\forall j=j\in1...p$. 
+
+2. The expected value of random error is zero: $E(\mathbf{\epsilon|X})=0$
+
+3. Random errors are independent with each other, and the variance of random error is consistent: $Var(\mathbf{\epsilon})=\sigma^{2}I$, where $\sigma$ is positive and $I$ is a $n \times n$ identical matrix.
+
+We will introduce four graphic diagnostics for the above assumptions.
+
+(1) Residual plot
+
+It is a scatter plot with residual on the Y-axis and fitted value on the X-axis. We can also put any of the explanatory variables on the X-axis. Under the assumption, residuals are randomly distributed, and we need to check the following:
+
+- Are residuals centered around zero?
+- Are there any patterns in the residual plots (such as residuals with x-values farther from $\bar{x}$  have greater variance than residuals with x-values closer to $\bar{x}$)?
+- Are the variances of the residual consistent across a range of fitted values?
+
+Please note that even if the variance is not consistent, the regression parameter's point estimate is still unbiased. However, the variance estimate is not unbiased. Because the significant test for regression parameters is based on the random error distribution, these tests are no longer valid if the variance is not constant.
+
+(2) Normal quantile-quantile Plot (Q-Q Plot)
+
+Q-Q Plot is used to check the normality assumption for the residual. For normally distributed residuals, the data points should follow a straight line along the Q-Q plot. The more departure from a straight line, the more departure from a normal distribution for the residual.
+
+(3) Standardized residuals plot 
+
+Standardized residual is the residual normalized by an estimate of its standard deviation. Like the residual plot, the X-axis is still the fitted value, but the y-axis is now standardized residuals. Because of the normalization, the y-axis shows the number of standard deviations from zero. A value greater than 2 or less than -2 indicates observations with large standardized residuals. The plot is useful because when the variance is not consistent, it can be difficult to detect the outliers using the raw residuals plot. 
+
+(4) Cook's distance
+
+Cook's distance can check influential points in OLS based linear regression models. In general, we need to pay attention to data points with Cook's distance > 0.5.  
+
+In R, these diagnostic graphs are built in the`plot()` function. 
+
+```{r lmdiagnostic, fig.cap= "Linear Regression Diagnostic Plots: residual plot (top left), Q-Q plot (top right), standardized residuals plot (lower left), Cook's distance (lower right)", out.width="80%", fig.asp=.75, fig.align="center"}
+par(mfrow = c(2, 2))
+plot(lmfit, which = 1)
+plot(lmfit, which = 2)
+plot(lmfit, which = 3)
+plot(lmfit, which = 4)
+```
+
+The above diagnostic plot examples show:
+
+- Residual plot: residuals are generally distributed around $y=0$ horizontal line. There are no significant trends or patterns in this residual plot (there are two bumps but does not seem too severe). So the linear relationship assumption between the response variable and explanatory variables is reasonable. 
+
+- Q-Q plot: data points are pretty much along the diagonal line of Y=X, indicating no significant normality assumption departure for the residuals. Because we simulate the data, we know the response variable before log transformation follows a normal distribution. The shape of the distribution does not deviate from a normal distribution too much after log transformation. 
+
+- Standardized residual plot: if the constant variance assumption is valid, then the plot's data points should be randomly distributed around the horizontal line. We can see there are three outliers on the plot.  Let us check those points:
+
+```{r}
+modeldat[which(row.names(modeldat) %in% c(960, 678, 155)), ]
+```
+
+Why are those outliers? They are outliers conditional on the values of the independent variables. Let us examine the value of expense for samples with the same Q1, Q2, Q3, Q6, and Q8 answers as the 3rd row above. 
+
+```{r}
+datcheck = modeldat %>% filter(Q1 ==2 & Q2 == 1 & Q3 == 1 & Q6 == 1 & Q8 == 3) 
+nrow(datcheck)
+```
+
+There are 87 samples with the same value of independent variables. The response variable's (`total_exp`) distribution is:
+
+
+```{r}
+summary(datcheck$total_exp)
+```
+
 
 ## PCR and PLS
 
+## Measurement Error
+
+### Measurement Error in the Response
+
+The measurement error in the response contributes to the random error ($\mathbf{\epsilon}$).  This part of the error is irreducible if you change the data collection mechanism, and so it makes the root mean square error (RMSE) and $R^2$ have the corresponding upper and lower limits. RMSE and $R^2$ are commonly used performance measures for the regression model which we will talk in more detail later. Therefore, the random error term not only represents the part of fluctuations the model cannot explain but also contains measurement error in the response variables. Section 20.2 of Applied Predictive Modeling [@APM] has an example that shows the effect of the measurement error in the response variable on the model performance (RMSE and $R^2$). 
+
+The authors increased the error in the response proportional to a base level error which was gotten using the original data without introducing extra noise.  Then fit a set of models repeatedly using the "contaminated" data sets to study the change of $RMSE$ and $R^2$ as the level of noise. Here we use clothing consumer data for a similar illustration. Suppose many people do not want to disclose their income and so we need to use other variables to establish a model to predict income. We set up the following model:
+
+```{r}
+# load data
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
+ymad <- mad(na.omit(sim.dat$income))
+# calculate z-score
+zs <- (sim.dat$income - mean(na.omit(sim.dat$income)))/ymad
+# which(na.omit(zs>3.5)): identify outliers which(is.na(zs)):
+# identify missing values
+idex <- c(which(na.omit(zs > 3.5)), which(is.na(zs)))
+# delete rows with outliers and missing values
+sim.dat <- sim.dat[-idex, ]
+fit <- lm(income ~ store_exp + online_exp + store_trans + online_trans, 
+    data = sim.dat)
+```
+
+The output shows that without additional noise, the root mean square error (RMSE) of the model is `r as.integer (summary(fit)$sigma)`, $R^2$ is `r round(summary(fit)$adj.r.squared,2)`.  
+
+Let's add various degrees of noise (0 to 3 times the RMSE) to the variable `income`:
+
+$$ RMSE \times (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0) $$
+
+```r
+noise <- matrix(rep(NA, 7 * nrow(sim.dat)), nrow = nrow(sim.dat), 
+    ncol = 7)
+for (i in 1:nrow(sim.dat)) {
+    noise[i, ] <- rnorm(7, rep(0, 7), summary(fit)$sigma * seq(0, 
+        3, by = 0.5))
+}
+```
+
+We then examine the effect of noise intensity on $R^2$ for models with different complexity. The models with complexity from low to high are: ordinary linear regression, partial least square regression(PLS), multivariate adaptive regression spline (MARS), support vector machine (SVM, the kernel function is radial basis function), and random forest.
+
+```r
+# fit ordinary linear regression
+rsq_linear <- rep(0, ncol(noise))
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- lm(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_linear[i] <- summary(fit0)$adj.r.squared
+}
+```
+
+PLS is a method of linearizing nonlinear relationships through hidden layers. It is similar to the principal component regression (PCR), except that PCR does not take into account the information of the dependent variable when selecting the components, and its purpose is to find the linear combinations (i.e., unsupervised) that capture the most variance of the independent variables. When the independent variables and response variables are related, PCR can well identify the systematic relationship between them. However, when there exist independent variables not associated with response variable, it will undermine PCR's performance. And PLS maximizes the linear combination of dependencies with the response variable. In the current case, the more complicated PLS does not perform better than simple linear regression. 
+
+```r
+# pls: conduct PLS and PCR
+library(pls)
+rsq_pls <- rep(0, ncol(noise))
+# fit PLS
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- plsr(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_pls[i] <- max(drop(R2(fit0, estimate = "train", intercept = FALSE)$val))
+}
+```
+
+```r
+# earth: fit mars
+library(earth)
+rsq_mars <- rep(0, ncol(noise))
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- earth(withnoise ~ store_exp + online_exp + store_trans + 
+        online_trans, data = sim.dat)
+    rsq_mars[i] <- fit0$rsq
+}
+```
+
+```r
+# caret: awesome package for tuning predictive model
+library(caret)
+rsq_svm <- rep(0, ncol(noise))
+# Need some time to run
+for (i in 1:7) {
+    idex <- which(is.na(sim.dat$income))
+    withnoise <- sim.dat$income + noise[, i]
+    trainX <- sim.dat[, c("store_exp", "online_exp", "store_trans", 
+        "online_trans")]
+    trainY <- withnoise
+    fit0 <- train(trainX, trainY, method = "svmRadial", tuneLength = 15, 
+        trControl = trainControl(method = "cv"))
+    rsq_svm[i] <- max(fit0$results$Rsquared)
+}
+```
+
+```r
+# randomForest: random forest model
+library(randomForest)
+rsq_rf <- rep(0, ncol(noise))
+# ntree=500 number of trees na.action = na.omit ignore
+# missing value
+for (i in 1:7) {
+    withnoise <- sim.dat$income + noise[, i]
+    fit0 <- randomForest(withnoise ~ store_exp + online_exp + 
+        store_trans + online_trans, data = sim.dat, ntree = 500, 
+        na.action = na.omit)
+    rsq_rf[i] <- tail(fit0$rsq, 1)
+}
+library(reshape2)
+rsq <- data.frame(cbind(Noise = c(0, 0.5, 1, 1.5, 2, 2.5, 3), 
+    rsq_linear, rsq_pls, rsq_mars, rsq_svm, rsq_rf))
+rsq <- melt(rsq, id.vars = "Noise", measure.vars = c("rsq_linear", 
+    "rsq_pls", "rsq_mars", "rsq_svm", "rsq_rf"))
+```
+
+```{r, echo=FALSE}
+rsq <- read.csv("Data/ResponseError.csv")
+```
+
+(ref:error-cap)  Test set $R^2$ profiles for income models when measurement system noise increases. `rsq_linear`: linear regression, `rsq_pls`: Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
+
+```{r error, fig.cap= "(ref:error-cap)", out.width="80%", fig.asp=.75, fig.align="center"}
+library(ggplot2)
+ggplot(data = rsq, aes(x = Noise, y = value, group = variable, 
+    colour = variable)) + geom_line() + geom_point() + ylab("R2")
+```
+
+Fig. \@ref(fig:error) shows that:
+
+All model performance decreases sharply with increasing noise intensity. To better anticipate model performance, it helps to understand the way variable is measured. It is something need to make clear at the beginning of an analytical project. A data scientist should be aware of the quality of the data in the database. For data from the clients, it is an important to understand the quality of the data by communication.
+
+More complex model is not necessarily better. The best model in this situation is MARS, not random forests or SVM. Simple linear regression and PLS perform the worst when noise is low. MARS is more complicated than the linear regression and PLS, but it is simpler and easier to explain than random forest and SVM.
+
+When noise increases to a certain extent, the potential structure becomes vaguer, and complex random forest model starts to fail. When the systematic measurement error is significant, a more straightforward but not naive model may be a better choice. It is always a good practice to try different models, and select the simplest model in the case of similar performance. Model evaluation and selection represent the career "maturity" of a data scientist.
+
+### Measurement Error in the Independent Variables
+
+The traditional statistical model usually assumes that the measurement of the independent variable has no error which is not possible in practice. Considering the error in the independent variables is necessary. The impact of the error depends on the following factors: (1) the magnitude of the randomness; (2) the importance of the corresponding variable in the model, and (3) the type of model used. Use variable `online_exp` as an example. The approach is similar to the previous section. Add varying degrees of noise and see its impact on the model performance. We add the following different levels of noise (0 to 3 times the standard deviation) to`online_exp`:
+
+$$\sigma_{0} \times (0.0, 0.5, 1.0, 1.5, 2.0, 2.5, 3.0)$$
+
+where $\sigma_{0}$ is the standard error of `online_exp`.
+
+```r
+noise<-matrix(rep(NA,7*nrow(sim.dat)),nrow=nrow(sim.dat),ncol=7)
+for (i in 1:nrow(sim.dat)){
+noise[i,]<-rnorm(7,rep(0,7),sd(sim.dat$online_exp)*seq(0,3,by=0.5))
+}
+```
+
+Likewise, we examine the effect of noise intensity on different models ($R^2$). The models with complexity from low to high are: ordinary linear regression, partial least square regression(PLS), multivariate adaptive regression spline (MARS), support vector machine (SVM, the Kernel function is radial basis function), and random forest. The code is similar as before so not shown here.
+
+```{r,echo=FALSE}
+rsq <- read.csv("Data/VariableError.csv")
+```
+
+(ref:errorvariable-cap)  Test set  $R^2$  profiles for income models when noise in `online_exp` increases. `rsq_linear` : linear regression, `rsq_pls` : Partial Least Square, `rsq_mars`: Multiple Adaptive Regression Spline Regression, `rsq_svm`: Support Vector Machine，`rsq_rf`: Random Forest
+
+```{r errorvariable, fig.cap="(ref:errorvariable-cap)", out.width='80%', fig.asp=.75, fig.align='center', echo=FALSE}
+library(ggplot2)
+ggplot(data=rsq, aes(x=Noise, y=value, group=variable, colour=variable)) +
+    geom_line() +
+    geom_point()+
+  ylab("R2") 
+```
+
+Comparing Fig. \@ref(fig:errorvariable) and Fig. \@ref(fig:error), the influence of the two types of error is very different. The error in response cannot be overcome for any model, but it is not the case for the independent variables. Imagine an extreme case, if `online_exp` is completely random, that is, no information in it, the impact on the performance of random forest and support vector machine is marginal. Linear regression and PLS still perform similarly. With the increase of noise, the performance starts to decline faster. To a certain extent, it becomes steady.  In general, if an independent variable contains error, other variables associated with it can compensate to some extent. 
