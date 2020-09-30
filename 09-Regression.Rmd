@@ -116,6 +116,8 @@ The statement’s six principles, many of which address misconceptions and misus
 5. A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.
 6. By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.
 
+
+
 Now let us come back to our example. We will not spend too much time on p-values, while we will focus on the confidence interval for the parameter estimate for each explanatory variable. In R, the function `confint()` can produce the confidence interval for each parameter: 
 
 ```{r}
@@ -181,15 +183,14 @@ The above diagnostic plot examples show:
 modeldat[which(row.names(modeldat) %in% c(960, 678, 155)), ]
 ```
 
-Why are those outliers? They are outliers conditional on the values of the independent variables. Let us examine the value of expense for samples with the same Q1, Q2, Q3, Q6, and Q8 answers as the 3rd row above. 
+It is not easy to see why those records are outliers from the above output. It will be clear conditional on the independent variables (`Q1`, `Q2`, `Q3`, `Q6`, and `Q8`). Let us examine the value of `total_exp` for samples with the same Q1, Q2, Q3, Q6, and Q8 answers as the 3rd row above. 
 
 ```{r}
 datcheck = modeldat %>% filter(Q1 ==2 & Q2 == 1 & Q3 == 1 & Q6 == 1 & Q8 == 3) 
 nrow(datcheck)
 ```
 
-There are 87 samples with the same value of independent variables. The response variable's (`total_exp`) distribution is:
-
+There are 87 samples with the same values of independent variables. The response variable's (`total_exp`) distribution is:
 
 ```{r}
 summary(datcheck$total_exp)
