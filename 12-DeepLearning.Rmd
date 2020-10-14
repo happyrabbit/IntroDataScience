@@ -368,11 +368,11 @@ $$L_1\ penalty = \frac{\lambda}{m}\Sigma_{i=1}^{n_x}|w|$$
 
 For neural network,
 
-$$J(w^{[1]},b^{[1]},\dots,w^{[L]},b^{[L]})=\frac{1}{m}\Sigma_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)}) + \frac{\lambda}{2m}\Sigma_{l=1}^{L} \parallel w^{[l]} \parallel^2_F$$
+$$J(w^{[1]},b^{[1]},\dots,w^{[L]},b^{[L]})=\frac{1}{m}\Sigma_{i=1}^{m}L(\hat{y}^{(i)},y^{(i)}) + \frac{\lambda}{2}\Sigma_{l=1}^{L} \parallel w^{[l]} \parallel^2_F$$
 
 where
 
-$$\parallel w^{[l]} \parallel^2_F = \Sigma_{i=1}^{l}\Sigma_{j=1}^{l-1} (w^{[l]}_{ij})^2$$
+$$\parallel w^{[l]} \parallel^2_F = \Sigma_{i=1}^{n^{[l]}}\Sigma_{j=1}^{n^{[l-1]}} (w^{[l]}_{ij})^2$$
 
 Many people call it "Frobenius Norm" instead of L2-norm.
 

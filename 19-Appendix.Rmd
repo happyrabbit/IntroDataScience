@@ -2,7 +2,7 @@
 
 # R code for data simulation
 
-## Customer Data for Clothing Company
+## Customer Data for Clothing Company {#appendixdata1}
 
 The simulation is not very straightforward and we will break it into three parts: 
 1. Define data structure: variable names, variable distribution, customer segment names, segment size
@@ -182,7 +182,7 @@ sim.dat <- cbind(sim.dat, sim.dat2)
 sim.dat$segment <- factor(rep(group_name, times = group_size))
 ```
 
-## Customer Satisfaction Survey Data from Airline Company
+## Customer Satisfaction Survey Data from Airline Company {#appendixdata2}
 
 ```r
 # Create a matrix of factor loadings This pattern
@@ -270,7 +270,7 @@ names(rating) <- c("Easy_Reservation", "Preferred_Seats",
     "Airline")
 ```
 
-## Swine Disease Breakout Data
+## Swine Disease Breakout Data {#appendixdata3}
 
 ```r
 # sim1_da1.csv the 1st simulated data similar
