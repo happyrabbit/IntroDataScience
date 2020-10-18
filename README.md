@@ -24,6 +24,19 @@ Readers should know basic statistical ideas, such as correlation and linear regr
 - End-to-end cycle of a typical data science project
 - Pitfalls that everyone should avoid
 
+**Notebooks**
+
+| Chapter | R | Python |
+| :--- | :---: | :---: |
+| Ch4: Big Data Cloud Platform | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/4269117185296595/78755435857845/latest.html) | [Create Spark Data](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/LoadDatasetSpark.ipynb), [`pyspark` Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/PysparkETL.ipynb)  |
+|Ch5: Data Preprocessing | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3241206203474646/1806228006848429/latest.html) |  |
+|Ch6: Data Wrangling | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3241206203474687/1806228006848429/latest.html) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/DataWrangling.ipynb) |
+|Ch7: Data Splitting and Resampling |  |   |
+|Ch8: Measuring Performance | |  |
+|Ch9: Regression Models | |  |
+|Ch10: Regularization Methods |  |  |
+|Ch11: Tree-Based Methods |  |  |
+|Ch12:  Deep Learning | [DNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/4269117185296628/78755435857845/latest.html), [CNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/1821707097719970/78755435857845/latest.html), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html) | [DNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/FFNN.ipynb), [CNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/CNN.ipynb), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html) |
 
 **Others**
 
