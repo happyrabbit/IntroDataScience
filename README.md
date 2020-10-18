@@ -35,7 +35,7 @@ Readers should know basic statistical ideas, such as correlation and linear regr
 |Ch8: Measuring Performance | |  |
 |Ch9: Regression Models | |  |
 |Ch10: Regularization Methods |  |  |
-|Ch11: Tree-Based Methods |  |  |
+|Ch11: Tree-Based Methods | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/2153523447602836/78755435857845/latest.html) |  [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/TreeBasedModels.ipynb) |
 |Ch12:  Deep Learning | [DNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/4269117185296628/78755435857845/latest.html), [CNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/1821707097719970/78755435857845/latest.html), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html) | [DNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/FFNN.ipynb), [CNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/CNN.ipynb), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html) |
 
 **Others**
