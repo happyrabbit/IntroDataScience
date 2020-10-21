@@ -29,7 +29,7 @@ Readers should know basic statistical ideas, such as correlation and linear regr
 | Chapter | R | Python |
 | :--- | :---: | :---: |
 | Ch4: Big Data Cloud Platform | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/4269117185296595/78755435857845/latest.html) | [Create Spark Data](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/LoadDatasetSpark.ipynb), [`pyspark` Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/PysparkETL.ipynb)  |
-|Ch5: Data Preprocessing | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3241206203474646/1806228006848429/latest.html) |  |
+|Ch5: Data Preprocessing | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3241206203474646/1806228006848429/latest.html) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/DataPreprocessing.ipynb) |
 |Ch6: Data Wrangling | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/2961012104553482/3241206203474687/1806228006848429/latest.html) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/DataWrangling.ipynb) |
 |Ch7: Data Splitting and Resampling |  |   |
 |Ch8: Measuring Performance | |  |
