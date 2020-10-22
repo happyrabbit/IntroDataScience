@@ -38,7 +38,7 @@ Tukey's 1962 list is surprisingly modern. Let's inspect those points in today's 
 
 The toolbox and application have been expanding fast, benefiting from the increasing availability of digitized information and the possibility of distributing it through the internet. Today, people apply data science in many areas, including business, health, biology, social science, politics, etc. Now data science is everywhere. But what is today's data science?
 
-## Blind men and an elephant
+## Data science role and skill tracks
 
 There is a widely diffused Chinese parable about a group of blind men conceptualizing what the elephant is like by touching it. The first person, whose hand landed on the trunk, said: "This being is like a thick snake." For another one whose hand reached its ear, it seemed like a fan. Another person whose hand was upon its leg said the elephant is a pillar-like tree trunk. The blind man who placed his hand upon its side said: "elephant is a wall." Another who felt its tail described it as a rope. The last felt its tusk, stating the elephant is hard, smooth, and spear.
 
@@ -48,17 +48,15 @@ Data science is the elephant. With the data science hype picking upstream, many 
 
 It is annoying but true. So, the answer to the question "what is data science?" depends on who you are talking to. Who may you be talking to then? Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!).
 
-There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science as described in next sub-section. [^1] 
+There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1] 
 
 [^1]: This is based on [Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory](https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.
 
-### Data science role/skill tracks
-
 When people talk about all the machine learning and AI algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are not ready for a data scientist if you don't have a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you may be able to get by with plain text files such as CSV (i.e., comma-separated values) or even Excel Spreadsheet. As the data increasing in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
 
-- **Engineering: the process of making everything else possible**
+### Engineering
 
-Data engineering mainly involves in building the data pipeline infrastructure. In the (not that) old day, when data is stored on local servers, computers, or other devices, building the data infrastructure can be a massive IT project. It involves the software and the hardware used to store the data and perform data ETL (i.e., extract, transform, and load) process. As cloud service development, it becomes the new norm to store and compute data on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
+Data engineering is the foundation that makes everything else possible. It mainly involves in building the data pipeline infrastructure. In the (not that) old day, when data is stored on local servers, computers, or other devices, building the data infrastructure can be a massive IT project. It involves the software and the hardware used to store the data and perform data ETL (i.e., extract, transform, and load) process. As cloud service development, it becomes the new norm to store and compute data on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
 
 (1) Data environment
 
@@ -72,7 +70,9 @@ Automated data collection is a common task that includes parsing the logs (depen
 
 If you want to integrate the model or analysis into the production system, you have to automate all data handling steps. It involves the whole pipeline from data access, preprocessing, modeling to final deployment. It is necessary to make the system work smoothly with all existing software stacks. So, it requires to monitor the system through some robust measures, such as rigorous error handling, fault tolerance, and graceful degradation to make sure the system is running smoothly and the users are happy.
     
-- **Analysis – the process of turning raw information into insights in a fast and often exploratory way**
+### Analysis
+
+Analysis turns raw information into insights in a fast and often exploratory way. In general, an analyst needs to have decent domain knowledge, do exploratory analysis efficiently, and present the results using storytelling. 
 
 (1) Domain knowledge
 
@@ -105,9 +105,9 @@ Storytelling with data is critical to deliver insights and drive better decision
 
 A business-friendly report or an interactive dashboard is the typical outcome of the analysis.   
 
-- **Modeling – the process of diving deeper into the data to discover the pattern we don't easily see**
+### Modeling
 
-A fancy machine learning model is the first thing that comes to people’s minds when the general public thinks about data science. Unfortunately, fancy models only occupy a small part of a typical data scientist’s day-to-day time. Nevertheless, many of those models are powerful tools.
+Modeling is a process that dives deeper into the data to discover the pattern we don't readily see. A fancy machine learning model is the first thing that comes to people’s minds when the general public thinks about data science. Unfortunately, fancy models only occupy a small part of a typical data scientist’s day-to-day time. Nevertheless, many of those models are powerful tools.
 
 (1) Supervised learning
 
