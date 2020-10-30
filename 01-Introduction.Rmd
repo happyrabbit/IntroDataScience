@@ -187,28 +187,31 @@ That is still very abstract, I hear you. Now, Let's be more specific...
 
 ### Prerequisites
 
-Data science is not a panacea and there are problems data science can't help. It is best to make a judgment as early in the analytical cycle as possible. Tell your clients honestly and clearly when you think data analytics can't give the answer they want. What kind of questions can data science solve? 
+Data science is not a panacea, and there are problems data science can't help. It is best to make a judgment as early in the analytical cycle as possible. First and foremost, we need to tell customers, clients, and stakeholders honestly and clearly when we think data analytics can't answer their question after careful evaluation of the request, data availability, computation resources, and modeling details. Often, we can tell them what we can do as an alternative. It is essential to "negotiate" with others what data science can do specifically; simply answering "we cannot do what you want" will end the collaboration. Now let's see what kind of questions data science can solve:
 
-1. Your question needs to be specific enough
+1. The question needs to be specific enough
 
-Look at two examples:
+Let us look at the two examples below:
 
 * Question 1:  How can I increase product sales?
 * Question 2:  Is the new promotional tool introduced at the beginning of this year boosting the annual sales of P1197 in Iowa and Wisconsin? (P1197 is an impressive corn seed product from DuPont Pioneer)
 
-It is easy to see the difference between the two questions. Question 1 is a grammatically correct question, but it is proper for data analysis to answer. Why? It is too general. What is the response variable here? Product sales? Which product? Is it annual sales or monthly sales? What are the candidate predictors? You nearly can't get any useful information from the questions. In contrast, question 2 is much more specific. From the analysis point of view, the response variable is clearly "annual sales of P1197 in Iowa and Wisconsin". Even we don't know all the predictors, but the variable of interest is "the new promotional tool introduced early this year." We want to study the impact of the promotion of sales. You can start from there and move on to figure out other variables need to include in the model by further communication. 
+It is easy to see the difference between the two questions. Question 1 is grammatically correct, but it is not proper for data analysis to answer. Why? It is too general. What is the response variable here? Product sales? Which product? Is it annual sales or monthly sales? What are the candidate predictors? We nearly can't get any useful information from the questions.
 
-As a data scientist, you may start with something general and unspecific like question 1 and eventually get to question 2. Effective communication and in-depth domain knowledge about the business problem are essential to convert a general business question into a solvable analytical problem. Domain knowledge helps data scientist communicate with the language the other people can understand and obtain the required information. 
+In contrast, question 2 is much more specific. From the analysis point of view, the response variable is clearly "annual sales of P1197 in Iowa and Wisconsin". Even we don't know all the predictors, but the variable of interest is "the new promotional tool introduced early this year." We want to study the impact of the promotion on sales. We can start there and figure out other variables that need to be included in the model by further communication.
 
-However, defining the question and variables involved won't guarantee that you can answer it. For example, I encountered this situation with a well-defined supply chain problem. My client asked me to estimate the stock needed for a product in a particular area. Why can't this question be answered? I tried fitting a Multivariate Adaptive Regression Spline (MARS) model and thought I found a reasonable solution. But it turned out later that the data my client gave me was inaccurate. In this case, only estimates rather than actual values of past supply figures were available and there was no way to get accurate data. The lesson lends itself to the next point.
+As a data scientist, we may start with general questions from customers, clients, or stakeholders and eventually get to more specific and data science solvable questions with a series of communication, evaluation, and negotiation. Effective communication and in-depth knowledge about the business problem are essential to converting a general business question into a solvable analytical problem. Domain knowledge helps data scientists communicate using the language other people can understand and obtain the required information. 
+
+However, defining the question and variables involved won't guarantee that we can answer it. For example, we could encounter this situation with a well-defined supply chain problem. The client may ask us to estimate the stock needed for a product in a particular area. Why can't this question be answered? We can try to fit various models such as a Multivariate Adaptive Regression Spline (MARS) model and find a reasonable solution from a modeling perspective. But it can turn out later that the client's data is an estimated value, not the actual observation. There is no good way for data science to solve the problem with the desired accuracy with inaccurate data. 
 
 2.  You need to have sound and relevant data
 
-One cannot make a silk purse out of a sow's ear. Data scientists need data, sound and relevant data. The supply problem is a case in point. There was relevant data, but not sound. All the later analytics based on that data was a building on sand. Of course, data nearly almost have noise, but it has to be in a certain range.  Generally speaking, the accuracy requirement for the independent variables of interest and response variable is higher than others. In question 2, it is data related to the "new promotion" and "sales of P1197".
+One cannot make a silk purse out of a sow's ear. Data scientists need data, sound, and relevant data. The supply problem mentioned above is a case in point. There were relevant data, but not sound. All the later analytics based on that data was a building on sand. Of course, data nearly almost have noise, but it has to be in a certain range. Generally speaking, the accuracy requirement for the independent variables of interest and response variable is higher than others. For the above question 2, it is variables related to the "new promotion" and "sales of P1197".
 
-The data has to be helpful for the question. If you want to predict which product consumers are most likely to buy in the next three months,  you need to have historical purchasing data: the last buying time, the amount of invoice, coupons and so on. Information about customers' credit card number, ID number, the email address is not going to help.
+The data has to be helpful for the question. If we want to predict which product consumers are most likely to buy in the next three months, we need to have historical purchasing data: the last buying time, the amount of invoice, coupons, etc. Information about customers' credit card numbers, ID numbers, and email addresses will not help much.
 
-Often the quality of the data is more important than the quantity, but the quantity cannot be overlooked. In the premise of guaranteeing quality, usually the more data, the better.  If you have a specific and reasonable question, also sound and relevant data, then congratulations, you can start playing data science!
+Often, the data quality is more important than the quantity, but you can not overlook the quantity.  
+Suppose you can guarantee the quality; usually, the more data, the better. If we have a specific and reasonable question with sound and relevant data, then congratulations, we can start playing data science!
 
 ### Problem type
 
@@ -308,3 +311,19 @@ It works well in the short term for both the company and the data science hires.
 - There is no career path for data science people and so it is difficult to retain talent.
 
 There is not an universal answer for the best way to organize data science team. It depends on the answer of many other questions. How important do you think the data science team is for your company? What is the stage of your company when you start to build data science team? Are you a startup or a relatively mature company? Data science has its own skillset, workflow, tooling, integration process and culture. If it is critical to your organization, it is the best not to bury it under any part of the organization. Otherwise data science will inevitably only serve the need for specific branch of the organization and it  also impedes data democratization across the organization. How valuable it is to use data to tell the truth, how dangerous it is to use data to affirm existing opinions. No matter which way you choose, be aware of both sides of the coin. If you are looking for a data science position, it is important to know where the data science team fits in the company.
+
+## List of potential data science careers
+
+As companies learn about using data to help with the business, there is a continuous specialization of different data science roles. 
+As a result, the old "data scientist" title is fading, and some other data science job titles are emerging. The misunderstanding of data science's fundamental work leads to confusing job postings and frustrations for both stakeholders and data scientists. Stakeholders are frustrated that they aren't getting what they expect, and data scientists are frustrated that their talent is not appreciated. We are glad to see that the change is underway. Here is a list of today's data science job titles. Some of them are relatively new, and the others have been around for some time but now are better defined. 
+
+| Role  |Skills  |
+|---|---|
+| Data infrastructure engineer  |  Go, Python, AWS/Google Cloud/Azure, logstash, Kafka, and Hadoop |
+| Data engineer  |  spark/scala, python, SQL, AWS/Google Cloud/Azure, Data modeling |
+| BI engineer  | Tableau/looker/Mode, etc., data visualization, SQL, Python  |
+| Data analyst | SQL, basic statistics, data visualization |
+| Data scientist |  R/Python, SQL, basic + applied statistics, data visualization, experimental design |
+| Research scientist | R/Python, advanced statistics + experimental design, ML, research background, publications, conference contributions, algorithms |
+| Applied scientist | ML algorithm design, often with an expectation of fundamental software engineering skills |
+| Machine Learning Engineer | More advanced software engineering skillset, algorithms, machine learning algorithm design, system design | 
