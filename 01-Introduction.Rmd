@@ -215,21 +215,21 @@ Suppose you can guarantee the quality; usually, the more data, the better. If we
 
 ### Problem type
 
-Many of the data science books classify the various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on "problem-oriented" track. We first introduce different groups of real problems and then present which models can be used to answer the corresponding category of questions. 
+Many of the data science books classify various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on a "problem-oriented" track. We first introduce different groups of real-world problems and then present which models can answer the corresponding category of questions.
 
 1. Description
 
-The basic analytic problem is to summarize and explore a data set with descriptive statistics (mean, standard deviation, and so forth) and visualization methods. It is the simplest problem and yet the most crucial and common one. You will need to describe and explore the dataset before moving on to more complex analysis. In the problem such as customer segmentation, after you cluster the sample, the next step is to figure out the profile of each class by comparing the descriptive statistics of the various variables. Questions of this kind are:
+The primary analytic problem is to summarize and explore a data set with descriptive statistics (mean, standard deviation, and so forth) and visualization methods. It is the most straightforward problem and yet the most crucial and common one. We will need to describe and explore the dataset before moving on to a more complex analysis. For problems such as customer segmentation, after we cluster the sample, the next step is to figure out each class's profile by comparing the descriptive statistics of various variables. Questions of this kind are:
 
-* How does the annual income distribute?
-* Are there outliers?
+* What is the annual income distribution?
+* Are there any outliers?
 * What are the mean active days of different accounts?
 
 Data description is often used to check data, find the appropriate data preprocessing method, and demonstrate the model results.
 
 2. Comparison
 
-The first common problem is to compare different groups. Such as: Is A better in some way than B? Or more comparisons: Is there any difference among A, B, and C in a particular aspect? Here are some examples:
+The first common modeling problem is to compare different groups. Is A better in some way than B? Or more comparisons: Is there any difference among A, B, and C in a particular aspect? Here are some examples:
 
 * Are males more inclined to buy our products than females?
 * Are there any differences in customer satisfaction in different business districts?
