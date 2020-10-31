@@ -2,7 +2,7 @@ This is a draft of the book [**Introduction to Data Science**](http://scientistc
 
 Please note that this work is being written under a [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms. 
 
-## Goal of the Book {-}
+## Goal of the Book
 
 This is an introductory book to data science with a specific focus on real-world applications. Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books on data science are about the modeling techniques and the implementation of models using R or Python. However, many of these books lack the context of the industrial environment. Moreover, a crucial part, the art of data science in practice is often missing. This book intends to fill the gap.
 
