@@ -294,29 +294,31 @@ As companies grow, each department prefers to be self-sufficient and tries to hi
 There is still a head of data science, but his/her role is mostly a hiring manager and coach, and he/she may report to a senior manager in the engineering department. The data science team brings in talented people and farms them out to the rest of the company. In other words, it gives up autonomy to ensure utility. The advantages are:
 
 - Data science is closer to its applications.
-- There is still a data science group so it is easy to share knowledge.
-- It has high flexibility to allocate data science resource to the rest of the company.
+- There is still a data science group, so it is easy to share knowledge.
+- It has high flexibility to allocate data science resources across the company.
 
 However, there are also concerns.
 
-- It brings difficulty to the management since the lead of the designated team is not responsible for data science professionals' growth and happiness while the data science managers are not directly vested in their work.
-- Data scientists are second-class citizens everywhere and it is hard to attract and retain top talent.
+- It brings difficulty to the management since the designated team's lead is not responsible for data science professionals' growth and happiness. In contrast, data science managers are not directly vested in their work.
+- Data scientists are second-class citizens everywhere, and it is hard to attract and retain top talent.
 
 (3) Integrated team
 
-There is no data science team. Each team hires its own data science people. For example, there may be a marketing analytics group consisting of data engineer, data analyst and data scientists. The team leader is a marketing manager who has an analytical mind and deep business knowledge. The advantages are obvious.
+There is no data science team. Each team hires its data science people. For example, a marketing analytics group consists of a data engineer, data analyst, and data scientist. The team leader is a marketing manager who has an analytical mind and in-depth business knowledge. The advantages are apparent.
 
-- Data science resource aligns with the organization very well
-- Data science professionals are first-class members and valued in their own team.  The manager is responsible for data science professionals' growth and happiness.
-- The insights from data are easily put into actions.
+- Data science resource aligns with the organization very well.
+- Data science professionals are first-class members and valued in their team. The manager is responsible for data science professionals' growth and happiness.
+- The insights from the data are quickly put into action.
 
 It works well in the short term for both the company and the data science hires. However, there are also many concerns.
 
-- It sacrifices the professional growth of data science hires since they work in silos and specialize in specific application. It is also difficult to share knowledge across different applied areas.
-- It is harder to move people around since they are highly associated with a specific function in the organization.
-- There is no career path for data science people and so it is difficult to retain talent.
+- It sacrifices data science hires' professional growth since they work in silos and specialize in a specific application. It is also difficult to share knowledge across different applied areas.
+- It is harder to move people around since they are highly associated with a specific organization's specific function.
+- There is no career path for data science people, and it is difficult to retain talent.
 
-There is not an universal answer for the best way to organize data science team. It depends on the answer of many other questions. How important do you think the data science team is for your company? What is the stage of your company when you start to build data science team? Are you a startup or a relatively mature company? Data science has its own skillset, workflow, tooling, integration process and culture. If it is critical to your organization, it is the best not to bury it under any part of the organization. Otherwise data science will inevitably only serve the need for specific branch of the organization and it  also impedes data democratization across the organization. How valuable it is to use data to tell the truth, how dangerous it is to use data to affirm existing opinions. No matter which way you choose, be aware of both sides of the coin. If you are looking for a data science position, it is important to know where the data science team fits in the company.
+There is no universal answer to the best way to organize the data science team. It depends on the answer to many other questions. How important do you think the data science team is for your company? What is the stage of your company when you start to build a data science team? Are you a startup or a relatively mature company? How valuable it is to use data to tell the truth, how dangerous it is to use data to affirm existing opinions.
+
+Data science has its skillset, workflow, tooling, integration process, and culture. If it is critical to your organization, it is best not to bury it under any part of the organization. Otherwise, data science will only serve the need for a specific branch. No matter which way you choose, be aware of both sides of the coin. If you are looking for a data science position, it is crucial to know where the data science team fits.
 
 ## List of potential data science careers
 
