@@ -107,13 +107,13 @@ multiplot(p1, p2, p3, p4, cols = 2)
 The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
 
 ```{r,warning=FALSE}
-p1 = ggplot(dat1, aes(x1, fx1)) + geom_point() + geom_smooth(method = "lm", 
+p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(method = "lm", 
     se = FALSE)
-p2 = ggplot(dat2, aes(x2, fx2)) + geom_point() + geom_smooth(method = "lm", 
+p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(method = "lm", 
     se = FALSE)
-p3 = ggplot(dat3, aes(x3, fx3)) + geom_point() + geom_smooth(method = "lm", 
+p3 = ggplot(dat3, aes(x3, fx3)) + geom_smooth(method = "lm", 
     se = FALSE)
-p4 = ggplot(dat4, aes(x4, fx4)) + geom_point() + geom_smooth(method = "lm", 
+p4 = ggplot(dat4, aes(x4, fx4)) + geom_smooth(method = "lm", 
     se = FALSE)
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
@@ -164,7 +164,7 @@ Assume the outcome variable is customer segment (column `segment`) and we decide
 
 ```{r}
 # load data
-sim.dat <- read.csv("https://raw.githubusercontent.com/happyrabbit/DataScientistR/master/Data/SegData.csv")
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 library(caret)
 # set random seed to make sure reproducibility
 set.seed(3456)

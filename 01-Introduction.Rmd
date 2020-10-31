@@ -235,57 +235,63 @@ The first common modeling problem is to compare different groups. Is A better in
 * Are there any differences in customer satisfaction in different business districts?
 * Do soybean carrying a particular gene have higher oil content?
 
-For those problems, it is usually to start exploring from the summary statistics and visualization by groups. After a preliminary visualization, you can test the differences between treatment and control group statistically. The commonly used statistical tests are chi-square test, t-test, and ANOVA. There are also methods using Bayesian methods. In biology industry, such as new drug development, crop breeding, mixed effect models are the dominant technique.
+For those problems, it usually starts with some summary statistics and visualization by groups. After a preliminary visualization, you can test the differences between the treatment and control groups statistically.  The commonly used statistical tests are chi-square test, t-test, and ANOVA. There are also methods using Bayesian methods. In the biology industry, such as new drug development, crop breeding, fixed/random/mixed effect models are standard techniques.
 
 3. Clustering
 
-Clustering is a widespread problem, which is usually related to classification. Clustering answers questions like:
+Clustering is a widespread problem, and it can answer questions like:
 
-* Which customers have similar product preference? 
-* Which printer performs a similar pattern to the broken ones?
-* How many different themes are there in the corpus?
+* How many reasonable customer segments are there based on historical purchase patterns? 
+* How are the customer segments different from each other? 
 
-Note that clustering is unsupervised learning. The most common clustering algorithms include K-Means and Hierarchical Clustering. 
+Please note that clustering is unsupervised learning; there are no response variables. The most common clustering algorithms include K-Means and Hierarchical Clustering.
 
 4. Classification
 
-Usually, a labeled sample set is used as a training set to train the classifier. Then the classifier is used to predict the category of a future sample.  Here are some example questions:
+For classification problems, there are one or more label columns to define the ground truth of classes. We use other features of the training dataset as explanatory variables for model training. We can use the trained classifier to predict the labels of a new observation. Here are some example questions:
 
-* Who is more likely to buy our product?
-* Is the borrower going to pay back?
-* Is it spam?
+* Will this customer likely to buy our product?
+* Is the borrower going to pay us back?
+* Is it spam email or not?
 
-There are hundreds of classifiers. In practice, we do not need to try all the models but several models that perform well generally. 
+There are hundreds of different classifiers. In practice, we do not need to try all the models but several models that perform well generally. For example, the random forest algorithm is usually used as the baseline model to set model performance expectations.
 
 5. Regression
 
-In general, regression deals with the problem of "how much is it?" and return a numerical answer.  In some cases, it is necessary to coerce the model results to be 0, or round the result to the nearest integer. It is the most common problem. 
+In general, regression deals with a question like "how much is it?" and return a numerical answer. It is necessary to coerce the model results to be 0 or round it to the nearest integer in some cases. It is still the most common problem in the data science world.
 
 * What will be the temperature tomorrow?
 * What is the projected net income for the next season?
 * How much inventory should we have? 
 
+6. Optimization
+
+Optimization is another common type of problems in data science to find an optimal solution by tuning a few tune-able variables with other non- controllable environmental variables. It is an expansion of comparison problem and can solve problems such as:
+
+* What is the best route to deliver the packages?
+* What is the optimal advertisement strategy to promote a new product? 
+
 ## Structure data science team
 
-During the past decade, a huge amount of data has become available and readily accessible for analysis in many companies across different business sectors. The size, complexity, and speed of increment of data suddenly beyond the traditional scope of statistical analysis or BI reporting. To leverage the big data, do you need an internal data science team to be a core competency, or can you outsource it?  The answer depends on the problems you want to solve using data. If the problems are critical to the business, you can't afford to outsource it. Also, each company has its own business context and hence needs new kinds of data or or use the results in novel ways. Being a data driven organization requires cross organization commitments to identify what data each department needs to collect, establish the infrastructure and process for collecting and maintaining that data, and the way to deliver analytical results. Unfortunately, it is unlikely that an off-the-shelf solution will be flexible enough to adapt to the specific business context. So most of the companies establish their own data science team. 
+A vast amount of data has become available and readily accessible for analysis in many companies across different business sectors during the past decade. The size, complexity, and speed of increment of data suddenly beyond the traditional scope of statistical analysis or business intelligence (i.e., BI) reporting. To leverage the big data collected, do you need an internal data science team to be a core competency, or can you outsource it? The answer depends on the problems you want to solve using data. If they are critical to the business, you can't afford to outsource it. Also, each company has its business context, and it needs new kinds of data as the business grows and uses the results in novel ways. Being a data-driven organization requires cross-organization commitments to identify what data each department needs to collect, establish the infrastructure and process for collecting and maintaining that data, and standardize how to deliver analytical results. Unfortunately, it is unlikely that an off-the-shelf solution will be flexible enough to adapt to the specific business context. In general, most of the companies establish their data science team.
 
-Where should data science team fit? Much has been written about different ways data science function fit in the organization. In general, data science team is organized in three ways.
+Where should the data science team fit? In general, the data science team is organized in three ways.
 
 (1) A standalone team
 
-Data science is an autonomous unit that is parallel to the other organizations (such as engineering, product etc.) and the head of data science reports directly to senior leadership, ideally to the CEO or at least to someone who understands data strategy and is willing to invest to give it what it needs. The advantages of this type of data organization are:
+Data science is an autonomous unit parallel to the other organizations (such as engineering, product, etc.). The head of data science reports directly to senior leadership, ideally to the CEO or at least someone who understands data strategy and is willing to invest and give it what it needs. The advantages of this type of data organization are:
 
-- Data science team has autonomy and is well positioned to tackle whatever problems it deems important to the whole company.
-- It is advantageous for people in data science team to share knowledge and grow professionally.
-- It provides a clear career path for data science professionals and shows the company treats data as a first-class asset. So it tends to attract and retain top talent people.
+- The data science team has autonomy and is well-positioned to tackle whatever problems it deems important to the company.
+- It is advantageous for people in the data science team to share knowledge and grow professionally.
+- It provides a clear career path for data science professionals and shows the company treats data as a first-class asset. So, it tends to attract and retain top talent people.
 
-The biggest concern of this type of organization is the risk of marginalization. Data science only has value if data drives action which requires collaboration among data scientists, engineers, product managers and other business stakeholders across the organization. If you have a standalone data science team, it is critical to choose a data science leader who is knowledgable about the applications of data science in different areas and also has strong inter-discipline communication skills. The head of data science needs to build strong collaboration with other departments.
+The biggest concern of this type of organization is the risk of marginalization. Data science only has value if data drives action, which requires collaboration among data scientists, engineers, product managers, and other business stakeholders across the organization. Suppose you have a standalone data science team. It is critical to choose a data science leader who is knowledgeable about the applications of data science in different areas and has strong inter-discipline communication skills. The head of data science needs to build a strong collaboration with other departments.
 
-Also, as companies grow, each department prefers to be self-sufficient and tries to hire data own analytical personal under different titles even when they can get support from the data science team. This is why it is unlikely for an already mature company to have a standalone data science team. If you start your data science team in the early stage as a startup, it is important that the CEO sets a clear vision from the beginning and sends out strong message to the whole company about accessing data support. 
+As companies grow, each department prefers to be self-sufficient and tries to hire its data personal under different titles even when they can get support from the standalone data science team. That is why it is unlikely for an already mature company to have a standalone data science team. If you start your data science team in the early stage as a startup, it is important that the CEO sets a clear vision from the beginning and sends out a strong message to the whole company about accessing data support.
 
 (2) An embedded model
 
-There is still a head of data science but his/her role is mostly a hiring manager and coach and  he/she may report to a senior manager in IT department. The data science team brings in talented people and farms them out to the rest of the company. In other words, it gives up autonomy to ensure utility. The advantages are:
+There is still a head of data science, but his/her role is mostly a hiring manager and coach, and he/she may report to a senior manager in the engineering department. The data science team brings in talented people and farms them out to the rest of the company. In other words, it gives up autonomy to ensure utility. The advantages are:
 
 - Data science is closer to its applications.
 - There is still a data science group so it is easy to share knowledge.
