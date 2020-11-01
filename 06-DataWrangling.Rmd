@@ -510,7 +510,7 @@ Let's use some data with context to help you better understand the functions.
 # Read data
 sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 # Get numerical variables
-sdat <- sim.dat[, !lapply(sim.dat, class) == "factor"]
+sdat <- sim.dat[, lapply(sim.dat, class) %in% c("integer", "numeric")]
 ## Try the following code with apply() function apply(sim.dat,2,class)
 ## What is the problem?
 ```

@@ -129,7 +129,7 @@ Fitting a linear regression is so easy using R that many analysts directly write
 
 ### Diagnostics for Linear Regression 
 
-In linear regression, we would like the Ordinary Least Square (OLS) estimate to be the Best Linear Unbiased Estimate (BLUE). In other words, we hope the expected value of the estimate is the actual parameter value (i.e., unbiased) and achieving minimized residual (i.e., best). Based on the Gauss-Markov theorem, the OLS estimate is BLUE under the following conditions:
+In linear regression \index{linear regression}, we would like the Ordinary Least Square (OLS) \index{Ordinary Least Square (OLS)} estimate to be the Best Linear Unbiased Estimate (BLUE) \index{Best Linear Unbiased Estimate (BLUE)}. In other words, we hope the expected value of the estimate is the actual parameter value (i.e., unbiased) and achieving minimized residual (i.e., best). Based on the Gauss-Markov theorem, the OLS \index{OLS} estimate is BLUE \index{BLUE} under the following conditions:
 
 1. Explanatory variables ($\mathbf{x_{.j}}$) and random error ($\mathbf{\epsilon}$) are independent:  $cov(\mathbf{x_{.j},\epsilon})=0$ for $\forall j=j\in1...p$. 
 
@@ -196,8 +196,14 @@ There are 87 samples with the same values of independent variables. The response
 summary(datcheck$total_exp)
 ```
 
+Now it is easy to see why row 960 with `total_exp = 658.3` is an outlier. All the other 86 records with the same survey responses have a much higher total expense!
 
-## PCR and PLS
+- Cook's distance: the maximum of Cook's distance is around 0.05. Even though the graph does not have any point with Cook's distance of more than 0.5, we could spot some outliers.
+
+The graphs suggest some outliers, but it is our decision what to do. We can either remove it or investigate it further. If the values are not due to any data error, we should consider them in our analysis. 
+
+## Principal Components Analysis and Partial Least Square
+
 
 ## Measurement Error
 
