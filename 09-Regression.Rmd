@@ -93,9 +93,9 @@ summary(lmfit)
 
 The `summary(lmfit)` presents a summary of the model fit. It shows the point estimate of each explanatory variable (the `Estimate` column), their corresponding standard error (the `Std. Error` column), t values (`t value`), and p values (`Pr(>|t|)`). 
 
-### The Magic P-value
+### The Magic P-value 
 
-Let us pause a little to have a short discussion about p-value. Misuse of p-value is common in many research fields. There were heated discussions about P-value in the past. Siegfried commented in his 2010 Science News article: 
+Let us pause a little to have a short discussion about p-value. Misuse of p-value is common in many research fields. There were heated discussions about P-value in the past. Siegfried commented in his 2010 Science News article: \index{P-value}
 
 > "It's science's dirtiest secret: The scientific method of testing hypotheses by statistical analysis stands on a flimsy foundation." 
 
@@ -116,7 +116,11 @@ The statement’s six principles, many of which address misconceptions and misus
 5. A p-value, or statistical significance, does not measure the size of an effect or the importance of a result.
 6. By itself, a p-value does not provide a good measure of evidence regarding a model or hypothesis.
 
+The $p = 0.05$ threshold is not based on any scientific calculation but is an arbitrary number. It means that practitioners can use a different threshold if they think it better fits the problem to solve. We do not promote p-value in this book. However, the p-value is hard to avoid in classical statistical inference. In practice, when making classic statistical inferences, we recommend reporting confidence interval whenever possible instead of P-value.  
 
+The Bayesian paradigm is an alternative to the classical paradigm.  A Bayesian can state probabilities about the parameters, which are considered random variables. However, it is not possible in the classical paradigm. In our work, We use hierarchical (generalize) linear models in practice instead of classical linear regression. Hierarchical models pool information across clusters (for example, you can treat each customer segment as a cluster). This pooling tends to improve estimates of each cluster, especially when sampling is imbalanced. Because the models automatically cope with differing uncertainty introduced by sampling imbalance (bigger cluster has smaller variance), it prevents over-sampled clusters from unfairly dominating inference. 
+
+This book does not cover the Bayesian framework. The best applied Bayesian book is [Statistical Rethinking](https://xcelab.net/rm/statistical-rethinking/)  by Richard McElreath [@rethinking2020]. The book provides outstanding conceptual explanations and a wide range of models from simple to advanced with detailed, repeatable code. The text uses R, but there are code examples for Python and Julia on the book website.
 
 Now let us come back to our example. We will not spend too much time on p-values, while we will focus on the confidence interval for the parameter estimate for each explanatory variable. In R, the function `confint()` can produce the confidence interval for each parameter: 
 
@@ -125,6 +129,7 @@ confint(lmfit,level=0.9)
 ```
 
 The above output is for a 90% confidence level as `level=0.9` indicated in the function call. We can change the confidence level by adjusting the level setting.
+
 Fitting a linear regression is so easy using R that many analysts directly write reports without thinking about whether the model is meaningful. On the other hand, we can easily use R to check model assumptions. In the following sections, we will introduce a few commonly used diagnostic methods for linear regression to check whether the model assumptions are reasonable.
 
 ### Diagnostics for Linear Regression 
