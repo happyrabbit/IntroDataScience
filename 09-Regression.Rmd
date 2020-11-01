@@ -63,7 +63,8 @@ We will not perform log-transformation for the response variable at this stage. 
 ```{r corplotlm, fig.cap= "Correlation Matrix Plot for Explanatory Variables", out.width="80%", fig.asp=.75, fig.align="center"}
 library(corrplot)
 correlation <- cor(modeldat[, grep("Q", names(modeldat))])
-corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", upper = "ellipse")
+corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", 
+    upper = "ellipse")
 ```
 
 As shown in fig @ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section @ref(collinearity) to remove highly correlated explanatory variables with a threshold of 0.75:
@@ -93,7 +94,7 @@ summary(lmfit)
 
 The `summary(lmfit)` presents a summary of the model fit. It shows the point estimate of each explanatory variable (the `Estimate` column), their corresponding standard error (the `Std. Error` column), t values (`t value`), and p values (`Pr(>|t|)`). 
 
-### The Magic P-value 
+### The Magic P-value
 
 Let us pause a little to have a short discussion about p-value. Misuse of p-value is common in many research fields. There were heated discussions about P-value in the past. Siegfried commented in his 2010 Science News article: \index{P-value}
 
@@ -144,7 +145,7 @@ In linear regression \index{linear regression}, we would like the Ordinary Least
 
 We will introduce four graphic diagnostics for the above assumptions.
 
-(1) Residual plot
+(1) Residual plot \index{residual plot}
 
 It is a scatter plot with residual on the Y-axis and fitted value on the X-axis. We can also put any of the explanatory variables on the X-axis. Under the assumption, residuals are randomly distributed, and we need to check the following:
 
@@ -154,15 +155,15 @@ It is a scatter plot with residual on the Y-axis and fitted value on the X-axis.
 
 Please note that even if the variance is not consistent, the regression parameter's point estimate is still unbiased. However, the variance estimate is not unbiased. Because the significant test for regression parameters is based on the random error distribution, these tests are no longer valid if the variance is not constant.
 
-(2) Normal quantile-quantile Plot (Q-Q Plot)
+(2) Normal quantile-quantile Plot (Q-Q Plot) \index{Q-Q Plot}
 
 Q-Q Plot is used to check the normality assumption for the residual. For normally distributed residuals, the data points should follow a straight line along the Q-Q plot. The more departure from a straight line, the more departure from a normal distribution for the residual.
 
-(3) Standardized residuals plot 
+(3) Standardized residuals plot \index{Standardized residuals plot}
 
 Standardized residual is the residual normalized by an estimate of its standard deviation. Like the residual plot, the X-axis is still the fitted value, but the y-axis is now standardized residuals. Because of the normalization, the y-axis shows the number of standard deviations from zero. A value greater than 2 or less than -2 indicates observations with large standardized residuals. The plot is useful because when the variance is not consistent, it can be difficult to detect the outliers using the raw residuals plot. 
 
-(4) Cook's distance
+(4) Cook's distance \index{Cook's distance}
 
 Cook's distance can check influential points in OLS based linear regression models. In general, we need to pay attention to data points with Cook's distance > 0.5.  
 
@@ -208,6 +209,36 @@ Now it is easy to see why row 960 with `total_exp = 658.3` is an outlier. All th
 The graphs suggest some outliers, but it is our decision what to do. We can either remove it or investigate it further. If the values are not due to any data error, we should consider them in our analysis. 
 
 ## Principal Components Analysis and Partial Least Square
+
+In real-life applications, explanatory variables are usually related to each other, containing similar information. For example, in the previous chapter, we used expenditure variables to predict consumer income. In that model, store expenditure (`store_exp`), online expenditure (`online_exp`), number of store transactions (`store_trans`), and number of online transactions (`online_trans`) are correlated to a certain extent, especially the number of transactions and expenditure. If there is a strong correlation among explanatory variables, then the least square-based linear regression model may not be robust. If the number of observations is less than the number of explanatory variables, the standard least square method cannot provide a unique set of coefficient estimates. We can perform data preprocessing, such as remove highly correlated variables with a preset threshold for such cases. However, this approach cannot guarantee a low correlation of the linear combination of the variables with other variables. In that case, the standard least square method will still not be robust. We need to be aware that removing highly correlated variables is not always guarantee a robust solution. We can also apply feature engineering procedures to explanatory variables such as principal component analysis (PCA). \index{principal component analysis (PCA)} By using principal components, we can ensure they are uncorrelated with each other. However, the drawback of using PCA is that these components are linear combinations of original variables, and it is difficult to explain the fitted model. Principal component regress (PCR) \index{principal component analysis (PCA)} is described in more detail in [@Massy1965]. It can be used when there are strong correlations among variables or when the number of observations is less than the number of variables.
+
+In theory, we can use PCR to reduce the number of variables used in a linear model, but the results are not good. Because the first a few principal components may not be good candidates to model the response variable. PCA is unsupervised learning such that the entire process does not consider the response variable. In PCA, it only focuses on the variability of explanatory variables. If the variability of explanatory variables aligns with the response variable, then PCR is a good approach. Otherwise, PCR may not be a good choice. We need to be aware that PCR does not make feature selections, and each principal component is a combination of original variables. 
+
+Partial least square regression (PLS) \index{Partial least square regression (PLS)} is the supervised version of PCR. Similar to PCR, PLS can also reduce the number of variables in the regression model. \index{PCR} \index{PLS} As PLS is also related to the variables' variance, we usually standardize or normalize variables before PLS. Suppose we have a list of explanatory variables $\mathbf{X}=[X_{1},X_{2},...,X_{p}]^{T}$, and their variance-covariance matrix is $\Sigma$. PLS also transforms the original variables using linear combination to new uncorrelated variables $(Z_{1} , Z_{2} , \ldots , Z_{m})$. When $m=p$, the result of PLS is the same as OLS. The main difference between PCR and PLS is the process of creating new variables. PLS considers the response variable. 
+
+PLS is from Herman Wold's Nonlinear Iterative Partial Least Squares (NIPALS) algorithm [@wold1973;@wold1982] \index{Nonlinear Iterative Partial Least Squares (NIPALS)}. This algorithm was first used to linearize non-linear variables. Later NIPALS was applied to regression problems, which was then called PLS \index{PLS}. In general, it will iteratively find the relationship between highly correlated explanatory variables and the response variable. We will not discuss the PLS algorithm's detail, and the reference mentioned above provides a more detailed description of the algorithm. 
+
+We focus on using R library `caret` to fit PCR and PLS models. Let us use the 10 survey questions (Q1-Q10) as the explanatory variables and income as the response variable. First load the data and preprocessing the data:
+
+```{r}
+library(lattice)
+library(caret)
+library(dplyr)
+library(elasticnet)
+library(lars)
+
+# Load Data
+sim.dat <- read.csv("http://bit.ly/2P5gTw4")
+ymad <- mad(na.omit(sim.dat$income))
+
+# Calculate Z values
+zs <- (sim.dat$income - mean(na.omit(sim.dat$income)))/ymad
+# which(na.omit(zs>3.5)) find outlier 
+# which(is.na(zs)) find missing values
+idex <- c(which(na.omit(zs > 3.5)), which(is.na(zs)))
+# Remove rows with outlier and missing values
+sim.dat <- sim.dat[-idex, ]
+```
 
 
 ## Measurement Error
