@@ -335,3 +335,30 @@ As a result, the old "data scientist" title is fading, and some other data scien
 | Research scientist | R/Python, advanced statistics + experimental design, ML, research background, publications, conference contributions, algorithms |
 | Applied scientist | ML algorithm design, often with an expectation of fundamental software engineering skills |
 | Machine Learning Engineer | More advanced software engineering skillset, algorithms, machine learning algorithm design, system design | 
+
+The above table shows some data science roles and common technical keywords in job descriptions. Those roles are different in the following key aspects: 
+
+- How much business knowledge is required?
+- Does it need to deploy code in the production environment?
+- How frequently is data updated?
+- How much engineering skill is required?
+- How much math/stat knowledge is needed?
+- Does the role work with structured or unstructured data?
+
+![Different roles in data science and the skill requirements](https://course2020.scientistcafe.com/slides/01Introduction/images/dsrole.png)
+
+Data infrastructure engineers work at the beginning of the data pipeline. They are hardcore engineers who work in the production system and usually handle high-frequency data. They are responsible for bringing data of different forms and formats and ensuring data coming in smoothly and correctly. They typically don't need to know the data's business context or how data scientists will use the data. For example, integrate the company's services with AWS/GCP/Azure services and set up an Apache Kafka environment to streaming the events. They work directly with other engineers (for example, data engineer and backend engineer). People call the pool of data they put together a data lake, a storage repository that holds a vast amount of raw data in its native format until needed.  As the number of data sources multiplies, having data scattered all over in various formats prevents the organization from using the data to help with business decisions or building products. That is when data engineers come to help.
+
+Data engineers transform, clean, and organize the data from the data lake. They commonly design the schemas, store data in query-able forms, and build and maintain data warehouses.  Since the database is for non-engineers, data engineers need to know a little more about the business and how analytical personals use the data.  They use technologies like Hadoop/Spark. Some of them may have a basic understanding of machine learning to deploy models developed by data/research scientists.
+
+BI engineers and data Analysts are close to the business, and hence they need to know the business context well. The critical difference is that BI engineers build automated dashboards, so they are engineers. They are usually experts in SQL and have the engineering skill to write production-level code to construct the later steam data pipeline and automate their work. Data analysts are technical but not engineers. They analyze ad hoc data and deliver the results through presentations. The data is, most of the time, structured. They need to know coding basics (SQL or sometimes R/Python) but are rarely asked to write production-level code. This role was mixed with "data scientist" by many companies but is now much better refined in mature companies. 
+
+The most significant difference between a data analyst and a data scientist is the requirement of mathematics and statistics. Data analysts usually don't need to have a quantitative background or have an advanced degree. The analytics they do are mostly descriptive with visualizations. Most data scientists have a quant background and do A/B experiments and sometimes machine learning models. They mainly handle structured and ad hoc data. 
+
+Research scientists are experts who have a research background. They do rigorous analysis and make causal inferences by framing experiments and developing hypotheses, and proving whether they are true or not. They are researchers that can create new models and publish peer-reviewed papers. Most of the small/mid companies don't have this role. 
+
+Applied scientist is the role that aims to fill the gap between data/research scientist and data engineers.  They have a decent scientific background, but they are also experts in applying their knowledge and implementing solutions at scale. They have a different focus than research scientists. Instead of scientific discovery, they focus on real-life applications. They usually need to pass a coding bar. 
+
+Machine learning engineers have a more advanced software engineering skillset, understand the efficiency of different algorithms and system design. They focus on deploying the models. They are in a niche position.  They collaborated with data scientists and applied scientists to read, reinterpret, and rewrite their proof of concept notebook or scripts into software that can be deployed. 
+
+
