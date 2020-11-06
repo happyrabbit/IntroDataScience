@@ -8,8 +8,8 @@ To compare different models, we need a way to measure model performance. There a
 
 Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values and the actual value. The Root Mean Squared Error (RMSE) is the root square of the MSE. 
 
-$$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}*{i})^{2}$$
-$$RMSE=\sqrt{\frac{1}{n}\sum*{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}}$$
+$$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}$$
+$$RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}}$$
 
 Both are the common measurements for the regression model performance.  Let's use the previous `income` prediction as an example. Fit a simple linear model:
 
