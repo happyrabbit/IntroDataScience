@@ -107,12 +107,11 @@ A business-friendly report or an interactive dashboard is the typical outcome of
 
 ### Modeling
 
-Modeling is a process that dives deeper into the data to discover the pattern we don't readily see. A fancy machine learning model is the first thing that comes to people’s minds when the general public thinks about data science. Unfortunately, fancy models only occupy a small part of a typical data scientist’s day-to-day time. Nevertheless, many of those models are powerful tools.
+Modeling is a process that dives deeper into the data to discover the pattern we don't readily see. A fancy machine learning model is the first thing that comes to people’s minds when the general public thinks about data science. Unfortunately, fancy models only occupy a small part of a typical data scientist’s day-to-day time. Nevertheless, many of those models are powerful tools. 
 
 (1) Supervised learning
 
 In supervised learning, each sample corresponds to a response measurement. There are two flavors of supervised learning: regression and classification. In regression, the response is a real number, such as the total net sales in 2017 for a company or the yield of corn next year for a state. The goal for regression is to approximate the response measurement as much as possible. In classification, the response is a class label, such as a dichotomous response of yes/no. The response can also have more than two categories, such as four segments of customers. A supervised learning model is a function that maps some input variables (X) with corresponding parameters (beta) to a response (y). The modeling process is to adjust the value of parameters to make the mapping fit the given response. In other words, it is to minimize the discrepancy between given responses and the model output. When the response y is a real value number, it is intuitive to define discrepancy as the squared difference between model output and the response. When y is categorical, there are other ways to measure the difference, such as the area under the receiver operating characteristic curve (i.e., AUC) or information gain.
-
 
 (2) Unsupervised learning
 
@@ -127,6 +126,17 @@ In unsupervised learning, there is no response variable. For a long time, the ma
 (3) Customized model development
 
 In most cases, after a business problem is fully translated into a data science problem, a data scientist needs to use out of the box algorithms to solve the problem with the right data. But in some situations, there isn't enough data to use any machine learning model, or the question doesn't fit neatly in the specifications of existing tools, or the model needs to incorporate some prior domain knowledge. A data scientist may need to develop new models to accommodate the subtleties of the problem at hand. For example, people may use Bayesian models to include domain knowledge as the modeling process's prior distribution.
+
+Here is a list of questions that can help you decide the type of technique to use:
+
+- Is your data labeled? It is straightforward since supervised learning needs labeled data.
+
+- Do you want to deploy your model at scale? There is a fundamental difference between building and deploying models. It is like the difference between making bread and making bread machine. One is a baker who will mix and bake ingredients according to recipes to make a variety of bread. One is a machine builder who builds a machine to automate the process and produce bread at scale. 
+
+- Is your data easy to collect? One of the major sources of cost in deploying machine learning is collecting, preparing, and cleaning the data. Because model maintenance includes continuously collecting data to keep the model updated. If the data collection process requires too much human labor, the maintenance cost can be too high. 
+
+- Does your problem have a unique context? If so, you may not be able to find any off-the-shelf method that can directly apply to your question and need to customize the model. 
+
 
 **What others?**
 
@@ -266,7 +276,7 @@ In general, regression deals with a question like "how much is it?" and return a
 
 6. Optimization
 
-Optimization is another common type of problems in data science to find an optimal solution by tuning a few tune-able variables with other non- controllable environmental variables. It is an expansion of comparison problem and can solve problems such as:
+Optimization is another common type of problems in data science to find an optimal solution by tuning a few tune-able variables with other non-controllable environmental variables. It is an expansion of comparison problem and can solve problems such as:
 
 * What is the best route to deliver the packages?
 * What is the optimal advertisement strategy to promote a new product? 
