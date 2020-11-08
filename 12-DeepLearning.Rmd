@@ -6,7 +6,7 @@ output:
 
 # Deep Learning
 
-With everyday applications in language, voice, image and automatic driving cars, deep learning becomes a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the concept of binary classifier of perceptron used a linear combination of input signals and a step activation function. It is basically the same as the single neuron in a modern deep learning framework that uses the exact same linear combination of input signals from neurons at previously layer and a more efficient non-linear activation function. The perceptron model was further defined by minimizing the classification error and it was trained by using one data point at a time to update the model parameters during the optimization process. In the modern neural network framework, there is a loss function to be minimized based on the problem to solve and the stochastics gradience descent and its variations are the major optimization algorithms.
+With everyday applications in language, voice, image, and automatic driving cars, deep learning becomes a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the binary perceptron classifier used a linear combination of input signals and a step activation function. It is the same as the single neuron in a modern deep learning framework that uses the same linear combination of input signals from neurons at the previous layer and a more efficient nonlinear activation function. The perceptron model was further defined by minimizing the classification error. It was trained by using one data point at a time to update the model parameters during the optimization process. There is a loss function in the modern neural network framework to be minimized based on the problem to solve, and the stochastic gradient descent and its variations are the major optimization algorithms.
 
 Even though the theoretical foundation of deep learning has gradually developed in the past few decades, real-world applications of deep learning started in the past few years primarily due to the following constraints: data, network structure, algorithm, and computation power.
 
@@ -105,7 +105,7 @@ First, thanks to the digitalization where lots of human activities are now in th
 
 ### Logistic Regression as Neural Network {#logistic_reg_as_neural_network}
 
-Let's look at logistic regression from the lens of neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have: 
+Let's look at logistic regression from the lens of the neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have: 
 
 \begin{equation}
 X=\left[\begin{array}{cccc}
@@ -144,9 +144,17 @@ $$L(\hat{y}^{(i)}, y^{(i)}) =  -y^{(i)}log(\hat{y}^{(i)})-(1-y^{(i)})log(1-\hat{
 
 To fit the model is to minimize the cost function.
 
-### Gradient Descent
+### Stochastic Gradient Descent
 
-The general approach to minimize $J(w,b)$ is by gradient descent, also known as _back-propagation_.  In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$ using the chain rule for differentiation. The optimization process is a forward and backward sweep over the network. Let's look at the gradient descent for logistic regression across m sample. The non-vectorized process is as follows.
+The general approach to minimize $J(w,b)$ is by gradient descent, also known as _back-propagation_.  The optimization process is a forward and backward sweep over the network.
+
+<center>
+![](../course2020/slides/02DeepLearning/DNN/images/dnn0_fb3.png){width=100%}
+</center>
+
+The forward propagation takes the current weights, calculates the prediction and cost. The backward propagation computes the gradient descent for the parameters by the chain rule for differentiation. In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$.
+
+Let's look at the Stochastic Gradient Descent (SGD) for logistic regression across $m$ samples. SGD updates one sample each time. The detailed process is as follows.
 
 <center>
 ![](images/GradientDescent.png){width=100%}
@@ -156,7 +164,7 @@ First initialize $w_1$, $w_2$, ... , $w_{n_x}$, and $b$. Then plug in the initia
     $$w := w - \gamma \frac{\partial J}{\partial w}$$
     $$b := b - \gamma \frac{\partial J}{\partial b}$$
 
-Repeat the progapation process using the updated parameter until the cost $J$ stabilizes. 
+Repeat the forward and backward process using the updated parameter until the cost $J$ stabilizes. 
 
 ### Deep Neural Network
 
@@ -347,8 +355,6 @@ For the output layer:
 - When it is binary classification, use sigmoid with binary cross-entropy as loss function
 - When there are multiple classes, use softmax function with categorical cross-entropy as loss function
 - When the response is continuous, use identity function (i.e. y = x)
-
-
 
 ### Deal with Overfitting
 
