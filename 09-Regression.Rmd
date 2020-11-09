@@ -67,7 +67,7 @@ corrplot.mixed(correlation, order = "hclust", tl.pos = "lt",
     upper = "ellipse")
 ```
 
-As shown in fig @ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section @ref(collinearity) to remove highly correlated explanatory variables with a threshold of 0.75:
+As shown in figure \@ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section \@ref(collinearity) to remove highly correlated explanatory variables with a threshold of 0.75:
 
 ```{r}
 highcor <- findCorrelation(correlation, cutoff = 0.75)
