@@ -272,7 +272,7 @@ RMSE was used to select the optimal model using the smallest value.
 The final values used for the model were fraction = 0.9579 and lambda = 0.
 ```
 
-The results show that the best values of the tuning parameters are fraction is `r res$fraction` and lambda is `r res$lambda` It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
+The results show that the best values of the tuning parameters are fraction = `r res$fraction` and lambda = `r res$lambda` It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
 
 ## Penalized Generalized Linear Model
 
@@ -547,7 +547,7 @@ nlam <- 100
 # number of cross-validation folds
 kfold <- 10
 cv_fit <- cv_glasso(trainx, trainy, nlam = nlam, kfold = kfold, type = "link")
-# 只展示部分结果
+# only show part of the results
 str(cv_fit)
 ```
 
