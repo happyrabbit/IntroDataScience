@@ -76,46 +76,47 @@ Online data are real-time information that flows to models to make automatic act
 
 #### Offline Training and Offline Application
 
-This type of data science project is for a specific business problem which needs to be solved once or multiple times. But the dynamic nature of the business problem requires substantial work every time. One example of such a project is "whether a new workflow is going to improve efficiency." In this situation, we often use offline internal and external data, build models, and deliver the final results as a report to answer the specific business question. It is similar to the traditional business intelligence project but with more focus on data and model. Sometimes the data size and model complexity are beyond the capacity of a single computer. So you need to use distributed storage and computation. Since the model is based on the historical data and the output is a report, there is no need for real-time execution. Usually, there is no run-time constraint on the machine learning model unless the model is running beyond a reasonable time frame such as a few hours or a few days. We can call this type of data science project "offline training, offline application" project.
+This type of data science project is for a specific business problem that needs to be solved once or multiple times. But the dynamic and disruptive nature of this type of business problem requires substantial work every time. One example of such a project is “whether a brand-new business workflow is going to improve efficiency.” In this case, we often use internal/external offline data and business insight to build models. The final results are delivered as a report to answer the specific business question. It is similar to the traditional business intelligence project but with more focus on data and models. Sometimes the data size and model complexity are beyond the capacity of a single computer. Then we need to use distributed storage and computation. Since the model uses historical data, and the output is a report, there is no need for real-time execution. Usually, there is no run-time constraint on the machine learning model unless the model runs beyond a reasonable time frame, such as a few days. We can call this type of data science project “offline training, offline application” project.
 
-#### Offline training and online application
+#### Offline Training and Online Application
 
-Another type of data science project is to use offline data for training and apply the trained model to real-time online data in the production environment. One example of such a project is "using historical data to train a personalized advertisement model, and then provides real-time ad recommendation when customers visit the website." The model is trained based on offline data, and then use a customer's online real-time data as features to run the model in real time to provide an automatic action. The model training is very similar to the "offline training, offline application" project, but as the trained model will be put to production, there are specific requirements such as features used in the offline training have to be available online in real time, and the online run-time of the model has to be short enough without impacting user experience. In most cases, data science projects in this category create continuous and scalable business value. We will use this type of data science project to describe the project cycle.
+Another type of data science project uses offline data for training and applies the trained model to real-time online data in the production environment. For example, we can use historical data to train a personalized advertisement recommendation model that provides a real-time ad recommendation. The model training uses historical offline data. The trained model then takes customers' online real-time data as input features and run the model in real-time to provide an automatic action. The model training is very similar to the "offline training, offline application" project. But to put the trained model into production, there are specific requirements. For example, as features used in the offline training have to be available online in real-time, the model's online run-time has to be short enough without impacting user experience. In most cases, data science projects in this category create continuous and scalable business value as the model could run millions of times a day. We will use this type of data science project to describe the project cycle.
 
-#### Online training and online application
+#### Online Training and Online Application
 
-For some business problems, it is so dynamic that even yesterday's data is out of date. For such cases, we can use online data to train the model and then applying it in real time. We call this type of data science project "online training, online application." This type of data science project requires high automation and low latency.
+For some business problems, it is so dynamic that even yesterday's data is out of date. In this case, we can use online data to train the model and apply it in real-time. We call this type of data science project "online training, online application." This type of data science project requires high automation and low latency.
 
-### At the Planning Stage
+### Problem Formulation and Project Planning Stage
 
-To ensure a successful data science project, a data-driven and fact-based planning stage is essential. With the recent big data and data science hype, there is a high demand for data science projects to create business value across different business sectors. Often times, these data science project proposals are initiated by the leaders of an organization. This top-down style data science projects usually have high visibility with certain human and computation resources pre-allocated. However, it is crucial to understand the business problem first and align the goal across different teams including 
+A data-driven and fact-based planning stage is essential to ensure a successful data science project. With the recent big data and data science hype, there is a high demand for data science projects to create business value across different business sectors. Usually, the leaders of an organization are those who initiate the data science project proposals. This top-down style of data science projects typically has high visibility with some human and computation resources pre-allocated. However, it is crucial to understand the business problem first and align the goal across different teams, including:
 
-(1) the business team which may include members from the business operation team, business analyst, insight and reporting team; 
+(1) the business team, which may include members from the business operation team, business analytics, insight, and metrics reporting team;
 
-(2) technology team which may include members from database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team; 
+(2) the technology team, which may include members from the database and data warehouse team, data engineering team, infrastructure team, core machine learning team, and software development team;
 
-(3) project management team which may include program management team and product management team depending on the scope of the data science project.
+(3) the project, program, and product management team depending on the scope of the data science project.
 
-To start the conversation, we can ask the following questions to everyone in the team:
+To start the conversation, we can ask everyone in the team the following questions :
 
-- What are the pain points in current business operation?
-- What data are available and how is the quality and quantity of the data?
+
+- What are the pain points in the current business operation?
+- What data are available, and how is the quality and quantity of the data?
 - What might be the most significant impacts of a data science project?
-- Are there any negative impact to other teams?
+- Is there any positive or negative impact on other teams?
 - What computation resources are available for model training and model execution?
 - Can we define key metrics to compare and quantify business value?
-- Are there any data security, privacy and legal concerns?
-- What are the desired check points and timeline?
+- Are there any data security, privacy, and legal concerns?
+- What are the desired milestones, checkpoints, and timeline?
 - Is the final application online or offline?
-- Are the data online or offline?
+- Are the data sources online or offline?
 
-It is likely to have a series of intense meetings and heated discussions to frame the project to a reasonable scope. After the planning stage, we should be able to define a set of key metrics related to the project, identify some offline and online data sources, request needed computation resources, draft tentative timeline and milestones, and form a team of data scientist, data engineer, software developer, project manager and members from business operation.  Data scientists should play a major role in these discussions. If data scientist is not leading the data science project formulation, it is very likely the entire project will not reach the timeline and milestones.
+It is likely to have a series of intense meetings and heated discussions to frame the project reasonably. After the planning stage, we should be able to define a set of key metrics related to the project, identify some offline and online data sources, request needed computation resources, draft a tentative timeline and milestones, and form a team of data scientist, data engineer, software developer, project manager and members from the business operation. Data scientists should play a significant role in these discussions. If data scientists do not lead the project formulation and planning, the project may not catch the desired timeline and milestones.
 
-### At the Modeling Stage
+### Project Modeling Stage
 
-Even though at the planning stage we already set some strategy, milestone, and timeline, data science projects are dynamic in nature and there could be uncertainties along the road. As a data scientist, clearly communicate any newly encountered difficulties during the modeling stage to the entire team is essential to keep the data science project progress. With the available data source identified at the planning stage, data cleaning, data wrangling, and exploratory data analysis are great starting points toward modeling. Meanwhile, abstracting the business problem to be a set of statistical and machine learning problems is an iterative process. It is rare that business problems can be solved by using just one statistical or machine learning model. The ability to use a sequence of methods to decompose the business problem is one of the key responsibility for a senior data scientist. The process requires iterative rounds of discussions with the business team and data engineering team based on the new learning from each iteration. Each iteration includes both data related and model related part.
+Even though we already set some strategies, milestones, and timelines at the problem formulation and project planning stage, data science projects are dynamic. There could be uncertainties along the road. As a data scientist, communicating any newly encountered difficulties or opportunities during the modeling stage to the entire team is essential to keep the data science project progress. Data cleaning, data wrangling, and exploratory data analysis are great starting points toward modeling with the available data source identified at the planning stage. Meanwhile, abstracting the business problem to be a set of statistical and machine learning problems is an iterative process. Business problems can rarely be solved by using just one statistical or machine learning model. Using a sequence of methods to decompose the business problem is one of the critical responsibilities for a senior data scientist. The process requires iterative rounds of discussions with the business and data engineering team based on each iteration's new learnings. Each iteration includes both data-related and model-related parts.
 
-#### Data related
+#### Data Related Part
 
 Data cleaning, data preprocessing and feature engineering are closely related procedures. The goal of these data-related procedures is to create usable variables or features for statistical and machine learning models. One important aspect of data related procedures is to make sure the data source we are using is a good representation of the situation where the final trained model will be applied. The exact same representation is rarely possible, and reasonable approximation is totally fine to start with. A data scientist has to be clear on the assumptions and communicate with the entire team the limitations of biased data and quantify its impact on the application. In data related part, sometimes the available data is not that relevant to the business problem we want to solve, and we have to collect more data.
 
