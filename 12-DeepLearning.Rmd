@@ -35,7 +35,6 @@ With data, network structure and algorithms ready, it still requires certain com
 In summary, deep learning applications are not developed just in the past few years and it has been ongoing research in the past few decades. The accumulation of data, the advance of algorithm and the improvement of computation power finally enable every day deep learning applications. In the foreseeable future, deep learning will continue to revolutionize machine learning methods across more areas to provide significant improvement.
 
 
-
 ## Projection Pursuit Regression
 
 Before moving onto neural networks, let us start with a broader framework, Projection Pursuit Regression (PPR). It has a form of **additive model** of the derived features rather than the inputs themselves. Another widely used algorithm, AdaBoost, also fits an additive model in a base learner.
@@ -182,7 +181,7 @@ knitr::include_graphics("images/onelayerNN.png")
 
 **From input to the first hidden layer**
 
-Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$.
+Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$. 
 
 **From the first hidden layer to the output**
 
@@ -241,9 +240,10 @@ z^{[l](1)} & z^{[l](1)} & \cdots & z^{[l](m)}\\
 
 You can add layers like this to get a deeper neural network as shown in the bottom right of figure \@ref(fig:ffnn). 
 
-When build a neural network with many layers, one of the choices you get to make is the activation function to use in the hidden layers and the output layer. So far, we only see sigmoid activation function. But there are other choices. Intermediate layers usually use different activation function than the output layer. Let's look at some of the common options in the next section.
-
 ### Activation Function
+
+
+
 
 - Sigmoid and Softmax Function
 
@@ -260,8 +260,6 @@ text(x = -5,y = 0.8,labels = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),se
 ```
 
 When the output has more than 2 categories, people use softmax function as the output layer activation function. 
-
-
 
 \begin{equation}
 f_i(\mathbf{z}) = \frac{e^{z_i}}{\Sigma_{j=1}^{J} e^{z_j} }
@@ -1263,7 +1261,7 @@ The rectangle represents a vector and the arrow represents matrix multiplication
 
 ### RNN Model
 
-To further understand the RNN model, let's look at an entity recognition example. Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo". It is a name recognition problem which is used by the research company to index different company names in the articles. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic. 
+To further understand the RNN model, let's look at an entity recognition example. Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo". It is a name recognition problem which is used by the research company to index different company names in the articles. For tasks like this, we need a model that can learn and share the learning across different texts. The position of the word has important information about the word. For example, the word before "to" is more likely to be a verb than a noun. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic. 
 
 Given input sentence x, you want a model to produce one output for each word in x that tells you if that word is the name for something. So in this example, the input is a sequence of 5 words including the period in the end. The output is a sequence of 0/1 with the same length that indicates whether the input word is a name (1) or not (0). We use superscript $<t>$ to denote the element position of input and output; use superscript $(i)$ to denote the $i^{th}$ sample (you will have different sentences in the training data); Use $T_x^{(i)}$ to denote the length of $i^{th}$ input, $T_y^{(i)}$ for output. In this case, $T_x^{(i)}$ is equal to $T_y^{(i)}$.
 
@@ -1271,12 +1269,48 @@ Given input sentence x, you want a model to produce one output for each word in 
 ![](images/rnn_notation.png){width=50%}
 </center>
 
+Before we build a neural network, we need to decide a way to represent individual words in numbers. What should $x^{<1>}$ be?  In practice, people use word embedding which we will discuss in the later section. Here, for illustration, we use the one-hot encoding word representation. Assume we have a dictionary of 10,000 unique words. You can build the dictionary by finding the top  10,000 occurring words in your training set. Each word in your training set will have a position in the dictionary sequence. For example, "use" is the 8320th element of the dictionary sequence. So $x^{<1>}$ is a vector with all zeros except for a one on position 8320. Using this one-hot representation, each input $x^{<t>}$ is a vector with all zeros except for one element. 
 
+<center>
+![](images/nn_ohe.png){width=50%}
+</center>
 
+Given this representation of input words, the goal is to learn a sequence model that maps the input words to output y, indicating if the word is an entity (1) or not (0). Let us build a one-layer recurrent neural network. The model starts from the first word "use" ($x^{<1>}$) and build a neural network to predict the output. To start the process, we also need to initialize the activation at time 0, $a_0$. The most common choice is to use a vector of zeros. The common activation function for the intermediate layer is the Hyperbolic Tangent Function (tanh). RNN uses other methods to prevent the vanishing gradient problem discussed in section \@ref(lstm). Similar to FFNN, The output layer activation function depends on the output type. The current example is a binary classification, so we use the sigmoid function ($\sigma$). 
+
+$$a^{<0>} = \mathbf{0};\ a^{<1>} = tanh(W_{aa}a^{<0>} + W_{ax}x^{<1>}+b_a)$$
+$$\hat{y}^{<1>} = \sigma(W_{ya}a^{<1>}+b_y)$$
+And when it takes the second word $x^{<2>}$, it also gets information from the previous step using the non-activated neurons. 
+
+$$a^{<2>} = tanh(W_{aa}a^{<1>}+W_{ax}x^{<2>}+b_a)$$
+$$\hat{y}^{<2>} = \sigma(W_{ya}a^{<2>}+b_y)$$
+
+For the $t^{th}$ word:
+
+$$a^{<t>} = tanh(W_{aa}a^{<t-1>}+W_{ax}x^{<t>}+b_a)$$
+$$\hat{y}^{<t>} = \sigma(W_{ya}a^{<t>}+b_y)$$
+
+The information flows from one step to the next with a repetitive structure until the last time step input $x^{<T_x>}$  and then it outputs $\hat{y}^{<T_y>}$. In this example, $T_x = T_y$. The architecture changes when $T_x$ and $T_y$ are not the same. The model shares parameters, $W_{ya}, W_{aa}, W_{ax},b_a, b_y$, for all time steps of the input. 
+
+<center>
+![](images/RNN_pro.png){width=80%}
+</center>
+
+Calculate the loss function:
+
+$$L^{<t>}(\hat{y}^{<t>}) = -y^{<t>}log(\hat{y}^{<t>})-(1-y^{<t>})log(1-\hat{y}^{<t>})$$
+$$L(\hat{y},y)=\Sigma_{t=1}^{T_y}L^{<t>}(\hat{y},y)$$
+The above defines the forward process. Same as before, the backward propagation computes the gradient descent for the parameters by the chain rule for differentiation.
+
+In this RNN structure, the information only flows from the left to the right. So at any position, it only uses data from earlier in the sequence to make a prediction. It does not work when predicting the current word needs information from later words. For example, consider the following two sentences:
+
+1. Do you like April Kepner in Grey's Anatomy?
+2. Do you like April in Los Angeles? It is not too hot. 
+
+Given just the first three words is not enough to know if the word "April" is part of a person's name. It is a person's name in 1 but not 2. The two sentences have the same first three words. In this case, we need a model that allows the information to flow in both directions. A bidirectional RNN takes data from both earlier and later in the sequence. The disadvantage is that it needs the entire word sequence to predict at any position. For a speech recognition application that requires capturing the speech in real-time, we need a more complex method called the attention model. We will not get into those models here.  
 
 ### Word Embedding
 
-### Long Short Term Memory
+### Long Short Term Memory {#lstm}
 
 We are going to walk through LSTM step by step. The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state". 
 
