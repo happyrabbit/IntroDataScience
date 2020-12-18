@@ -1308,21 +1308,21 @@ In this RNN structure, the information only flows from the left to the right. So
 
 Given just the first three words is not enough to know if the word "April" is part of a person's name. It is a person's name in 1 but not 2. The two sentences have the same first three words. In this case, we need a model that allows the information to flow in both directions. A bidirectional RNN takes data from both earlier and later in the sequence. The disadvantage is that it needs the entire word sequence to predict at any position. For a speech recognition application that requires capturing the speech in real-time, we need a more complex method called the attention model. We will not get into those models here. Deep Learning with R [@deeplearningr18] provides a high-level introduction of bidirectional RNN with applicable codes. It teaches both intuition and practical, computational usage of deep learning models. For python users, refer to Deep Learning with Python [@deeplearningpy17]. A standard text with heavy mathematics is Deep Learning [@Goodfellow-et-al-2016]. 
 
-### Word Embedding
+### Word Embedding {#embedding}
 
 ### Long Short Term Memory {#lstm}
 
-The sequence in RNN can be very long which leads to vanishing gradient problem even when the RNN network is not deep.  Think about the following examples:
+The sequence in RNN can be very long, which leads to the vanishing gradient problem even when the RNN network is not deep.  Think about the following examples:
 
 1. The **girl** walked away, sat down in the shade of a tree, and began to read a new book which  **she** bought the day before.
 2. The **boy** walked away, sat down in the shade of a tree, and began to read a new book which **he** bought the day before.
 
-For sentence 1, you need to use “she" in the adjective clause after "which" because it is a girl. For sentence 2, you need to use "he" because it is a boy. This is an example where there is a long-term dependency in the sentence where the information at the beginning can affect what needs to come much later in the sentence. RNN needs to forward propagate information from left to right and then backpropagate from right to left. It can be difficult for the error associated with the later sequence to affect the optimization earlier. So in practice, it means the model might fail to do the task mentioned above.  People came up with different methods to mitigate this issue, such as the Greater Recurrent Units (GRU) [@chung2014empirical] and  Long Short Term Memory units (LSTM) [@lstm1997]. The goal is to help the model memorize information in the earlier sequence. We are going to walk through LSTM step by step.
+For sentence 1, you need to use "she" in the adjective clause after "which" because it is a girl. For sentence 2, you need to use "he" because it is a boy. This is a long-term dependency example where the information at the beginning can affect what needs to come much later in the sentence. RNN needs to forward propagate information from left to right and then backpropagate from right to left. It can be difficult for the error associated with the later sequence to affect the optimization earlier. So in practice, it means the model might fail to do the task mentioned above.  People came up with different methods to mitigate this issue, such as the Greater Recurrent Units (GRU) [@chung2014empirical] and  Long Short Term Memory Units (LSTM) [@lstm1997]. The goal is to help the model memorize information in the earlier sequence. We are going to walk through LSTM step by step.
 
 The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state". 
 
 <center>
-![](images/lstm1.png){width=50%}
+![](images/lstm1.png){width=80%}
 </center>
 
 The next step is to decide what new information we're going to add to the cell state. This step includes two parts:
@@ -1331,20 +1331,43 @@ The next step is to decide what new information we're going to add to the cell s
 2. a vector of new candidate value ($\tilde{c}^{<t>}$)
 
 <center>
-![](images/lstm2.png){width=50%}
+![](images/lstm2.png){width=80%}
 </center>
 
 The multiplication of the above two parts $\Gamma_{u}*\tilde{c}^{<t>}$ is the new candidate scaled by the input gate. We then combine the results we get so far to get new cell state $c^{<t>}$.
 
 
 <center>
-![](images/lstm3.png){width=50%}
+![](images/lstm3.png){width=80%}
 </center>
 
 Finally, we need to decide what we are going to output. The output is a filtered version of the new cell state $c^{<t>}$. 
 
 <center>
-![](images/lstm4.png){width=50%}
+![](images/lstm4.png){width=80%}
 </center>
 
+### Sentiment Analysis Using RNN {#rnnexample}
 
+In this section, we will walk through an example of text sentiment analysis using RNN. Refer to section \@ref(CloudEnvironment) to set up an account, create a notebook (R or Python) and start a cluster. Refer to section \@ref(ffnnexample) for package installation. 
+
+We will use the IMDB movie review data. It is one of the most used datasets for text-related machine learning methods. The datasets' inputs are movie reviews published at IMDB in its raw text format, and the output is a binary sentiment indicator( "1" for positive and "0" for negative) created through human evaluation. The training and testing data have 25,000 records each. Each review varies in length.
+
+#### Data preprocessing
+
+Machine learning algorithms can not deal with raw text, and we have to convert text into numbers before feeding it into an algorithm. Tokenization is one way to convert text data into a numerical representation. For example, suppose we have 500 unique words for all reviews in the training dataset. We can label each word by the rank (i.e., from 1 to 500) of their frequency in the training data. Then each word is replaced by an integer between 1 to 500. This way, we can map each movie review from its raw text format to a sequence of integers.
+
+As reviews can have different lengths, sequences of integers will have different sizes too. So another important step is to make sure each input has the same length by padding or truncating. For example, we can set a length of 50 words, and for any reviews less than 50 words, we can pad 0 to make it 50 in length; and for reviews with more than 50 words, we can truncate the sequence to 50 by keeping only the first 50 words. After padding and truncating, we have a typical data frame, each row is an observation, and each column is a feature. The number of features is the number of words designed for each review (i.e., 50 in this example).
+
+After tokenization, the numerical input is just a naive mapping to the original words, and the integers do not have their usual numerical meanings. We need to use embedding to convert these categorical integers to more meaningful representations. The word embedding captures the inherited relationship of words and dramatically reduces the input dimension (see section  \@ref(embedding)). The dimension is a vector space representing the entire vocabulary. It can be 128 or 256, and the vector space dimension is the same when the vocabulary changes. It has a lower dimension, and each vector is filled with real numbers. The embedding vectors can be learned from the training data, or we can use pre-trained embedding models. There are many pre-trained embeddings for us to use, such as Word2Vec, BIRD.
+
+![](../course2020/slides/02DeepLearning/RNN/images/TokenizingPadding.png){width=80%}
+<center>
+
+#### R code for IMDB dataset
+
+Load `keras` package:
+
+```r
+library(keras)
+```
