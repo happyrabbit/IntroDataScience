@@ -1366,8 +1366,214 @@ After tokenization, the numerical input is just a naive mapping to the original 
 
 #### R code for IMDB dataset
 
-Load `keras` package:
+The IMDB dataset is preloaded for `keras` and we can call `dataset_imdb()` to load a partially pre-processed dataset into a data frame. We can define a few parameters in that function. `num_words` is the number of words in each review to be used. All the unique words are ranked by their frequency counts in the training dataset. The `dataset_imdb()` function keeps the top `num_words` words and replaces other words with a default value of 2, and using integers to represent text (i.e., top frequency word will be replaced by 3 and 0, 1, 2 are reserved for "padding," "start of the sequence," and "unknown." ).
 
 ```r
+# Load `keras` package
 library(keras)
+
+# consider only the top 10,000 words in the dataset
+max_unique_word <- 2500
+# cut off reviews after 100 words
+max_review_len <- 100
 ```
+
+Now we load the IMDB dataset, and we can check the structure of the loaded object by using `str()` command.
+
+```r
+my_imdb <- dataset_imdb(num_words = max_unique_word)
+str(my_imdb)
+```
+
+```html
+Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/imdb.npz
+
+    8192/17464789 [..............................] - ETA: 0s
+  811008/17464789 [>.............................] - ETA: 1s
+ 4202496/17464789 [======>.......................] - ETA: 0s
+11476992/17464789 [==================>...........] - ETA: 0s
+17465344/17464789 [==============================] - 0s 0us/step
+List of 2
+ $ train:List of 2
+  ..$ x:List of 25000
+  .. ..$ : int [1:218] 1 14 22 16 43 530 973 1622 1385 65 ...
+  .. ..$ : int [1:189] 1 194 1153 194 2 78 228 5 6 1463 ...
+  
+*** skipped some output ***
+```
+
+```r
+x_train <- my_imdb$train$x
+y_train <- my_imdb$train$y
+x_test  <- my_imdb$test$x
+y_test  <- my_imdb$test$y
+```
+
+Next, we do the padding and truncating process.
+
+```r
+x_train <- pad_sequences(x_train, maxlen = max_review_len)
+x_test <- pad_sequences(x_test, maxlen = max_review_len)
+```
+
+The `x_train` and `x_test` are numerical data frames ready to be used for recurrent neural network models.
+
+**Simple Recurrent Neurel Network**
+
+Like DNN and CNN models we trained in the past, RNN models are relatively easy to train using `keras` after the pre-processing stage. In the following example, we use `layer_embedding()` to fit an embedding layer based on the training dataset, which has two parameters: `input_dim` (the number of unique words) and `output_dim` (the length of dense vectors). Then, we add a simple RNN layer by calling `layer_simple_rnn()` and followed by a dense layer `layer_dense()` to connect to the response binary variable.
+
+```r
+rnn_model <- keras_model_sequential()
+rnn_model %>%
+  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>% 
+  layer_simple_rnn(units = 64, dropout = 0.2, recurrent_dropout = 0.2) %>% 
+  layer_dense(units = 1, activation = 'sigmoid')
+```
+
+We compile the RNN model by defining the loss function, optimizer to use, and metrics to track the same way as DNN and CNN models.
+
+```r
+rnn_model %>% compile(
+  loss = 'binary_crossentropy',
+  optimizer = 'adam',
+  metrics = c('accuracy')
+)
+```
+
+Let us define a few more variables before fitting the model: `batch_size`, `epochs`, and `validation_split`. These variables have the same meaning as DNN and CNN models we see in the past.
+
+```r
+batch_size = 128
+epochs = 5
+validation_split = 0.2
+
+rnn_history <- rnn_model %>% fit(
+  x_train, y_train,
+  batch_size = batch_size,
+  epochs = epochs,
+  validation_split = validation_split
+)
+```
+
+```html
+Epoch 1/5
+
+  1/157 [...............] - ETA: 0s - loss: 0.7348 - accuracy: 0.4766
+  2/157 [...............] - ETA: 7s - loss: 0.7279 - accuracy: 0.4961
+  3/157 [...............] - ETA: 10s - loss: 0.7290 - accuracy: 0.4896
+
+*** skipped some output ***
+
+154/157 [=============>.] - ETA: 0s - loss: 0.4456 - accuracy: 0.7991
+155/157 [=============>.] - ETA: 0s - loss: 0.4460 - accuracy: 0.7991
+156/157 [=============>.] - ETA: 0s - loss: 0.4457 - accuracy: 0.7995
+157/157 [===============] - 17s 109ms/step 
+loss: 0.4457 - accuracy: 0.7995 - val_loss: 0.4444 - val_accuracy: 0.7908
+
+```
+
+```r
+plot(rnn_history)
+```
+
+<center>
+![](images/rnnhandson1.png){width=60%}
+</center>
+
+```r
+rnn_model %>% 
+   evaluate(x_test, y_test)
+```
+
+```html
+  1/782 [...............] - ETA: 0s - loss: 0.3019 - accuracy: 0.8438
+  8/782 [...............] - ETA: 5s - loss: 0.4328 - accuracy: 0.8008
+ 15/782 [...............] - ETA: 5s - loss: 0.4415 - accuracy: 0.7937
+ 23/782 [...............] - ETA: 5s - loss: 0.4247 - accuracy: 0.8043
+
+*** skipped some output ***
+
+775/782 [=============>.] - ETA: 0s - loss: 0.4371 - accuracy: 0.8007
+782/782 [===============] - ETA: 0s - loss: 0.4365 - accuracy: 0.8010
+782/782 [===============] - 6s 8ms/step - loss: 0.4365 - accuracy: 0.8010
+     loss  accuracy 
+0.4365373 0.8010000 
+```
+
+**LSTM RNN Model**
+
+A simple RNN layer is a good starting point for learning RNN, but the performance is usually not that good because these long-term dependencies are impossible to learn due to vanishing gradient. Long Short Term Memory RNN model (LSTM) can carry useful information from the earlier words to later words. In `keras`, it is easy to replace a simple RNN layer with an LSTM layer by using `layer_lstm()`.
+
+```r
+lstm_model <- keras_model_sequential()
+
+lstm_model %>%
+  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>% 
+  layer_lstm(units = 64, dropout = 0.2, recurrent_dropout = 0.2) %>% 
+  layer_dense(units = 1, activation = 'sigmoid')
+
+lstm_model %>% compile(
+  loss = 'binary_crossentropy',
+  optimizer = 'adam',
+  metrics = c('accuracy')
+)
+
+batch_size = 128
+epochs = 5
+validation_split = 0.2
+
+lstm_history <- lstm_model %>% fit(
+  x_train, y_train,
+  batch_size = batch_size,
+  epochs = epochs,
+  validation_split = validation_split
+)
+```
+
+```html
+Epoch 1/5
+
+  1/157 [................] - ETA: 0s - loss: 0.6939 - accuracy: 0.4766
+  2/157 [................] - ETA: 31s - loss: 0.6940 - accuracy: 0.4766
+  3/157 [................] - ETA: 43s - loss: 0.6937 - accuracy: 0.4896
+
+*** skipped some output ***
+
+155/157 [===============>.] - ETA: 0s - loss: 0.2610 - accuracy: 0.8918
+156/157 [===============>.] - ETA: 0s - loss: 0.2607 - accuracy: 0.8920
+157/157 [=================] - ETA: 0s - loss: 0.2609 - accuracy: 0.8917
+157/157 [=================] - 67s 424ms/step 
+loss: 0.2609 - accuracy: 0.8917 - val_loss: 0.3754 - val_accuracy: 0.8328
+```
+
+```r
+plot(lstm_history)
+```
+
+<center>
+![](images/rnnhandson2.png){width=60%}
+</center>
+
+```r
+lstm_model %>% 
+   evaluate(x_test, y_test)
+```
+
+```html
+  1/782 [................] - ETA: 0s - loss: 0.2332 - accuracy: 0.9062
+  4/782 [................] - ETA: 12s - loss: 0.3536 - accuracy: 0.8750
+  7/782 [................] - ETA: 14s - loss: 0.3409 - accuracy: 0.8705
+ 10/782 [................] - ETA: 14s - loss: 0.3508 - accuracy: 0.8625
+
+*** skipped some output ***
+
+775/782 [=============>.] - ETA: 0s - loss: 0.3640 - accuracy: 0.8415
+778/782 [==============>.] - ETA: 0s - loss: 0.3637 - accuracy: 0.8417
+780/782 [==============>.] - ETA: 0s - loss: 0.3632 - accuracy: 0.8419
+782/782 [================] - ETA: 0s - loss: 0.3631 - accuracy: 0.8420
+782/782 [================] - 18s 22ms/step - loss: 0.3631 - accuracy: 0.8420
+     loss  accuracy 
+0.3631141 0.8420000 
+```
+
+This simple example shows that LSTM's performance has improved dramatically from the simple RNN model. The computation time for LSTM is roughly doubled when compared with the simple RNN model for this small dataset.
