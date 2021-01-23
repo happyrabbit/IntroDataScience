@@ -148,7 +148,7 @@ To fit the model is to minimize the cost function.
 The general approach to minimize $J(w,b)$ is by gradient descent, also known as _back-propagation_.  The optimization process is a forward and backward sweep over the network.
 
 <center>
-![](../course2020/slides/02DeepLearning/DNN/images/dnn0_fb3.png){width=100%}
+![](images/dnn0_fb3.png){width=100%}
 </center>
 
 The forward propagation takes the current weights, calculates the prediction and cost. The backward propagation computes the gradient descent for the parameters by the chain rule for differentiation. In logistic regression, it is easy to calculate the gradient w.r.t the parameters $(w, b)$.
@@ -381,6 +381,12 @@ $$\parallel w^{[l]} \parallel^2_F = \Sigma_{i=1}^{n^{[l]}}\Sigma_{j=1}^{n^{[l-1]
 Many people call it "Frobenius Norm" instead of L2-norm.
 
 #### Dropout
+
+Another powerful regularization technique is "dropout."  In chapter \@ref(tree model), we mentioned that the random forest model de-correlates the trees by randomly choosing a subset of features. Dropout uses a similar idea in the parameter estimation process. 
+
+It temporally freezes a randomly selected subset of nodes at a specific layer in the neural network during the optimization process to reduce overfitting. When applying dropout to a particular layer and mini-batch, we pre-set a percentage, for example, 30%, and randomly remove 30% of the layer's nodes. The output from the 30% removed nodes will be zero. During backpropagation, we update the remaining parameters for a much-diminished network. We need to do the random drop out again for the next mini-batch.
+
+To normalize the output with all nodes in this layer, we need to scale up the output accordingly to the same percentage to make sure the dropped-out nodes do not impact the overall signal. Please note, the dropout process will randomly turn-off different nodes for each mini-batch. Dropout is more efficient in reducing overfitting in deep learning than L1 or L2 regularizations.
 
 ### Optimization 
 
@@ -1310,6 +1316,28 @@ Given just the first three words is not enough to know if the word "April" is pa
 
 ### Word Embedding {#embedding}
 
+So far, we have been using one-hot encoding to represent the words. This representation is sparse and doesn't capture the relationship between the words. For example, if your model learns from the training data that the word after "pumpkin" in the first sentence is "pie," can it fill the second sentence's blank with "pie"? 
+
+1. [training data] My favorite Christmas dessert is pumpkin pie.
+2. [testing data] My favorite Christmas dessert is apple ____.
+
+The algorithm can not learn the relationship between "pumpkin" and "apple" by the distance between the one-hot encoding for the two words.  If we can find a way to create features to represent the words, we may teach the model to learn that pumpkin and apple is food. And the distance between the feature representations of these two words is closer than, for example, "apple" and "nurse." So when the model sees "apple" in a new sentence and needs to predict the word after, it is more likely to choose "pie" since it sees "pumpkin pie" in the training data. The idea of word embedding is to learn a set of features to represent words. For example, you can score each word in the dictionary according to a group of features like this:
+
+<center>
+![](images/rnn_embedding1.png){width=80%}
+</center>
+
+The word "male" has a score of -1 for the "gender" feature, "female" has a score of 1.  Both "Apple" and "pumpkin" have a high score for the "food" feature and much lower scores for the rest. You can set the number of features to learn, usually more than what we list in the above figure. If you use 200 features to represent the words, then the learned embedding for each word is a vector with a length of 200. 
+
+For language-related applications, text embedding is the most critical step. It converts raw text into a meaningful vector representation. Once we have a vector representation, it is easy to calculate typical numerical metrics such as cosine similarity. There are many pre-trained text embeddings available for us to use. We will briefly introduce some of these popular embeddings. 
+
+The first widely used embedding is word2vec. It was first introduced in 2013 and was trained by a large collection of text in an unsupervised way. Training the word2vec embedding vector uses bag-of-words or skip-gram. In the bag-of-words architecture, the model predicts the current word based on a window of surrounding context words. In skip-gram architecture, the model uses the current word to predict the surrounding window of context words. There are pre-trained word2vec embeddings based on a large amount of text (such as wiki pages, news reports, etc.) for general applications. 
+
+GloVe (Global Vectors) embedding is an extension of word2vec and performs better. It uses a unique version of the square loss function. However, words are composite of meaningful components such as radicals.  
+"eat" and "eaten" are different forms of the same word.   Both word2vec and GloVe use word-level information, and they treat each word uniquely based on its context. 
+
+The fastText embedding is introduced to use the word's internal structure to make the process more efficient. It uses morphological information to extend the skip-gram model. New words that are not in the training data can be repressed well. It also supports 150+ different languages. The above-mentioned embeddings (word2vec, GloVe, and fastText) do not consider the words' context (i.e., the same word has the same embedding vector). However, the same word may have different meanings in a different context. BERT (Bidirectional Encoder Representations from Transformers) is introduced to add context-level information in text-related applications. As of early 2021, BERT is generally considered the best language model for common application tasks.
+
 ### Long Short Term Memory {#lstm}
 
 The sequence in RNN can be very long, which leads to the vanishing gradient problem even when the RNN network is not deep.  Think about the following examples:
@@ -1361,7 +1389,7 @@ As reviews can have different lengths, sequences of integers will have different
 
 After tokenization, the numerical input is just a naive mapping to the original words, and the integers do not have their usual numerical meanings. We need to use embedding to convert these categorical integers to more meaningful representations. The word embedding captures the inherited relationship of words and dramatically reduces the input dimension (see section  \@ref(embedding)). The dimension is a vector space representing the entire vocabulary. It can be 128 or 256, and the vector space dimension is the same when the vocabulary changes. It has a lower dimension, and each vector is filled with real numbers. The embedding vectors can be learned from the training data, or we can use pre-trained embedding models. There are many pre-trained embeddings for us to use, such as Word2Vec, BIRD.
 
-![](../course2020/slides/02DeepLearning/RNN/images/TokenizingPadding.png){width=80%}
+![](images/TokenizingPadding.png){width=80%}
 <center>
 
 #### R code for IMDB dataset
@@ -1386,7 +1414,8 @@ str(my_imdb)
 ```
 
 ```html
-Downloading data from https://storage.googleapis.com/tensorflow/tf-keras-datasets/imdb.npz
+Downloading data from
+https://storage.googleapis.com/tensorflow/tf-keras-datasets/imdb.npz
 
     8192/17464789 [..............................] - ETA: 0s
   811008/17464789 [>.............................] - ETA: 1s
@@ -1477,7 +1506,7 @@ plot(rnn_history)
 ```
 
 <center>
-![](images/rnnhandson1.png){width=60%}
+![](images/rnnhandson1.png){width=90%}
 </center>
 
 ```r
@@ -1551,7 +1580,7 @@ plot(lstm_history)
 ```
 
 <center>
-![](images/rnnhandson2.png){width=60%}
+![](images/rnnhandson2.png){width=90%}
 </center>
 
 ```r
