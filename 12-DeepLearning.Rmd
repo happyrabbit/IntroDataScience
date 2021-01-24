@@ -165,7 +165,7 @@ First initialize $w_1$, $w_2$, ... , $w_{n_x}$, and $b$. Then plug in the initia
 
 Repeat the forward and backward process using the updated parameter until the cost $J$ stabilizes. 
 
-### Deep Neural Network
+### Deep Neural Network {#deepneuralnetwork}
 
 Before people coined the term _deep learning_, a neural network refers to _single hidden layer network_. Neural networks with more than one layers are called _deep learning_. Network with the structure in figure \@ref(fig:ffnn) is the **multiple layer perceptron (MLP)** or **feedforward neural network (FFNN)**.
 
@@ -241,8 +241,6 @@ z^{[l](1)} & z^{[l](1)} & \cdots & z^{[l](m)}\\
 You can add layers like this to get a deeper neural network as shown in the bottom right of figure \@ref(fig:ffnn). 
 
 ### Activation Function
-
-
 
 
 - Sigmoid and Softmax Function
@@ -389,6 +387,8 @@ It temporally freezes a randomly selected subset of nodes at a specific layer in
 To normalize the output with all nodes in this layer, we need to scale up the output accordingly to the same percentage to make sure the dropped-out nodes do not impact the overall signal. Please note, the dropout process will randomly turn-off different nodes for each mini-batch. Dropout is more efficient in reducing overfitting in deep learning than L1 or L2 regularizations.
 
 ### Optimization 
+
+So far, we have introduced the core components of deep learning architecture, layer, weight, activation function, and loss function. With the architecture in place, we need to determine how to update the network based on a loss function (a.k.a. objective function). In this section, we will look at variants of optimization algorithms that will improve the training speed.
 
 #### Batch, Mini-batch, Stochastic Gradient Descent
 
