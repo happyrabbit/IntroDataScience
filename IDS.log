@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.10.31)  23 JAN 2021 11:57
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.10.31)  24 JAN 2021 15:57
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -4552,222 +4552,240 @@ File: IDS_files/figure-latex/activationrelu-1.pdf Graphic file (type pdf)
 [284]
 File: IDS_files/figure-latex/activationleakyrelu-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/activationleakyrelu-1.pdf>
-[285] [286] [287]
+[285] [286]
+File: images/weighted_agv.png Graphic file (type bmp)
+<images/weighted_agv.png>
+[287] [288]
+Overfull \hbox (24.35782pt too wide) detected at line 8545
+[]
+ []
+
+[289]
+Underfull \vbox (badness 10000) detected at line 8621
+ []
+
+[290]
+File: IDS_files/figure-latex/unnamed-chunk-170-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-170-1.pdf>
+[291] [292] [293]
 File: images/grayscaleimage.png Graphic file (type bmp)
 <images/grayscaleimage.png>
-[288]
 File: images/colorimage.png Graphic file (type bmp)
 <images/colorimage.png>
-[289] [290]
-Underfull \hbox (badness 10000) detected at line 8619
+[294] [295]
+Underfull \hbox (badness 10000) detected at line 8735
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8619
+Underfull \hbox (badness 10000) detected at line 8735
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8621
+Underfull \hbox (badness 10000) detected at line 8737
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8621
+Underfull \hbox (badness 10000) detected at line 8737
 [][][]
  []
 
-[291]
+[296] [297]
 File: images/mnist_image3.png Graphic file (type bmp)
 <images/mnist_image3.png>
-[292] [293] [294]
-Underfull \hbox (badness 4569) in paragraph at lines 8772--8773
+[298] [299] [300]
+Underfull \hbox (badness 4569) in paragraph at lines 8888--8889
 []\TU/lmr/m/n/12 In keras, it is easy to define a DNN model: (1) use
  []
 
-[295] [296] [297]
-File: images/dnn_history.png Graphic file (type bmp)
-<images/dnn_history.png>
-[298]
-Underfull \vbox (badness 1460) detected at line 8925
+
+Underfull \vbox (badness 2884) detected at line 8902
  []
 
-[299] [300]
+[301] [302] [303]
+File: images/dnn_history.png Graphic file (type bmp)
+<images/dnn_history.png>
+[304]
+Underfull \vbox (badness 1460) detected at line 9041
+ []
+
+[305] [306]
 File: images/misclassified_img.png Graphic file (type bmp)
 <images/misclassified_img.png>
-[301] [302]
+[307] [308]
 File: images/convolution1.png Graphic file (type bmp)
 <images/convolution1.png>
 File: images/convolutionsbs.png Graphic file (type bmp)
 <images/convolutionsbs.png>
-[303] [304]
+[309] [310]
 File: images/edgedet5.png Graphic file (type bmp)
 <images/edgedet5.png>
-[305]
+[311]
 File: IDS_files/figure-latex/simpleedge-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/simpleedge-1.pdf>
-[306]
+[312]
 File: images/convlayer.png Graphic file (type bmp)
 <images/convlayer.png>
-[307]
+[313]
 File: images/padding.png Graphic file (type bmp)
 <images/padding.png>
-[308]
+[314]
 File: images/poolinglayer.png Graphic file (type bmp)
 <images/poolinglayer.png>
-[309] [310]
-Underfull \vbox (badness 10000) detected at line 9263
+[315] [316]
+Underfull \vbox (badness 10000) detected at line 9379
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9263
+Underfull \vbox (badness 10000) detected at line 9379
  []
 
-[311]
+[317]
 File: images/eggshellconv.png Graphic file (type bmp)
 <images/eggshellconv.png>
-[312] [313]
+[318] [319]
 File: images/ConvOverVolume.png Graphic file (type bmp)
 <images/ConvOverVolume.png>
-[314] [315] [316]
-Underfull \hbox (badness 10000) detected at line 9429
+[320] [321] [322]
+Underfull \hbox (badness 10000) detected at line 9545
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9429
+Underfull \hbox (badness 10000) detected at line 9545
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9431
+Underfull \hbox (badness 10000) detected at line 9547
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9431
+Underfull \hbox (badness 10000) detected at line 9547
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9433
+Underfull \hbox (badness 10000) detected at line 9549
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9433
+Underfull \hbox (badness 10000) detected at line 9549
 [][][]
  []
 
-[317] [318]
+[323] [324]
 File: images/cnn_history.png Graphic file (type bmp)
 <images/cnn_history.png>
-[319] [320]
+[325] [326]
 File: images/misclassified_img_cnn.png Graphic file (type bmp)
 <images/misclassified_img_cnn.png>
-[321]
+[327]
 File: images/rnnunit.png Graphic file (type bmp)
 <images/rnnunit.png>
 File: images/rnnrollout.png Graphic file (type bmp)
 <images/rnnrollout.png>
-[322]
+[328]
 File: images/rnnapplication.png Graphic file (type bmp)
 <images/rnnapplication.png>
 File: images/rnnstrs.png Graphic file (type bmp)
 <images/rnnstrs.png>
-[323]
+[329]
 File: images/rnn_notation.png Graphic file (type bmp)
 <images/rnn_notation.png>
-[324]
+[330]
 File: images/nn_ohe.png Graphic file (type bmp)
 <images/nn_ohe.png>
-[325]
+[331]
 File: images/RNN_pro.png Graphic file (type bmp)
 <images/RNN_pro.png>
 
-Underfull \hbox (badness 10000) detected at line 9700
+Underfull \hbox (badness 10000) detected at line 9816
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9700
+Underfull \hbox (badness 10000) detected at line 9816
 [][][]
  []
 
-[326]
-Underfull \hbox (badness 10000) detected at line 9702
+[332]
+Underfull \hbox (badness 10000) detected at line 9818
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9702
+Underfull \hbox (badness 10000) detected at line 9818
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9716
+Underfull \hbox (badness 10000) detected at line 9832
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9716
+Underfull \hbox (badness 10000) detected at line 9832
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9718
+Underfull \hbox (badness 10000) detected at line 9834
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9718
+Underfull \hbox (badness 10000) detected at line 9834
 [][][]
  []
 
-[327]
+[333]
 File: images/rnn_embedding1.png Graphic file (type bmp)
 <images/rnn_embedding1.png>
-[328]
-Underfull \hbox (badness 10000) detected at line 9745
+[334]
+Underfull \hbox (badness 10000) detected at line 9861
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9745
+Underfull \hbox (badness 10000) detected at line 9861
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9747
+Underfull \hbox (badness 10000) detected at line 9863
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9747
+Underfull \hbox (badness 10000) detected at line 9863
 [][][]
  []
 
-[329]
+[335]
 File: images/lstm1.png Graphic file (type bmp)
 <images/lstm1.png>
-[330]
-Underfull \hbox (badness 10000) detected at line 9762
+[336]
+Underfull \hbox (badness 10000) detected at line 9878
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9762
+Underfull \hbox (badness 10000) detected at line 9878
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9764
+Underfull \hbox (badness 10000) detected at line 9880
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9764
+Underfull \hbox (badness 10000) detected at line 9880
 [][][]
  []
 
@@ -4777,58 +4795,58 @@ File: images/lstm3.png Graphic file (type bmp)
 <images/lstm3.png>
 File: images/lstm4.png Graphic file (type bmp)
 <images/lstm4.png>
-[331] [332]
+[337] [338]
 File: images/TokenizingPadding.png Graphic file (type bmp)
 <images/TokenizingPadding.png>
-[333]
-Underfull \hbox (badness 1077) in paragraph at lines 9798--9799
+[339]
+Underfull \hbox (badness 1077) in paragraph at lines 9914--9915
 \TU/lmr/m/n/12 The IMDB dataset is preloaded for \TU/SourceCodePro(0)/m/n/12 ke
 ras \TU/lmr/m/n/12 and we can call
  []
 
-[334] [335] [336]
+[340] [341] [342]
 File: images/rnnhandson1.png Graphic file (type bmp)
 <images/rnnhandson1.png>
-[337]
-Underfull \vbox (badness 4266) detected at line 9952
+[343]
+Underfull \vbox (badness 4266) detected at line 10068
  []
 
-[338] [339]
+[344] [345]
 File: images/rnnhandson2.png Graphic file (type bmp)
 <images/rnnhandson2.png>
-[340] [341] [342]
-Underfull \vbox (badness 10000) detected at line 10045
+[346] [347] [348]
+Underfull \vbox (badness 10000) detected at line 10161
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10045
+Overfull \hbox (336.25pt too wide) detected at line 10161
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10045
+Underfull \vbox (badness 10000) detected at line 10161
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10045
+Overfull \hbox (336.25pt too wide) detected at line 10161
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10045
+Underfull \vbox (badness 10000) detected at line 10161
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10045
+Overfull \hbox (336.25pt too wide) detected at line 10161
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10045
+Underfull \vbox (badness 10000) detected at line 10161
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10045
+Overfull \hbox (336.25pt too wide) detected at line 10161
 []
  []
 
@@ -4838,50 +4856,50 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[343
+[349
 
 
-] [344]
-Underfull \vbox (badness 10000) detected at line 10157
+] [350]
+Underfull \vbox (badness 10000) detected at line 10273
  []
 
-[345] [346]
-Underfull \vbox (badness 10000) detected at line 10239
+[351] [352]
+Underfull \vbox (badness 10000) detected at line 10355
  []
 
-[347]
-Underfull \vbox (badness 1742) detected at line 10330
+[353]
+Underfull \vbox (badness 1742) detected at line 10446
  []
 
-[348]
-Underfull \vbox (badness 10000) detected at line 10330
- []
-
-
-Underfull \vbox (badness 10000) detected at line 10330
- []
-
-[349]
-Underfull \vbox (badness 1681) detected at line 10440
- []
-
-[350]
-Underfull \vbox (badness 10000) detected at line 10440
+[354]
+Underfull \vbox (badness 10000) detected at line 10446
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10440
+Underfull \vbox (badness 10000) detected at line 10446
  []
 
-[351]
-Underfull \vbox (badness 10000) detected at line 10440
+[355]
+Underfull \vbox (badness 1681) detected at line 10556
+ []
+
+[356]
+Underfull \vbox (badness 10000) detected at line 10556
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10440
+Underfull \vbox (badness 10000) detected at line 10556
  []
 
-[352] (./IDS.bbl [353]
+[357]
+Underfull \vbox (badness 10000) detected at line 10556
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 10556
+ []
+
+[358] (./IDS.bbl [359]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -4918,7 +4936,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[354
+[360
 
 ]
 Underfull \vbox (badness 10000) detected at line 1
@@ -4966,9 +4984,9 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[355
+[361
 
-] [356] [357] [358] [359] [360]) [361]
+] [362] [363] [364] [365] [366]) [367]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
@@ -5005,7 +5023,7 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[362
+[368
 
 ] (./IDS.ind
 Underfull \hbox (badness 10000) detected at line 1
@@ -5021,23 +5039,23 @@ Underfull \hbox (badness 10000) has occurred while \output is active
  [][][][] 
  []
 
-[363
+[369
 
 
 ]) (./IDS.aux)
 Package rerunfilecheck Info: File `IDS.out' has not changed.
-(rerunfilecheck)             Checksum: 17090C72B362FC06D337E6EC139B9429;24129.
+(rerunfilecheck)             Checksum: 35CBE5923DAE27B214996918B895332A;24129.
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 20080 strings out of 479405
- 360481 string characters out of 5879480
- 835818 words of memory out of 5000000
- 39048 multiletter control sequences out of 15000+600000
+ 20098 strings out of 479405
+ 361028 string characters out of 5879480
+ 835906 words of memory out of 5000000
+ 39064 multiletter control sequences out of 15000+600000
  541739 words of font info for 107 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
  94i,13n,121p,1946b,688s stack positions out of 5000i,500n,10000p,200000b,80000s
 
-Output written on IDS.pdf (381 pages).
+Output written on IDS.pdf (387 pages).

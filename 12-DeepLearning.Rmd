@@ -352,6 +352,131 @@ For the output layer:
 - When there are multiple classes, use softmax function with categorical cross-entropy as loss function
 - When the response is continuous, use identity function (i.e. y = x)
 
+### Optimization 
+
+So far, we have introduced the core components of deep learning architecture, layer, weight, activation function, and loss function. With the architecture in place, we need to determine how to update the network based on a loss function (a.k.a. objective function). In this section, we will look at variants of optimization algorithms that will improve the training speed.
+
+#### Batch, Mini-batch, Stochastic Gradient Descent
+
+**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logistic_reg_as_neural_network).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
+
+In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. ** Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
+
+$$\begin{array}{ccc} x= & [\underbrace{x^{(1)},x^{(2)},\cdots,x^{(1000)}}/ & \cdots/\cdots x^{(m)}]\\ (n_{x},m) & mini-batch\ 1 \end{array}$$
+
+$$\begin{array}{ccc} y= & [\underbrace{y^{(1)},y^{(2)},\cdots,y^{(1000)}}/ & \cdots/\cdots y^{(m)}]\\ (1,m) & mini-batch\ 1 \end{array}$$
+
+- Mini-batch size = m: batch gradient descent, too long per iteration
+- Mini-batch size = 1: stochastic gradient descent, lose speed from vectorization
+- Mini-batch size in between: mini-batch gradient descent, make progress without processing all training set, typical batch sizes are $2^6=64$, $2^7=128$, $2^7=256$, $2^8=512$
+
+#### Optimization Algorithms
+
+In the history of deep learning, researchers proposed different optimization algorithms and showed that they worked well in a specific scenario.  But the optimization algorithms didn't generalize well to a wide range of neural networks.  So you will need to try different optimizers in your application. We will introduce three commonly used optimizers here, and they are all based on something called exponentially weighted averages. To understand the intuition behind it, let's look at a hypothetical example shown in figure \@ref(fig:weightedagv). 
+
+```{r weightedagv, fig.cap = "The intuition behind the weighted average gradient", out.width="60%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/weighted_agv.png")
+```
+
+We have two parameters, b and w.  The blue dot represents the current parameter value, and the red point is the optimum value we want to reach.  The current value is close to the target vertically but far away horizontally. In this situation, we hope to have slower learning on b and faster learning on w. A way to adjust is to use the average of the gradients from different iterations instead of the current iteration to update the parameter. Vertically, since the current value is close to the target value of parameter b, the gradient of b is likely to jump between positive and negative values.  The average tends to cancel out the positive and negative derivatives along the vertical direction and slow down the oscillations. Horizontally, since it is still further away from the target value of parameter w, all the gradients are likely pointing in the same direction.  Using an average won't have too much impact there. That is the fundamental idea behind many different optimizers:  adjust the learning rate using a weighted average of various iterations' gradients. 
+
+**Exponentially Weighted Averages**
+
+Before we get to more sophisticated optimization algorithms that implement this idea, let's first introduce the basic weighted moving average framework. 
+
+Suppose we have the following 100 days' temperature data:
+
+$$ \theta_{1}=49F, \theta_{2}=53F, \dots, \theta_{99}=70F, \theta_{100}=69F$$
+The weighted average is defined as:
+
+$$V_t = \beta V_{t-1}+(1-\beta)\theta_t$$
+And we have:
+
+$$
+\begin{array}{c} V_{0}=0\\ V_{1}=\beta V_1 + (1-\beta)\theta_1\\ V_2=\beta V_1 + (1-\beta)\theta_2\\ \vdots \\ V_{100}= \beta V_{99} + (1-\beta)\theta_{100} \end{array}$$
+
+It is approximately average over $\frac{1}{1-\beta}$ days. The averages in the initial phase of  training are more biased and the bias correction can help you to obtain a better estimate:
+
+$$V_t^{corrected} = \frac{V_t}{1-\beta^t}$$
+
+For example, for $\beta=0.95$:
+
+$$\begin{array}{cc} V_{0}=0\\ V_{1}=0.05\theta_{1} & V_{1}^{corrected}=\frac{V_{1}}{1-0.95}=\theta_{1}\\ V_{2}=0.0475\theta_{1}+0.05\theta_{2} & V_{2}^{corrected}=\frac{V_{2}}{1-0.95^{2}}=0.4872\theta_{1}+0.5128\theta_{2} \end{array}$$
+
+On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
+
+$$V_{dw} = \beta V_{dw}+(1-\beta)dw$$
+$$V_{db} = \beta V_{db}+(1-\beta)db$$
+
+$$w=w-\alpha V_{dw};\ \ b=b-\alpha V_{db}$$
+
+The following code simulates a set of temperature data and applies exponentially weighted average with and without correction using various $\beta$ values (0.5, 0.8, 0.95).
+
+```{r}
+# simulate the tempreture data
+a = -30/3479
+b = -120 * a
+c = 3600 * a + 80
+
+day = c(1:100)
+theta = a * day^2 + b * day + c + runif(length(day), -5, 5)
+theta = round(theta, 0)
+
+par(mfrow=c(1,2))
+plot(day, theta, cex = 0.5, pch = 3, main = "Without Correction")
+
+beta1 = 0.95
+beta2 = 0.8
+beta3 = 0.5
+
+exp_weight_avg = function(beta, theta) {
+  v = rep(0, length(theta))
+  
+  for (i in 1:length(theta)) {
+    if (i == 1) {
+      v[i] = (1 - beta) * theta[i]
+    } else {
+      v[i] = beta * v[i - 1] + (1 - beta) * theta[i]
+    }
+  }
+  return(v)
+}
+
+v1 = exp_weight_avg(beta = beta1, theta)
+v2 = exp_weight_avg(beta = beta2, theta)
+v3 = exp_weight_avg(beta = beta3, theta)
+
+lines(day, v1, col = 1)
+lines(day, v2, col = 2)
+lines(day, v3, col = 3)
+legend("bottomright",paste0(c("beta1=","beta2=","beta3="), c(beta1, beta2, beta3)), col = c(1:3), lty = 1)
+
+exp_weight_avg_correct = function(beta, theta) {
+  v = rep(0, length(theta))
+  
+  for (i in 1:length(theta)) {
+    if (i == 1) {
+      v[i] = (1 - beta) * theta[i]
+    } else {
+      v[i] = beta * v[i - 1] + (1 - beta) * theta[i]
+    }
+  }
+  v = v/(1 - beta^c(1:length(v)))
+  return(v)
+}
+
+v1_correct = exp_weight_avg_correct(beta = beta1, theta)
+v2_correct = exp_weight_avg_correct(beta = beta2, theta)
+v3_correct = exp_weight_avg_correct(beta = beta3, theta)
+
+plot(day, theta, cex = 0.5, pch = 3, main = "With Correction")
+
+lines(day, v1_correct, col = 4)
+lines(day, v2_correct, col = 5)
+lines(day, v3_correct, col = 6)
+legend("bottomright",paste0(c("beta1=","beta2=","beta3="), c(beta1, beta2, beta3)), col = c(4:6), lty = 1)
+```
+
 ### Deal with Overfitting
 
 The biggest problem for deep learning is overfitting. It happens when the model learns too much from the data. We discussed this in more detail in section \@ref(vbtradeoff). A common way to diagnose the problem is to use cross-validation (section \@ref(datasplittingresampling)). You can recognize the problem when the model fits great on the training data but gives poor predictions on the testing data. One way to prevent the model from over learning the data is to limit model complexity. There are several approaches to that. 
@@ -385,30 +510,6 @@ Another powerful regularization technique is "dropout."  In chapter \@ref(tree m
 It temporally freezes a randomly selected subset of nodes at a specific layer in the neural network during the optimization process to reduce overfitting. When applying dropout to a particular layer and mini-batch, we pre-set a percentage, for example, 30%, and randomly remove 30% of the layer's nodes. The output from the 30% removed nodes will be zero. During backpropagation, we update the remaining parameters for a much-diminished network. We need to do the random drop out again for the next mini-batch.
 
 To normalize the output with all nodes in this layer, we need to scale up the output accordingly to the same percentage to make sure the dropped-out nodes do not impact the overall signal. Please note, the dropout process will randomly turn-off different nodes for each mini-batch. Dropout is more efficient in reducing overfitting in deep learning than L1 or L2 regularizations.
-
-### Optimization 
-
-So far, we have introduced the core components of deep learning architecture, layer, weight, activation function, and loss function. With the architecture in place, we need to determine how to update the network based on a loss function (a.k.a. objective function). In this section, we will look at variants of optimization algorithms that will improve the training speed.
-
-#### Batch, Mini-batch, Stochastic Gradient Descent
-
-**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logistic_reg_as_neural_network).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
-
-In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. ** Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
-
-$$\begin{array}{ccc} x= & [\underbrace{x^{(1)},x^{(2)},\cdots,x^{(1000)}}/ & \cdots/\cdots x^{(m)}]\\ (n_{x},m) & mini-batch\ 1 \end{array}$$
-
-$$\begin{array}{ccc} y= & [\underbrace{y^{(1)},y^{(2)},\cdots,y^{(1000)}}/ & \cdots/\cdots y^{(m)}]\\ (1,m) & mini-batch\ 1 \end{array}$$
-
-- Mini-batch size = m: batch gradient descent, too long per iteration
-- Mini-batch size = 1: stochastic gradient descent, lose speed from vectorization
-- Mini-batch size in between: mini-batch gradient descent, make progress without processing all training set, typical batch sizes are $2^6=64$, $2^7=128$, $2^7=256$, $2^8=512$
-
-#### Optimization Algorithms
-
-In the history of deep learning, researchers proposed different optimization algorithms and showed that they worked well in a specific scenario.  But the optimization algorithms didn't generalize well to a wide range of neural networks.  So you will need to try different optimizers in your application. We will introduce three commonly used optimizers here. 
-
-**Exponentially Weighted Averages**
 
 ### Image Recognition Using FFNN {#ffnnexample}
 
