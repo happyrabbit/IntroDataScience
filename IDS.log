@@ -1,11 +1,11 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2020.10.31)  24 JAN 2021 15:57
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.1.25)  25 JAN 2021 10:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
 **IDS.tex
 (./IDS.tex
-LaTeX2e <2020-10-01> patch level 2
-L3 programming layer <2020-10-27> xparse <2020-03-03> (./krantz.cls
+LaTeX2e <2020-10-01> patch level 4
+L3 programming layer <2021-01-09> xparse <2020-03-03> (./krantz.cls
 Document Class: krantz 2005/09/16 v1.4f Standard LaTeX document class
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/base/bk12.clo
 File: bk12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
@@ -25,21 +25,21 @@ File: bk12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 \@cipboxa=\box51
 \@cipboxb=\box52
 \@ciprulewidth=\dimen146
-\c@part=\count171
-\c@chapter=\count172
-\c@section=\count173
-\c@subsection=\count174
-\c@subsubsection=\count175
-\c@paragraph=\count176
-\c@subparagraph=\count177
+\c@part=\count173
+\c@chapter=\count174
+\c@section=\count175
+\c@subsection=\count176
+\c@subsubsection=\count177
+\c@paragraph=\count178
+\c@subparagraph=\count179
 \secwd=\dimen147
 \subsecwd=\dimen148
 \subsubsecwd=\dimen149
-\c@figure=\count178
-\c@table=\count179
+\c@figure=\count180
+\c@table=\count181
 \abovecaptionskip=\skip47
 \belowcaptionskip=\skip48
-\c@numauthors=\count180
+\c@numauthors=\count182
 \section@toc@skip=\skip49
 \SectionTOCWidth=\skip50
 \subsection@toc@skip=\skip51
@@ -61,7 +61,7 @@ File: bk12.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
 \@finalAUboxfromtwo=\box62
 \@finalAUboxfromthree=\box63
 \@finalAUboxfromfour=\box64
-\c@chaptocdepth=\count181
+\c@chaptocdepth=\count183
 \bibindent=\dimen150
 \tempbox=\box65
 \nomenwidth=\dimen151
@@ -159,13 +159,13 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count182
+\inf@bad=\count184
 LaTeX Info: Redefining \frac on input line 234.
-\uproot@=\count183
-\leftroot@=\count184
+\uproot@=\count185
+\leftroot@=\count186
 LaTeX Info: Redefining \overline on input line 399.
-\classnum@=\count185
-\DOTSCASE@=\count186
+\classnum@=\count187
+\DOTSCASE@=\count188
 LaTeX Info: Redefining \ldots on input line 496.
 LaTeX Info: Redefining \dots on input line 499.
 LaTeX Info: Redefining \cdots on input line 620.
@@ -174,15 +174,15 @@ LaTeX Info: Redefining \cdots on input line 620.
 \big@size=\dimen163
 LaTeX Font Info:    Redeclaring font encoding OML on input line 743.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 744.
-\macc@depth=\count187
-\c@MaxMatrixCols=\count188
+\macc@depth=\count189
+\c@MaxMatrixCols=\count190
 \dotsspace@=\muskip16
-\c@parentequation=\count189
-\dspbrk@lvl=\count190
+\c@parentequation=\count191
+\dspbrk@lvl=\count192
 \tag@help=\toks17
-\row@=\count191
-\column@=\count192
-\maxfields@=\count193
+\row@=\count193
+\column@=\count194
+\maxfields@=\count195
 \andhelp@=\toks18
 \eqnshift@=\dimen164
 \alignsep@=\dimen165
@@ -213,13 +213,17 @@ Package fixltx2e Warning: fixltx2e is not required with releases after 2015
 Already applied: [0000/00/00] Old fixltx2e package on input line 53.
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math.st
 y (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/l3kernel/expl3.sty
-Package: expl3 2020-10-27 L3 programming layer (loader) 
+Package: expl3 2021-01-09 L3 programming layer (loader) 
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/l3backend/l3backend-xetex.def
-File: l3backend-xetex.def 2020-09-24 L3 backend support: XeTeX
-\g__graphics_track_int=\count194
+File: l3backend-xetex.def 2021-01-09 L3 backend support: XeTeX
+(|extractbb --version)
+\c__kernel_sys_dvipdfmx_version_int=\count196
+\l__kernel_color_stack_int=\count197
+\g__graphics_track_int=\count198
 \l__pdf_internal_box=\box74
-\g__pdf_backend_object_int=\count195
-\g__pdf_backend_annotation_int=\count196
+\g__pdf_backend_object_int=\count199
+\g__pdf_backend_annotation_int=\count266
+\g__pdf_backend_link_int=\count267
 ))
 Package: unicode-math 2020/01/31 v0.8q Unicode maths in XeLaTeX and LuaLaTeX
 
@@ -240,17 +244,17 @@ Package: fontspec 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTeX
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/fontspec/fontspec-xetex.sty
 Package: fontspec-xetex 2020/02/21 v2.7i Font selection for XeLaTeX and LuaLaTe
 X
-\l__fontspec_script_int=\count197
-\l__fontspec_language_int=\count198
-\l__fontspec_strnum_int=\count199
-\l__fontspec_tmp_int=\count266
-\l__fontspec_tmpa_int=\count267
-\l__fontspec_tmpb_int=\count268
-\l__fontspec_tmpc_int=\count269
-\l__fontspec_em_int=\count270
-\l__fontspec_emdef_int=\count271
-\l__fontspec_strong_int=\count272
-\l__fontspec_strongdef_int=\count273
+\l__fontspec_script_int=\count268
+\l__fontspec_language_int=\count269
+\l__fontspec_strnum_int=\count270
+\l__fontspec_tmp_int=\count271
+\l__fontspec_tmpa_int=\count272
+\l__fontspec_tmpb_int=\count273
+\l__fontspec_tmpc_int=\count274
+\l__fontspec_em_int=\count275
+\l__fontspec_emdef_int=\count276
+\l__fontspec_strong_int=\count277
+\l__fontspec_strongdef_int=\count278
 \l__fontspec_tmpa_dim=\dimen170
 \l__fontspec_tmpb_dim=\dimen171
 \l__fontspec_tmpc_dim=\dimen172
@@ -263,9 +267,9 @@ Package: fix-cm 2015/01/14 v1.1t fixes to LaTeX
 File: ts1enc.def 2001/06/05 v3.0e (jk/car/fm) Standard LaTeX file
 LaTeX Font Info:    Redeclaring font encoding TS1 on input line 47.
 ))
-\g__um_fam_int=\count274
-\g__um_fonts_used_int=\count275
-\l__um_primecount_int=\count276
+\g__um_fam_int=\count279
+\g__um_fonts_used_int=\count280
+\l__um_primecount_int=\count281
 \g__um_primekern_muskip=\muskip17
 
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/unicode-math/unicode-math-tabl
@@ -394,7 +398,7 @@ Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
 Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
 )) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/etoolbox/etoolbox.sty
 Package: etoolbox 2020/10/05 v2.5k e-TeX tools for LaTeX (JAW)
-\etb@tempcnta=\count277
+\etb@tempcnta=\count282
 )) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/xcolor/xcolor.sty
 Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/graphics-cfg/color.cfg
@@ -443,8 +447,8 @@ Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
 Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
 )
 \@linkdim=\dimen173
-\Hy@linkcounter=\count278
-\Hy@pagecounter=\count279
+\Hy@linkcounter=\count283
+\Hy@pagecounter=\count284
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc.sty
@@ -452,7 +456,7 @@ Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcmds.sty
 Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
 )
-\Hy@SavedSpaceFactor=\count280
+\Hy@SavedSpaceFactor=\count285
 Package hyperref Info: Option `unicode' set `true' on input line 4338.
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/hyperref/puenc.def
 File: puenc.def 2020-05-15 v7.00e Hyperref: PDF Unicode definition (HO)
@@ -464,7 +468,7 @@ Package hyperref Info: Plain pages OFF on input line 4479.
 Package hyperref Info: Backreferencing OFF on input line 4484.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4717.
-\c@Hy@tempcnt=\count281
+\c@Hy@tempcnt=\count286
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/url/url.sty
 \Urlmuskip=\muskip18
 Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
@@ -477,7 +481,7 @@ Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
 Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
 )
 ))
-\Fld@menulength=\count282
+\Fld@menulength=\count287
 \Field@Width=\dimen175
 \Fld@charsize=\dimen176
 Package hyperref Info: Hyper figures OFF on input line 6347.
@@ -494,9 +498,9 @@ Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
 ge
 with kernel methods
 )
-\Hy@abspage=\count283
-\c@Item=\count284
-\c@Hfootnote=\count285
+\Hy@abspage=\count288
+\c@Item=\count289
+\c@Hfootnote=\count290
 )
 Package hyperref Info: Driver (autodetected): hxetex.
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/hyperref/hxetex.def
@@ -506,10 +510,10 @@ Package: stringenc 2019/11/29 v1.12 Convert strings between diff. encodings (HO
 )
 )
 \pdfm@box=\box75
-\c@Hy@AnnotLevel=\count286
-\HyField@AnnotCount=\count287
-\Fld@listcount=\count288
-\c@bookmark@seq@number=\count289
+\c@Hy@AnnotLevel=\count291
+\HyField@AnnotCount=\count292
+\Fld@listcount=\count293
+\c@bookmark@seq@number=\count294
 
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/rerunfilecheck.
 sty
@@ -531,12 +535,12 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 Package hyperref Info: Option `colorlinks' set `true' on input line 42.
 Package hyperref Info: Option `breaklinks' set `true' on input line 42.
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
-Package: fancyvrb 2020/05/03 v3.6 verbatim text (tvz,hv)
-\FV@CodeLineNo=\count290
+Package: fancyvrb 2021/01/20 v3.7 verbatim text (tvz,hv)
+\FV@CodeLineNo=\count295
 \FV@InFile=\read2
 \FV@TabBox=\box76
-\c@FancyVerbLine=\count291
-\FV@StepNumber=\count292
+\c@FancyVerbLine=\count296
+\FV@StepNumber=\count297
 \FV@OutFile=\write3
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
@@ -551,16 +555,16 @@ Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
 \LTright=\skip83
 \LTpre=\skip84
 \LTpost=\skip85
-\LTchunksize=\count293
+\LTchunksize=\count298
 \LTcapwidth=\dimen181
 \LT@head=\box77
 \LT@firsthead=\box78
 \LT@foot=\box79
 \LT@lastfoot=\box80
-\LT@cols=\count294
-\LT@rows=\count295
-\c@LT@tables=\count296
-\c@LT@chunks=\count297
+\LT@cols=\count299
+\LT@rows=\count300
+\c@LT@tables=\count301
+\c@LT@chunks=\count302
 \LT@p@ftn=\toks22
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/booktabs/booktabs.sty
 Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
@@ -574,12 +578,12 @@ Package: booktabs 2020/01/12 v1.61803398 Publication quality tables
 \cmidrulesep=\dimen189
 \cmidrulekern=\dimen190
 \defaultaddspace=\dimen191
-\@cmidla=\count298
-\@cmidlb=\count299
+\@cmidla=\count303
+\@cmidlb=\count304
 \@aboverulesep=\dimen192
 \@belowrulesep=\dimen193
-\@thisruleclass=\count300
-\@lastruleclass=\count301
+\@thisruleclass=\count305
+\@lastruleclass=\count306
 \@thisrulewidth=\dimen194
 ) (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/mdwtools/footnote.sty
 Package: footnote 1997/01/28 1.13 Save footnotes around boxes
@@ -626,8 +630,8 @@ Package caption Warning: Unknown document class (or package),
 (caption)                standard defaults will be used.
 See the caption package documentation for explanation.
 
-\c@caption@flags=\count302
-\c@continuedfloat=\count303
+\c@caption@flags=\count307
+\c@continuedfloat=\count308
 Package caption Info: hyperref package is loaded.
 Package caption Info: longtable package is loaded.
 (/Users/hui/Library/TinyTeX/texmf-dist/tex/latex/caption/ltcaption.sty
@@ -655,7 +659,7 @@ Package: natbib 2010/09/13 8.31b (PWD, AO)
 \bibhang=\skip89
 \bibsep=\skip90
 LaTeX Info: Redefining \cite on input line 694.
-\c@NAT@ctr=\count304
+\c@NAT@ctr=\count309
 ) (./IDS.aux
 
 LaTeX Warning: Label `bagging-tree' multiply defined.
@@ -959,7 +963,7 @@ Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
 g.sty
 Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
 )
-\c@section@level=\count305
+\c@section@level=\count310
 )
 LaTeX Info: Redefining \ref on input line 174.
 LaTeX Info: Redefining \pageref on input line 174.
@@ -4556,236 +4560,221 @@ File: IDS_files/figure-latex/activationleakyrelu-1.pdf Graphic file (type pdf)
 File: images/weighted_agv.png Graphic file (type bmp)
 <images/weighted_agv.png>
 [287] [288]
-Overfull \hbox (24.35782pt too wide) detected at line 8545
-[]
- []
-
+Missing character: There is no 𝜃 in font [lmroman12-regular]:mapping=tex-text;!
 [289]
-Underfull \vbox (badness 10000) detected at line 8621
- []
-
-[290]
-File: IDS_files/figure-latex/unnamed-chunk-170-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-170-1.pdf>
-[291] [292] [293]
+File: IDS_files/figure-latex/weightedavgplot-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/weightedavgplot-1.pdf>
+[290] [291] [292] [293]
 File: images/grayscaleimage.png Graphic file (type bmp)
 <images/grayscaleimage.png>
 File: images/colorimage.png Graphic file (type bmp)
 <images/colorimage.png>
 [294] [295]
-Underfull \hbox (badness 10000) detected at line 8735
+Underfull \hbox (badness 10000) detected at line 8708
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8735
+Underfull \hbox (badness 10000) detected at line 8708
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8737
+Underfull \hbox (badness 10000) detected at line 8710
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8737
+Underfull \hbox (badness 10000) detected at line 8710
 [][][]
  []
 
-[296] [297]
+[296]
 File: images/mnist_image3.png Graphic file (type bmp)
 <images/mnist_image3.png>
-[298] [299] [300]
-Underfull \hbox (badness 4569) in paragraph at lines 8888--8889
+[297] [298] [299]
+Underfull \hbox (badness 4569) in paragraph at lines 8861--8862
 []\TU/lmr/m/n/12 In keras, it is easy to define a DNN model: (1) use
  []
 
-
-Underfull \vbox (badness 2884) detected at line 8902
- []
-
-[301] [302] [303]
+[300] [301] [302]
 File: images/dnn_history.png Graphic file (type bmp)
 <images/dnn_history.png>
-[304]
-Underfull \vbox (badness 1460) detected at line 9041
- []
-
-[305] [306]
+[303] [304] [305]
 File: images/misclassified_img.png Graphic file (type bmp)
 <images/misclassified_img.png>
-[307] [308]
+[306] [307]
 File: images/convolution1.png Graphic file (type bmp)
 <images/convolution1.png>
 File: images/convolutionsbs.png Graphic file (type bmp)
 <images/convolutionsbs.png>
-[309] [310]
+[308] [309]
 File: images/edgedet5.png Graphic file (type bmp)
 <images/edgedet5.png>
-[311]
+[310]
 File: IDS_files/figure-latex/simpleedge-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/simpleedge-1.pdf>
-[312]
+[311]
 File: images/convlayer.png Graphic file (type bmp)
 <images/convlayer.png>
-[313]
+[312]
 File: images/padding.png Graphic file (type bmp)
 <images/padding.png>
-[314]
+[313]
 File: images/poolinglayer.png Graphic file (type bmp)
 <images/poolinglayer.png>
-[315] [316]
-Underfull \vbox (badness 10000) detected at line 9379
+[314] [315]
+Underfull \vbox (badness 10000) detected at line 9352
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9379
+Underfull \vbox (badness 10000) detected at line 9352
  []
 
-[317]
+[316]
 File: images/eggshellconv.png Graphic file (type bmp)
 <images/eggshellconv.png>
-[318] [319]
+[317] [318]
 File: images/ConvOverVolume.png Graphic file (type bmp)
 <images/ConvOverVolume.png>
-[320] [321] [322]
-Underfull \hbox (badness 10000) detected at line 9545
+[319] [320] [321]
+Underfull \hbox (badness 10000) detected at line 9518
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9545
+Underfull \hbox (badness 10000) detected at line 9518
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9547
+Underfull \hbox (badness 10000) detected at line 9520
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9547
+Underfull \hbox (badness 10000) detected at line 9520
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9549
+Underfull \hbox (badness 10000) detected at line 9522
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9549
+Underfull \hbox (badness 10000) detected at line 9522
 [][][]
  []
 
-[323] [324]
+[322] [323]
 File: images/cnn_history.png Graphic file (type bmp)
 <images/cnn_history.png>
-[325] [326]
+[324] [325]
 File: images/misclassified_img_cnn.png Graphic file (type bmp)
 <images/misclassified_img_cnn.png>
-[327]
+[326]
 File: images/rnnunit.png Graphic file (type bmp)
 <images/rnnunit.png>
 File: images/rnnrollout.png Graphic file (type bmp)
 <images/rnnrollout.png>
-[328]
+[327]
 File: images/rnnapplication.png Graphic file (type bmp)
 <images/rnnapplication.png>
 File: images/rnnstrs.png Graphic file (type bmp)
 <images/rnnstrs.png>
-[329]
+[328]
 File: images/rnn_notation.png Graphic file (type bmp)
 <images/rnn_notation.png>
-[330]
+[329]
 File: images/nn_ohe.png Graphic file (type bmp)
 <images/nn_ohe.png>
-[331]
+[330]
 File: images/RNN_pro.png Graphic file (type bmp)
 <images/RNN_pro.png>
 
-Underfull \hbox (badness 10000) detected at line 9816
+Underfull \hbox (badness 10000) detected at line 9789
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9816
+Underfull \hbox (badness 10000) detected at line 9789
+[][][]
+ []
+
+[331]
+Underfull \hbox (badness 10000) detected at line 9791
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9791
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9805
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9805
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9807
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9807
 [][][]
  []
 
 [332]
-Underfull \hbox (badness 10000) detected at line 9818
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9818
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9832
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9832
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9834
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9834
-[][][]
- []
-
-[333]
 File: images/rnn_embedding1.png Graphic file (type bmp)
 <images/rnn_embedding1.png>
+[333]
+Underfull \hbox (badness 10000) detected at line 9834
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9834
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9836
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 9836
+[][][]
+ []
+
 [334]
-Underfull \hbox (badness 10000) detected at line 9861
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9861
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9863
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 9863
-[][][]
- []
-
-[335]
 File: images/lstm1.png Graphic file (type bmp)
 <images/lstm1.png>
-[336]
-Underfull \hbox (badness 10000) detected at line 9878
+[335]
+Underfull \hbox (badness 10000) detected at line 9851
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9878
+Underfull \hbox (badness 10000) detected at line 9851
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9880
+Underfull \hbox (badness 10000) detected at line 9853
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9880
+Underfull \hbox (badness 10000) detected at line 9853
 [][][]
  []
 
@@ -4795,58 +4784,97 @@ File: images/lstm3.png Graphic file (type bmp)
 <images/lstm3.png>
 File: images/lstm4.png Graphic file (type bmp)
 <images/lstm4.png>
-[337] [338]
+[336] [337]
 File: images/TokenizingPadding.png Graphic file (type bmp)
 <images/TokenizingPadding.png>
-[339]
-Underfull \hbox (badness 1077) in paragraph at lines 9914--9915
+[338]
+Underfull \hbox (badness 1077) in paragraph at lines 9887--9888
 \TU/lmr/m/n/12 The IMDB dataset is preloaded for \TU/SourceCodePro(0)/m/n/12 ke
 ras \TU/lmr/m/n/12 and we can call
  []
 
-[340] [341] [342]
+[339] [340] [341]
 File: images/rnnhandson1.png Graphic file (type bmp)
 <images/rnnhandson1.png>
-[343]
-Underfull \vbox (badness 4266) detected at line 10068
+[342]
+Underfull \vbox (badness 4266) detected at line 10041
  []
 
-[344] [345]
+[343] [344]
 File: images/rnnhandson2.png Graphic file (type bmp)
 <images/rnnhandson2.png>
-[346] [347] [348]
-Underfull \vbox (badness 10000) detected at line 10161
- []
+[345] [346] [347]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10161
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10161
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10161
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10161
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10161
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10161
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \hbox (336.25pt too wide) has occurred while \output is active
+[]
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 10161
+Underfull \hbox (badness 10000) has occurred while \output is active
+ [][][][] 
+ []
+
+[348
+
+]
+Underfull \vbox (badness 10000) detected at line 10134
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 10134
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 10134
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 10134
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 10134
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 10134
+[]
+ []
+
+
+Underfull \vbox (badness 10000) detected at line 10134
+ []
+
+
+Overfull \hbox (336.25pt too wide) detected at line 10134
 []
  []
 
@@ -4858,45 +4886,44 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 [349
 
-
 ] [350]
-Underfull \vbox (badness 10000) detected at line 10273
+Underfull \vbox (badness 10000) detected at line 10246
  []
 
 [351] [352]
-Underfull \vbox (badness 10000) detected at line 10355
+Underfull \vbox (badness 10000) detected at line 10328
  []
 
 [353]
-Underfull \vbox (badness 1742) detected at line 10446
+Underfull \vbox (badness 1742) detected at line 10419
  []
 
 [354]
-Underfull \vbox (badness 10000) detected at line 10446
+Underfull \vbox (badness 10000) detected at line 10419
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10446
+Underfull \vbox (badness 10000) detected at line 10419
  []
 
 [355]
-Underfull \vbox (badness 1681) detected at line 10556
+Underfull \vbox (badness 1681) detected at line 10529
  []
 
 [356]
-Underfull \vbox (badness 10000) detected at line 10556
+Underfull \vbox (badness 10000) detected at line 10529
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10556
+Underfull \vbox (badness 10000) detected at line 10529
  []
 
 [357]
-Underfull \vbox (badness 10000) detected at line 10556
+Underfull \vbox (badness 10000) detected at line 10529
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10556
+Underfull \vbox (badness 10000) detected at line 10529
  []
 
 [358] (./IDS.bbl [359]
@@ -5043,19 +5070,19 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ]) (./IDS.aux)
-Package rerunfilecheck Info: File `IDS.out' has not changed.
-(rerunfilecheck)             Checksum: 35CBE5923DAE27B214996918B895332A;24129.
 
 LaTeX Warning: There were multiply-defined labels.
 
+Package rerunfilecheck Info: File `IDS.out' has not changed.
+(rerunfilecheck)             Checksum: D4CA330E090EFDC8DED3159483E4E523;24129.
  ) 
 Here is how much of TeX's memory you used:
- 20098 strings out of 479405
- 361028 string characters out of 5879480
- 835906 words of memory out of 5000000
- 39064 multiletter control sequences out of 15000+600000
- 541739 words of font info for 107 fonts, out of 8000000 for 9000
+ 20179 strings out of 479212
+ 362345 string characters out of 5874329
+ 842867 words of memory out of 5000000
+ 39335 multiletter control sequences out of 15000+600000
+ 410081 words of font info for 105 fonts, out of 8000000 for 9000
  14 hyphenation exceptions out of 8191
- 94i,13n,121p,1946b,688s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 98i,13n,125p,1946b,688s stack positions out of 5000i,500n,10000p,200000b,80000s
 
 Output written on IDS.pdf (387 pages).

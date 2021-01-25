@@ -360,7 +360,7 @@ So far, we have introduced the core components of deep learning architecture, la
 
 **Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logistic_reg_as_neural_network).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
 
-In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. ** Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
+In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. **Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
 
 $$\begin{array}{ccc} x= & [\underbrace{x^{(1)},x^{(2)},\cdots,x^{(1000)}}/ & \cdots/\cdots x^{(m)}]\\ (n_{x},m) & mini-batch\ 1 \end{array}$$
 
@@ -395,24 +395,27 @@ And we have:
 $$
 \begin{array}{c} V_{0}=0\\ V_{1}=\beta V_1 + (1-\beta)\theta_1\\ V_2=\beta V_1 + (1-\beta)\theta_2\\ \vdots \\ V_{100}= \beta V_{99} + (1-\beta)\theta_{100} \end{array}$$
 
-It is approximately average over $\frac{1}{1-\beta}$ days. The averages in the initial phase of  training are more biased and the bias correction can help you to obtain a better estimate:
+For example, for $\beta=0.95$:
+
+$$\begin{array}{c} V_{0}=0 \\ V_{1}=0.05\theta_{1}  \\ V_{2}=0.0475\theta_{1}+0.05\theta_{2}   \end{array} \\ ......$$
+
+The black line in the right plot of figure \@ref(fig:weightedavgplot) is the exponentially weighted averages of simulated temperature data with $\beta = 0.95$. $V_t$ is approximately average over the previous $\frac{1}{1-\beta}$ $\theta$. So $\beta = 0.95$ approximates a 20 days' average.  The red line corresponds to $\beta = 0.8$, which approximates 5 days' average. As $\beta$ increases, it averages over a larger window of the previous values, and hence the curve gets smoother.  A larger $\beta$ also means that it gives  V_{0}=0 \\ V_{1}=0.05\theta_{1}the current value $\theta_t$ less weight ($1-\beta$), and the average adapts more slowly. It is easy to see from the plot that the averages at the beginning are more biased. The bias correction can help to achieve a better estimate:
+
 
 $$V_t^{corrected} = \frac{V_t}{1-\beta^t}$$
 
-For example, for $\beta=0.95$:
 
-$$\begin{array}{cc} V_{0}=0\\ V_{1}=0.05\theta_{1} & V_{1}^{corrected}=\frac{V_{1}}{1-0.95}=\theta_{1}\\ V_{2}=0.0475\theta_{1}+0.05\theta_{2} & V_{2}^{corrected}=\frac{V_{2}}{1-0.95^{2}}=0.4872\theta_{1}+0.5128\theta_{2} \end{array}$$
 
-On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
+$$V_{1}^{corrected}=\frac{V_{1}}{1-0.95}=\theta_{1}$$
 
-$$V_{dw} = \beta V_{dw}+(1-\beta)dw$$
-$$V_{db} = \beta V_{db}+(1-\beta)db$$
+$$V_{2}^{corrected}=\frac{V_{2}}{1-0.95^{2}}=0.4872\theta_{1}+0.5128\theta_{2}$$
 
-$$w=w-\alpha V_{dw};\ \ b=b-\alpha V_{db}$$
+For $\beta = 0.95$, the origional $V_2 = 0.0475\theta_{1}+0.05\theta_{2}$ which is a small fraction of both $theta_1$ and $theta_2$. That is why it starts so much lower with big bias. After correction, $V_{2}^{corrected} = 0.4872\theta_{1}+0.5128\theta_{2}$ is a weighted average with two weights added up to 1 which revmoves the bias. Notice that as $t$ increases, $\beta^t$ converges to 0 and $V^{corrected}$ converges to $V^t$.
 
 The following code simulates a set of temperature data and applies exponentially weighted average with and without correction using various $\beta$ values (0.5, 0.8, 0.95).
 
-```{r}
+```{r weightedavgplot, fig.cap = "Exponentially weighted averages with and without corrrection", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+
 # simulate the tempreture data
 a = -30/3479
 b = -120 * a
@@ -423,7 +426,9 @@ theta = a * day^2 + b * day + c + runif(length(day), -5, 5)
 theta = round(theta, 0)
 
 par(mfrow=c(1,2))
-plot(day, theta, cex = 0.5, pch = 3, main = "Without Correction")
+plot(day, theta, cex = 0.5, pch = 3, ylim = c(0, 100),
+     main = "Without Correction", 
+     xlab = "Days", ylab = "Tempreture")
 
 beta1 = 0.95
 beta2 = 0.8
@@ -449,7 +454,10 @@ v3 = exp_weight_avg(beta = beta3, theta)
 lines(day, v1, col = 1)
 lines(day, v2, col = 2)
 lines(day, v3, col = 3)
-legend("bottomright",paste0(c("beta1=","beta2=","beta3="), c(beta1, beta2, beta3)), col = c(1:3), lty = 1)
+legend("bottomright",
+       paste0(c("beta1=","beta2=","beta3="), 
+              c(beta1, beta2, beta3)), col = c(1:3),
+       lty = 1)
 
 exp_weight_avg_correct = function(beta, theta) {
   v = rep(0, length(theta))
@@ -469,17 +477,59 @@ v1_correct = exp_weight_avg_correct(beta = beta1, theta)
 v2_correct = exp_weight_avg_correct(beta = beta2, theta)
 v3_correct = exp_weight_avg_correct(beta = beta3, theta)
 
-plot(day, theta, cex = 0.5, pch = 3, main = "With Correction")
+plot(day, theta, cex = 0.5, pch = 3, ylim = c(0,100),
+     main = "With Correction",
+     xlab = "Days", ylab = "")
 
 lines(day, v1_correct, col = 4)
 lines(day, v2_correct, col = 5)
 lines(day, v3_correct, col = 6)
-legend("bottomright",paste0(c("beta1=","beta2=","beta3="), c(beta1, beta2, beta3)), col = c(4:6), lty = 1)
+legend("bottomright",
+       paste0(c("beta1=","beta2=","beta3="),
+              c(beta1, beta2, beta3)), 
+       col = c(4:6), lty = 1)
 ```
+
+How do we apply the exponentially weighted average to optimization? Instead of using the gradients ($dw$ and $db$) to update the parameter, we use the gradients' exponentially weighted average. There are various optimizers built on top of this idea. We will look at three optimizers, Momentum, Root Mean Square Propagation (RMSprop), and Adaptive Moment Estimation (Adam).
+
+**Momentum**
+
+On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
+ 
+$$V_{dw} = \beta V_{dw}+(1-\beta)dw$$
+
+$$V_{db} = \beta V_{db}+(1-\beta)db$$
+
+$$w=w-\alpha V_{dw};\ \ b=b-\alpha V_{db}$$
+
+**Root Mean Square Propagation (RMSprop)**
+
+On iteration t, compute dw, db using the current mini-batch.
+
+$$S_{dw}=\beta S_{dw} + (1-\beta)dw^2$$
+
+$$S_{db}=\beta S_{db} + (1-\beta)db^2$$
+
+$$w = w - \alpha \frac{dw}{\sqrt{S_{dw}}};\ b=b-\alpha \frac{db}{\sqrt{S_{db}}}$$
+
+**Adaptive Moment Estimation (Adam)**
+
+On iteration t, compute dw, db using the current mini-batch.
+
+$$\begin{cases} \begin{array}{c} V_{dw}=\beta_{1}V_{dw}+(1-\beta_{1})dw\\ V_{db}=\beta_{1}V_{db}+(1-\beta_{1})db \end{array} & momantum\ update\ \beta_{1}\end{cases}$$
+
+$$\begin{cases} \begin{array}{c} S_{dw}=\beta_{2}S_{dw}+(1-\beta_{2})dw^{2}\\ S_{db}=\beta_{2}S_{db}+(1-\beta_{2})db^{2} \end{array} & RMSprop\ update\ \beta_{2}\end{cases}$$
+
+$$\begin{cases} \begin{array}{c} V_{dw}^{corrected}=\frac{V_{dw}}{1-\beta_{1}^{t}}\\ V_{db}^{corrected}=\frac{V_{db}}{1-\beta_{1}^{t}} \end{array}\end{cases};\ \ \begin{cases} \begin{array}{c} S_{dw}^{corrected}=\frac{S_{dw}}{1-\beta_{2}^{t}}\\ S_{db}^{corrected}=\frac{S_{db}}{1-\beta_{2}^{t}} \end{array}\end{cases}$$
+
+$$w=w-\alpha \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected}} +\epsilon};\ b=b-\alpha\frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected}}+\epsilon}$$
+
 
 ### Deal with Overfitting
 
 The biggest problem for deep learning is overfitting. It happens when the model learns too much from the data. We discussed this in more detail in section \@ref(vbtradeoff). A common way to diagnose the problem is to use cross-validation (section \@ref(datasplittingresampling)). You can recognize the problem when the model fits great on the training data but gives poor predictions on the testing data. One way to prevent the model from over learning the data is to limit model complexity. There are several approaches to that. 
+
+
 
 #### Regularization
 
