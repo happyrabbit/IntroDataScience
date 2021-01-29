@@ -8,7 +8,7 @@ We are familiar with our laptop/desktop computers which have three main componen
 
 The data and codes stored in the hard disk have specific features such as slow to read and write, and large capacity of around a few TB in today's market. Memory is fast to read and write but with small capacity in the order of a few dozens of GB in today's market. CPU is where all the computation happens.
 
-```{r sparkcluster, fig.cap = "Single computer (left) and a cluster of computers (right)", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r sparkcluster, fig.cap = "Single computer (left) and a cluster of computers (right)", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/cluster.png")
 ```
 
@@ -45,7 +45,7 @@ Anyone can apply for a free Databrick account through https://databricks.com/try
 
 For this book, we will use R notebook for examples and demos and the corresponding Python notebook will be available online too. For an R notebook, it contains multiple cells, and, by default, the content within each cell are R scripts. Usually, each cell is a well-managed segment of a few lines of codes that accomplish a specific task. For example, Figure  \@ref(fig:rnotebook) shows the default cell for an R notebook. We can type in R scripts and comments same as we are using R console. By default, only the result from the last line will be shown following the cell. However, you can use `print()` function to output results for any lines. If we move the mouse to the middle of the lower edge of the cell below the results, a "`+`" symbol will show up and click on the symbol will insert a new cell below. When we click any area within a cell, it will make it editable and you will see a few icons on the top right corn of the cell where we can run the cell, as well as add a cell below or above, copy the cell, cut the cell etc. One quick way to run the cell is `Shift+Enter` when the cell is chosen. User will become familiar with the notebook environment quickly.
 
-```{r rnotebook, fig.cap = "Example of R Notebook", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r rnotebook, fig.cap = "Example of R Notebook", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/dbxrnotebook.png")
 ```
 
@@ -53,7 +53,7 @@ knitr::include_graphics("images/dbxrnotebook.png")
 
 For an R notebook, every cell by default will contain R scripts. But if we put `%md`, `%sql` or `%python` at the first line of a cell, that cell becomes Markdown cell, SQL script cell, and Python script cell accordingly. For example, Figure \@ref(fig:dbxmarkdown) shows a markdown cell with scripts and the actual appearance when exits editing mode. Markdown cell provides a straightforward way to descript what each cell is doing as well as what the entire notebook is about. It is a better way than a simple comment within the code.
 
-```{r dbxmarkdown, fig.cap = "Example of Markdown Cell", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r dbxmarkdown, fig.cap = "Example of Markdown Cell", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/dbxmarkdown.png")
 ```
 
@@ -153,14 +153,16 @@ iris_summary <- iris_tbl %>%
 
 Now, `iris_summary` is a local R object to the R notebook and we can use any R packages and functions to it. In the following code, we will apply `ggplot()` to it, exactly the same as a stand along R console:
 
-
 ```r
 library(ggplot2)
-ggplot(iris_summary, aes(Sepal_Width, Sepal_Length, color = Species)) +
+ggplot(iris_summary, aes(Sepal_Width, Sepal_Length, 
+                         color = Species)) +
   geom_line(size = 1.2) +
   geom_errorbar(aes(ymin = Sepal_Length - stdev, 
-                    ymax = Sepal_Length + stdev), width = 0.05) +
-  geom_text(aes(label = count), vjust = -0.2, hjust = 1.2, color = "black") +
+                    ymax = Sepal_Length + stdev), 
+                    width = 0.05) +
+  geom_text(aes(label = count), vjust = -0.2, hjust = 1.2, 
+            color = "black") +
   theme(legend.position="top")
 ```
 

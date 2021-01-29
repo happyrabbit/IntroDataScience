@@ -494,7 +494,7 @@ How do we apply the exponentially weighted average to optimization? Instead of u
 
 **Momentum**
 
-On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
+The momentum algorithm uses the exponentially weighted average of gradients to update the parameters. On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
  
 $$V_{dw} = \beta V_{dw}+(1-\beta)dw$$
 
@@ -502,25 +502,36 @@ $$V_{db} = \beta V_{db}+(1-\beta)db$$
 
 $$w=w-\alpha V_{dw};\ \ b=b-\alpha V_{db}$$
 
+The learning rate $\alpha$ and weighted average parameter $\beta$ are hyperparameters. The most common and robust choice is $\beta = 0.9$. This algorithm does not use the bias correction because the average will warm up after a dozen iterations and no longer be biased.  The momentum algorithm, in general, works better than the original gradient descent without any average. 
+
 **Root Mean Square Propagation (RMSprop)**
 
-On iteration t, compute dw, db using the current mini-batch.
+The Root Mean Square Propagation (RMSprop) is another algorithm that applies the idea of exponentially weighted average. On iteration t, compute dw and db using the current mini-batch. Instead of V, it calculates the weighted average of the squared gradient descents. When dw and db are vectors, the squaring is an element-wise operation. 
+
 
 $$S_{dw}=\beta S_{dw} + (1-\beta)dw^2$$
 
 $$S_{db}=\beta S_{db} + (1-\beta)db^2$$
 
+Then, update the parameters as follows: 
+
 $$w = w - \alpha \frac{dw}{\sqrt{S_{dw}}};\ b=b-\alpha \frac{db}{\sqrt{S_{db}}}$$
+
+The RMSprop algorithm divides the learning rate for a parameter by a weighted average of recent gradients' magnitudes for that parameter. The goal is still to adjust the learning speed. Recall the example that illustrates the intuition behind it. When parameter b is close to its target value, we want to decrease the oscillations along the vertical direction. 
 
 **Adaptive Moment Estimation (Adam)**
 
-On iteration t, compute dw, db using the current mini-batch.
+The Adaptive Moment Estimation (Adam) algorithm is, in some way, a combination of momentum and RMSprop. On iteration t, compute dw, db using the current mini-batch. Then calculate both V and S using the gradient descents. 
 
 $$\begin{cases} \begin{array}{c} V_{dw}=\beta_{1}V_{dw}+(1-\beta_{1})dw\\ V_{db}=\beta_{1}V_{db}+(1-\beta_{1})db \end{array} & momantum\ update\ \beta_{1}\end{cases}$$
 
 $$\begin{cases} \begin{array}{c} S_{dw}=\beta_{2}S_{dw}+(1-\beta_{2})dw^{2}\\ S_{db}=\beta_{2}S_{db}+(1-\beta_{2})db^{2} \end{array} & RMSprop\ update\ \beta_{2}\end{cases}$$
 
+The Adam algorithm implements bias correction.
+
 $$\begin{cases} \begin{array}{c} V_{dw}^{corrected}=\frac{V_{dw}}{1-\beta_{1}^{t}}\\ V_{db}^{corrected}=\frac{V_{db}}{1-\beta_{1}^{t}} \end{array}\end{cases};\ \ \begin{cases} \begin{array}{c} S_{dw}^{corrected}=\frac{S_{dw}}{1-\beta_{2}^{t}}\\ S_{db}^{corrected}=\frac{S_{db}}{1-\beta_{2}^{t}} \end{array}\end{cases}$$
+
+And it updates the parameter using both corrected V and S. $\epsilon$ here is a tiny positive number to make sure the denominator is larger than zero. The choice of $\epsilon$ doesn't matter much, and the inventors of the Adam algorithm recommended $\epsilon = 10^{-8}$. For hyperparameter $\beta_1$ and $\beta_2$, the common settings are $\beta_1 = 0.9$ and $\beta_2 = 0.999$.
 
 $$w=w-\alpha \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected}} +\epsilon};\ b=b-\alpha\frac{V_{db}^{corrected}}{\sqrt{S_{db}^{corrected}}+\epsilon}$$
 

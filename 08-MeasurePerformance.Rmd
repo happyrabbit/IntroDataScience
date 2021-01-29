@@ -81,8 +81,11 @@ yTest <- disease_dat$y[-trainIndex] %>% as.factor()
 Train a random forest model: 
 
 ```r
-train_rf <- randomForest(yTrain ~ ., data = xTrain, mtry = trunc(sqrt(ncol(xTrain) - 
-    1)), ntree = 1000, importance = T)
+train_rf <- randomForest(yTrain ~ ., 
+                         data = xTrain, 
+                         mtry = trunc(sqrt(ncol(xTrain) - 1)),
+                         ntree = 1000, 
+                         importance = T)
 ```
 
 ```{r, echo=FALSE}

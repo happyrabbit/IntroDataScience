@@ -117,8 +117,9 @@ You can also pass `col_names`  a character vector which will be used as the colu
 
 As mentioned before, you can use `read_csv2()` to read semicolon separated files:
 
-```{r}
-dat <- read_csv2("Saturday; carrot; extremely happy \n Sunday; carrot; extremely happy", col_names = FALSE)
+```{r, message = FALSE}
+dat <- read_csv2("Saturday; carrot; extremely happy \n 
+                 Sunday; carrot; extremely happy", col_names = FALSE)
 print(dat)
 ```
 
@@ -295,7 +296,13 @@ dt[ , mean(online_trans), by = gender]
 The code above is equal to the following SQL：
 
 ```sql
-SELECT  gender, avg(online_trans) FROM sim.dat GROUP BY gender
+SELECT
+   gender,
+   avg(online_trans) 
+FROM
+   sim.dat 
+GROUP BY
+   gender
 ```
 
 R code:
@@ -306,8 +313,16 @@ dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
 
 is equal to SQL：
 
-```sql 
-SELECT gender, house, avg(online_trans) AS avg FROM sim.dat GROUP BY gender, house
+```sql
+SELECT
+   gender,
+   house,
+   avg(online_trans) AS avg 
+FROM
+   sim.dat 
+GROUP BY
+   gender,
+   house
 ```
 
 R code：
@@ -319,7 +334,17 @@ dt[ age < 40, .(avg = mean(online_trans)), by = .(gender, house)]
 is equal to SQL：
 
 ```sql
-SELECT gender, house, avg(online_trans) AS avg FROM sim.dat WHERE age < 40 GROUP BY gender, house
+SELECT
+   gender,
+   house,
+   avg(online_trans) AS avg 
+FROM
+   sim.dat 
+WHERE
+   age < 40 
+GROUP BY
+   gender,
+   house
 ```
 
 You can see the analogy between `data.table` and `SQL`.  Now let's focus on operations in data table. 
@@ -339,7 +364,8 @@ Selecting columns in  `data.table` don't need `$`:
 
 ```{r}
 # select column “age” but return it as a vector
-# the argument for row is empty so the result will return all observations
+# the argument for row is empty so the result
+# will return all observations
 ans <- dt[, age]
 head(ans)
 ```
@@ -347,7 +373,8 @@ head(ans)
 To return `data.table` object, put column names in `list()`:
 
 ```r
-# Select age and online_exp columns and return as a data.table instead
+# Select age and online_exp columns 
+# and return as a data.table instead
 ans <- dt[, list(age, online_exp)]
 head(ans)
 ```
@@ -356,7 +383,6 @@ Or you can also put column names in `.()`:
 
 ```r
 ans <- dt[, .(age, online_exp)]
-# head(ans)
 ```
 
 To select all columns from “`age`” to “`income`”:
@@ -426,7 +452,7 @@ dt[order(gender, -online_exp)][1:5]
 Other than `read.csv` in base R, we have introduced 'read_csv' in 'readr'.  `read_csv` is much faster and will provide progress bar which makes user feel much better (at least make me feel better). `fread()` in `data.table` further increase the efficiency of reading data. The following are three examples of reading the same data file `topic.csv`. The file includes text data scraped from an agriculture forum with 209670 rows and 6 columns:
 
 ```r
-system.time(topic<-read.csv("http://bit.ly/2zam5ny"))
+system.time(topic <- read.csv("http://bit.ly/2zam5ny"))
 ```
 
 ```html
@@ -435,7 +461,7 @@ system.time(topic<-read.csv("http://bit.ly/2zam5ny"))
 ```
 
 ```r
-system.time(topic<-readr::read_csv("http://bit.ly/2zam5ny"))
+system.time(topic <- readr::read_csv("http://bit.ly/2zam5ny"))
 ```
 
 ```html
@@ -444,7 +470,7 @@ system.time(topic<-readr::read_csv("http://bit.ly/2zam5ny"))
 ```
 
 ```r
-system.time(topic<-data.table::fread("http://bit.ly/2zam5ny"))
+system.time(topic <- data.table::fread("http://bit.ly/2zam5ny"))
 ```
 
 ```html
@@ -693,7 +719,8 @@ sim.dat %>%
   summarise(Age = round(mean(na.omit(age)), 0), 
             FemalePct = round(mean(gender == "Female"), 2), 
             HouseYes = round(mean(house == "Yes"), 2), 
-            store_exp = round(mean(na.omit(store_exp), trim = 0.1), 0),
+            store_exp = round(mean(na.omit(store_exp), 
+                                   trim = 0.1), 0),
             online_exp = round(mean(online_exp), 0), 
             store_trans = round(mean(store_trans), 1), 
             online_trans = round(mean(online_trans), 1))
@@ -744,7 +771,8 @@ Another comman task is to check which column has missing values. It requires the
 
 ```{r}
 # apply function anyNA() to each column
-# you can also assign a function vector such as: c("anyNA","is.factor")
+# you can also assign a function vector 
+# such as: c("anyNA","is.factor")
 dplyr::summarise_all(sim.dat, funs_(c("anyNA")))
 ```
 
@@ -836,9 +864,12 @@ You can run a regression to study the effect of purchasing channel as follows:
 ```r
 # Here we use all observations from sim.dat
 # Don't show result here
-mdat <- melt(sim.dat[, 1:6], measure.vars = c("store_exp", "online_exp"), 
-    variable.name = "Channel", value.name = "Expense")
-fit <- lm(Expense ~ gender + house + income + Channel + age, data = mdat)
+mdat <- melt(sim.dat[, 1:6], 
+             measure.vars = c("store_exp", "online_exp"), 
+             variable.name = "Channel", 
+             value.name = "Expense")
+fit <- lm(Expense ~ gender + house + income + Channel + age, 
+          data = mdat)
 summary(fit)
 ```
 
@@ -864,7 +895,8 @@ sdat %>% tbl_df()
 `gather()` function in `tidyr` is analogous to `melt()` in `reshape2`. The following code will do the same thing as we did before using `melt()`: 
 
 ```{r}
-msdat <- tidyr::gather(sdat, "variable","value", store_exp, store_trans)
+msdat <- tidyr::gather(sdat, "variable","value", 
+                       store_exp, store_trans)
 msdat %>% tbl_df()
 ```
 

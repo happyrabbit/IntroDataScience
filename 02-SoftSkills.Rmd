@@ -1,5 +1,7 @@
 # Soft Skills for Data Scientists
 
+We want to start the book with soft skills for data scientists. There are many university courses, online self-learning modules, and excellent books that teach technical skills. However, there are much fewer resources discussing the soft skills for data scientists in detail. However, soft skills are essential for data scientists to succeed in their career, especially in the early stage. This chapter also introduces the project cycle and some common pitfalls of data science projects in real life.
+
 ## Comparison between Statistician and Data Scientist
 
 Statistics as a scientific area can be traced back to 1749, and statistician as a career has been around for hundreds of years with well-established theory and application. Data scientist becomes an attractive career for only a few years, along with the fact that data size and variety beyond the traditional statistician’s toolbox and the fast-growing of computation power. Statistician and data scientist have a lot in common, but there are also significant differences, as highlighted in figure \@ref(fig:softskill1) below:

@@ -182,6 +182,7 @@ sim.dat <- cbind(sim.dat, sim.dat2)
 sim.dat$segment <- factor(rep(group_name, times = group_size))
 ```
 
+<!--
 ## Customer Satisfaction Survey Data from Airline Company {#appendixdata2}
 
 ```r
@@ -269,6 +270,7 @@ names(rating) <- c("Easy_Reservation", "Preferred_Seats",
     "Satisfaction", "Fly_Again", "Recommend", "ID", 
     "Airline")
 ```
+-->
 
 ## Swine Disease Breakout Data {#appendixdata3}
 

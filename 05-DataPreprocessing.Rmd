@@ -39,7 +39,8 @@ source("https://raw.githubusercontent.com/happyrabbit/CE_JSM2017/master/Rcode/00
 
 ```{r, message=FALSE,results="hide"}
 # install packages from CRAN
-p_needed <- c('imputeMissings','caret','e1071','psych','car','corrplot')
+p_needed <- c('imputeMissings','caret','e1071','psych',
+              'car','corrplot')
 packages <- rownames(installed.packages())
 p_to_install <- p_needed[!(p_needed %in% packages)]
 if (length(p_to_install) > 0) {
@@ -138,7 +139,8 @@ In the case of missing at random, a common method is to impute with the mean (co
 ```r
 # save the result as another object
 demo_imp <- impute(sim.dat, method = "median/mode")
-# check the first 5 columns, there is no missing values in other columns
+# check the first 5 columns
+# there is no missing values in other columns
 summary(demo_imp[, 1:5])
 ```
 
@@ -282,7 +284,8 @@ Skewness=0 means that the destribution is symmetric, i.e. the probability of fal
 
 
 
-```{r} 
+```{r preprocessskew, fig.cap = "Example of skewed distributions", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+
 # need skewness() function from e1071 package
 set.seed(1000)
 par(mfrow = c(1, 2), oma = c(2, 2, 2, 2))

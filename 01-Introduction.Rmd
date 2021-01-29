@@ -2,6 +2,10 @@
 
 # Introduction
 
+Data science is a fast-developing area. This chapter discusses varied aspects of data science. What are the different career tracks and skills required in data science? How is the data science team structured?  We focus on the demand side of data science from business and industry requirements and application points of view. We hope this chapter will provide a complementary perspective to other data sciences books. 
+
+## A brief history of data science
+
 Interest in data science-related careers is at an all-time high and has exploded in popularity in the last few years. Data scientists today are from various backgrounds. If someone ran into you ask what data science is all about, what would you tell them? It is not an easy question to answer. Data science is one of the areas that everyone is talking about, but no one can define it well.
 
 Media has been hyping about "Data Science," "Big Data," and "Artificial Intelligence" over the past few years. There is an amusing statement from the internet:

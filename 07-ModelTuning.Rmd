@@ -21,7 +21,10 @@ There are two kinds of application problems: complete information problem and in
 Assume we have $\hat{f}$ which is an estimator of $f$. Then we can further get  $\mathbf{\hat{y}}=\hat{f}(\mathbf{X})$. The predicted error is divided into two parts, systematic error, and random error:
 
 \begin{equation}
-E(\mathbf{y}-\hat{\mathbf{y}})^{2}=E[f(\mathbf{X})+\mathbf{\epsilon}-\hat{f}(\mathbf{X})]^{2}=\underset{\text{(1)}}{\underbrace{E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}}}+\underset{\text{(2)}}{\underbrace{Var(\mathbf{\epsilon})}}
+\begin{array}{ccc}
+E(\mathbf{y}-\hat{\mathbf{y}})^{2} & = & E[f(\mathbf{X})+ \mathbf{\epsilon} - \hat{f}(\mathbf{X})]^{2}\\
+ & = & \underset{\text{(1)}}{\underbrace{E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}}}+\underset{\text{(2)}}{\underbrace{Var(\mathbf{\epsilon})}}
+\end{array}
 (\#eq:error)
 \end{equation}
 
@@ -67,7 +70,9 @@ Then fit a simple linear regression on these data:
 ```{r linearbias, fig.cap= "High bias model", out.width="80%", fig.asp=.75, fig.align="center"}
 # plot fitting result
 library(ggplot2)
-ggplot(dat, aes(x, fx)) + geom_point() + geom_smooth(method = "lm", se = FALSE)
+ggplot(dat, aes(x, fx)) + 
+    geom_point() + 
+    geom_smooth(method = "lm", se = FALSE)
 ```
 
 Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
@@ -168,8 +173,10 @@ sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 library(caret)
 # set random seed to make sure reproducibility
 set.seed(3456)
-trainIndex <- createDataPartition(sim.dat$segment, p = 0.8, list = FALSE, 
-    times = 1)
+trainIndex <- createDataPartition(sim.dat$segment, 
+                                  p = 0.8, 
+                                  list = FALSE,
+                                  times = 1)
 head(trainIndex)
 ```
 
@@ -242,10 +249,15 @@ Plot the resulted set to compare different sampling methods:
 
 ```{r maxdis, fig.cap='Compare Maximum Dissimilarity Sampling with  Random Sampling', out.width='80%', fig.asp=.75, fig.align='center'}
 start$group <- rep("Initial Set", nrow(start))
-minDissSet$group <- rep("Maximum Dissimilarity Sampling", nrow(minDissSet))
-RandomSet$group <- rep("Random Sampling", nrow(RandomSet))
-xyplot(age ~ income, data = rbind(start, minDissSet, RandomSet), grid = TRUE, 
-    group = group, auto.key = TRUE)
+minDissSet$group <- rep("Maximum Dissimilarity Sampling", 
+                        nrow(minDissSet))
+RandomSet$group <- rep("Random Sampling", 
+                       nrow(RandomSet))
+xyplot(age ~ income, 
+       data = rbind(start, minDissSet, RandomSet), 
+       grid = TRUE, 
+       group = group, 
+       auto.key = TRUE)
 ```
 
 The points from maximum dissimilarity sampling are far away from the initial samples ( Fig. \@ref(fig:maxdis), while the random samples are much closer to the initial ones.  Why do we need a diverse subset? Because we hope the test set to be representative. If all test set samples are from respondents younger than 30, model performance on the test set has a high risk to fail to tell you how the model will perform on more general population.
@@ -265,7 +277,9 @@ Fig. \@ref(fig:times) shows 100 simulated time series observation. The goal is t
 
 ```{r}
 timeSlices <- createTimeSlices(1:length(timedata), 
-                   initialWindow = 36, horizon = 12, fixedWindow = T)
+                   initialWindow = 36, 
+                   horizon = 12, 
+                   fixedWindow = T)
 str(timeSlices,max.level = 1)
 ```
 
@@ -349,7 +363,10 @@ In fact, this method is nothing but repeating the training/test set division on 
 We can use the same function (`createDataPartition ()`) as before.   If you look back, you will see `times = 1`. The only thing to change is to set it to the number of repetitions.
 
 ```{r}
-trainIndex <- createDataPartition(sim.dat$segment, p = .8, list = FALSE, times = 5)
+trainIndex <- createDataPartition(sim.dat$segment, 
+                                  p = .8, 
+                                  list = FALSE, 
+                                  times = 5)
 dplyr::glimpse(trainIndex)
 ```
 
