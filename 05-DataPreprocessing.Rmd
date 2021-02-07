@@ -96,11 +96,11 @@ summary(sim.dat)
 Are there any problems? Questionnaire response Q1-Q10 seem reasonable, the minimum is 1 and maximum is 5. Recall that the questionnaire score is 1-5. The number of store transactions (`store_trans`) and online transactions (`online_trans`) make sense too. Things to pay attention are: 
 
 - There are some missing values. 
-- There are outliers for store expenses (`store_exp`). The maximum value is 50000. Who would spend $50000 a year buying clothes? Is it an imputation error? 
+- There are outliers for store expenses (`store_exp`). The maximum value is 50000. Who would spend $50000 a year buying clothes? Is it an imputation error?
 - There is a negative value ( -500) in `store_exp ` which is not logical. 
 - Someone is 300 years old. 
 
-How to deal with that? Depending on the real situation, if the sample size is large enough, it does not hurt to delete those problematic samples. Here we have 1000 observations. Since marketing survey is usually expensive, it is better to set these values as missing and impute them instead of deleting the rows. 
+How to deal with that? Depending on the situation, if the sample size is large enough and the missing happens randomly, it does not hurt to delete those problematic samples. Or we can set these values as missing and impute them instead of deleting the rows. 
 
 
 ```r
@@ -380,7 +380,7 @@ sdat <- subset(sim.dat, select = c("age", "income", "store_exp",
     "online_exp", "store_trans", "online_trans"))
 # use scatterplotMatrix() function from car package
 par(oma = c(2, 2, 1, 2))
-scatterplotMatrix(sdat, diagonal = "boxplot", smoother = FALSE)
+car::scatterplotMatrix(sdat, diagonal = TRUE)
 ```
 
 <!--As figure \@ref(fig:scm) shows, `store_exp` has outliers. -->
