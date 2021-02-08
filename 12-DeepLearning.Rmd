@@ -574,13 +574,7 @@ To normalize the output with all nodes in this layer, we need to scale up the ou
 
 ### Image Recognition Using FFNN {#ffnnexample}
 
-In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development. We are using the Databrick community edition with the following consideration:
-
-- Minimum language barrier in coding for most users
-- Zero setup to save time using cloud environment
-- Help you get familiar with current trend of cloud computing in corporate setup
-
-Refer to section \@ref(CloudEnvironment) for how to set up an account, create a notebook (R or Python) and start a cluster.
+In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development. 
 
 What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. Each each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network(CNN). Or, you can vectorize the array as the input for FFNN as shown in the figure.
 
@@ -606,6 +600,18 @@ As `keras` is just an interface to popular deep learning frameworks, we have to 
 library(keras)
 install_keras()
 ```
+
+You can run the code in this section in the Databrick community edition with R as the interface. Refer to section \@ref(CloudEnvironment) for how to set up an account, create a notebook (R or Python) and start a cluster. For an audience with a statistical background, using a well-managed cloud environment has the following benefit:
+
+- Minimum language barrier in coding for most statisticians
+- Zero setups to save time using the cloud environment
+- Get familiar with the current trend of cloud computing in the industrial context
+
+You can also run the code on your local machine with R and the required Python packages (`keras`  uses the Python TensorFlow backend engine). Different versions of Python may cause some errors when running `install_keras()`.  Here are the things you could do when you encounter the Python backend issue in your local machine:
+
+- Run `reticulate::py_config()` to check the current Python configuration to see if anything needs to be changed. 
+- By default, `install_keras()` uses virtual environment `~/.virtualenvs/r-reticulate`. If you don't know how to set the right environment, try to set the installation method as conda (`install_keras(method = "conda")`)
+- Refer to this document for more details on how to [install `keras` and the TensorFlow backend](https://tensorflow.rstudio.com/reference/keras/install_keras/). 
 
 Now we are all set to explore deep learning! As simple as three lines of R code, but there are quite a lot going on behind the scene. If you are using a cloud environment, you do not need to worry about these behind scene setup and maintenance.
 
@@ -1375,6 +1381,12 @@ sum(cnn_pred != mnist$test$y)
 
 ```html
 [1] 72
+```
+
+```r
+missed_image = mnist$test$x[cnn_pred != mnist$test$y,,]
+missed_digit = mnist$test$y[cnn_pred != mnist$test$y]
+missed_pred = cnn_pred[cnn_pred != mnist$test$y]
 ```
 
 ```r
