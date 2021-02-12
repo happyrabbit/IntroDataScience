@@ -30,7 +30,7 @@ pre {
   word-wrap: normal;
 }
 pre code {
-  white-space: inherit;
+  white-space: pre-wrap;
 }
 p.flushright {
   text-align: right;

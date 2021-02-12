@@ -125,7 +125,7 @@ print(dat)
 
 Here "`\n`" is a convenient shortcut for adding a new line. 
 
-You can use `read_tsv()` to read tab delimited files：
+You can use `read_tsv()` to read tab delimited files:
 
 ```{r}
 dat <- read_tsv("every\tman\tis\ta\tpoet\twhen\the\tis\tin\tlove\n", 
@@ -133,7 +133,7 @@ dat <- read_tsv("every\tman\tis\ta\tpoet\twhen\the\tis\tin\tlove\n",
 print(dat)
 ```
 
-Or more generally, you can use `read_delim()` and assign separating character：
+Or more generally, you can use `read_delim()` and assign separating character:
 
 ```{r}
 dat <- read_delim("THE|UNBEARABLE|RANDOMNESS|OF|LIFE\n", 
@@ -171,7 +171,7 @@ Some other useful materials:
 
 - For getting data from the internet, you can refer to the book “XML and Web Technologies for Data Sciences with R”.  
 - [R data import/export manual](https://cran.r-project.org/doc/manuals/r-release/R-data.html#Acknowledgements)
-- `rio` package：https://github.com/leeper/rio
+- `rio` package:https://github.com/leeper/rio
 
 ### `data.table`--- enhanced `data.frame`
 
@@ -293,7 +293,7 @@ Let's review our previous code:
 dt[ , mean(online_trans), by = gender]
 ```
 
-The code above is equal to the following SQL：
+The code above is equal to the following SQL:
 
 ```sql
 SELECT
@@ -311,7 +311,7 @@ R code:
 dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
 ```
 
-is equal to SQL：
+is equal to SQL:
 
 ```sql
 SELECT
@@ -325,13 +325,13 @@ GROUP BY
    house
 ```
 
-R code：
+R code:
 
 ```r
 dt[ age < 40, .(avg = mean(online_trans)), by = .(gender, house)]
 ```
 
-is equal to SQL：
+is equal to SQL:
 
 ```sql
 SELECT
