@@ -30,7 +30,7 @@ In addition to data and neural network structure, there were a few key algorithm
 
 **Computation Power**
 
-With data, network structure and algorithms ready, it still requires certain computation power to train a deep learning model. The entire framework involves heavy linear algebra operations with large matrixes and tensors. The general CPU architecture is not the ideal platform and GPU is a much faster choice. With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of well-trained software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demo deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
+With data, network structure and algorithms ready, it still requires certain computation power to train a deep learning model. The entire framework involves heavy linear algebra operations with large matrixes and tensors. The general CPU architecture is not the ideal platform and GPU is a much faster choice. With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of well-trained software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demonstrate deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
 
 In summary, deep learning applications are not developed just in the past few years and it has been ongoing research in the past few decades. The accumulation of data, the advance of algorithm and the improvement of computation power finally enable every day deep learning applications. In the foreseeable future, deep learning will continue to revolutionize machine learning methods across more areas to provide significant improvement.
 
@@ -715,10 +715,12 @@ In addition, we also need to scale all features to be between (0, 1) or (-1, 1) 
 
 We first reshape the 28x28 image for each digit (i.e each row) into 784 columns (i.e. features), and then rescale the value to be between 0 and 1 by dividing the original pixel value by 255, as described in the cell below.
 
-```R
+```r
 # step 1: reshape
-x_train <- array_reshape(x_train, c(nrow(x_train), 784))
-x_test <- array_reshape(x_test, c(nrow(x_test), 784))
+x_train <- array_reshape(x_train, 
+                         c(nrow(x_train), 784))
+x_test <- array_reshape(x_test, 
+                        c(nrow(x_test), 784))
 
 # step 2: rescale
 x_train <- x_train / 255
@@ -1219,8 +1221,10 @@ img_cols <- 28
 For CNN, the input is a $n_H \times n_W \times n_C$ 3D array with $n_C$ channels. For example, a greyscale $n_H \times n_W$ image has only one channel, and the input is $n_H \times n_W \times 1$   tensor. A $n_H \times n_W$ 8-bit per channel RGB image has three channels with 3 $n_H \times n_W$ array with values between 0 and 255, so the input is $n_H \times n_W \times 3$ tensor. For the problem that we have now, the image is greyscaled, but we need to specifically define there is one channel by reshaping the 2D array into 3D tensor using `array_reshape()`. The `input_shape` variable will be used in the CNN model later. For an RGB color image, the number of channels is 3 and we need to replace "1" with "3" for the code cell below if the input image is RGB format.
 
 ```r
-x_train <- array_reshape(x_train, c(nrow(x_train), img_rows, img_cols, 1))
-x_test <- array_reshape(x_test, c(nrow(x_test), img_rows, img_cols, 1))
+x_train <- array_reshape(x_train,
+                         c(nrow(x_train), img_rows, img_cols, 1))
+x_test <- array_reshape(x_test,
+                         c(nrow(x_test), img_rows, img_cols, 1))
 input_shape <- c(img_rows, img_cols, 1)
 ```
 
@@ -1265,9 +1269,14 @@ Let's define the CNN model structure. Now we define a CNN model with two convolu
 ```r
 # define model structure 
 cnn_model <- keras_model_sequential() %>%
-  layer_conv_2d(filters = 32, kernel_size = c(5,5), activation = 'relu', input_shape = input_shape) %>% 
+  layer_conv_2d(filters = 32, 
+                kernel_size = c(5,5), 
+                activation = 'relu', 
+                input_shape = input_shape) %>% 
   layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
-  layer_conv_2d(filters = 64, kernel_size = c(5,5), activation = 'relu') %>% 
+  layer_conv_2d(filters = 64, 
+                kernel_size = c(5,5), 
+                activation = 'relu') %>% 
   layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
   layer_dropout(rate = 0.2) %>% 
   layer_flatten() %>% 
@@ -1281,36 +1290,10 @@ cnn_model <- keras_model_sequential() %>%
 summary(cnn_model)
 ```
 
-```html
-Model: "sequential_5"
-____________________________________________________________________________________________
-Layer (type)                             Output Shape                         Param #       
-============================================================================================
-conv2d_11 (Conv2D)                       (None, 24, 24, 32)                   832           
-____________________________________________________________________________________________
-max_pooling2d_9 (MaxPooling2D)           (None, 12, 12, 32)                   0             
-____________________________________________________________________________________________
-conv2d_12 (Conv2D)                       (None, 8, 8, 64)                     51264         
-____________________________________________________________________________________________
-max_pooling2d_10 (MaxPooling2D)          (None, 4, 4, 64)                     0             
-____________________________________________________________________________________________
-dropout_6 (Dropout)                      (None, 4, 4, 64)                     0             
-____________________________________________________________________________________________
-flatten_5 (Flatten)                      (None, 1024)                         0             
-____________________________________________________________________________________________
-dense_15 (Dense)                         (None, 120)                          123000        
-____________________________________________________________________________________________
-dropout_7 (Dropout)                      (None, 120)                          0             
-____________________________________________________________________________________________
-dense_16 (Dense)                         (None, 84)                           10164         
-____________________________________________________________________________________________
-dense_17 (Dense)                         (None, 10)                           850           
-============================================================================================
-Total params: 186,110
-Trainable params: 186,110
-Non-trainable params: 0
-____________________________________________________________________________________________
-```
+<center>
+![](images/cnn_summary.png){width=100%}
+</centerr>
+
 
 Similar to before, we need to compile the defined CNN model.
 
@@ -1334,7 +1317,7 @@ cnn_history <- cnn_model %>% fit(
 ```
 
 <center>
-![](images/cnn_history.png){width=70%}
+![](images/cnn_history.png){width=90%}
 </center>
 
 The trained model accuracy can be evaluated on the testing dataset which is pretty good.
@@ -1344,17 +1327,8 @@ cnn_model %>% evaluate(x_test, y_test)
 ```
 
 ```html
-...
-
- 9248/10000 [==========================>...] - ETA: 0s
- 9568/10000 [===========================>..] - ETA: 0s
- 9888/10000 [============================>.] - ETA: 0s
-10000/10000 [==============================] - 2s 189us/sample - loss: 0.0120 - accuracy: 0.9928
-$loss
-[1] 0.02399249
-
-$accuracy
-[1] 0.9928
+##       loss   accuracy 
+## 0.02153786 0.99290001
 ```
 
 #### Prediction
@@ -1409,13 +1383,13 @@ Traditional neural networks don't have a framework that can handle sequential ev
 
 The recurrent neural network allows information to flow from one step to the next with a repetitive structure. Figure \@ref(fig:rnnunit) shows the basic chunk of an RNN network. You combine the activated neuro from the previous step with the current input $x^{<t>}$ to produce an output $\hat{y}^{<t>}$ and an updated activated neuro to support the next input at $t+1$. 
 
-```{r rnnunit, fig.cap = "Recurrent Neural Network Unit", fig.align="center", echo = F}
+```{r rnnunit, fig.cap = "Recurrent Neural Network Unit", out.width="40%", fig.align="center", echo = F}
 knitr::include_graphics("images/rnnunit.png")
 ```
 
 So the whole process repeats a similar pattern. If we unroll the loop:
 
-```{r unrolledrnn, fig.cap = "An Unrolled Recurrent Neural Network",out.width="70%", fig.asp=.75, fig.align="center", echo = F}
+```{r unrolledrnn, fig.cap = "An Unrolled Recurrent Neural Network",out.width="90%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/rnnrollout.png")
 ```
 
@@ -1450,13 +1424,13 @@ To further understand the RNN model, let's look at an entity recognition example
 Given input sentence x, you want a model to produce one output for each word in x that tells you if that word is the name for something. So in this example, the input is a sequence of 5 words including the period in the end. The output is a sequence of 0/1 with the same length that indicates whether the input word is a name (1) or not (0). We use superscript $<t>$ to denote the element position of input and output; use superscript $(i)$ to denote the $i^{th}$ sample (you will have different sentences in the training data); Use $T_x^{(i)}$ to denote the length of $i^{th}$ input, $T_y^{(i)}$ for output. In this case, $T_x^{(i)}$ is equal to $T_y^{(i)}$.
 
 <center>
-![](images/rnn_notation.png){width=50%}
+![](images/rnn_notation.png){width=70%}
 </center>
 
 Before we build a neural network, we need to decide a way to represent individual words in numbers. What should $x^{<1>}$ be?  In practice, people use word embedding which we will discuss in the later section. Here, for illustration, we use the one-hot encoding word representation. Assume we have a dictionary of 10,000 unique words. You can build the dictionary by finding the top  10,000 occurring words in your training set. Each word in your training set will have a position in the dictionary sequence. For example, "use" is the 8320th element of the dictionary sequence. So $x^{<1>}$ is a vector with all zeros except for a one on position 8320. Using this one-hot representation, each input $x^{<t>}$ is a vector with all zeros except for one element. 
 
 <center>
-![](images/nn_ohe.png){width=50%}
+![](images/nn_ohe.png){width=70%}
 </center>
 
 Given this representation of input words, the goal is to learn a sequence model that maps the input words to output y, indicating if the word is an entity (1) or not (0). Let us build a one-layer recurrent neural network. The model starts from the first word "use" ($x^{<1>}$) and build a neural network to predict the output. To start the process, we also need to initialize the activation at time 0, $a_0$. The most common choice is to use a vector of zeros. The common activation function for the intermediate layer is the Hyperbolic Tangent Function (tanh). RNN uses other methods to prevent the vanishing gradient problem discussed in section \@ref(lstm). Similar to FFNN, The output layer activation function depends on the output type. The current example is a binary classification, so we use the sigmoid function ($\sigma$). 
@@ -1502,7 +1476,7 @@ So far, we have been using one-hot encoding to represent the words. This represe
 The algorithm can not learn the relationship between "pumpkin" and "apple" by the distance between the one-hot encoding for the two words.  If we can find a way to create features to represent the words, we may teach the model to learn that pumpkin and apple is food. And the distance between the feature representations of these two words is closer than, for example, "apple" and "nurse." So when the model sees "apple" in a new sentence and needs to predict the word after, it is more likely to choose "pie" since it sees "pumpkin pie" in the training data. The idea of word embedding is to learn a set of features to represent words. For example, you can score each word in the dictionary according to a group of features like this:
 
 <center>
-![](images/rnn_embedding1.png){width=80%}
+![](images/rnn_embedding1.png){width=90%}
 </center>
 
 The word "male" has a score of -1 for the "gender" feature, "female" has a score of 1.  Both "Apple" and "pumpkin" have a high score for the "food" feature and much lower scores for the rest. You can set the number of features to learn, usually more than what we list in the above figure. If you use 200 features to represent the words, then the learned embedding for each word is a vector with a length of 200. 
@@ -1633,7 +1607,8 @@ Like DNN and CNN models we trained in the past, RNN models are relatively easy t
 rnn_model <- keras_model_sequential()
 rnn_model %>%
   layer_embedding(input_dim = max_unique_word, output_dim = 128) %>% 
-  layer_simple_rnn(units = 64, dropout = 0.2, recurrent_dropout = 0.2) %>% 
+  layer_simple_rnn(units = 64, dropout = 0.2, 
+                   recurrent_dropout = 0.2) %>% 
   layer_dense(units = 1, activation = 'sigmoid')
 ```
 
@@ -1740,17 +1715,17 @@ lstm_history <- lstm_model %>% fit(
 ```html
 Epoch 1/5
 
-  1/157 [................] - ETA: 0s - loss: 0.6939 - accuracy: 0.4766
-  2/157 [................] - ETA: 31s - loss: 0.6940 - accuracy: 0.4766
-  3/157 [................] - ETA: 43s - loss: 0.6937 - accuracy: 0.4896
+  1/157 [.........] - ETA: 0s - loss: 0.6939 - accuracy: 0.4766
+  2/157 [.........] - ETA: 31s - loss: 0.6940 - accuracy: 0.4766
+  3/157 [.........] - ETA: 43s - loss: 0.6937 - accuracy: 0.4896
 
 *** skipped some output ***
 
-155/157 [===============>.] - ETA: 0s - loss: 0.2610 - accuracy: 0.8918
-156/157 [===============>.] - ETA: 0s - loss: 0.2607 - accuracy: 0.8920
-157/157 [=================] - ETA: 0s - loss: 0.2609 - accuracy: 0.8917
-157/157 [=================] - 67s 424ms/step 
-loss: 0.2609 - accuracy: 0.8917 - val_loss: 0.3754 - val_accuracy: 0.8328
+155/157 [=======>.] - ETA: 0s - loss: 0.2610 - accuracy: 0.8918
+156/157 [=======>.] - ETA: 0s - loss: 0.2607 - accuracy: 0.8920
+157/157 [=========] - ETA: 0s - loss: 0.2609 - accuracy: 0.8917
+157/157 [=========] - 67s 424ms/step 
+loss: 0.2609 accuracy: 0.8917 val_loss: 0.3754 val_accuracy: 0.8328
 ```
 
 ```r
@@ -1767,18 +1742,18 @@ lstm_model %>%
 ```
 
 ```html
-  1/782 [................] - ETA: 0s - loss: 0.2332 - accuracy: 0.9062
-  4/782 [................] - ETA: 12s - loss: 0.3536 - accuracy: 0.8750
-  7/782 [................] - ETA: 14s - loss: 0.3409 - accuracy: 0.8705
- 10/782 [................] - ETA: 14s - loss: 0.3508 - accuracy: 0.8625
+  1/782 [.........] - ETA: 0s  - loss: 0.2332 - accuracy: 0.9062
+  4/782 [.........] - ETA: 12s - loss: 0.3536 - accuracy: 0.8750
+  7/782 [.........] - ETA: 14s - loss: 0.3409 - accuracy: 0.8705
+ 10/782 [.........] - ETA: 14s - loss: 0.3508 - accuracy: 0.8625
 
 *** skipped some output ***
 
-775/782 [=============>.] - ETA: 0s - loss: 0.3640 - accuracy: 0.8415
-778/782 [==============>.] - ETA: 0s - loss: 0.3637 - accuracy: 0.8417
-780/782 [==============>.] - ETA: 0s - loss: 0.3632 - accuracy: 0.8419
-782/782 [================] - ETA: 0s - loss: 0.3631 - accuracy: 0.8420
-782/782 [================] - 18s 22ms/step - loss: 0.3631 - accuracy: 0.8420
+775/782 [=======>.] - ETA: 0s - loss: 0.3640 - accuracy: 0.8415
+778/782 [=======>.] - ETA: 0s - loss: 0.3637 - accuracy: 0.8417
+780/782 [=======>.] - ETA: 0s - loss: 0.3632 - accuracy: 0.8419
+782/782 [=========] - ETA: 0s - loss: 0.3631 - accuracy: 0.8420
+782/782 [=========] - 18s 22ms/step - loss: 0.3631 - accuracy: 0.8420
      loss  accuracy 
 0.3631141 0.8420000 
 ```

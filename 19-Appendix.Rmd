@@ -5,6 +5,7 @@
 ## Customer Data for Clothing Company {#appendixdata1}
 
 The simulation is not very straightforward and we will break it into three parts: 
+
 1. Define data structure: variable names, variable distribution, customer segment names, segment size
 1. Variable distribution parameters: mean and variance
 1. Iterate across segments and variables. Simulate data according to specific parameters assigned
@@ -297,8 +298,8 @@ for (j in 1:20) {
     colnames(sim.da1) <- col
     rownames(sim.da1) <- row
     
-    # use class.ind() function in nnet package to
-    # encode dummy variables
+    # use class.ind() function in nnet package to encode
+    # dummy variables
     library(nnet)
     dummy.sim1 <- NULL
     for (k in 1:ncol(sim.da1)) {
@@ -308,35 +309,45 @@ for (j in 1:20) {
     }
     dummy.sim1 <- data.frame(dummy.sim1)
     
-    # set 'C' as the baseline delete baseline dummy
-    # variable
+    # set 'C' as the baseline delete baseline dummy variable
     
     base.idx <- 3 * c(1:120)
     dummy1 <- dummy.sim1[, -base.idx]
     
-    # simulate independent variable for different
-    # values of r simulate based on one value of r each
-    # time r=0.1, get the link function
-    s1 <- c(rep(c(1/10, 0, -1/10), 40), rep(c(1/10, 
-        0, 0), 40), rep(c(0, 0, 0), 40))
+    # simulate independent variable for different values of
+    # r simulate based on one value of r each time r=0.1,
+    # get the link function
+    
+    s1 <- c(rep(c(1/10, 0, -1/10), 40), 
+            rep(c(1/10, 0, 0), 40), 
+            rep(c(0, 0, 0), 40))
     link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/10
     
-    # r=0.25
-    # c(rep(c(1/4,0,-1/4),40),rep(c(1/4,0,0),40),rep(c(0,0,0),40))->s1
-    # as.matrix(dummy.sim1)%*%s1-40/3/4->link1
+    # Other settings  ---------------------------
+    # r = 0.25
+    # s1 <- c(rep(c(1/4, 0, -1/4), 40), 
+    #        rep(c(1/4, 0, 0), 40), 
+    #        rep(c(0, 0, 0), 40))
+    # link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/4
     
-    # r=0.5
-    # c(rep(c(1/2,0,-1/2),40),rep(c(1/2,0,0),40),rep(c(0,0,0),40))->s1
-    # as.matrix(dummy.sim1)%*%s1-40/3/2->link1
+    # r = 0.5
+    # s1 <- c(rep(c(1/2, 0, -1/2), 40), 
+    #        rep(c(1/2, 0, 0), 40), 
+    #        rep(c(0, 0, 0), 40))
+    # link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/2
     
-    # r=1
-    # c(rep(c(1,0,-1),40),rep(c(1,0,0),40),rep(c(0,0,0),40))->s1
-    # as.matrix(dummy.sim1)%*%s1-40/3->link1
+    # r = 1
+    # s1 <- c(rep(c(1, 0, -1), 40), 
+    #        rep(c(1, 0, 0), 40), 
+    #        rep(c(0, 0, 0), 40))
+    # link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3
     
-    # r=2
-    # c(rep(c(2,0,-2),40),rep(c(2,0,0),40),rep(c(0,0,0),40))->s1
-    # as.matrix(dummy.sim1)%*%s1-40/3/0.5->link1
-    
+    # r = 2
+    # s1 <- c(rep(c(2, 0, -2), 40), 
+    #        rep(c(2, 0, 0), 40), 
+    #        rep(c(0, 0, 0), 40))
+    # 
+    # link1 <- as.matrix(dummy.sim1) %*% s1 - 40/3/0.5
     
     # calculate the outbreak probability
     hp1 <- exp(link1)/(exp(link1) + 1)
@@ -345,14 +356,13 @@ for (j in 1:20) {
     # variable: res
     res <- rep(9, nf)
     for (i in 1:nf) {
-        res[i] <- sample(c(1, 0), 1, prob = c(hp1[i], 
-            1 - hp1[i]))
+        res[i] <- sample(c(1, 0), 1, prob = c(hp1[i], 1 - 
+            hp1[i]))
     }
     
-    # da1 with response variable, without group
-    # indicator da2 without response variable, with
-    # group indicator da3 without response variable,
-    # without group indicator
+    # da1 with response variable, without group indicator
+    # da2 without response variable, with group indicator
+    # da3 without response variable, without group indicator
     
     dummy1$y <- res
     da1 <- dummy1
@@ -366,12 +376,12 @@ for (j in 1:20) {
     da3 <- da1[, 1:240]
     
     # save simulated data
-    write.csv(da1, paste("sim", j, "_da", 1, ".csv", 
-        sep = ""), row.names = F)
-    write.csv(da2, paste("sim", j, "_da", 2, ".csv", 
-        sep = ""), row.names = F)
-    write.csv(da3, paste("sim", j, "_da", 3, ".csv", 
-        sep = ""), row.names = F)
+    write.csv(da1, paste("sim", j, "_da", 1, ".csv", sep = ""), 
+        row.names = F)
+    write.csv(da2, paste("sim", j, "_da", 2, ".csv", sep = ""), 
+        row.names = F)
+    write.csv(da3, paste("sim", j, "_da", 3, ".csv", sep = ""), 
+        row.names = F)
     write.csv(sim.da1, paste("sim", j, ".csv", sep = ""), 
         row.names = F)
     write.csv(dummy.sim1, paste("dummy.sim", j, ".csv", 

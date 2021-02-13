@@ -789,9 +789,10 @@ The forward stagewise algorithm approximates the optimal solution of equation \@
 
 1. Initialize $f_0(x)=0$
 2. **for**  $m=1,\dots,M$ **do**：
-    - compute
+    compute
     $$(\beta_m,\gamma_m)=\underset{\beta,\gamma}{argmin}\Sigma_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\gamma))$$
-    - set $f_m(x)=f_{m-1}(x)+\beta_m b(x;\gamma_m)$
+    
+    set $f_m(x)=f_{m-1}(x)+\beta_m b(x;\gamma_m)$
 
 At iteration m, it will search for the optimal $b(x;\gamma_m)$ and $\beta_m$ based on the previous basis function $f_{m-1}(x)$. And then add the new basis $b(x;\gamma_m)\beta_m$ to the previous basis function to get a new basis function $f_m(x)$ without changing any parameters from previous steps. Assume we use squared-error loss:
 
