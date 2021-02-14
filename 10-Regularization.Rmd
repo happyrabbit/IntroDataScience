@@ -19,7 +19,7 @@ Ridge regression [@Hoerl1970] is similar but it finds $\hat{\beta}^{R}$ that opt
 
 where  $\lambda >0$ is a tuning parameter. As with the least squares, ridge regression considers minimizing RSS. However, it adds a shrinkage penalty $\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}$ that takes account of the number of parameters in the model. When $\lambda = 0$, it is identical to least squares. As $\lambda$ gets larger, the coefficients start shrinking towards 0. When $\lambda\rightarrow\infty$, the rest of the coefficients $\beta_{1},...,\beta_{p}$ are close to 0. Here, the penalty is not applied to $\beta_{0}$. The tuning parameter $\lambda$ is used to adjust the impact of the two parts in equation \@ref(eq:ridge). Every value of $\lambda$ corresponds to a set of parameter estimates. 
 
-There are many R packages for ridge regression, such as lm.ridge() function from MASS, function enet() from, elasticnet. If you know the value of $\lambda$, you can use either of the function to fit ridge regression. A more convenient way is to use train() function from caret. Let's use the 10 survey questions to predict the total purchase amount (sum of online and store purchase).
+There are many R packages for ridge regression, such as `lm.ridge()` function from `MASS`, function `enet()` from `elasticnet`. If you know the value of $\lambda$, you can use either of the function to fit ridge regression. A more convenient way is to use `train()` function from caret. Let's use the 10 survey questions to predict the total purchase amount (sum of online and store purchase).
 
 ```{r, message=FALSE,results="hide"}
 # install packages from CRAN
@@ -278,13 +278,13 @@ The results show that the best values of the tuning parameters are fraction = `r
 
 Adding penalties is a general technique that can be applied to many methods other than linear regression. In this section, we will introduce the penalized generalized linear model. It is to fit the generalized linear model by minimizing a penalized maximum likelihood. The penalty can be $L_1$, $L_2$ or a combination of the two. The estimates of coefficients minimize the following: 
 
-$$\underset{\beta_{0},\mathbf{\beta}}{min}\frac{1}{N}\Sigma_{i=1}^{N}w_{i}l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})+\lambda[(1-\alpha)\parallel\mathbf{\beta}\parallel_{2}^{2}/2+\alpha\parallel\mathbf{\beta}\parallel_{1}]$$
+$$\underset{\beta_{0},\symbf{\beta}}{min}\frac{1}{N}\Sigma_{i=1}^{N}w_{i}l(y_{i},\beta_{0}+\symbf{\beta^{T}x_{i}})+\lambda[(1-\alpha)\parallel\symbf{\beta}\parallel_{2}^{2}/2+\alpha\parallel\symbf{\beta}\parallel_{1}]$$
 
 where
 
-$$l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})=-log[\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})]$$
+$$l(y_{i},\beta_{0}+\symbf{\beta^{T}x_{i}})=-log[\mathcal{L}(y_{i},\beta_{0}+\symbf{\beta^{T}x_{i}})]$$
 
-It is the negative logarithm of the likelihood, $\mathcal{L}(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$. Maximize likelihood is to minimize $l(y_{i},\beta_{0}+\mathbf{\beta^{T}x_{i}})$.
+It is the negative logarithm of the likelihood, $\mathcal{L}(y_{i},\beta_{0}+\symbf{\beta^{T}x_{i}})$. Maximize likelihood is to minimize $l(y_{i},\beta_{0}+\symbf{\beta^{T}x_{i}})$.
 
 Parameter $\alpha$ decides the penalty, i.e, between $L_2$ ($\alpha=0$) and $L_1$ ($\alpha=1$).  $\lambda$ controls the weight of the whole penalty item. The higher $\lambda$ is, the more weight the penalty carries comparing to likelihood. As discussed above, the ridge penalty shrinks the coefficients towards 0 but can't be exactly 0. The lasso penalty can set 0 estimates so it has the property of feature selection. The elastic net combines both. Here we have two tuning parameters, $\alpha$ and $\lambda$. 
 
@@ -297,7 +297,7 @@ The default family option in the function `glmnet()` is `gaussian`. It is the li
 ```{r}
 library(glmnet)
 dat <- read.csv("http://bit.ly/2P5gTw4")
-# data cleaning: delete wrong observations since expense can't be negative
+# data cleaning: delete wrong observations with expense < 0
 dat <- subset(dat, store_exp > 0 & online_exp > 0)
 # get predictors
 trainx <- dat[, grep("Q", names(dat))]
@@ -312,7 +312,7 @@ The object `glmfit` returned by `glmnet()` has the information of the fitted mod
 plot(glmfit, label = T)
 ```
 
-Each curve in the plot represents one predictor. The default setting is $\alpha=1$ which means there is only lasso penalty. From left to right, $L_I$ norm is increasing which means $\lambda$ is decreasing. The bottom x-axis is $L_1$ norm (i.e. $\parallel\mathbf{\beta}\parallel_{1}$). The upper x-axis is the effective degrees of freedom (df) for the lasso. You can check the detail for every step by:  
+Each curve in the plot represents one predictor. The default setting is $\alpha=1$ which means there is only lasso penalty. From left to right, $L_I$ norm is increasing which means $\lambda$ is decreasing. The bottom x-axis is $L_1$ norm (i.e. $\parallel\symbf{\beta}\parallel_{1}$). The upper x-axis is the effective degrees of freedom (df) for the lasso. You can check the detail for every step by:  
 
 ```r
 print(glmfit)
@@ -389,17 +389,17 @@ of disease for $i$th subject by $\theta_i$, the model can be formulated as:
 
 $$y_{i}\sim Bounoulli(\theta_{i})$$
 
-$$log\left(\frac{\theta_{i}}{1-\theta_{i}}\right)=\eta_{\mathbf{\beta}}(x_{i})=\beta_{0}+\sum_{g=1}^{G}\mathbf{x_{i,g}}^{T}\mathbf{\mathbf{\beta_{g}}}$$
+$$log\left(\frac{\theta_{i}}{1-\theta_{i}}\right)=\eta_{\symbf{\beta}}(x_{i})=\beta_{0}+\sum_{g=1}^{G}\mathbf{x_{i,g}}^{T}\symbf{\beta_{g}}$$
 
-where $\beta_{0}$ is the intercept and $\mathbf{\beta_{g}}$ is the parameter vector corresponding to the $g^{th}$ predictor. As we mentioned, here $\mathbf{\beta_{g}}$ has length 2.
+where $\beta_{0}$ is the intercept and $\symbf{\beta_{g}}$ is the parameter vector corresponding to the $g^{th}$ predictor. As we mentioned, here $\symbf{\beta_{g}}$ has length 2.
 
 Traditional estimation of logistic
-parameters $\mathbf{\beta}=(\beta_{0}^{T},\mathbf{\beta_{1}}^{T},\mathbf{\beta_{2}}^{T},...,\mathbf{\beta_{G}}^{T})^{T}$ is done through maximizing the log-likelihood
+parameters $\symbf{\beta}=(\beta_{0}^{T},\symbf{\beta_{1}}^{T},\symbf{\beta_{2}}^{T},...,\symbf{\beta_{G}}^{T})^{T}$ is done through maximizing the log-likelihood
 
 \begin{eqnarray*}
-l(\mathbf{\beta})&=&log[\prod_{i=1}^{n}\theta_{i}^{y_{i}}(1-\theta_{i})^{1-y_{i}}]\\
+l(\symbf{\beta})&=&log[\prod_{i=1}^{n}\theta_{i}^{y_{i}}(1-\theta_{i})^{1-y_{i}}]\\
 &=&\sum_{i=1}^{n}\{y_{i}log(\theta_{i})+(1-y_{i})log(1-\theta_{i})\}\\
-&=&\sum_{i=1}^{n}\{\ y_{i}\eta_{\mathbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\mathbf{\beta}}(\mathbf{x_{i}}))]\ \}
+&=&\sum_{i=1}^{n}\{\ y_{i}\eta_{\symbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\symbf{\beta}}(\mathbf{x_{i}}))]\ \}
 (\#eq:logisticlikelihood)
 \end{eqnarray*}
 
@@ -419,7 +419,7 @@ There is an error saying "`algorithm did not converge`". It is because there is 
 Penalized logistic regression adds penalty to the likelihood function:
 
 $$
-\underset{\mathbf{\beta}\in \mathbb{R}^{p+1}}{min} -\sum_{i=1}^{n}\{\ y_{i}\eta_{\mathbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\mathbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda [(1-\alpha) \parallel \mathbf{\beta}\parallel _{2}^{2}/2] + \alpha \parallel \mathbf{\beta}\parallel _{1} ]
+\sum_{i=1}^{n}\{\ y_{i}\eta_{\symbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\symbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda [(1-\alpha) \frac{\parallel \symbf{\beta}\parallel_{2}^{2}}{2}] + \alpha \parallel \symbf{\beta}\parallel _{1} ]
 $$
 
 ```{r}
@@ -457,7 +457,8 @@ predict(fit, newdat, type = "link", s = c(2.833e-02, 3.110e-02))
 For example:
 
 ```{r}
-cvfit = cv.glmnet(as.matrix(trainx), trainy, family = "binomial", type.measure = "class")
+cvfit = cv.glmnet(as.matrix(trainx), trainy, 
+                  family = "binomial", type.measure = "class")
 plot(cvfit)
 ```
 
@@ -477,7 +478,7 @@ For models with categorical survey questions (explanatory variables), however, t
 In this section, we illustrate how to use the logistic group lasso algorithm to construct risk scoring systems for predicting disease. Instead of maximizing the log-likelihood in the maximum likelihood method, the logistic group lasso estimates are calculated by minimizing the convex function: 
 
 $$
-S_{\lambda}(\mathbf{\beta})=-l(\mathbf{\beta})+\lambda\sum_{g=1}^{G}s(df_{g})\parallel\mathbf{\beta_{g}}\parallel_{2}
+S_{\lambda}(\symbf{\beta})=-l(\symbf{\beta})+\lambda\sum_{g=1}^{G}s(df_{g})\parallel\symbf{\beta_{g}}\parallel_{2}
 $$
 
 where $\lambda$ is a tuning parameter for the penalty and $s(\cdot)$ is a function to rescale the penalty. In lasso algorithms, the selection of $\lambda$ is usually determined by cross-validation using data. For $s(\cdot)$, we use the square root function $s(df_g)=df_g^{0.5}$ as suggested in Meier et al.[@Meier2008]. It ensures the penalty is of the order of the number of parameters $df_g$ as used in [@Yuan2007].
@@ -536,7 +537,7 @@ Dummy variables from the same question are in the same group:
 index[1:50]
 ```
 
-Set a series of tuning parameter values. nlam is the number of values we want to tune.  It is the parameter $m$ in {0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{m}\lambda_{max}\}$. The tuning process returns a long output and we will not report all:
+Set a series of tuning parameter values. `nlam` is the number of values we want to tune.  It is the parameter $m$ in {0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{m}\lambda_{max}\}$. The tuning process returns a long output and we will not report all:
 
 ```r
 # Tune over 100 values
@@ -546,7 +547,8 @@ nlam <- 100
 # - `response`: return the predicted probability
 # number of cross-validation folds
 kfold <- 10
-cv_fit <- cv_glasso(trainx, trainy, nlam = nlam, kfold = kfold, type = "link")
+cv_fit <- cv_glasso(trainx, trainy, 
+                    nlam = nlam, kfold = kfold, type = "link")
 # only show part of the results
 str(cv_fit)
 ```
@@ -555,9 +557,9 @@ Here we only show part of the output:
 
 ```html
 ...
- $ auc               : num [1:100] 0.573 0.567 0.535 0.484 0.514 ...
- $ log_likelihood    : num [1:100] -554 -554 -553 -553 -552 ...
- $ maxrho            : num [1:100] -0.0519 0.00666 0.04631 0.0486 0.06269 ...
+ $ auc               : num [1:100] 0.573 0.567 0.535 ...
+ $ log_likelihood    : num [1:100] -554 -554 -553 ...
+ $ maxrho            : num [1:100] -0.0519 0.00666  ...
  $ lambda.max.auc    : Named num [1:2] 0.922 0.94
   ..- attr(*, "names")= chr [1:2] "lambda" "auc"
  $ lambda.1se.auc    : Named num [1:2] 16.74 0.81
@@ -597,7 +599,8 @@ plot(cv_fit)
 The x-axis is the value of the tuning parameter, the y-axis is AUC. The two dash lines are the value of $\lambda$ for max AUC and the value for the one standard deviation to the max AUC. Once you choose the value of the tuning parameter, you can use `fitglasso()` to fit the model. For example, we can fit the model using the parameter value that gives the max AUC, which is $\lambda=0.922$: 
 
 ```r
-fitgl <- fitglasso(trainx, trainy, lambda = 0.922, na_action = na.pass)
+fitgl <- fitglasso(trainx, trainy, 
+                   lambda = 0.922, na_action = na.pass)
 ```
 
 ```html

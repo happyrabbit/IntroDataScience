@@ -337,11 +337,13 @@ trainx1 <- dat[, grep("Q", names(dat))]
 trainx1$segment <- dat$segment
 
 # trainx2: use approach 2, encode it to a set of dummy variables
-dumMod<-dummyVars(~.,
-                  data=trainx1,
-                  # Combine the previous variable name and the level name
-                  # as the new dummy variable name
-                  levelsOnly=F)
+dumMod<-dummyVars(
+  ~.,
+  data=trainx1,
+  # Combine the previous variable and the level name
+  # as the new dummy variable name
+  levelsOnly=F
+  )
 trainx2 <- predict(dumMod,trainx1)
 # the response variable is gender
 trainy <- dat$gender
@@ -351,13 +353,14 @@ Here we use `train()` function in `caret` package to call `rpart` to build the m
 
 ```{r, echo=FALSE, results=FALSE}
 set.seed(100)
-rpartTune1 <- caret::train(trainx1, trainy, method = "rpart",
-                       tuneLength = 30,
-                       metric = "ROC", 
-                       trControl = trainControl(method = "cv",
-                                                summaryFunction = twoClassSummary,
-                                                classProbs = TRUE,
-                                                savePredictions = TRUE))
+rpartTune1 <- caret::train(
+  trainx1, trainy, method = "rpart",
+  tuneLength = 30,
+  metric = "ROC", 
+  trControl = trainControl(method = "cv",
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           savePredictions = TRUE))
 rpartTune1
 ```
 
@@ -392,13 +395,15 @@ The final value used for the model was cp = 0.00835.
 The above keeps the variable as categorical without encoding. Here `cp` is the complexity parameter. It is used to decide when to stop growing the tree. `cp = 0.01` means the algorithm only keeps the split that improves the corresponding metric by more than 0.01. Next, let's encode the categorical variable to be a set of dummy variables and fit the model again:
 
 ```{r}
-rpartTune2 <- caret::train(trainx2, trainy, method = "rpart",
-                       tuneLength = 30,
-                       metric = "ROC", 
-                       trControl = trainControl(method = "cv",
-                                                summaryFunction = twoClassSummary,
-                                                classProbs = TRUE,
-                                                savePredictions = TRUE))
+rpartTune2 <- caret::train(
+  trainx2, trainy, method = "rpart",
+  tuneLength = 30,
+  metric = "ROC", 
+  trControl = trainControl(method = "cv",
+                           summaryFunction = twoClassSummary,
+                           classProbs = TRUE,
+                           savePredictions = TRUE)
+  )
 ```
 
 Compare the results of the two approaches.
@@ -709,7 +714,7 @@ The results show that the tuning parameter settings that lead to the best ROC ar
 
 Now, let's compare the results from the three tree models.
 
-```{r}
+```{r, message=FALSE}
 treebagRoc <- roc(response = bagTune$pred$obs,
                         predictor = bagTune$pred$Female,
                         levels = rev(levels(bagTune$pred$obs)))
@@ -724,36 +729,38 @@ gbmRoc <- roc(response = gbmTune$pred$obs,
 
 plot.roc(rpartRoc, 
      type = "s", 
-     print.thres = c(.5),
-     print.thres.pch = 16,
-     print.thres.pattern = "",
-     print.thres.cex = 1.2,
+     print.thres = c(.5), print.thres.pch = 16,
+     print.thres.pattern = "", print.thres.cex = 1.2,
      col = "black", legacy.axes = TRUE,
      print.thres.col = "black")
 
 plot.roc(treebagRoc, 
      type = "s", 
-     add = TRUE, print.thres = c(.5), 
-     print.thres.pch = 3, legacy.axes = TRUE, print.thres.pattern = "", 
+     add = TRUE, 
+     print.thres = c(.5), print.thres.pch = 3, 
+     legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "red", print.thres.col = "red")
 
 plot.roc(rfRoc, 
      type = "s", 
-     add = TRUE, print.thres = c(.5), 
-     print.thres.pch = 1, legacy.axes = TRUE, print.thres.pattern = "", 
+     add = TRUE, 
+     print.thres = c(.5), print.thres.pch = 1, 
+     legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "green", print.thres.col = "green")
 
 plot.roc(gbmRoc, 
      type = "s", 
-     add = TRUE, print.thres = c(.5), 
-     print.thres.pch = 10, legacy.axes = TRUE, print.thres.pattern = "", 
+     add = TRUE, 
+     print.thres = c(.5), print.thres.pch = 10, 
+     legacy.axes = TRUE, print.thres.pattern = "", 
      print.thres.cex = 1.2,
      col = "blue", print.thres.col = "blue")
 
 legend(0.2, 0.5, cex = 0.8,
-       c("Single Tree", "Bagged Tree", "Random Forest", "Boosted Tree"),
+       c("Single Tree", "Bagged Tree", 
+         "Random Forest", "Boosted Tree"),
        lwd = c(1, 1, 1, 1),
        col = c("black", "red", "green", "blue"),
        pch = c(16, 3, 1, 10))
@@ -774,7 +781,7 @@ f(x)=\Sigma_{m=1}^M \beta_m b(x,\gamma_m)
 (\#eq:basisexp)
 \end{equation}
 
-where $\beta_m,\ m=1,\dots,M$ is expansion coefficient and $b(x,\gamma)\in \mathbb{R}$ is basis function.  Many of the learning methods fit into this additive framework. Hastie et al discuss basis expansion in detail in Chapter 5 of the book [@Hastie2008]  and cover the additive expansion for different learning techniques [@Hastie2008], such as single-hidden-layer neural networks (Chapter 11) and MARS (Section 9.4). These models are fit by minimizing a designated loss function averaged over the training data:
+where $\beta_m,\ m=1,\dots,M$ is expansion coefficient and $b(x,\gamma)\in \mathbb{R}$ is basis function.  Many of the learning methods fit into this additive framework. Hastie et al discuss basis expansion in detail in Chapter 5 of @Hastie2008 and cover the additive expansion for different learning techniques, such as single-hidden-layer neural networks (Chapter 11) and MARS (Section 9.4). These models are fit by minimizing a designated loss function averaged over the training data:
 
 \begin{equation}
 \underset{\{\beta_m,\gamma_m\}_i^M}{min}\Sigma_{i=1}^N L\left(y_i,\Sigma_{m=1}^M\beta_{m}b(x_i;\gamma_m)\right)
@@ -785,7 +792,7 @@ Different models have different basis function $b(x_i;\gamma_m)$. You can also c
 
 $$\underset{\beta,\gamma}{min}=\Sigma_{i=1}^N L(y_i,\beta b(x_i;\gamma))$$
 
-The forward stagewise algorithm approximates the optimal solution of equation \@ref(eq:additiveloss). It adds new basis functions to the expansion without adjusting the previous ones. The forward stagewise additive algorithm is as following (section 10.2, [@Hastie2008]):
+The forward stagewise algorithm approximates the optimal solution of equation \@ref(eq:additiveloss). It adds new basis functions to the expansion without adjusting the previous ones. The forward stagewise additive algorithm is as following (Section 10.2 of @Hastie2008):
 
 1. Initialize $f_0(x)=0$
 2. **for**  $m=1,\dots,M$ **do**：
@@ -826,10 +833,10 @@ where  $w_i^m= exp[-y_if_{m-1}(x_i)]$. It does not depend on $\beta$ and $G(x)$.
 
 \begin{equation}
 \begin{array}{ccc}
-(\beta_{m},G_{m}) & = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}w_{i}^{m}exp[-y_{i}\beta G(x_{i})]\\
-& = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}I(y_{i}=G(x))+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
-& = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}[1-I(y_{i}\neq G(x))]+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
-& = & \underset{\beta,G}{argmin}\left\{ (e^{\beta}-e^{-\beta})\cdot\Sigma_{i=1}^{N}w_{i}^{m}I(y_{i}\neq G(x_{i}))+e^{-\beta}\cdot\Sigma_{i=1}^{N}w_{i}^{m}\right\}
+ &  & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}w_{i}^{m}exp[-y_{i}\beta G(x_{i})]\\
+ & = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}I(y_{i}=G(x))+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
+ & = & \underset{\beta,G}{argmin}\Sigma_{i=1}^{N}\left\{ w_{i}^{m}e^{-\beta}[1-I(y_{i}\neq G(x))]+w_{i}^{m}e^{\beta}I(y_{i}\neq G(x))\right\} \\
+ & = & \underset{\beta,G}{argmin}\left\{ (e^{\beta}-e^{-\beta})\cdot\Sigma_{i=1}^{N}w_{i}^{m}I(y_{i}\neq G(x_{i}))+e^{-\beta}\cdot\Sigma_{i=1}^{N}w_{i}^{m}\right\} 
 \end{array}
 (\#eq:explossadaboost2)
 \end{equation}
