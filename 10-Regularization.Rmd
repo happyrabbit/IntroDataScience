@@ -36,7 +36,8 @@ lapply(p_needed, require, character.only = TRUE)
 
 ```{r}
 dat <- read.csv("http://bit.ly/2P5gTw4")
-# data cleaning: delete wrong observations since expense can't be negative
+# data cleaning: delete wrong observations
+# expense can't be negative
 dat <- subset(dat, store_exp > 0 & online_exp > 0)
 # get predictors
 trainx <- dat[ , grep("Q", names(dat))]
@@ -44,7 +45,7 @@ trainx <- dat[ , grep("Q", names(dat))]
 trainy <- dat$store_exp + dat$online_exp
 ```
 
-Use `train()` function to tune parameter. Since ridge regression adds the penalty parameter $\lambda$ in front of the sum of squares of the parameters, the scale of the parameters matters. So here it is better to center and scale the predictors. This preprocessing is recommended for all techniques that put penalty to parameter estimates. In this example, the 10 survey questions are already with the same scale so data preprocessing doesn't make too much different. It is a good idea to set the preprocessing as a standard.
+Use `train()` function to tune parameter. Since ridge regression adds the penalty parameter $\lambda$ in front of the sum of squares of the parameters, the scale of the parameters matters. So here it is better to center and scale the predictors. This preprocessing is generally recommended for all techniques that puts penalty to parameter estimates. In this example, the 10 survey questions are already with the same scale so data preprocessing doesn't make too much different. It is a good idea to set the preprocessing as a standard.
 
 ```{r}
 # set cross validation
@@ -146,13 +147,15 @@ Once you select a value for tuning parameter, there are different functions to f
 Here we continue using `enet()`.  The syntax is similar to ridge regression. The only difference is that you need to set `lambda = 0` because the argument `lambda` here is to control the ridge penalty. When it is 0, the function will return the lasso model object.
 
 ```{r}
-lassoModel<- enet(x = as.matrix(trainx), y = trainy, lambda = 0, normalize = TRUE)
+lassoModel <- enet(x = as.matrix(trainx), y = trainy, 
+                   lambda = 0, normalize = TRUE)
 ```
 
 Set the fraction value to be 0.957 (the value we got above):
 
 ```{r}
-lassoFit <- predict(lassoModel, newx = as.matrix(trainx), s = 0.957, mode = "fraction", type = "fit")
+lassoFit <- predict(lassoModel, newx = as.matrix(trainx), 
+                    s = 0.957, mode = "fraction", type = "fit")
 ```
 
 Again by setting `type = "fit"`, the above returns a list object. The `fit` item has the predictions:
@@ -164,7 +167,8 @@ head(lassoFit$fit)
 You need to set `type = "coefficients"` to get parameter estimates: 
 
 ```{r}
-lassoCoef <- predict(lassoModel, newx = as.matrix(trainx), s = 0.95, mode = "fraction", type = "coefficients")
+lassoCoef <- predict(lassoModel, newx = as.matrix(trainx), 
+                     s = 0.95, mode = "fraction", type = "coefficients")
 ```
 
 It also returns a list and the estimates are in the `coefficients` item:
@@ -174,7 +178,7 @@ It also returns a list and the estimates are in the `coefficients` item:
 LassoCoef = lassoCoef$coefficients
 ```
 
-Many researchers applied lasso to other learning methods, such as linear discriminant analysis [@Clem2011], partial least squares regression[@chun2010]. However, since the $L_1$ norm is not differentiable, optimization for lasso regression is more complicated. People come up with different algorithms to solve the computation problem. The biggest breakthrough is Least Angle Regression [LARS] from Bradley Efron etc. This algorithm works well for lasso regression especially when the dimension is high.
+Many researchers applied lasso to other learning methods, such as linear discriminant analysis [@Clem2011], partial least squares regression[@chun2010]. However, since the $L_1$ norm is not differentiable, optimization for lasso regression is more complicated. People come up with different algorithms to solve the computation problem. The biggest breakthrough is Least Angle Regression (LARS) from Bradley Efron etc. This algorithm works well for lasso regression especially when the dimension is high.
 
 ## Variable selection property of the lasso
 
@@ -347,7 +351,7 @@ newdat = matrix(sample(1:9, 30, replace = T), nrow = 3)
 predict(glmfit, newdat, s = c(1741, 2000))
 ```
 
-Each column corresponds to a value of $\lambda$. To tune the value of $\lambda$, we can easily use `cv.glmnet()` function to do cross-validation.`cv.glmnet()` returns the cross-validation results as a list object. We store the object in `cvfit` and use it for further operations.
+Each column corresponds to a value of $\lambda$. To tune the value of $\lambda$, we can easily use `cv.glmnet()` function to do cross-validation. `cv.glmnet()` returns the cross-validation results as a list object. We store the object in `cvfit` and use it for further operations.
 
 ```{r}
 cvfit = cv.glmnet(as.matrix(trainx), trainy)
@@ -537,7 +541,7 @@ Dummy variables from the same question are in the same group:
 index[1:50]
 ```
 
-Set a series of tuning parameter values. `nlam` is the number of values we want to tune.  It is the parameter $m$ in {0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{m}\lambda_{max}\}$. The tuning process returns a long output and we will not report all:
+Set a series of tuning parameter values. `nlam` is the number of values we want to tune.  It is the parameter $m$ in $\{0.96\lambda_{max},0.96^{2}\lambda_{max},0.96^{3}\lambda_{max},...,0.96^{m}\lambda_{max}\}$. The tuning process returns a long output and we will not report all:
 
 ```r
 # Tune over 100 values

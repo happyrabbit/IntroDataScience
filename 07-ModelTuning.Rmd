@@ -39,11 +39,11 @@ Deep learning has significant success solving problems with complete information
 
 ![Types of Model Error](images/ModelError.png)
 
-The systematic error can be further decomposed as:
+The systematic error $E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}$ can be further decomposed as:
 
 \begin{equation}
 \begin{array}{ccc}
-E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2} & = & E\left(f(\mathbf{X})-E[\hat{f}(\mathbf{X})]+E[\hat{f}(\mathbf{X})]-\hat{f}(\mathbf{X})\right)^{2}\\
+ &  & \left(f(\mathbf{X})-E[\hat{f}(\mathbf{X})]+E[\hat{f}(\mathbf{X})]-\hat{f}(\mathbf{X})\right)\\
  & = & E\left(E[\hat{f}(\mathbf{X})]-f(\mathbf{X})\right)^{2}+E\left(\hat{f}(\mathbf{X})-E[\hat{f}(\mathbf{X})]\right)^{2}\\
  & = & [Bias(\hat{f}(\mathbf{X}))]^{2}+Var(\hat{f}(\mathbf{X}))
 \end{array}
@@ -111,7 +111,7 @@ multiplot(p1, p2, p3, p4, cols = 2)
 
 The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
 
-```{r,warning=FALSE}
+```{r,warning=FALSE, message=FALSE}
 p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(method = "lm", 
     se = FALSE)
 p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(method = "lm", 
@@ -135,8 +135,8 @@ _Data splitting_ is to put part of the data aside as testing set (or Hold-outs, 
 
 The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
 
-- What is the monthly sales of a product in 2015? 
-- What is the number of visits to our site in the past month?  
+- What is the monthly sales of a product in 2015?
+- What is the number of visits to our site in the past month?
 - What is the sales difference in 2015 for two different product designs? 
 
 There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
