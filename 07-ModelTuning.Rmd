@@ -324,13 +324,19 @@ k-fold cross-validation is to partition the original sample into $k$ equal size 
 
 Denote by $\hat{f}^{-\kappa}(X)$ the fitted function, computed with the $\kappa^{th}$ fold removed and $x_i^\kappa$ the predictors for samples in left-out fold. The process of k-fold cross-validation is as follows:
 
-> 
-1. Partition the original sample into $k$ equal size folds
-2. for $\kappa=1…k$
-    - Use data other than fold $\kappa$ to train the model $\hat{f}^{-\kappa}(X)$
-    - Apply $\hat{f}^{-\kappa}(X)$ to predict fold $\kappa$ to get $\hat{f}^{-\kappa}(x_i^\kappa)$
-3. Aggregate the results 
+
+\begin{algorithm}
+\caption{k-fold cross-validation}\label{kfoldcv} 
+\begin{algorithmic}[1] 
+\State Partition the original sample into $k$ equal size folds
+\For{$\kappa=1…k$}
+      \State Use data other than fold $\kappa$ to train the model $\hat{f}^{-\kappa}(X)$
+      \State Apply $\hat{f}^{-\kappa}(X)$ to predict fold $\kappa$ to get $\hat{f}^{-\kappa}(x_i^\kappa)$
+\EndFor
+\State Aggregate the results 
 $$\hat{Error} = \frac{1}{N}\Sigma_{\kappa=1}^k\Sigma_{x_i^{\kappa}}L(y_i^{\kappa},\hat{f}^{-\kappa}(x_i^\kappa))$$
+\end{algorithmic}
+\end{algorithm}
 
 It is a standard way to find the value of tuning parameter that gives you the best performance. It is also a way to study the variability of model performance. 
 

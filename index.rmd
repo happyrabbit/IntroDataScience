@@ -1,5 +1,8 @@
 --- 
-title: "Introduction to Data Science "
+title: "Introduction to Data Science"
+header-includes:
+  - \usepackage{algpseudocode}
+  - \usepackage{algorithm}
 author: "Hui Lin and Ming Li"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
@@ -62,7 +65,6 @@ This book is for readers who want to explore potential data science career paths
 ## What This Book Covers {-}
 
 We first introduce the basic ideas of data science and then cover data science career paths, project cycles, soft skills, and common pitfalls based on industry and real-world scenarios. We then introduce typical big data cloud platforms and use R library `sparklyr` \index{sparklyr} to explore Spark's power for data preprocessing and traditional statistical and machine learning model development. The next few chapters cover common statistical and machine learning models and strategies such as data preprocessing, data wrangling, model tuning, performance measuring, regression methods, regularization, and tree-based methods. In the end, we introduce three types of deep learning models and their applications to image and text data. We use R as the text's programming language and provide most of the Python codes in GitHub. Refer to this page (https://github.com/happyrabbit/IntroDataScience/) for a table with the notebooks' links.  
-
 
 ## Acknowledgements  {-}
 
