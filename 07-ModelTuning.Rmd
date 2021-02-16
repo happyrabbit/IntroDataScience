@@ -135,9 +135,9 @@ _Data splitting_ is to put part of the data aside as testing set (or Hold-outs, 
 
 The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
 
-- What is the monthly sales of a product in 2015?
+- What is the monthly sales of a product in 2020?
 - What is the number of visits to our site in the past month?
-- What is the sales difference in 2015 for two different product designs? 
+- What is the sales difference in 2021 for two different product designs? 
 
 There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
 
@@ -145,15 +145,21 @@ Many models have parameters which cannot be directly estimated from the data, su
 
 To get a reasonable precision of the performance based on a single test set, the size of the test set may need to be large. So a conventional approach is to use a subset of samples to fit the model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
 
--  Define a set of candidate values for tuning parameter(s)
-    - For each candidate value in the set
-        - Resample data
-        - Fit model
-        - Predict hold-out
-        - Calculate performance
-- Aggregate the results
-- Determine the final tuning parameter
-- Refit the model with the entire data set
+\begin{algorithm}
+\caption{General resampling steps}\label{resampling} 
+\begin{algorithmic}[1] 
+\State Define a set of candidate values for tuning parameter(s)
+    \For {Each candidate value in the set}
+        \State Resample data
+        \State Fit model
+        \State Predict hold-out
+        \State Calculate performance
+    \EndFor
+\State Aggregate the results
+\State Determine the final tuning parameter
+\State Refit the model with the entire data set
+\end{algorithmic}
+\end{algorithm}
 
 ![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
 

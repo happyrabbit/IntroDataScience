@@ -454,11 +454,14 @@ One way to overcome those is to use an ensemble of trees. In the rest of this ch
 
 As mentioned before, a single tree is unstable. If you randomly separate the sample to be two parts and fit tree model on each, you can get two very different trees. A stable model should give a similar result on different random samples. Some traditional statistical models have high stability, such as linear regression. *Ensemble methods* appeared in the 1990s which can effectively stabilize the model. *Bootstrapping* is a type of process where you repeated draw samples of the same size from a single original sample with replacement [@Efron1986].  *Bootstrap aggregation* (Bagged) is an ensemble technique proposed by Leo Breiman (Breiman 1996a). It uses bootstrapping in conjunction with any model to construct an ensemble.  The process is very straightforward:
 
-1. Build a model on different bootstrap samples to form an ensemble, say $B$ samples
-2. For a new sample, each model will give a prediction: $\hat{f}^1(x),\hat{f}^2(x)\dots,\hat{f}^B(x)$
-3. The bagged model's prediction is the average of all the predictions:
-
-$$\hat{f}_{avg}(x)=\frac{1}{B}\Sigma^B_{b=1}\hat{f}^b(x)$$
+\begin{algorithm}
+\caption{Bagging tree}\label{baggingtreealgorithm} 
+\begin{algorithmic}[1] 
+\State Build a model on different bootstrap samples to form an ensemble, say $B$ samples
+\State For a new sample, each model will give a prediction: $\hat{f}^1(x),\hat{f}^2(x)\dots,\hat{f}^B(x)$
+\State The bagged model's prediction is the average of all the predictions: $$\hat{f}_{avg}(x)=\frac{1}{B}\Sigma^B_{b=1}\hat{f}^b(x)$$
+\end{algorithmic}
+\end{algorithm}
 
 Assume that there are $n$ independent random variables $Z_1,\dots,Z_n$ with variance $\sigma^2$. Then the variance of the mean $\bar{Z}$ is $\frac{\sigma^2}{n}$. It is easy to see why bagged models have less variance. Since bootstrapping is to sample with replacement, it means some samples are selected multiple times and some not at all. Those left out samples are called out-of-bag. You can use the out-of-bag sample to access the model performance. For regression, the prediction is a simple average. For classification, the prediction is the category with the most "votes". Here, the number of trees, $B$ is a parameter you need to decide, i.e. tuning parameter. **Bagging is a general approach that can be applied to different learners. Here we only discuss in the context of decision trees.**
 
@@ -525,21 +528,24 @@ Since the tree correlation prevents bagging from optimally reducing the variance
 
 From a statistical perspective, you can de-correlate trees by introducing randomness when you build each tree. One approach [@Ho1998; @amit1997] is to randomly choose $m$ variables to use each time you build a tree.  Dietterich[@Dietterich2000] came up with the idea of random split selection which is to randomly choose $m$ variables to use at each splitting node. Based on the different generalizations to the original bagging algorithm, Breiman [@Breiman2001] came up with a unified algorithm called *random forest.* 
 
-When building a tree, the algorithm randomly chooses $m$ variables to use at each splitting node. Then choose the best one out of the $m$ to use at that node. In general, people use $m=\sqrt{p}$. For example, if we use 10 questions from the questionnaire as predictors, then at each node, the algorithm will randomly choose 4 candidate variables. Since those trees in the forest don't always use the same variables, tree correlation is less than that in bagging. It tends to work better when there are more predictors. Since we only have 10 predictors here, the improvement from the random forest is marginal. The number of randomly selected predictors is a tuning parameter in the random forest.  Since random forest is computationally intensive, we suggest starting with 5 value around $m=\sqrt{p}$. Another tuning parameter is the number of trees in the forest. You can start with 1000 trees and then increase the number until performance levels off.
-
-The basic random forest is as follows:
-
+When building a tree, the algorithm randomly chooses $m$ variables to use at each splitting node. Then choose the best one out of the $m$ to use at that node. In general, people use $m=\sqrt{p}$. For example, if we use 10 questions from the questionnaire as predictors, then at each node, the algorithm will randomly choose 4 candidate variables. Since those trees in the forest don't always use the same variables, tree correlation is less than that in bagging. It tends to work better when there are more predictors. Since we only have 10 predictors here, the improvement from the random forest is marginal. The number of randomly selected predictors is a tuning parameter in the random forest.  Since random forest is computationally intensive, we suggest starting with 5 value around $m=\sqrt{p}$. Another tuning parameter is the number of trees in the forest. You can start with 1000 trees and then increase the number until performance levels off. The basic random forest is shown in Algorithm \@ref(randomforestalgorithm).
  
-1. Select the number of trees, B
-2. **for** _i=1 to B_ **do**
-    - generate a bootstrap sample of the original data
-    - train a tree on this sample
-         - **for** _each split_ **do**
-              - randomly select m（<p）predictors
-              - choose the best one out of the $m$ and partition the data
-         - **end**
-    - use typical tree model stopping criteria to determine when a tree is complete without pruning
-3. **end**
+\begin{algorithm}
+\caption{Random forest}\label{randomforestalgorithm} 
+\begin{algorithmic}[1] 
+\State Select the number of trees, B
+    \For {i=1 to B}
+        \State Generate a bootstrap sample of the original data
+        \State Rrain a tree on this sample
+            \For {each split}
+                \State Randomly select m（<p）predictors
+                \State Choose the best one out of the $m$ and partition the data
+            \EndFor
+        \State Use typical tree model stopping criteria to determine when a tree is complete without pruning
+    \EndFor
+\end{algorithmic}
+\end{algorithm}
+
 
 When $m=p$, random forest is equal to the bagging tree. When the predictors are highly correlated, then smaller $m$ tends to work better. Let's use the `caret` package to train a random forest:
 
@@ -608,21 +614,20 @@ The algorithm produces a series of classifiers $G_m(x),\ m=1,2,...,M$ from diffe
 $$G(x)=sign ( \Sigma_{m=1}^M \alpha_{m}G_m(x))$$
 where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations.
 
-**AdaBoost.M1**
-
-1. Response variables have two values: +1 and -1
-2. Initialize the observation to have the same weights:  $w_i=\frac{1}{N},i=1,...,N$
-3. for m = 1 to M:
-
-    (a) Fit a classifier $G_m(x)$ to the training data using weights $w_i$
-
-    (b) Compute the error rate for the $m^th$ classifier: $err_m=\frac{\Sigma_{i=1}^Nw_i I(y_i\neq G_m(x_i))}{\Sigma_{i=1}^Nw_i}$
-
-    (c) Compute the stage weight for $m^{th}$ iteration: $\alpha_m=log\frac{1-err_m}{err_m}$
-
-    (d) Update $w_i = w_i\cdot exp[\alpha_m\cdot I(y_i \neq G_m(x_i))],\ i=1,2,\dots,N$
-
-4. Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$，where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
+\begin{algorithm}
+\caption{AdaBoost.M1}\label{AdaBoostM1algorithm} 
+\begin{algorithmic}[1] 
+\State Response variables have two values: +1 and -1
+\State Initialize the observation to have the same weights:  $w_i=\frac{1}{N},i=1,...,N$
+\For {m = 1 to M}
+    \State Fit a classifier $G_m(x)$ to the training data using weights $w_i$
+    \State Compute the error rate for the $m^th$ classifier: $err_m=\frac{\Sigma_{i=1}^Nw_i I(y_i\neq G_m(x_i))}{\Sigma_{i=1}^Nw_i}$
+    \State Compute the stage weight for $m^{th}$ iteration: $\alpha_m=log\frac{1-err_m}{err_m}$
+    \State Update $w_i = w_i\cdot exp[\alpha_m\cdot I(y_i \neq G_m(x_i))],\ i=1,2,\dots,N$
+\EndFor
+\State Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$，where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
+\end{algorithmic}
+\end{algorithm}
 
 Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm is known as  “Discrete AdaBoost” [@Friedman2000]. You can revise the above algorithm if it returns continuous value, for example, a probability[@Friedman2000].  As mentioned before, boosting is a general approach that can be applied to different learners. Since you can easily create weak learners by limiting the depth of the tree, the boosting tree is a common method. Since the classification tree is a low bias/high variance technique, ensemble decreases model variance and lead to low bias/low variance model. See Breinman[@Breiman1998] for more explanation about why the boosting tree performs well in general. However, boosting can not significantly improve the low variance model. So applying boosting to Latent Dirichlet Allocation (LDA) or K-Nearest Neighbor (KNN) doesn't lead to as good improvement as applying boosting to statistical learning methods like naive Bayes [@Bauer1999]. 
 
@@ -632,15 +637,21 @@ As mentioned before, Friedman [@Friedman2000] provided a statistical framework f
 
 Consider a 2-class classification problem. You have the response $y \in \{0, 1\}$ and the sample proportion of class 1 from the training set is $p$. $f(x)$ is the model prediction in the range of $[-\infty, +\infty]$ and the predicted event probability is $\hat{p}=\frac{1}{1+exp[-f(x)]}$. The gradient boosting for this problem is as follows:
 
-1. Initialize all  predictions to the sample log-odds: $f_{i} = log \frac{\hat{p}}{1- \hat{p}}$
-2. **for**  j=1 ... M **do**
-    - Compute predicted event probability:  $\hat{p}_i=\frac{1}{1+exp[-f_{i}(x)]}$.
-    - Compute the residual (i.e. gradient): $z_i=y_i-\hat{p}_i$
-    - Randomly sample the training data
-    - Train a tree model on the random subset using the residuals as the outcome
-    - Compute the terminal node estimates of the Pearson residuals: $r_i=\frac{1/n\Sigma_i^n(y_i-\hat{p}_i)}{1/n\Sigma_i^n\hat{p}_i(1-\hat{p}_i)}$
-    - Update f：$f_i=f_i+\lambda f_i^{(j)}$
-3. end
+\begin{algorithm}
+\caption{Stochastic gradient boosting for 2-class classification}\label{gbmalgorithm} 
+\begin{algorithmic}[1] 
+\State Response variables have two values: +1 and -1
+\State Initialize all  predictions to the sample log-odds: $f_{i} = log \frac{\hat{p}}{1- \hat{p}}$
+\For {j=1 ... M}
+    \State Compute predicted event probability:  $\hat{p}_i=\frac{1}{1+exp[-f_{i}(x)]}$
+    \State Compute the residual (i.e. gradient): $z_i=y_i-\hat{p}_i$
+    \State Randomly sample the training data
+    \State Train a tree model on the random subset using the residuals as the outcome
+    \State Compute the terminal node estimates of the Pearson residuals: $r_i=\frac{1/n\Sigma_i^n(y_i-\hat{p}_i)}{1/n\Sigma_i^n\hat{p}_i(1-\hat{p}_i)}$
+    \State Update f：$f_i=f_i+\lambda f_i^{(j)}$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 When using the tree as the base learner, basic gradient boosting has two tuning parameters: tree depth and the number of iterations. You can further customize the algorithm by selecting a different loss function and gradient[@Hastie2008].  The final line of the loop includes a regularization strategy. Instead of adding $f_i^{(j)}$ to the previous iteration's $f_i$, only a fraction of the value is added. This fraction is called learning rate which is $\lambda$ in the algorithm. It can take values between 0 and 1 which is another tuning parameter of the model.
 
@@ -690,24 +701,21 @@ Resampling: Cross-Validated (10 fold)
 Summary of sample sizes: 899, 900, 900, 899, 899, 901, ... 
 Resampling results across tuning parameters:
 
-  shrinkage  interaction.depth  n.minobsinnode  n.trees  ROC     Sens    Spec    
-  0.01       1                   1              1        0.6821  1.0000  0.000000
-  0.01       1                   1              2        0.6882  1.0000  0.000000
-  0.01       1                   1              3        0.6936  1.0000  0.000000
+shrinkage interaction.depth n.minobsinnode n.trees ROC    Sens Spec    
+0.01      1                 1              1       0.6821 1.00 0.00
+0.01      1                 1              2       0.6882 1.00 0.00
   .
   .
   .
-  0.01       5                   8              2        0.7127  1.0000  0.000000
-  0.01       5                   8              3        0.7148  1.0000  0.000000
-  0.01       5                   8              4        0.7096  1.0000  0.000000
-  0.01       5                   8              5        0.7100  1.0000  0.000000
-  0.01       5                   9              1        0.7006  1.0000  0.000000
-  0.01       5                   9              2        0.7055  1.0000  0.000000
+0.01      5                 8              4       0.7096 1.00 0.00
+0.01      5                 8              5       0.7100 1.00 0.00
+0.01      5                 9              1       0.7006 1.00 0.00
+0.01      5                 9              2       0.7055 1.00 0.00
  [ reached getOption("max.print") -- omitted 358 rows ]
 
 ROC was used to select the optimal model using the largest value.
-The final values used for the model were n.trees = 4, interaction.depth = 3, shrinkage
- = 0.01 and n.minobsinnode = 6.
+The final values used for the model were n.trees = 4, 
+interaction.depth = 3, shrinkage = 0.01 and n.minobsinnode = 6.
 ```
 
 The results show that the tuning parameter settings that lead to the best ROC are `n.trees = 4` (number of trees), `interaction.depth = 3` (depth of tree),  `shrinkage = 0.01` (learning rate)  and `n.minobsinnode = 6` (minimum number of observations in each node).
@@ -794,12 +802,17 @@ $$\underset{\beta,\gamma}{min}=\Sigma_{i=1}^N L(y_i,\beta b(x_i;\gamma))$$
 
 The forward stagewise algorithm approximates the optimal solution of equation \@ref(eq:additiveloss). It adds new basis functions to the expansion without adjusting the previous ones. The forward stagewise additive algorithm is as following (Section 10.2 of @Hastie2008):
 
-1. Initialize $f_0(x)=0$
-2. **for**  $m=1,\dots,M$ **do**：
-    compute
+\begin{algorithm}
+\caption{Forward stagewise algorithm}\label{forwardstagewisealgorithm} 
+\begin{algorithmic}[1] 
+\State Initialize $f_0(x)=0$
+\For {$m=1,\dots,M$}
+    \State Compute
     $$(\beta_m,\gamma_m)=\underset{\beta,\gamma}{argmin}\Sigma_{i=1}^NL(y_i,f_{m-1}(x_i)+\beta b(x_i;\gamma))$$
-    
-    set $f_m(x)=f_{m-1}(x)+\beta_m b(x;\gamma_m)$
+    \State Set $f_m(x)=f_{m-1}(x)+\beta_m b(x;\gamma_m)$
+\EndFor
+\end{algorithmic}
+\end{algorithm}
 
 At iteration m, it will search for the optimal $b(x;\gamma_m)$ and $\beta_m$ based on the previous basis function $f_{m-1}(x)$. And then add the new basis $b(x;\gamma_m)\beta_m$ to the previous basis function to get a new basis function $f_m(x)$ without changing any parameters from previous steps. Assume we use squared-error loss:
 

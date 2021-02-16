@@ -3,6 +3,7 @@ title: "Introduction to Data Science"
 header-includes:
   - \usepackage{algpseudocode}
   - \usepackage{algorithm}
+  - \usepackage{listings}
 author: "Hui Lin and Ming Li"
 date: "`r Sys.Date()`"
 knit: "bookdown::render_book"
@@ -34,7 +35,7 @@ ids_url = function(file) {
          'raw/master/', file)
 }
 
-package_list = c("svglite", "RANN", "proxy", "partykit", "pROC","plot3D")
+# package_list = c("svglite", "RANN", "proxy", "partykit", "pROC","plot3D")
 # install.packages("plot3D")
 # bookdown::render_book("index.Rmd", "bookdown::gitbook")
 # bookdown::render_book("index.Rmd", "bookdown::pdf_book")

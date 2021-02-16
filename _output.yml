@@ -32,7 +32,7 @@ bookdown::pdf_book:
   latex_engine: xelatex
   citation_package: natbib
   template: null
-  pandoc_args: --top-level-division=chapter
+  pandoc_args: ["--top-level-division=chapter", "--highlight-style=tango"]
   toc_depth: 3
   toc_unnumbered: false
   toc_appendix: true
