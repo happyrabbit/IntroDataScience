@@ -54,10 +54,10 @@ The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $V
 
 To explore bias and variance, let's begin with a simple simulation. We will simulate a data with a non-linear relationship and fit different models on it. An intuitive way to show these is to compare the plots of various models. 
 
-The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear.  
+The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear. You need to load the `multiplot` function by running `source('http://bit.ly/2KeEIg9')`. The function assembles multiple plots on a canvas.  
 
 ```{r}
-source(ids_url('R/multiplot.r'))
+source('http://bit.ly/2KeEIg9')
 # randomly simulate some non-linear samples
 x = seq(1, 10, 0.01) * pi
 e = rnorm(length(x), mean = 0, sd = 0.2)

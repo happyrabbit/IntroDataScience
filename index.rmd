@@ -29,11 +29,6 @@ options(
   htmltools.dir.version = FALSE, formatR.indent = 2,
   width = 55, digits = 4, warnPartialMatchAttr = FALSE, warnPartialMatchDollar = FALSE
 )
-ids_url = function(file) {
-  paste0('https://github.com/',
-         'happyrabbit/DataScientistR/',
-         'raw/master/', file)
-}
 
 # package_list = c("svglite", "RANN", "proxy", "partykit", "pROC","plot3D")
 # install.packages("plot3D")
