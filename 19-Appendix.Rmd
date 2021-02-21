@@ -1,5 +1,469 @@
 # (APPENDIX) Appendix {-}
 
+# Handling Large Local Data {#largelocaldata}
+
+## `readr`
+
+You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base R. Here we will introduce a more efficient package for reading and writing data: `readr` package. The corresponding functions are `read_csv()`, `read_table()` and `write_csv()`. The commands look quite similar, but `readr` is different in the following respects:
+
+1. It is 10x faster. The trick is that `readr` uses C++ to process the data quickly. 
+
+1. It doesn't change the column names. The names can start with a number and "`.`"  will not be substituted to "`_`". For example:  
+
+```{r}
+read_csv("2015,2016,2017
+1,2,3
+4,5,6")
+```
+
+1. `readr` functions do not convert strings to factors by default, are able to parse dates and times and can automatically determine the data types in each column. 
+
+1. The killing character, in my opinion, is that `readr` provides **progress bar**. What makes you feel worse than waiting is not knowing how long you have to wait. 
+
+![](images/prograssbar.png)
+
+The major functions of readr is to turn flat files into data frames:
+
+- `read_csv()`: reads comma delimited files
+- `read_csv2()`: reads semicolon separated files (common in countries where  `,`  is used as the decimal place)
+- `read_tsv()`: reads tab delimited files
+- `read_delim()`: reads in files with any delimiter
+- `read_fwf()`: reads fixed width files. You can specify fields either by their widths with `fwf_widths()`  or their position with  `fwf_positions()`  
+- `read_table()`: reads a common variation of fixed width files where columns are separated by white space 
+- `read_log()`: reads Apache style log files
+
+The good thing is that those functions have similar syntax. Once you learn one, the others become easy. Here we will focus on `read_csv()`.
+
+The most important information for `read_csv()` is the path to your data:
+
+```r
+sim.dat <- read_csv("http://bit.ly/2P5gTw4")
+head(sim.dat)
+```
+
+```pre
+# A tibble: 6 x 19
+    age gender income house store_exp online_exp store_trans online_trans    Q1
+  <int> <chr>   <dbl> <chr>     <dbl>      <dbl>       <int>        <int> <int>
+1    57 Female 1.21e5 Yes        529.       304.           2            2     4
+2    63 Female 1.22e5 Yes        478.       110.           4            2     4
+3    59 Male   1.14e5 Yes        491.       279.           7            2     5
+4    60 Male   1.14e5 Yes        348.       142.          10            2     5
+5    51 Male   1.24e5 Yes        380.       112.           4            4     4
+6    59 Male   1.08e5 Yes        338.       196.           4            5     4
+# ... with 10 more variables: Q2 <int>, Q3 <int>, Q4 <int>, Q5 <int>, Q6 <int>,
+#   Q7 <int>, Q8 <int>, Q9 <int>, Q10 <int>, segment <chr>
+```
+
+The function reads the file to R as a `tibble`. You can consider `tibble` as next iteration of the data frame. They are different with data frame for the following aspects:
+
+- It never changes an input’s type (i.e., no more `stringsAsFactors = FALSE`!)
+- It never adjusts the names of variables
+- It has a refined print method that shows only the first 10 rows and all the columns that fit on the screen. You can also control the default print behavior by setting options.
+
+Refer to http://r4ds.had.co.nz/tibbles.html for more information about ‘tibble’.
+
+When you run `read_csv()`  it prints out a column specification that gives the name and type of each column. To better understanding how `readr` works, it is helpful to type in some baby data set and check the results:
+
+```{r}
+dat <- read_csv("2015,2016,2017
+100,200,300
+canola,soybean,corn")
+print(dat)
+```
+
+You can also add comments on the top and tell R to skip those lines:
+
+```{r}
+dat <- read_csv("# I will never let you know that
+          # my favorite food is carrot
+          Date,Food,Mood
+          Monday,carrot,happy
+          Tuesday,carrot,happy
+          Wednesday,carrot,happy
+          Thursday,carrot,happy
+          Friday,carrot,happy
+          Saturday,carrot,extremely happy
+          Sunday,carrot,extremely happy", 
+          skip = 2)
+print(dat)
+```
+
+If you don't have column names, set `col_names = FALSE` then R will assign names "`X1`","`X2`"... to the columns:
+
+```{r}
+dat <- read_csv("Saturday,carrot,extremely happy
+          Sunday,carrot,extremely happy", col_names = FALSE)
+print(dat)
+```
+
+You can also pass `col_names`  a character vector which will be used as the column names. Try to replace `col_names=FALSE` with `col_names=c("Date","Food","Mood")` and see what happen.
+
+As mentioned before, you can use `read_csv2()` to read semicolon separated files:
+
+```{r, message = FALSE}
+dat <- read_csv2("Saturday; carrot; extremely happy \n 
+                 Sunday; carrot; extremely happy", col_names = FALSE)
+print(dat)
+```
+
+Here "`\n`" is a convenient shortcut for adding a new line. 
+
+You can use `read_tsv()` to read tab delimited files:
+
+```{r}
+dat <- read_tsv("every\tman\tis\ta\tpoet\twhen\the\tis\tin\tlove\n", 
+    col_names = FALSE)
+print(dat)
+```
+
+Or more generally, you can use `read_delim()` and assign separating character:
+
+```{r}
+dat <- read_delim("THE|UNBEARABLE|RANDOMNESS|OF|LIFE\n", 
+    delim = "|", col_names = FALSE)
+print(dat)
+```
+
+Another situation you will often run into is the missing value. In marketing survey, people like to use "99" to represent missing. You can tell R to set all observation with value "99" as missing when you read the data:
+
+```{r}
+dat <- read_csv("Q1,Q2,Q3
+               5, 4,99", 
+               na = "99")
+print(dat)
+```
+
+For writing data back to disk, you can use `write_csv()` and `write_tsv()`. The following two characters of the two functions increase the chances of the output file being read back in correctly:
+
+- Encode strings in UTF-8
+- Save dates and date-times in ISO8601 format so they are easily parsed elsewhere
+
+For example:
+
+```r
+write_csv(sim.dat, "sim_dat.csv")
+```
+
+For other data types, you can use the following packages: 
+
+- `Haven`: SPSS, Stata and SAS data
+- `Readxl` and `xlsx`: excel data(.xls and .xlsx)
+- `DBI`: given data base, such as RMySQL, RSQLite and RPostgreSQL, read data directly from the database using SQL
+
+Some other useful materials:
+
+- For getting data from the internet, you can refer to the book “XML and Web Technologies for Data Sciences with R”.  
+- [R data import/export manual](https://cran.r-project.org/doc/manuals/r-release/R-data.html#Acknowledgements)
+- `rio` package:https://github.com/leeper/rio
+
+## `data.table`--- enhanced `data.frame`
+
+What is `data.table`? It is an R package that provides an enhanced version of `data.frame`.  The most used object in R is `data frame`.  Before we move on, let's briefly review some basic characters and manipulations of data.frame:
+
+- It is a set of rows and columns.
+- Each row is of the same length and data type
+- Every column is of the same length but can be of differing data types
+- It has characteristics of both a matrix and a list
+- It uses `[]` to subset data
+
+We will use the clothes customer data to illustrate. There are two dimensions in `[]`. The first one indicates the row and second one indicates column. It uses a comma to separate them.
+
+
+```{r, results="hide"}
+# read data
+sim.dat <- readr::read_csv("http://bit.ly/2P5gTw4")
+# subset the first two rows
+sim.dat[1:2, ]
+# subset the first two rows and column 3 and 5
+sim.dat[1:2, c(3, 5)]
+# get all rows with age>70
+sim.dat[sim.dat$age > 70, ]
+# get rows with age> 60 and gender is Male select column 3 and 4
+sim.dat[sim.dat$age > 68 & sim.dat$gender == "Male", 3:4]
+```
+
+Remember that there are usually different ways to conduct the same manipulation. For example, the following code presents three ways to calculate an average number of online transactions for male and female:
+
+```r
+tapply(sim.dat$online_trans, sim.dat$gender, mean)
+
+aggregate(online_trans ~ gender, data = sim.dat, mean)
+
+sim.dat %>% 
+  group_by(gender) %>% 
+  summarise(Avg_online_trans = mean(online_trans))
+```
+
+There is no gold standard to choose a specific function to manipulate data. The goal is to solve the real problem, not the tool itself. So just use whatever tool that is convenient for you.  
+
+The way to use `[]` is straightforward. But the manipulations are limited. If you need more complicated data reshaping or aggregation, there are other packages to use such as `dplyr`, `reshape2`, `tidyr` etc. But the usage of those packages are not as straightforward as `[]`. You often need to change functions.  Keeping related operations together, such as subset, group, update, join etc,  will allow for:
+
+- concise, consistent and readable syntax irrespective of the set of operations you would like to perform to achieve your end goal 
+- performing data manipulation fluidly without the cognitive burden of having to change among different functions 
+- by knowing precisely the data required for each operation, you can automatically optimize operations effectively 
+
+`data.table` is the package for that. If you are not familiar with other data manipulating packages and are interested in reducing programming time tremendously, then this package is for you. 
+
+
+Other than extending the function of `[]`, `data.table` has the following advantages:
+
+- Offers fast import, subset, grouping, update, and joins for large data files
+- It is easy to turn data frame to data table
+- Can behave just like a data frame
+
+You need to install and load the package:
+
+Use `data.table()` to convert the existing data frame `sim.dat` to data table:
+
+```{r}
+dt <- data.table(sim.dat)
+class(dt)
+```
+
+Calculate mean for counts of online transactions:
+
+```{r}
+dt[, mean(online_trans)]
+```
+
+You can't do the same thing using data frame:
+
+```r
+sim.dat[,mean(online_trans)]
+```
+
+```html
+Error in mean(online_trans) : object 'online_trans' not found
+```
+
+If you want to calculate mean by group as before, set “`by = `” argument:
+
+```{r}
+dt[ , mean(online_trans), by = gender]
+```
+
+You can group by more than one variables. For example, group by “`gender`” and “`house`”:
+
+```{r}
+dt[ , mean(online_trans), by = .(gender, house)]
+```
+
+Assign column names for aggregated variables:
+
+```{r}
+dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
+```
+
+`data.table` can accomplish all operations that `aggregate()` and `tapply()`can do for data frame.
+
+-  General setting of `data.table`
+
+Different from data frame, there are three arguments for data table:
+
+<center>
+![](images/datable1.png)
+</center>
+
+It is analogous to SQL. You don't have to know SQL to learn data table. But experience with SQL will help you understand data table.  In SQL, you select column `j` (use command `SELECT`) for row `i` (using command `WHERE`).  `GROUP BY` in SQL will assign the variable to group the observations. 
+
+<center>
+![](images/rSQL.png)
+</center>
+
+Let's review our previous code:
+
+```r
+dt[ , mean(online_trans), by = gender]
+```
+
+The code above is equal to the following SQL:
+
+```sql
+SELECT
+   gender,
+   avg(online_trans) 
+FROM
+   sim.dat 
+GROUP BY
+   gender
+```
+
+R code:
+ 
+```r
+dt[ , .(avg = mean(online_trans)), by = .(gender, house)]
+```
+
+is equal to SQL:
+
+```sql
+SELECT
+   gender,
+   house,
+   avg(online_trans) AS avg 
+FROM
+   sim.dat 
+GROUP BY
+   gender,
+   house
+```
+
+R code:
+
+```r
+dt[ age < 40, .(avg = mean(online_trans)), by = .(gender, house)]
+```
+
+is equal to SQL:
+
+```sql
+SELECT
+   gender,
+   house,
+   avg(online_trans) AS avg 
+FROM
+   sim.dat 
+WHERE
+   age < 40 
+GROUP BY
+   gender,
+   house
+```
+
+You can see the analogy between `data.table` and `SQL`.  Now let's focus on operations in data table. 
+
+- select row
+
+```{r}
+# select rows with age<20 and income > 80000
+dt[age < 20 & income > 80000]
+# select the first two rows
+dt[1:2]
+```
+
+- select column
+
+Selecting columns in  `data.table` don't need `$`:
+
+```{r}
+# select column “age” but return it as a vector
+# the argument for row is empty so the result
+# will return all observations
+ans <- dt[, age]
+head(ans)
+```
+
+To return `data.table` object, put column names in `list()`:
+
+```r
+# Select age and online_exp columns 
+# and return as a data.table instead
+ans <- dt[, list(age, online_exp)]
+head(ans)
+```
+
+Or you can also put column names in `.()`:
+
+```r
+ans <- dt[, .(age, online_exp)]
+```
+
+To select all columns from “`age`” to “`income`”:
+
+```{r}
+ans <- dt[, age:income, with = FALSE]
+head(ans,2)
+```
+
+Delete columns using `-` or `!`:
+
+```r
+# delete columns from  age to online_exp
+ans <- dt[, -(age:online_exp), with = FALSE]
+ans <- dt[, !(age:online_exp), with = FALSE]
+```
+
+- tabulation
+
+In data table. `.N` means to count。
+
+```{r}
+# row count
+dt[, .N] 
+```
+
+If you assign the group variable, then it will count by groups:
+
+```{r}
+# counts by gender
+dt[, .N, by= gender]  
+# for those younger than 30, count by gender
+ dt[age < 30, .(count=.N), by= gender] 
+```
+
+Order table:
+
+```r
+# get records with the highest 5 online expense:
+head(dt[order(-online_exp)],5) 
+```
+
+```pre
+   age gender   income house store_exp online_exp store_trans ...
+1:  40 Female 217599.7    No  7023.684   9479.442          10
+2:  41 Female       NA   Yes  3786.740   8638.239          14
+3:  36   Male 228550.1   Yes  3279.621   8220.555           8
+4:  31 Female 159508.1   Yes  5177.081   8005.932          11
+5:  43 Female 190407.4   Yes  4694.922   7875.562           6
+...
+```
+
+Since data table keep some characters of data frame, they share some operations:
+ 
+```r
+dt[order(-online_exp)][1:5]
+```
+
+You can also order the table by more than one variable. The following code will order the table by `gender`, then order within `gender` by `online_exp`:
+
+```r 
+dt[order(gender, -online_exp)][1:5]
+```
+
+-  Use `fread()` to import dat
+
+Other than `read.csv` in base R, we have introduced 'read_csv' in 'readr'.  `read_csv` is much faster and will provide progress bar which makes user feel much better (at least make me feel better). `fread()` in `data.table` further increase the efficiency of reading data. The following are three examples of reading the same data file `topic.csv`. The file includes text data scraped from an agriculture forum with 209670 rows and 6 columns:
+
+```r
+system.time(topic <- read.csv("http://bit.ly/2zam5ny"))
+```
+
+```html
+   user  system elapsed 
+  3.561   0.051   4.888 
+```
+
+```r
+system.time(topic <- readr::read_csv("http://bit.ly/2zam5ny"))
+```
+
+```html
+   user  system elapsed 
+  0.409   0.032   2.233 
+```
+
+```r
+system.time(topic <- data.table::fread("http://bit.ly/2zam5ny"))
+```
+
+```html
+   user  system elapsed 
+  0.276   0.096   1.117 
+```
+
+It is clear that `read_csv()` is much faster than `read.csv()`. `fread()` is a little faster than `read_csv()`. As the size increasing, the difference will become for significant. Note that `fread()` will read file as `data.table` by default. 
+
 # R code for data simulation
 
 ## Customer Data for Clothing Company {#appendixdata1}

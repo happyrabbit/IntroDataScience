@@ -187,9 +187,14 @@ Receiver Operating Characteristic (ROC) curve uses the predicted class probabili
 
 ```{r}
 library(pROC)
-rocCurve<-roc(response=yTest,
-              predictor=yhatprob[,2])
-plot(rocCurve)
+
+rocCurve<-roc(response = yTest,
+              predictor =yhatprob[,2])
+plot(1-rocCurve$specificities, 
+     rocCurve$sensitivities, 
+     type = 'l',
+     xlab = '1 - Specificities',
+     ylab = 'Sensitivities')
 ```
 
 

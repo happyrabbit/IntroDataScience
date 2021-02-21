@@ -4,8 +4,8 @@ output:
   html_document: default
 ---
 
-# Deep Learning
-
+# Deep Learning {#deeplearning}
+ 
 With everyday applications in language, voice, image, and automatic driving cars, deep learning becomes a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the binary perceptron classifier used a linear combination of input signals and a step activation function. It is the same as the single neuron in a modern deep learning framework that uses the same linear combination of input signals from neurons at the previous layer and a more efficient nonlinear activation function. The perceptron model was further defined by minimizing the classification error. It was trained by using one data point at a time to update the model parameters during the optimization process. There is a loss function in the modern neural network framework to be minimized based on the problem to solve, and the stochastic gradient descent and its variations are the major optimization algorithms.
 
 Even though the theoretical foundation of deep learning has gradually developed in the past few decades, real-world applications of deep learning started in the past few years primarily due to the following constraints: data, network structure, algorithm, and computation power.

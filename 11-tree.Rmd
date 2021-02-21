@@ -625,7 +625,7 @@ where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations
     \State Compute the stage weight for $m^{th}$ iteration: $\alpha_m=log\frac{1-err_m}{err_m}$
     \State Update $w_i = w_i\cdot exp[\alpha_m\cdot I(y_i \neq G_m(x_i))],\ i=1,2,\dots,N$
 \EndFor
-\State Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$，where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
+\State Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$, where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
 \end{algorithmic}
 \end{algorithm}
 
