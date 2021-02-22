@@ -2,6 +2,16 @@
 
 # Handling Large Local Data {#largelocaldata}
 
+When the data is too large to fit in a computer's memory, we can use some big data analytics engine like Spark on a cloud platform (see Chapter \@ref(bigdatacloudplatform)). However, even when the data can fit in the memory, there may be a situation where it is slow to read and manipulate due to a relatively large size. Some R packages can make the process faster with the cost of familiarity, especially for data wrangling. But it avoids the hurdle of setting up Spark cluster and working in an unfamiliar environment. This section presents some of the alternative R packages to read, write and wrangle a data set that is relatively large but not too big to fit in the memory.  
+
+Load the R packages first:
+
+```{r, message=FALSE}
+# install packages from CRAN if you haven't
+library(readr)
+library(data.table)
+```
+
 ## `readr`
 
 You must be familiar with `read.csv()`, `read.table()` and `write.csv()` in base R. Here we will introduce a more efficient package for reading and writing data: `readr` package. The corresponding functions are `read_csv()`, `read_table()` and `write_csv()`. The commands look quite similar, but `readr` is different in the following respects:
