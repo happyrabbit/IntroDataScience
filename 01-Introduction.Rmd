@@ -2,7 +2,7 @@
 
 # Introduction
 
-Data science is a fast-developing area. This chapter discusses varied aspects of data science. What are the different career tracks and skills required in data science? How is the data science team structured?  We focus on the demand side of data science from business and industry requirements and application points of view. We hope this chapter will provide a complementary perspective to other data sciences books. 
+Data science is a fast-developing area. This chapter discusses various aspects of data science. What are the different career tracks and skills required in data science? How is the data science team structured?  We focus on the demand side of data science from business and industry requirements and application points of view. We hope this chapter will provide a complementary perspective to other data sciences books. 
 
 ## A brief history of data science
 

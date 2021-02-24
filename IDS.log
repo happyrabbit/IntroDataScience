@@ -1,4 +1,4 @@
-This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.9)  22 FEB 2021 00:27
+This is XeTeX, Version 3.14159265-2.6-0.999992 (TeX Live 2020) (preloaded format=xelatex 2021.2.9)  22 FEB 2021 00:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1479,43 +1479,43 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [16
 
 ]
-Underfull \vbox (badness 10000) detected at line 247
+Underfull \vbox (badness 10000) detected at line 261
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 247
+Overfull \hbox (336.25pt too wide) detected at line 261
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 247
+Underfull \vbox (badness 10000) detected at line 261
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 247
+Overfull \hbox (336.25pt too wide) detected at line 261
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 247
+Underfull \vbox (badness 10000) detected at line 261
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 247
+Overfull \hbox (336.25pt too wide) detected at line 261
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 247
+Underfull \vbox (badness 10000) detected at line 261
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 247
+Overfull \hbox (336.25pt too wide) detected at line 261
 []
  []
 
 
-Underfull \hbox (badness 10000) detected at line 247
+Underfull \hbox (badness 10000) detected at line 261
 []
  []
 
@@ -1566,44 +1566,44 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [18
 
 ]
-Underfull \vbox (badness 10000) detected at line 264
+Underfull \vbox (badness 10000) detected at line 278
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 264
+Overfull \hbox (336.25pt too wide) detected at line 278
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 264
+Underfull \vbox (badness 10000) detected at line 278
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 264
+Overfull \hbox (336.25pt too wide) detected at line 278
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 264
+Underfull \vbox (badness 10000) detected at line 278
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 264
+Overfull \hbox (336.25pt too wide) detected at line 278
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 264
+Underfull \vbox (badness 10000) detected at line 278
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 264
+Overfull \hbox (336.25pt too wide) detected at line 278
 []
  []
 
 Chapter 1.
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 277--277
+Overfull \hbox (30.0pt too wide) in paragraph at lines 291--291
 |  
  []
 
@@ -1616,318 +1616,318 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ] [2]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 287--287
+Overfull \hbox (30.0pt too wide) in paragraph at lines 301--301
 |  
  []
 
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 10.0pt on input line 293.
+(Font)              scaled to size 10.0pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 7.0pt on input line 293.
+(Font)              scaled to size 7.0pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(1)/m/n' will be
-(Font)              scaled to size 5.0pt on input line 293.
+(Font)              scaled to size 5.0pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 10.00092pt on input line 293.
+(Font)              scaled to size 10.00092pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 7.00064pt on input line 293.
+(Font)              scaled to size 7.00064pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(2)/m/n' will be
-(Font)              scaled to size 5.00046pt on input line 293.
+(Font)              scaled to size 5.00046pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 9.99893pt on input line 293.
+(Font)              scaled to size 9.99893pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 6.99925pt on input line 293.
+(Font)              scaled to size 6.99925pt on input line 307.
 LaTeX Font Info:    Font shape `TU/latinmodern-math.otf(3)/m/n' will be
-(Font)              scaled to size 4.99947pt on input line 293.
+(Font)              scaled to size 4.99947pt on input line 307.
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/n' will be
-(Font)              scaled to size 6.99997pt on input line 293.
+(Font)              scaled to size 6.99997pt on input line 307.
 Font mapping `tex-ansi.tec' for font `Source Code Pro' not found.
 
-Underfull \hbox (badness 10000) detected at line 299
+Underfull \hbox (badness 10000) detected at line 313
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 299
+Underfull \hbox (badness 10000) detected at line 313
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 299--301
+Underfull \hbox (badness 10000) in paragraph at lines 313--315
 
  []
 
 
-Underfull \hbox (badness 10000) detected at line 301
+Underfull \hbox (badness 10000) detected at line 315
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 301
+Underfull \hbox (badness 10000) detected at line 315
 [][][]
  []
 
 [3]
-Underfull \hbox (badness 10000) detected at line 312
+Underfull \hbox (badness 10000) detected at line 326
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 312
+Underfull \hbox (badness 10000) detected at line 326
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 314
+Underfull \hbox (badness 10000) detected at line 328
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 314
+Underfull \hbox (badness 10000) detected at line 328
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 316
+Underfull \hbox (badness 10000) detected at line 330
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 316
+Underfull \hbox (badness 10000) detected at line 330
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 318
+Underfull \hbox (badness 10000) detected at line 332
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 318
+Underfull \hbox (badness 10000) detected at line 332
 [][][]
  []
 
 [4] [5]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 334--334
+Overfull \hbox (30.0pt too wide) in paragraph at lines 348--348
 |  
  []
 
 [6]
-Underfull \hbox (badness 10000) detected at line 351
+Underfull \hbox (badness 10000) detected at line 365
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 351
+Underfull \hbox (badness 10000) detected at line 365
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 361
+Underfull \hbox (badness 10000) detected at line 375
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 361
+Underfull \hbox (badness 10000) detected at line 375
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 371
+Underfull \hbox (badness 10000) detected at line 385
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 371
+Underfull \hbox (badness 10000) detected at line 385
 [][][]
  []
 
 [7]
-Underfull \hbox (badness 10000) detected at line 385
+Underfull \hbox (badness 10000) detected at line 399
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 385
+Underfull \hbox (badness 10000) detected at line 399
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 419
+Underfull \hbox (badness 10000) detected at line 433
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 419
+Underfull \hbox (badness 10000) detected at line 433
 [][][]
  []
 
 [8]
-Underfull \hbox (badness 10000) detected at line 429
+Underfull \hbox (badness 10000) detected at line 443
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 429
+Underfull \hbox (badness 10000) detected at line 443
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 455
+Underfull \hbox (badness 10000) detected at line 469
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 455
+Underfull \hbox (badness 10000) detected at line 469
 [][][]
  []
 
 [9]
-Underfull \hbox (badness 10000) detected at line 465
+Underfull \hbox (badness 10000) detected at line 479
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 465
+Underfull \hbox (badness 10000) detected at line 479
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 484
+Underfull \hbox (badness 10000) detected at line 498
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 484
+Underfull \hbox (badness 10000) detected at line 498
 [][][]
  []
 
 [10]
-Underfull \hbox (badness 10000) detected at line 518
+Underfull \hbox (badness 10000) detected at line 532
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 518
+Underfull \hbox (badness 10000) detected at line 532
 [][][]
  []
 
 [11]
-Underfull \hbox (badness 10000) detected at line 538
+Underfull \hbox (badness 10000) detected at line 552
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 538
+Underfull \hbox (badness 10000) detected at line 552
 [][][]
  []
 
 [12]
-Underfull \hbox (badness 10000) detected at line 561
+Underfull \hbox (badness 10000) detected at line 575
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 561
+Underfull \hbox (badness 10000) detected at line 575
 [][][]
  []
 
 [13]
-Underfull \hbox (badness 10000) detected at line 587
+Underfull \hbox (badness 10000) detected at line 601
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 587
+Underfull \hbox (badness 10000) detected at line 601
 [][][]
  []
 
 [14]
-Underfull \hbox (badness 10000) detected at line 606
+Underfull \hbox (badness 10000) detected at line 620
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 606
+Underfull \hbox (badness 10000) detected at line 620
 [][][]
  []
 
 [15]
-Underfull \hbox (badness 10000) detected at line 628
+Underfull \hbox (badness 10000) detected at line 642
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 628
+Underfull \hbox (badness 10000) detected at line 642
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 650
+Underfull \hbox (badness 10000) detected at line 664
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 650
+Underfull \hbox (badness 10000) detected at line 664
 [][][]
  []
 
 [16]
-Underfull \hbox (badness 10000) detected at line 670
+Underfull \hbox (badness 10000) detected at line 684
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 670
+Underfull \hbox (badness 10000) detected at line 684
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 692
+Underfull \hbox (badness 10000) detected at line 706
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 692
+Underfull \hbox (badness 10000) detected at line 706
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 712
+Underfull \hbox (badness 10000) detected at line 726
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 712
+Underfull \hbox (badness 10000) detected at line 726
 [][][]
  []
 
 [17]
-Underfull \hbox (badness 10000) detected at line 736
+Underfull \hbox (badness 10000) detected at line 750
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 736
+Underfull \hbox (badness 10000) detected at line 750
 [][][]
  []
 
 [18]
-Underfull \hbox (badness 10000) detected at line 760
+Underfull \hbox (badness 10000) detected at line 774
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 760
+Underfull \hbox (badness 10000) detected at line 774
 [][][]
  []
 
 [19]
-Underfull \hbox (badness 10000) detected at line 790
+Underfull \hbox (badness 10000) detected at line 804
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 790
+Underfull \hbox (badness 10000) detected at line 804
 [][][]
  []
 
@@ -1975,38 +1975,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [26
 
 ]
-Underfull \vbox (badness 10000) detected at line 918
+Underfull \vbox (badness 10000) detected at line 932
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 918
+Overfull \hbox (336.25pt too wide) detected at line 932
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 918
+Underfull \vbox (badness 10000) detected at line 932
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 918
+Overfull \hbox (336.25pt too wide) detected at line 932
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 918
+Underfull \vbox (badness 10000) detected at line 932
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 918
+Overfull \hbox (336.25pt too wide) detected at line 932
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 918
+Underfull \vbox (badness 10000) detected at line 932
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 918
+Overfull \hbox (336.25pt too wide) detected at line 932
 []
  []
 
@@ -2021,141 +2021,131 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [27
 
 ] [28] [29] [30]
-Underfull \hbox (badness 10000) detected at line 990
+Underfull \hbox (badness 10000) detected at line 1004
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 990
+Underfull \hbox (badness 10000) detected at line 1004
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1000
+Underfull \hbox (badness 10000) detected at line 1014
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1000
+Underfull \hbox (badness 10000) detected at line 1014
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1010
+Underfull \hbox (badness 10000) detected at line 1024
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1010
+Underfull \hbox (badness 10000) detected at line 1024
 [][][]
  []
 
 File: images/softskill2.png Graphic file (type bmp)
 <images/softskill2.png>
 [31] [32] [33] [34]
-Underfull \hbox (badness 10000) detected at line 1064
+Underfull \hbox (badness 10000) detected at line 1078
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1064
+Underfull \hbox (badness 10000) detected at line 1078
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1066
+Underfull \hbox (badness 10000) detected at line 1080
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1066
+Underfull \hbox (badness 10000) detected at line 1080
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1068
+Underfull \hbox (badness 10000) detected at line 1082
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1068
+Underfull \hbox (badness 10000) detected at line 1082
 [][][]
  []
 
 [35] [36]
-Underfull \hbox (badness 10000) detected at line 1123
+Underfull \hbox (badness 10000) detected at line 1137
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1123
+Underfull \hbox (badness 10000) detected at line 1137
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1125
+Underfull \hbox (badness 10000) detected at line 1139
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1125
+Underfull \hbox (badness 10000) detected at line 1139
 [][][]
  []
 
 [37] [38] [39] [40] [41] [42] [43] [44]
-Underfull \vbox (badness 10000) detected at line 1208
+Underfull \vbox (badness 10000) detected at line 1222
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1208
+Overfull \hbox (336.25pt too wide) detected at line 1222
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1208
+Underfull \vbox (badness 10000) detected at line 1222
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1208
+Overfull \hbox (336.25pt too wide) detected at line 1222
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1208
+Underfull \vbox (badness 10000) detected at line 1222
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1208
+Overfull \hbox (336.25pt too wide) detected at line 1222
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1208
+Underfull \vbox (badness 10000) detected at line 1222
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1208
+Overfull \hbox (336.25pt too wide) detected at line 1222
 []
  []
 
 Chapter 3.
 
-Underfull \hbox (badness 10000) detected at line 1221
+Underfull \hbox (badness 10000) detected at line 1235
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1221
-[][][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1233
- [][]
- []
-
-
-Underfull \hbox (badness 10000) detected at line 1233
+Underfull \hbox (badness 10000) detected at line 1235
 [][][]
  []
 
@@ -2166,6 +2156,16 @@ Underfull \hbox (badness 10000) detected at line 1247
 
 
 Underfull \hbox (badness 10000) detected at line 1247
+[][][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1261
+ [][]
+ []
+
+
+Underfull \hbox (badness 10000) detected at line 1261
 [][][]
  []
 
@@ -2178,97 +2178,97 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ]
-Underfull \hbox (badness 10000) detected at line 1258
+Underfull \hbox (badness 10000) detected at line 1272
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1258
+Underfull \hbox (badness 10000) detected at line 1272
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1260
+Underfull \hbox (badness 10000) detected at line 1274
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1260
+Underfull \hbox (badness 10000) detected at line 1274
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1262
+Underfull \hbox (badness 10000) detected at line 1276
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1262
+Underfull \hbox (badness 10000) detected at line 1276
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1264
+Underfull \hbox (badness 10000) detected at line 1278
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1264
+Underfull \hbox (badness 10000) detected at line 1278
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1266
+Underfull \hbox (badness 10000) detected at line 1280
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1266
+Underfull \hbox (badness 10000) detected at line 1280
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1299
+Underfull \hbox (badness 10000) detected at line 1313
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1299
+Underfull \hbox (badness 10000) detected at line 1313
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1301
+Underfull \hbox (badness 10000) detected at line 1315
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1301
+Underfull \hbox (badness 10000) detected at line 1315
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1303
+Underfull \hbox (badness 10000) detected at line 1317
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1303
+Underfull \hbox (badness 10000) detected at line 1317
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1305
+Underfull \hbox (badness 10000) detected at line 1319
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1305
+Underfull \hbox (badness 10000) detected at line 1319
 [][][]
  []
 
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/b/n' will be
-(Font)              scaled to size 8.39996pt on input line 1312.
+(Font)              scaled to size 8.39996pt on input line 1326.
 Font mapping `tex-ansi.tec' for font `Source Code Pro Bold' not found.
 [46]
 Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
@@ -2278,43 +2278,43 @@ Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 
-Overfull \hbox (0.25569pt too wide) detected at line 1363
+Overfull \hbox (0.25569pt too wide) detected at line 1377
 [] [] [] [] []
  []
 
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/it' will be
-(Font)              scaled to size 8.39996pt on input line 1370.
+(Font)              scaled to size 8.39996pt on input line 1384.
 Font mapping `tex-ansi.tec' for font `Source Code Pro Italic' not found.
 [48]
 File: images/MnistExamples.png Graphic file (type bmp)
 <images/MnistExamples.png>
 [49]
-Underfull \hbox (badness 10000) detected at line 1410
+Underfull \hbox (badness 10000) detected at line 1424
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1410
+Underfull \hbox (badness 10000) detected at line 1424
 [][][]
  []
 
 
-Underfull \hbox (badness 1137) in paragraph at lines 1416--1418
+Underfull \hbox (badness 1137) in paragraph at lines 1430--1432
 \TU/lmr/m/n/12 much information. There is a parameter in the
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1416--1418
+Underfull \hbox (badness 10000) in paragraph at lines 1430--1432
 
  []
 
 [50]
-Underfull \hbox (badness 10000) detected at line 1421
+Underfull \hbox (badness 10000) detected at line 1435
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1421
+Underfull \hbox (badness 10000) detected at line 1435
 [][][]
  []
 
@@ -2358,38 +2358,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [52
 
 ]
-Underfull \vbox (badness 10000) detected at line 1427
+Underfull \vbox (badness 10000) detected at line 1441
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1427
+Overfull \hbox (336.25pt too wide) detected at line 1441
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1427
+Underfull \vbox (badness 10000) detected at line 1441
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1427
+Overfull \hbox (336.25pt too wide) detected at line 1441
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1427
+Underfull \vbox (badness 10000) detected at line 1441
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1427
+Overfull \hbox (336.25pt too wide) detected at line 1441
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1427
+Underfull \vbox (badness 10000) detected at line 1441
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1427
+Overfull \hbox (336.25pt too wide) detected at line 1441
 []
  []
 
@@ -2411,92 +2411,92 @@ File: images/dbxrnotebook.png Graphic file (type bmp)
 File: images/dbxmarkdown.png Graphic file (type bmp)
 <images/dbxmarkdown.png>
 [59] [60] [61] [62] [63] [64] [65]
-Underfull \hbox (badness 10000) detected at line 1730
+Underfull \hbox (badness 10000) detected at line 1744
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1730
+Underfull \hbox (badness 10000) detected at line 1744
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1732
+Underfull \hbox (badness 10000) detected at line 1746
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1732
+Underfull \hbox (badness 10000) detected at line 1746
 [][][]
  []
 
 [66]
-Underfull \hbox (badness 10000) detected at line 1734
+Underfull \hbox (badness 10000) detected at line 1748
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1734
+Underfull \hbox (badness 10000) detected at line 1748
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1736
+Underfull \hbox (badness 10000) detected at line 1750
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1736
+Underfull \hbox (badness 10000) detected at line 1750
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1738
+Underfull \hbox (badness 10000) detected at line 1752
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1738
+Underfull \hbox (badness 10000) detected at line 1752
 [][][]
  []
 
 [67] [68] [69] [70]
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/b/n' will be
-(Font)              scaled to size 6.99997pt on input line 1822.
+(Font)              scaled to size 6.99997pt on input line 1836.
 Font mapping `tex-ansi.tec' for font `Source Code Pro Bold' not found.
 [71] [72] [73] [74]
-Underfull \vbox (badness 10000) detected at line 1921
+Underfull \vbox (badness 10000) detected at line 1935
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1921
+Overfull \hbox (336.25pt too wide) detected at line 1935
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1921
+Underfull \vbox (badness 10000) detected at line 1935
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1921
+Overfull \hbox (336.25pt too wide) detected at line 1935
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1921
+Underfull \vbox (badness 10000) detected at line 1935
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1921
+Overfull \hbox (336.25pt too wide) detected at line 1935
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 1921
+Underfull \vbox (badness 10000) detected at line 1935
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 1921
+Overfull \hbox (336.25pt too wide) detected at line 1935
 []
  []
 
@@ -2504,52 +2504,52 @@ Chapter 5.
 File: images/DataPre-processing.png Graphic file (type bmp)
 <images/DataPre-processing.png>
 
-Underfull \hbox (badness 10000) detected at line 1937
+Underfull \hbox (badness 10000) detected at line 1951
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1937
+Underfull \hbox (badness 10000) detected at line 1951
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1939
+Underfull \hbox (badness 10000) detected at line 1953
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1939
+Underfull \hbox (badness 10000) detected at line 1953
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1941
+Underfull \hbox (badness 10000) detected at line 1955
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1941
+Underfull \hbox (badness 10000) detected at line 1955
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1943
+Underfull \hbox (badness 10000) detected at line 1957
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1943
+Underfull \hbox (badness 10000) detected at line 1957
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1945
+Underfull \hbox (badness 10000) detected at line 1959
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 1945
+Underfull \hbox (badness 10000) detected at line 1959
 [][][]
  []
 
@@ -2562,19 +2562,19 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ] [76] [77]
-Overfull \hbox (1.17853pt too wide) in paragraph at lines 2033--2033
+Overfull \hbox (1.17853pt too wide) in paragraph at lines 2047--2047
 [] \TU/SourceCodePro(0)/m/n/12 1st Qu.:1.00   1st Qu.:2.00   1st Qu.:1.75   1st
  Qu.:1.00   1st Qu.:2.50[] 
  []
 
 
-Overfull \hbox (1.17853pt too wide) in paragraph at lines 2033--2033
+Overfull \hbox (1.17853pt too wide) in paragraph at lines 2047--2047
 [] \TU/SourceCodePro(0)/m/n/12 Median :1.00   Median :3.00   Median :4.00   Med
 ian :2.00   Median :4.00[] 
  []
 
 
-Overfull \hbox (1.17853pt too wide) in paragraph at lines 2033--2033
+Overfull \hbox (1.17853pt too wide) in paragraph at lines 2047--2047
 [] \TU/SourceCodePro(0)/m/n/12 3rd Qu.:3.00   3rd Qu.:4.00   3rd Qu.:4.00   3rd
  Qu.:4.00   3rd Qu.:4.00[] 
  []
@@ -2583,105 +2583,105 @@ Overfull \hbox (1.17853pt too wide) in paragraph at lines 2033--2033
 File: IDS_files/figure-latex/preprocessskew-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/preprocessskew-1.pdf>
 [85] [86]
-Underfull \hbox (badness 1810) in paragraph at lines 2299--2300
+Underfull \hbox (badness 1810) in paragraph at lines 2313--2314
 []\TU/lmr/m/n/12 As an example, we will apply Box-Cox transformation on
  []
 
 [87]
-File: IDS_files/figure-latex/unnamed-chunk-43-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-43-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-11-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-11-1.pdf>
 [88]
-File: IDS_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-46-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-14-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-14-1.pdf>
 [89]
 Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;!
 [90]
-Underfull \hbox (badness 10000) detected at line 2430
+Underfull \hbox (badness 10000) detected at line 2444
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2430
+Underfull \hbox (badness 10000) detected at line 2444
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2432
+Underfull \hbox (badness 10000) detected at line 2446
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2432
+Underfull \hbox (badness 10000) detected at line 2446
 [][][]
  []
 
 [91]
-Underfull \hbox (badness 10000) detected at line 2434
+Underfull \hbox (badness 10000) detected at line 2448
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2434
+Underfull \hbox (badness 10000) detected at line 2448
 [][][]
  []
 
-File: IDS_files/figure-latex/unnamed-chunk-48-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-48-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-16-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-16-1.pdf>
 [92]
-File: IDS_files/figure-latex/unnamed-chunk-49-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-49-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-17-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-17-1.pdf>
 [93] [94]
-Underfull \hbox (badness 10000) detected at line 2492
+Underfull \hbox (badness 10000) detected at line 2506
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2492
+Underfull \hbox (badness 10000) detected at line 2506
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2494
+Underfull \hbox (badness 10000) detected at line 2508
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2494
+Underfull \hbox (badness 10000) detected at line 2508
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2496
+Underfull \hbox (badness 10000) detected at line 2510
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2496
+Underfull \hbox (badness 10000) detected at line 2510
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2498
+Underfull \hbox (badness 10000) detected at line 2512
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2498
+Underfull \hbox (badness 10000) detected at line 2512
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2500
+Underfull \hbox (badness 10000) detected at line 2514
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2500
+Underfull \hbox (badness 10000) detected at line 2514
 [][][]
  []
 
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 2502--2502
+Overfull \hbox (30.0pt too wide) in paragraph at lines 2516--2516
 |  
  []
 
@@ -2725,38 +2725,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [100
 
 ]
-Underfull \vbox (badness 10000) detected at line 2654
+Underfull \vbox (badness 10000) detected at line 2668
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 2654
+Overfull \hbox (336.25pt too wide) detected at line 2668
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2654
+Underfull \vbox (badness 10000) detected at line 2668
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 2654
+Overfull \hbox (336.25pt too wide) detected at line 2668
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2654
+Underfull \vbox (badness 10000) detected at line 2668
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 2654
+Overfull \hbox (336.25pt too wide) detected at line 2668
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 2654
+Underfull \vbox (badness 10000) detected at line 2668
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 2654
+Overfull \hbox (336.25pt too wide) detected at line 2668
 []
  []
 
@@ -2770,261 +2770,261 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 ]
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/b/n' will be
-(Font)              scaled to size 7.69997pt on input line 2696.
+(Font)              scaled to size 7.69997pt on input line 2710.
 Font mapping `tex-ansi.tec' for font `Source Code Pro Bold' not found.
 [102]
-Underfull \hbox (badness 10000) detected at line 2716
+Underfull \hbox (badness 10000) detected at line 2730
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2716
+Underfull \hbox (badness 10000) detected at line 2730
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2718
+Underfull \hbox (badness 10000) detected at line 2732
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2718
+Underfull \hbox (badness 10000) detected at line 2732
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2720
+Underfull \hbox (badness 10000) detected at line 2734
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2720
+Underfull \hbox (badness 10000) detected at line 2734
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2722
+Underfull \hbox (badness 10000) detected at line 2736
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2722
+Underfull \hbox (badness 10000) detected at line 2736
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2724
+Underfull \hbox (badness 10000) detected at line 2738
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2724
+Underfull \hbox (badness 10000) detected at line 2738
 [][][]
  []
 
 [103] [104]
-Underfull \hbox (badness 10000) detected at line 2821
+Underfull \hbox (badness 10000) detected at line 2835
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2821
+Underfull \hbox (badness 10000) detected at line 2835
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2823
+Underfull \hbox (badness 10000) detected at line 2837
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2823
+Underfull \hbox (badness 10000) detected at line 2837
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2825
+Underfull \hbox (badness 10000) detected at line 2839
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2825
+Underfull \hbox (badness 10000) detected at line 2839
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2827
+Underfull \hbox (badness 10000) detected at line 2841
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2827
+Underfull \hbox (badness 10000) detected at line 2841
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2829
+Underfull \hbox (badness 10000) detected at line 2843
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2829
+Underfull \hbox (badness 10000) detected at line 2843
 [][][]
  []
 
 [105] [106] [107]
-Underfull \hbox (badness 10000) detected at line 2941
+Underfull \hbox (badness 10000) detected at line 2955
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2941
+Underfull \hbox (badness 10000) detected at line 2955
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2943
+Underfull \hbox (badness 10000) detected at line 2957
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2943
+Underfull \hbox (badness 10000) detected at line 2957
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2945
+Underfull \hbox (badness 10000) detected at line 2959
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2945
+Underfull \hbox (badness 10000) detected at line 2959
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2954
+Underfull \hbox (badness 10000) detected at line 2968
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2954
+Underfull \hbox (badness 10000) detected at line 2968
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2956
+Underfull \hbox (badness 10000) detected at line 2970
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2956
+Underfull \hbox (badness 10000) detected at line 2970
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2958
+Underfull \hbox (badness 10000) detected at line 2972
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2958
+Underfull \hbox (badness 10000) detected at line 2972
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2960
+Underfull \hbox (badness 10000) detected at line 2974
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2960
+Underfull \hbox (badness 10000) detected at line 2974
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2962
+Underfull \hbox (badness 10000) detected at line 2976
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2962
+Underfull \hbox (badness 10000) detected at line 2976
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2964
+Underfull \hbox (badness 10000) detected at line 2978
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2964
+Underfull \hbox (badness 10000) detected at line 2978
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2966
+Underfull \hbox (badness 10000) detected at line 2980
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 2966
+Underfull \hbox (badness 10000) detected at line 2980
 [][][]
  []
 
 [108] [109] [110] [111]
-Underfull \hbox (badness 10000) detected at line 3143
+Underfull \hbox (badness 10000) detected at line 3157
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3143
+Underfull \hbox (badness 10000) detected at line 3157
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3145
+Underfull \hbox (badness 10000) detected at line 3159
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3145
+Underfull \hbox (badness 10000) detected at line 3159
 [][][]
  []
 
 [112] [113] [114] [115] [116] [117] [118] [119] [120]
-Underfull \vbox (badness 10000) detected at line 3483
+Underfull \vbox (badness 10000) detected at line 3497
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3483
+Overfull \hbox (336.25pt too wide) detected at line 3497
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3483
+Underfull \vbox (badness 10000) detected at line 3497
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3483
+Overfull \hbox (336.25pt too wide) detected at line 3497
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3483
+Underfull \vbox (badness 10000) detected at line 3497
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3483
+Overfull \hbox (336.25pt too wide) detected at line 3497
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 3483
+Underfull \vbox (badness 10000) detected at line 3497
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 3483
+Overfull \hbox (336.25pt too wide) detected at line 3497
 []
  []
 
@@ -3038,32 +3038,32 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ] [122]
-Underfull \hbox (badness 10000) detected at line 3520
+Underfull \hbox (badness 10000) detected at line 3534
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3520
+Underfull \hbox (badness 10000) detected at line 3534
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3522
+Underfull \hbox (badness 10000) detected at line 3536
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3522
+Underfull \hbox (badness 10000) detected at line 3536
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3524
+Underfull \hbox (badness 10000) detected at line 3538
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3524
+Underfull \hbox (badness 10000) detected at line 3538
 [][][]
  []
 
@@ -3071,7 +3071,7 @@ Underfull \hbox (badness 10000) detected at line 3524
 File: images/ModelError.png Graphic file (type bmp)
 <images/ModelError.png>
 [124]
-Underfull \hbox (badness 2573) in paragraph at lines 3550--3551
+Underfull \hbox (badness 2573) in paragraph at lines 3564--3565
 \TU/lmr/m/n/12 variable (\TU/SourceCodePro(0)/m/n/12 fx\TU/lmr/m/n/12 ). The re
 lationship between \TU/SourceCodePro(0)/m/n/12 x \TU/lmr/m/n/12 and \TU/SourceC
 odePro(0)/m/n/12 fx \TU/lmr/m/n/12 is non-
@@ -3083,23 +3083,23 @@ File: IDS_files/figure-latex/linearbias-1.pdf Graphic file (type pdf)
 File: IDS_files/figure-latex/linearvar-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/linearvar-1.pdf>
 [126]
-File: IDS_files/figure-latex/unnamed-chunk-77-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-77-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-45-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-45-1.pdf>
 [127]
-File: IDS_files/figure-latex/unnamed-chunk-78-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-78-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-46-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-46-1.pdf>
 [128] [129] [130]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 3686.
+put line 3700.
 File: images/ParameterTuningProcess.png Graphic file (type bmp)
 <images/ParameterTuningProcess.png>
 [131]
-Underfull \hbox (badness 10000) detected at line 3717
+Underfull \hbox (badness 10000) detected at line 3731
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3717
+Underfull \hbox (badness 10000) detected at line 3731
 [][][]
  []
 
@@ -3107,12 +3107,12 @@ Underfull \hbox (badness 10000) detected at line 3717
 Missing character: There is no ＝ in font Source Code Pro/OT:script=latn;languag
 e=dflt;mapping=tex-ansi;!
 [133]
-Underfull \hbox (badness 10000) detected at line 3798
+Underfull \hbox (badness 10000) detected at line 3812
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3798
+Underfull \hbox (badness 10000) detected at line 3812
 [][][]
  []
 
@@ -3123,92 +3123,92 @@ File: IDS_files/figure-latex/maxdis-1.pdf Graphic file (type pdf)
 File: IDS_files/figure-latex/times-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/times-1.pdf>
 [137] [138]
-Underfull \hbox (badness 10000) detected at line 3977
+Underfull \hbox (badness 10000) detected at line 3991
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3977
+Underfull \hbox (badness 10000) detected at line 3991
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3979
+Underfull \hbox (badness 10000) detected at line 3993
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3979
+Underfull \hbox (badness 10000) detected at line 3993
 [][][]
  []
 
 [139]
-Underfull \hbox (badness 10000) detected at line 3990
+Underfull \hbox (badness 10000) detected at line 4004
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3990
+Underfull \hbox (badness 10000) detected at line 4004
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3992
+Underfull \hbox (badness 10000) detected at line 4006
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 3992
+Underfull \hbox (badness 10000) detected at line 4006
 [][][]
  []
 
 File: images/cv5fold.png Graphic file (type bmp)
 <images/cv5fold.png>
 [140] [141] [142]
-Overfull \hbox (7.8985pt too wide) in paragraph at lines 4082--4082
+Overfull \hbox (7.8985pt too wide) in paragraph at lines 4096--4096
 []\TU/SourceCodePro(0)/m/n/12 ##   ..$ : chr [1:5] "Resample1" "Resample2" "Res
 ample3" "Resample4" ...[] 
  []
 
 [143]
-Overfull \hbox (12.33206pt too wide) detected at line 4097
+Overfull \hbox (12.33206pt too wide) detected at line 4111
 [][][][][][] [] [][][][][][][][] [][][][][][][][][] [][][][][][][][][] [] [][][
 ][][][] [] [][][][][][][][] [][][][][] [][][][][]
  []
 
 [144]
-Underfull \vbox (badness 10000) detected at line 4102
+Underfull \vbox (badness 10000) detected at line 4116
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4102
+Overfull \hbox (336.25pt too wide) detected at line 4116
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4102
+Underfull \vbox (badness 10000) detected at line 4116
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4102
+Overfull \hbox (336.25pt too wide) detected at line 4116
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4102
+Underfull \vbox (badness 10000) detected at line 4116
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4102
+Overfull \hbox (336.25pt too wide) detected at line 4116
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4102
+Underfull \vbox (badness 10000) detected at line 4116
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4102
+Overfull \hbox (336.25pt too wide) detected at line 4116
 []
  []
 
@@ -3224,11 +3224,11 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 ]
 Missing character: There is no ＝ in font [lmroman12-regular]:mapping=tex-text;!
 [146] [147] [148] [149] [150] [151] [152] [153] [154]
-File: IDS_files/figure-latex/unnamed-chunk-99-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-99-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-67-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-67-1.pdf>
 [155] [156] [157]
-File: IDS_files/figure-latex/unnamed-chunk-102-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-102-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-70-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-70-1.pdf>
 Missing character: There is no （ in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ） in font [lmroman12-regular]:mapping=tex-text;!
 [158] [159]
@@ -3271,38 +3271,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [160
 
 ]
-Underfull \vbox (badness 10000) detected at line 4500
+Underfull \vbox (badness 10000) detected at line 4514
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4500
+Overfull \hbox (336.25pt too wide) detected at line 4514
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4500
+Underfull \vbox (badness 10000) detected at line 4514
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4500
+Overfull \hbox (336.25pt too wide) detected at line 4514
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4500
+Underfull \vbox (badness 10000) detected at line 4514
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4500
+Overfull \hbox (336.25pt too wide) detected at line 4514
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 4500
+Underfull \vbox (badness 10000) detected at line 4514
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 4500
+Overfull \hbox (336.25pt too wide) detected at line 4514
 []
  []
 
@@ -3319,251 +3319,251 @@ Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝛽 in font [lmroman12-bold]:mapping=tex-text;!
 [162]
-File: IDS_files/figure-latex/unnamed-chunk-107-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-107-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-75-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-75-1.pdf>
 [163]
 File: IDS_files/figure-latex/corplotlm-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/corplotlm-1.pdf>
 
-Underfull \hbox (badness 10000) detected at line 4609
+Underfull \hbox (badness 10000) detected at line 4623
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4609
+Underfull \hbox (badness 10000) detected at line 4623
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4611
+Underfull \hbox (badness 10000) detected at line 4625
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4611
+Underfull \hbox (badness 10000) detected at line 4625
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4613
+Underfull \hbox (badness 10000) detected at line 4627
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4613
+Underfull \hbox (badness 10000) detected at line 4627
 [][][]
  []
 
 [164]
-Underfull \hbox (badness 10000) detected at line 4615
+Underfull \hbox (badness 10000) detected at line 4629
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4615
+Underfull \hbox (badness 10000) detected at line 4629
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4617
+Underfull \hbox (badness 10000) detected at line 4631
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4617
+Underfull \hbox (badness 10000) detected at line 4631
 [][][]
  []
 
 [165]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 4662--4662
+Overfull \hbox (30.0pt too wide) in paragraph at lines 4676--4676
 |  
  []
 
 [166]
-Overfull \hbox (30.0pt too wide) in paragraph at lines 4668--4668
+Overfull \hbox (30.0pt too wide) in paragraph at lines 4682--4682
 |  
  []
 
 
-Overfull \hbox (30.0pt too wide) in paragraph at lines 4674--4674
+Overfull \hbox (30.0pt too wide) in paragraph at lines 4688--4688
 |  
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4682
+Underfull \hbox (badness 10000) detected at line 4696
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4682
+Underfull \hbox (badness 10000) detected at line 4696
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4684
+Underfull \hbox (badness 10000) detected at line 4698
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4684
+Underfull \hbox (badness 10000) detected at line 4698
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4686
+Underfull \hbox (badness 10000) detected at line 4700
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4686
+Underfull \hbox (badness 10000) detected at line 4700
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4688
+Underfull \hbox (badness 10000) detected at line 4702
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4688
+Underfull \hbox (badness 10000) detected at line 4702
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4690
+Underfull \hbox (badness 10000) detected at line 4704
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4690
+Underfull \hbox (badness 10000) detected at line 4704
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4692
+Underfull \hbox (badness 10000) detected at line 4706
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4692
+Underfull \hbox (badness 10000) detected at line 4706
 [][][]
  []
 
 [167] [168]
-Underfull \hbox (badness 10000) detected at line 4731
+Underfull \hbox (badness 10000) detected at line 4745
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4731
+Underfull \hbox (badness 10000) detected at line 4745
 [][][]
  []
 
 Missing character: There is no 𝜖 in font [lmroman12-bold]:mapping=tex-text;!
 Missing character: There is no 𝜖 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 4733
+Underfull \hbox (badness 10000) detected at line 4747
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4733
+Underfull \hbox (badness 10000) detected at line 4747
 [][][]
  []
 
 Missing character: There is no 𝜖 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 4735
+Underfull \hbox (badness 10000) detected at line 4749
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4735
+Underfull \hbox (badness 10000) detected at line 4749
 [][][]
  []
 
 Missing character: There is no 𝜖 in font [lmroman12-bold]:mapping=tex-text;!
 [169]
-Underfull \hbox (badness 10000) detected at line 4744
+Underfull \hbox (badness 10000) detected at line 4758
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4744
+Underfull \hbox (badness 10000) detected at line 4758
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4766
+Underfull \hbox (badness 10000) detected at line 4780
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4766
+Underfull \hbox (badness 10000) detected at line 4780
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4776
+Underfull \hbox (badness 10000) detected at line 4790
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4776
+Underfull \hbox (badness 10000) detected at line 4790
 [][][]
  []
 
 [170]
-Underfull \hbox (badness 10000) detected at line 4786
+Underfull \hbox (badness 10000) detected at line 4800
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 4786
+Underfull \hbox (badness 10000) detected at line 4800
 [][][]
  []
 
 File: IDS_files/figure-latex/lmdiagnostic-1.pdf Graphic file (type pdf)
 <use IDS_files/figure-latex/lmdiagnostic-1.pdf>
 [171] [172] [173] [174] [175] [176]
-File: IDS_files/figure-latex/unnamed-chunk-119-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-119-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-87-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-87-1.pdf>
 [177] [178] [179]
-File: IDS_files/figure-latex/unnamed-chunk-121-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-121-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-89-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-89-1.pdf>
 [180]
-Underfull \vbox (badness 10000) detected at line 5048
+Underfull \vbox (badness 10000) detected at line 5062
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 5048
+Overfull \hbox (336.25pt too wide) detected at line 5062
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 5048
+Underfull \vbox (badness 10000) detected at line 5062
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 5048
+Overfull \hbox (336.25pt too wide) detected at line 5062
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 5048
+Underfull \vbox (badness 10000) detected at line 5062
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 5048
+Overfull \hbox (336.25pt too wide) detected at line 5062
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 5048
+Underfull \vbox (badness 10000) detected at line 5062
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 5048
+Overfull \hbox (336.25pt too wide) detected at line 5062
 []
  []
 
@@ -3588,139 +3588,139 @@ language=dflt;mapping=tex-text;!
 File: images/LassoRidge.png Graphic file (type bmp)
 <images/LassoRidge.png>
 [191] [192] [193]
-Overfull \hbox (12.93848pt too wide) in paragraph at lines 5475--5475
+Overfull \hbox (12.93848pt too wide) in paragraph at lines 5489--5489
 []\TU/SourceCodePro(0)/m/n/12 The final values used for the model were fraction
  = 0.9579 and lambda = 0.[] 
  []
 
 [194] [195]
-File: IDS_files/figure-latex/unnamed-chunk-139-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-139-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-107-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-107-1.pdf>
 [196] [197]
-File: IDS_files/figure-latex/unnamed-chunk-143-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-143-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-111-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-111-1.pdf>
 [198] [199]
-Underfull \hbox (badness 10000) in paragraph at lines 5676--5678
+Underfull \hbox (badness 10000) in paragraph at lines 5690--5692
 []\TU/lmr/m/n/12 Traditional estimation of logistic parameters $[] []
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 5676--5678
+Underfull \hbox (badness 2846) in paragraph at lines 5690--5692
 [][][][] [][][] [][][] [][][][] [][][][]$ \TU/lmr/m/n/12 is done through maximi
 zing the log-
  []
 
 [200] [201] [202]
-File: IDS_files/figure-latex/unnamed-chunk-150-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-150-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-118-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-118-1.pdf>
 [203] [204]
-Underfull \hbox (badness 10000) in paragraph at lines 5828--5829
+Underfull \hbox (badness 10000) in paragraph at lines 5842--5843
 []\TU/lmr/m/n/12 Here we consider selection of the tuning param-
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 5828--5829
+Underfull \hbox (badness 10000) in paragraph at lines 5842--5843
 \TU/lmr/m/n/12 eter $[]$ from a multiplicative grid of 100 values
  []
 
 [205] [206]
-Underfull \hbox (badness 1424) in paragraph at lines 5902--5903
+Underfull \hbox (badness 1424) in paragraph at lines 5916--5917
 []\TU/lmr/m/n/12 Set a series of tuning parameter values. \TU/SourceCodePro(0)/
 m/n/12 nlam \TU/lmr/m/n/12 is the num-
  []
 
 
-Underfull \hbox (badness 2846) in paragraph at lines 5902--5903
+Underfull \hbox (badness 2846) in paragraph at lines 5916--5917
 \TU/lmr/m/n/12 ber of values we want to tune. It is the parameter $[]$
  []
 
 [207]
-File: IDS_files/figure-latex/unnamed-chunk-157-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-157-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-125-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-125-1.pdf>
 [208] [209] [210]
-Underfull \vbox (badness 10000) detected at line 6021
+Underfull \vbox (badness 10000) detected at line 6035
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 6021
+Overfull \hbox (336.25pt too wide) detected at line 6035
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 6021
+Underfull \vbox (badness 10000) detected at line 6035
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 6021
+Overfull \hbox (336.25pt too wide) detected at line 6035
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 6021
+Underfull \vbox (badness 10000) detected at line 6035
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 6021
+Overfull \hbox (336.25pt too wide) detected at line 6035
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 6021
+Underfull \vbox (badness 10000) detected at line 6035
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 6021
+Overfull \hbox (336.25pt too wide) detected at line 6035
 []
  []
 
 Chapter 11.
 
-Underfull \hbox (badness 10000) detected at line 6029
+Underfull \hbox (badness 10000) detected at line 6043
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6029
+Underfull \hbox (badness 10000) detected at line 6043
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6031
+Underfull \hbox (badness 10000) detected at line 6045
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6031
+Underfull \hbox (badness 10000) detected at line 6045
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6033
+Underfull \hbox (badness 10000) detected at line 6047
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6033
+Underfull \hbox (badness 10000) detected at line 6047
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6035
+Underfull \hbox (badness 10000) detected at line 6049
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6035
+Underfull \hbox (badness 10000) detected at line 6049
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6037
+Underfull \hbox (badness 10000) detected at line 6051
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6037
+Underfull \hbox (badness 10000) detected at line 6051
 [][][]
  []
 
@@ -3741,22 +3741,22 @@ Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;
 File: images/giniEN.PNG Graphic file (type bmp)
 <images/giniEN.PNG>
 
-Underfull \hbox (badness 10000) detected at line 6097
+Underfull \hbox (badness 10000) detected at line 6111
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6097
+Underfull \hbox (badness 10000) detected at line 6111
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6099
+Underfull \hbox (badness 10000) detected at line 6113
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6099
+Underfull \hbox (badness 10000) detected at line 6113
 [][][]
  []
 
@@ -3765,126 +3765,126 @@ File: images/InfoGainEN.PNG Graphic file (type bmp)
 <images/InfoGainEN.PNG>
 Missing character: There is no － in font [lmroman12-regular]:mapping=tex-text;!
 [215]
-Underfull \hbox (badness 10000) detected at line 6128
+Underfull \hbox (badness 10000) detected at line 6142
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6128
+Underfull \hbox (badness 10000) detected at line 6142
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6130
+Underfull \hbox (badness 10000) detected at line 6144
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6130
+Underfull \hbox (badness 10000) detected at line 6144
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6132
+Underfull \hbox (badness 10000) detected at line 6146
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6132
+Underfull \hbox (badness 10000) detected at line 6146
 [][][]
  []
 
 File: images/varEN.png Graphic file (type bmp)
 <images/varEN.png>
 [216]
-Underfull \hbox (badness 10000) detected at line 6158
+Underfull \hbox (badness 10000) detected at line 6172
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6158
+Underfull \hbox (badness 10000) detected at line 6172
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6160
+Underfull \hbox (badness 10000) detected at line 6174
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6160
+Underfull \hbox (badness 10000) detected at line 6174
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6162
+Underfull \hbox (badness 10000) detected at line 6176
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6162
+Underfull \hbox (badness 10000) detected at line 6176
 [][][]
  []
 
 File: images/varEN2.png Graphic file (type bmp)
 <images/varEN2.png>
 
-Underfull \hbox (badness 10000) detected at line 6177
+Underfull \hbox (badness 10000) detected at line 6191
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6177
+Underfull \hbox (badness 10000) detected at line 6191
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6179
+Underfull \hbox (badness 10000) detected at line 6193
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6179
+Underfull \hbox (badness 10000) detected at line 6193
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6181
+Underfull \hbox (badness 10000) detected at line 6195
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6181
+Underfull \hbox (badness 10000) detected at line 6195
 [][][]
  []
 
 [217] [218]
-Underfull \hbox (badness 10000) detected at line 6237
+Underfull \hbox (badness 10000) detected at line 6251
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6237
+Underfull \hbox (badness 10000) detected at line 6251
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6239
+Underfull \hbox (badness 10000) detected at line 6253
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6239
+Underfull \hbox (badness 10000) detected at line 6253
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6241
+Underfull \hbox (badness 10000) detected at line 6255
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6241
+Underfull \hbox (badness 10000) detected at line 6255
 [][][]
  []
 
@@ -3892,62 +3892,62 @@ Underfull \hbox (badness 10000) detected at line 6241
 Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;!
 [220]
-Underfull \hbox (badness 10000) detected at line 6278
+Underfull \hbox (badness 10000) detected at line 6292
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6278
+Underfull \hbox (badness 10000) detected at line 6292
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6280
+Underfull \hbox (badness 10000) detected at line 6294
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6280
+Underfull \hbox (badness 10000) detected at line 6294
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6282
+Underfull \hbox (badness 10000) detected at line 6296
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6282
+Underfull \hbox (badness 10000) detected at line 6296
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6284
+Underfull \hbox (badness 10000) detected at line 6298
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6284
+Underfull \hbox (badness 10000) detected at line 6298
 [][][]
  []
 
 [221]
-Underfull \hbox (badness 10000) detected at line 6327
+Underfull \hbox (badness 10000) detected at line 6341
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6327
+Underfull \hbox (badness 10000) detected at line 6341
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6329
+Underfull \hbox (badness 10000) detected at line 6343
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6329
+Underfull \hbox (badness 10000) detected at line 6343
 [][][]
  []
 
@@ -3957,60 +3957,60 @@ File: images/varEN.png Graphic file (type bmp)
 File: images/BinaryTree.png Graphic file (type bmp)
 <images/BinaryTree.png>
 [223]
-Overfull \vbox (1.58295pt too high) detected at line 6379
+Overfull \vbox (1.58295pt too high) detected at line 6393
  []
 
 [224]
-File: IDS_files/figure-latex/unnamed-chunk-161-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-161-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-129-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-129-1.pdf>
 [225]
-File: IDS_files/figure-latex/unnamed-chunk-164-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-164-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-132-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-132-1.pdf>
 [226]
-Underfull \hbox (badness 10000) detected at line 6435
+Underfull \hbox (badness 10000) detected at line 6449
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6435
+Underfull \hbox (badness 10000) detected at line 6449
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6437
+Underfull \hbox (badness 10000) detected at line 6451
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6437
+Underfull \hbox (badness 10000) detected at line 6451
 [][][]
  []
 
 [227] [228] [229]
-File: IDS_files/figure-latex/unnamed-chunk-168-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-168-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-136-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-136-1.pdf>
 [230]
-Underfull \hbox (badness 10000) detected at line 6579
+Underfull \hbox (badness 10000) detected at line 6593
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6579
+Underfull \hbox (badness 10000) detected at line 6593
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6581
+Underfull \hbox (badness 10000) detected at line 6595
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 6581
+Underfull \hbox (badness 10000) detected at line 6595
 [][][]
  []
 
 [231]
-Underfull \hbox (badness 1817) in paragraph at lines 6595--6596
+Underfull \hbox (badness 1817) in paragraph at lines 6609--6610
 []\TU/lmr/m/n/12 For a new sample, each model will give a prediction:
  []
 
@@ -4018,10 +4018,10 @@ Underfull \hbox (badness 1817) in paragraph at lines 6595--6596
 Missing character: There is no （ in font [lmroman12-regular]:mapping=tex-text;!
 Missing character: There is no ） in font [lmroman12-regular]:mapping=tex-text;!
 [236] [237] [238]
-File: IDS_files/figure-latex/unnamed-chunk-176-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-176-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-144-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-144-1.pdf>
 [239] [240]
-Underfull \hbox (badness 1038) in paragraph at lines 6832--6833
+Underfull \hbox (badness 1038) in paragraph at lines 6846--6847
 [] \TU/lmr/m/n/12 Compute the stage weight for $[][]$ iteration: $[][] []
  []
 
@@ -4029,10 +4029,10 @@ Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;
 [241]
 Missing character: There is no ： in font [lmroman12-regular]:mapping=tex-text;!
 [242] [243] [244] [245]
-File: IDS_files/figure-latex/unnamed-chunk-179-1.pdf Graphic file (type pdf)
-<use IDS_files/figure-latex/unnamed-chunk-179-1.pdf>
+File: IDS_files/figure-latex/unnamed-chunk-147-1.pdf Graphic file (type pdf)
+<use IDS_files/figure-latex/unnamed-chunk-147-1.pdf>
 [246] [247] [248] [249]
-Overfull \hbox (22.75595pt too wide) detected at line 7069
+Overfull \hbox (22.75595pt too wide) detected at line 7083
 [][]
  []
 
@@ -4076,38 +4076,38 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [252
 
 ]
-Underfull \vbox (badness 10000) detected at line 7105
+Underfull \vbox (badness 10000) detected at line 7119
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 7105
+Overfull \hbox (336.25pt too wide) detected at line 7119
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 7105
+Underfull \vbox (badness 10000) detected at line 7119
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 7105
+Overfull \hbox (336.25pt too wide) detected at line 7119
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 7105
+Underfull \vbox (badness 10000) detected at line 7119
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 7105
+Overfull \hbox (336.25pt too wide) detected at line 7119
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 7105
+Underfull \vbox (badness 10000) detected at line 7119
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 7105
+Overfull \hbox (336.25pt too wide) detected at line 7119
 []
  []
 
@@ -4128,45 +4128,45 @@ Missing character: There is no 𝜔 in font [lmroman12-bold]:mapping=tex-text;!
 [257]
 Missing character: There is no 𝜔 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 7151
+Underfull \hbox (badness 10000) detected at line 7165
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7151
+Underfull \hbox (badness 10000) detected at line 7165
 [][][]
  []
 
 Missing character: There is no 𝜔 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 7153
+Underfull \hbox (badness 10000) detected at line 7167
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7153
+Underfull \hbox (badness 10000) detected at line 7167
 [][][]
  []
 
 Missing character: There is no 𝜔 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 7155
+Underfull \hbox (badness 10000) detected at line 7169
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7155
+Underfull \hbox (badness 10000) detected at line 7169
 [][][]
  []
 
 Missing character: There is no 𝜔 in font [lmroman12-bold]:mapping=tex-text;!
 
-Underfull \hbox (badness 10000) detected at line 7157
+Underfull \hbox (badness 10000) detected at line 7171
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7157
+Underfull \hbox (badness 10000) detected at line 7171
 [][][]
  []
 
@@ -4215,34 +4215,34 @@ File: images/grayscaleimage.png Graphic file (type bmp)
 File: images/colorimage.png Graphic file (type bmp)
 <images/colorimage.png>
 [281]
-Underfull \hbox (badness 10000) in paragraph at lines 7701--7703
+Underfull \hbox (badness 10000) in paragraph at lines 7715--7717
 []\TU/lmr/m/n/12 By default, \TU/SourceCodePro(0)/m/n/12 install_keras() \TU/lm
 r/m/n/12 uses virtual environment
  []
 
 
-Underfull \hbox (badness 1742) in paragraph at lines 7701--7703
+Underfull \hbox (badness 1742) in paragraph at lines 7715--7717
 \TU/SourceCodePro(0)/m/n/12 ~/.virtualenvs/r-reticulate\TU/lmr/m/n/12 . If you 
 don’t know how to set
  []
 
 [282]
-Underfull \hbox (badness 10000) detected at line 7723
+Underfull \hbox (badness 10000) detected at line 7737
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7723
+Underfull \hbox (badness 10000) detected at line 7737
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7725
+Underfull \hbox (badness 10000) detected at line 7739
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 7725
+Underfull \hbox (badness 10000) detected at line 7739
 [][][]
  []
 
@@ -4250,12 +4250,12 @@ Underfull \hbox (badness 10000) detected at line 7725
 File: images/mnist_image3.png Graphic file (type bmp)
 <images/mnist_image3.png>
 [285] [286] [287]
-Underfull \hbox (badness 4569) in paragraph at lines 7878--7879
+Underfull \hbox (badness 4569) in paragraph at lines 7892--7893
 []\TU/lmr/m/n/12 In keras, it is easy to define a DNN model: (1) use
  []
 
 [288]
-Underfull \vbox (badness 10000) detected at line 7926
+Underfull \vbox (badness 10000) detected at line 7940
  []
 
 [289] [290]
@@ -4284,11 +4284,11 @@ File: images/padding.png Graphic file (type bmp)
 File: images/poolinglayer.png Graphic file (type bmp)
 <images/poolinglayer.png>
 [301] [302]
-Underfull \vbox (badness 10000) detected at line 8369
+Underfull \vbox (badness 10000) detected at line 8383
  []
 
 
-Underfull \vbox (badness 10000) detected at line 8369
+Underfull \vbox (badness 10000) detected at line 8383
  []
 
 [303] [304]
@@ -4298,32 +4298,32 @@ File: images/eggshellconv.png Graphic file (type bmp)
 File: images/ConvOverVolume.png Graphic file (type bmp)
 <images/ConvOverVolume.png>
 [306] [307] [308]
-Underfull \hbox (badness 10000) detected at line 8537
+Underfull \hbox (badness 10000) detected at line 8551
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8537
+Underfull \hbox (badness 10000) detected at line 8551
 [][][]
  []
 
 [309]
-Underfull \hbox (badness 10000) detected at line 8539
+Underfull \hbox (badness 10000) detected at line 8553
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8539
+Underfull \hbox (badness 10000) detected at line 8553
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8541
+Underfull \hbox (badness 10000) detected at line 8555
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8541
+Underfull \hbox (badness 10000) detected at line 8555
 [][][]
  []
 
@@ -4356,64 +4356,64 @@ File: images/nn_ohe.png Graphic file (type bmp)
 File: images/RNN_pro.png Graphic file (type bmp)
 <images/RNN_pro.png>
 
-Underfull \hbox (badness 10000) detected at line 8781
+Underfull \hbox (badness 10000) detected at line 8795
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8781
+Underfull \hbox (badness 10000) detected at line 8795
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8783
+Underfull \hbox (badness 10000) detected at line 8797
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8783
+Underfull \hbox (badness 10000) detected at line 8797
 [][][]
  []
 
 [319]
-Underfull \hbox (badness 10000) detected at line 8797
+Underfull \hbox (badness 10000) detected at line 8811
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8797
+Underfull \hbox (badness 10000) detected at line 8811
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8799
+Underfull \hbox (badness 10000) detected at line 8813
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8799
+Underfull \hbox (badness 10000) detected at line 8813
 [][][]
  []
 
 File: images/rnn_embedding1.png Graphic file (type bmp)
 <images/rnn_embedding1.png>
 [320] [321]
-Underfull \hbox (badness 10000) detected at line 8826
+Underfull \hbox (badness 10000) detected at line 8840
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8826
+Underfull \hbox (badness 10000) detected at line 8840
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8828
+Underfull \hbox (badness 10000) detected at line 8842
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8828
+Underfull \hbox (badness 10000) detected at line 8842
 [][][]
  []
 
@@ -4421,22 +4421,22 @@ Underfull \hbox (badness 10000) detected at line 8828
 File: images/lstm1.png Graphic file (type bmp)
 <images/lstm1.png>
 
-Underfull \hbox (badness 10000) detected at line 8843
+Underfull \hbox (badness 10000) detected at line 8857
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8843
+Underfull \hbox (badness 10000) detected at line 8857
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8845
+Underfull \hbox (badness 10000) detected at line 8859
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 8845
+Underfull \hbox (badness 10000) detected at line 8859
 [][][]
  []
 
@@ -4451,7 +4451,7 @@ File: images/lstm4.png Graphic file (type bmp)
 File: images/TokenizingPadding.png Graphic file (type bmp)
 <images/TokenizingPadding.png>
 [326]
-Underfull \hbox (badness 1077) in paragraph at lines 8879--8880
+Underfull \hbox (badness 1077) in paragraph at lines 8893--8894
 \TU/lmr/m/n/12 The IMDB dataset is preloaded for \TU/SourceCodePro(0)/m/n/12 ke
 ras \TU/lmr/m/n/12 and we can call
  []
@@ -4460,7 +4460,7 @@ ras \TU/lmr/m/n/12 and we can call
 File: images/rnnhandson1.png Graphic file (type bmp)
 <images/rnnhandson1.png>
 [330]
-Underfull \vbox (badness 4266) detected at line 9034
+Underfull \vbox (badness 4266) detected at line 9048
  []
 
 [331] [332]
@@ -4506,59 +4506,59 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [336
 
 ]
-Underfull \vbox (badness 10000) detected at line 9127
+Underfull \vbox (badness 10000) detected at line 9141
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9127
+Overfull \hbox (336.25pt too wide) detected at line 9141
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9127
+Underfull \vbox (badness 10000) detected at line 9141
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9127
+Overfull \hbox (336.25pt too wide) detected at line 9141
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9127
+Underfull \vbox (badness 10000) detected at line 9141
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9127
+Overfull \hbox (336.25pt too wide) detected at line 9141
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9127
+Underfull \vbox (badness 10000) detected at line 9141
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9127
+Overfull \hbox (336.25pt too wide) detected at line 9141
 []
  []
 
 Appendix A.
 
-Underfull \hbox (badness 10000) detected at line 9149
+Underfull \hbox (badness 10000) detected at line 9163
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9149
+Underfull \hbox (badness 10000) detected at line 9163
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9151
+Underfull \hbox (badness 10000) detected at line 9165
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9151
+Underfull \hbox (badness 10000) detected at line 9165
 [][][]
  []
 
@@ -4570,60 +4570,60 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 [337
 
 ]
-Underfull \hbox (badness 10000) detected at line 9173
+Underfull \hbox (badness 10000) detected at line 9187
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9173
+Underfull \hbox (badness 10000) detected at line 9187
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9175
+Underfull \hbox (badness 10000) detected at line 9189
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9175
+Underfull \hbox (badness 10000) detected at line 9189
 [][][]
  []
 
 File: images/prograssbar.png Graphic file (type bmp)
 <images/prograssbar.png>
 
-Underfull \hbox (badness 10000) in paragraph at lines 9193--9195
+Underfull \hbox (badness 10000) in paragraph at lines 9207--9209
 
  []
 
 [338]
-Overfull \hbox (36.45837pt too wide) in paragraph at lines 9223--9223
+Overfull \hbox (36.45837pt too wide) in paragraph at lines 9237--9237
 []    \TU/SourceCodePro(0)/m/n/12 age gender income house store_exp online_exp 
 store_trans online_trans    Q1[] 
  []
 
 
-Overfull \hbox (4.53851pt too wide) in paragraph at lines 9223--9223
+Overfull \hbox (4.53851pt too wide) in paragraph at lines 9237--9237
 []  \TU/SourceCodePro(0)/m/n/12 <int> <chr>   <dbl> <chr>     <dbl>      <dbl> 
       <int>        <int> <int>[] 
  []
 
 
-Overfull \hbox (36.45837pt too wide) in paragraph at lines 9223--9223
+Overfull \hbox (36.45837pt too wide) in paragraph at lines 9237--9237
 []\TU/SourceCodePro(0)/m/n/12 # ... with 10 more variables: Q2 <int>, Q3 <int>,
  Q4 <int>, Q5 <int>, Q6 <int>,[] 
  []
 
 LaTeX Font Info:    Font shape `TU/SourceCodePro(0)/m/it' will be
-(Font)              scaled to size 6.99997pt on input line 9241.
+(Font)              scaled to size 6.99997pt on input line 9255.
 Font mapping `tex-ansi.tec' for font `Source Code Pro Italic' not found.
 [339] [340] [341] [342]
-Underfull \hbox (badness 10000) in paragraph at lines 9418--9420
+Underfull \hbox (badness 10000) in paragraph at lines 9432--9434
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 9420--9420
+Underfull \hbox (badness 10000) in paragraph at lines 9434--9434
 [][][][][]$[][][][][] [] [] [] [][][][] [] [] [][] [][][][][][][] [] [][][] [] 
 [][][] [] [][][][][][][] [] [] [][] [][][][][][][] [] [] [][] [][][][] [] [][][
 ][] []
@@ -4638,69 +4638,69 @@ File: images/rSQL.png Graphic file (type bmp)
 [348] [349] [350]
 Missing character: There is no 。 in font [lmroman12-regular]:mapping=tex-text;!
 [351] [352] [353] [354]
-Underfull \vbox (badness 10000) detected at line 9955
+Underfull \vbox (badness 10000) detected at line 9969
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9955
+Overfull \hbox (336.25pt too wide) detected at line 9969
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9955
+Underfull \vbox (badness 10000) detected at line 9969
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9955
+Overfull \hbox (336.25pt too wide) detected at line 9969
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9955
+Underfull \vbox (badness 10000) detected at line 9969
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9955
+Overfull \hbox (336.25pt too wide) detected at line 9969
 []
  []
 
 
-Underfull \vbox (badness 10000) detected at line 9955
+Underfull \vbox (badness 10000) detected at line 9969
  []
 
 
-Overfull \hbox (336.25pt too wide) detected at line 9955
+Overfull \hbox (336.25pt too wide) detected at line 9969
 []
  []
 
 Appendix B.
 
-Underfull \hbox (badness 10000) detected at line 9966
+Underfull \hbox (badness 10000) detected at line 9980
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9966
+Underfull \hbox (badness 10000) detected at line 9980
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9968
+Underfull \hbox (badness 10000) detected at line 9982
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9968
+Underfull \hbox (badness 10000) detected at line 9982
 [][][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9970
+Underfull \hbox (badness 10000) detected at line 9984
  [][]
  []
 
 
-Underfull \hbox (badness 10000) detected at line 9970
+Underfull \hbox (badness 10000) detected at line 9984
 [][][]
  []
 
@@ -4713,35 +4713,35 @@ Underfull \hbox (badness 10000) has occurred while \output is active
 
 
 ]
-Underfull \vbox (badness 1635) detected at line 10031
+Underfull \vbox (badness 1635) detected at line 10045
  []
 
 [356]
-Overfull \vbox (0.74564pt too high) detected at line 10075
+Overfull \vbox (0.74564pt too high) detected at line 10089
  []
 
 [357] [358]
-Overfull \vbox (0.95564pt too high) detected at line 10157
+Overfull \vbox (0.95564pt too high) detected at line 10171
  []
 
 [359]
-Underfull \vbox (badness 1342) detected at line 10276
+Underfull \vbox (badness 1342) detected at line 10290
  []
 
 [360]
-Underfull \vbox (badness 10000) detected at line 10276
+Underfull \vbox (badness 10000) detected at line 10290
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10276
+Underfull \vbox (badness 10000) detected at line 10290
  []
 
 [361]
-Underfull \vbox (badness 10000) detected at line 10276
+Underfull \vbox (badness 10000) detected at line 10290
  []
 
 
-Underfull \vbox (badness 10000) detected at line 10276
+Underfull \vbox (badness 10000) detected at line 10290
  []
 
 [362] (./IDS.bbl [363]
@@ -4896,7 +4896,7 @@ Package rerunfilecheck Info: File `IDS.out' has not changed.
  ) 
 Here is how much of TeX's memory you used:
  21506 strings out of 479210
- 384802 string characters out of 5874315
+ 384778 string characters out of 5874315
  869090 words of memory out of 5000000
  40627 multiletter control sequences out of 15000+600000
  410089 words of font info for 106 fonts, out of 8000000 for 9000

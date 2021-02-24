@@ -62,7 +62,13 @@ We assume readers have experience with one of the programming languages, R or Py
 
 ## What This Book Covers {-}
 
-We first introduce the basic ideas of data science and then cover data science career paths, project cycles, soft skills, and common pitfalls based on industry and real-world scenarios. We then introduce typical big data cloud platforms and use R library `sparklyr` \index{sparklyr} to explore Spark's power for data preprocessing and traditional statistical and machine learning model development. The next few chapters cover common statistical and machine learning models and strategies such as data preprocessing, data wrangling, model tuning, performance measuring, regression methods, regularization, and tree-based methods. In the end, we introduce three types of deep learning models and their applications to image and text data. We use R as the text's programming language and provide most of the Python codes in GitHub. Refer to this page (https://github.com/happyrabbit/IntroDataScience/) for a table with the notebooks' links.  
+The book is organized as the following. 
+
+- Chapters 1-3 discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
+- Chapter 4 introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
+- Chapters 5-6 cover the essential skills to prepare the data for further analysis and modeling, i.e., data preprocessing and wrangling.
+- Chapter 7 illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters'. 
+- Chapters 8 - 14 introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
 
 ## Acknowledgements  {-}
 
