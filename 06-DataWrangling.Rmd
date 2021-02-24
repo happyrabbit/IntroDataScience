@@ -412,9 +412,9 @@ sdat
 For the above data `sdat`, what if we want to reshape the data to have a column indicating the purchasing channel (i.e. from `store_exp` or `online_exp`) and a second column with the corresponding expense amount? Assume we want to keep the rest of the columns the same. It is a task to change data from "wide" to "long". 
 
 ```{r}
-dat_wide <- tidyr::gather(sdat, "Channel","Expense", 
+dat_long <- tidyr::gather(sdat, "Channel","Expense", 
                        store_exp, online_exp)
-dat_wide
+dat_long
 ```
 
 The above code gathers two variables (`store_exp` and `online_exp`),  and collapses them into key-value pairs (`Channel` and `Expense`), duplicating all other columns as needed.
@@ -437,9 +437,9 @@ Sometimes we want to reshape the data from "long" to "wide". For example, **you 
 We need to reshape the wide data frame `dat_wide` to a long format by spreading the key-value pairs across multiple columns.  And then summarize the long data frame `dat_long`,  grouping  by`house` and `gender`.
 
 ```{r, message = FALSE}
-dat_long = tidyr::spread(dat_wide, Channel, Expense)
+dat_wide = tidyr::spread(dat_long, Channel, Expense)
 # you can check what dat_long is like
-dat_long %>% 
+dat_wide %>% 
   dplyr::group_by(house, gender) %>% 
   dplyr::summarise(total_online_exp = sum(online_exp),
                    total_store_exp = sum(store_exp))
@@ -450,7 +450,7 @@ The above code also uses the functions in the `dplyr` package introduced in the 
 Another pair of functions that do opposite manipulations are `separate()` and `unite()`. 
 
 ```{r}
-sepdat<- dat_wide %>% 
+sepdat<- dat_long %>% 
   separate(Channel, c("Source", "Type"))
 sepdat
 ```

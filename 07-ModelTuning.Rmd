@@ -197,14 +197,21 @@ datTest <- sim.dat[-trainIndex, ]
 
 According to the setting, there are 800 samples in the training set and 200 in test set. Let's check the distribution of the two sets:
 
-```{r}
-library(plyr)
-ddply(datTrain, "segment", summarise, count = length(segment), 
-    percentage = round(length(segment)/nrow(datTrain), 2))
-
-ddply(datTest, "segment", summarise, count = length(segment), 
-    percentage = round(length(segment)/nrow(datTest), 2))
+```{r, message=FALSE}
+datTrain %>%
+  dplyr::group_by(segment) %>%
+  dplyr::summarise(count = n(),
+            percentage = round(length(segment)/nrow(datTrain), 2))
 ```
+
+```{r, message=FALSE}
+datTest %>%
+  dplyr::group_by(segment) %>%
+  dplyr::summarise(count = n(),
+            percentage = round(length(segment)/nrow(datTrain), 2))
+
+```
+
 
 The percentages are the same for these two sets. In practice, it is possible that the distributions are not exactly identical but should be close.
 
@@ -359,10 +366,10 @@ You can implement k-fold cross-validation using `createFolds()` in `caret`:
  
 ```{r}
 library(caret)
-class<-sim.dat$segment
+class <- sim.dat$segment
 # creat k-folds
 set.seed(1)
-cv<-createFolds(class,k=10,returnTrain=T)
+cv <- createFolds(class, k = 10, returnTrain = T)
 str(cv)
 ```
  
