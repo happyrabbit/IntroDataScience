@@ -93,33 +93,53 @@ set.seed(2016)
 # sample part of the data to fit model sample 1
 idx1 = sample(1:length(x), 100)
 dat1 = data.frame(x1 = x[idx1], fx1 = fx[idx1])
-p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(span = 0.03)
+p1 = ggplot(dat1, aes(x1, fx1)) + 
+  geom_smooth(span = 0.03) + 
+  geom_point()
+
 # sample 2
 idx2 = sample(1:length(x), 100)
 dat2 = data.frame(x2 = x[idx2], fx2 = fx[idx2])
-p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(span = 0.03)
+p2 = ggplot(dat2, aes(x2, fx2)) + 
+  geom_smooth(span = 0.03) + 
+  geom_point()
+
 # sample 3
 idx3 = sample(1:length(x), 100)
 dat3 = data.frame(x3 = x[idx3], fx3 = fx[idx3])
-p3 = ggplot(dat3, aes(x3, fx3)) + geom_smooth(span = 0.03)
+p3 = ggplot(dat3, aes(x3, fx3)) + 
+  geom_smooth(span = 0.03) + 
+  geom_point()
+
 # sample 4
 idx4 = sample(1:length(x), 100)
 dat4 = data.frame(x4 = x[idx4], fx4 = fx[idx4])
-p4 = ggplot(dat4, aes(x4, fx4)) + geom_smooth(span = 0.03)
+p4 = ggplot(dat4, aes(x4, fx4)) + 
+  geom_smooth(span = 0.03) + 
+  geom_point()
+
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
 The fitted lines (blue) change over different samples which means it has high variance. People also call it overfitting. Fitting the linear model using the same four subsets, the result barely changes:
 
 ```{r,warning=FALSE, message=FALSE}
-p1 = ggplot(dat1, aes(x1, fx1)) + geom_smooth(method = "lm", 
-    se = FALSE)
-p2 = ggplot(dat2, aes(x2, fx2)) + geom_smooth(method = "lm", 
-    se = FALSE)
-p3 = ggplot(dat3, aes(x3, fx3)) + geom_smooth(method = "lm", 
-    se = FALSE)
-p4 = ggplot(dat4, aes(x4, fx4)) + geom_smooth(method = "lm", 
-    se = FALSE)
+p1 = ggplot(dat1, aes(x1, fx1)) + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_point()
+
+p2 = ggplot(dat2, aes(x2, fx2)) + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_point()
+
+p3 = ggplot(dat3, aes(x3, fx3)) + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_point()
+
+p4 = ggplot(dat4, aes(x4, fx4)) + 
+  geom_smooth(method = "lm", se = FALSE) + 
+  geom_point()
+
 multiplot(p1, p2, p3, p4, cols = 2)
 ```
 
