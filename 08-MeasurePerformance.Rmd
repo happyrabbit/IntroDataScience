@@ -2,6 +2,23 @@
 
 To compare different models, we need a way to measure model performance. There are various metrics to use. To better understand the strengths and weaknesses of a model, you need to look at it through multiple metrics. In this chapter, we will introduce some of the most common performance measurement metrics.
 
+Load the R packages first:
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+# install packages from CRAN
+p_needed <- c('caret', 'dplyr', 'randomForest',
+              'readr', 'car', 'pROC', 'fmsb', 'caret')
+
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
+
 ## Regression Model Performance
 
 **MSE and RMSE**
@@ -48,17 +65,13 @@ $$AIC=n+nlog(2\pi)+nlog(RSS/n)+2(p+1)$$
 
 $$BIC=n+nlog(2\pi)+nlog(RSS/n)+log(n)(p+1)$$
 
-R function AIC() and BIC() will calculate the AIC and BIC value according to the above equations. Many textbooks ignore content item $n+nlog(2\pi)$, and use $p$ instead of $p+1$. Those slightly different versions give the same results since we are only interested in the relative value. Comparing to AIC, BIC puts a heavier penalty on the number of parameters. 
+R function `AIC()` and `BIC()` will calculate the AIC and BIC value according to the above equations. Many textbooks ignore content item $n+nlog(2\pi)$, and use $p$ instead of $p+1$. Those slightly different versions give the same results since we are only interested in the relative value. Comparing to AIC, BIC puts a heavier penalty on the number of parameters. 
 
 ## Classification Model Performance
 
 This section focuses on performance measurement for models with a categorical response. The metrics in the previous section are for models with a continuous response and they are not appropriate in the context of classification. Most of the classification problems are dichotomous, such as an outbreak of disease, spam email, etc. There are also cases with more than two categories as the segments in the clothing company data. We use swine disease data to illustrate different metrics. Let's train a random forest model as an example. We will discuss the model in Chapter \@ref(treemodel).
 
 ```{r}
-library(dplyr)
-library(randomForest)
-library(caret)
-library(readr)
 disease_dat <- read.csv("http://bit.ly/2KXb1Qi")
 # you can check the data using glimpse()
 # glimpse(disease_dat)
@@ -118,7 +131,7 @@ We will use the above two types of predictions to show different performance met
 ```{r}
 yhat = as.factor(yhat) %>% relevel("1")
 yTest = as.factor(yTest) %>% relevel("1")
-table(yhat,yTest)
+table(yhat, yTest)
 ```
 
 The top-left and bottom-right are the numbers of correctly classified samples. The top-right and bottom-left are the numbers of wrongly classified samples.  A general confusion matrix for a binary classifier is following: 
@@ -186,10 +199,9 @@ kt$Judgement
 Receiver Operating Characteristic (ROC) curve uses the predicted class probabilities and determines an effective threshold such that values above the threshold are indicative of a specific event. We have shown the definitions of sensitivity and specificity above. The sensitivity is the true positive rate and specificity is true negative rate. "1 - specificity" is the false negative rate. ROC is a graph of pairs of true positive rate (sensitivity) and false positive rate (1-specificity) values that result as the test’s cutoff value is varied. The Area Under the Curve(AUC) is a common measure for two-class problem. There is usually a trade-off between sensitivity and specificity. If the threshold is set lower, then there are more samples predicted as positive and hence the sensitivity is higher. Let's look at the predicted probability `yhatprob` in the swine disease example. The predicted probability object `yhatprob` has two columns, one is the predicted probability that a farm will have an outbreak, the other is the probability that farm will NOT have an outbreak. So the two add up to have value 1. We use the probability of outbreak (the 2nd column) for further illustration. You can use `roc()` function to get an ROC object (`rocCurve`) and then apply different functions on that object to get needed plot or ROC statistics. For example, the following code produces the ROC curve:
 
 ```{r}
-library(pROC)
+rocCurve <- pROC::roc(response = yTest,
+              predictor = yhatprob[,2])
 
-rocCurve<-roc(response = yTest,
-              predictor =yhatprob[,2])
 plot(1-rocCurve$specificities, 
      rocCurve$sensitivities, 
      type = 'l',
@@ -231,7 +243,7 @@ Let's plot the lift charts to compare the predicted outbreak probability (`model
 modelscore <- yhatprob[ ,2]
 # randomly sample from a uniform distribution
 randomscore <- runif(length(yTest))
-labs<-c(modelscore="Random Forest Prediction",
+labs <- c(modelscore="Random Forest Prediction",
         randomscore="Random Number")
 liftCurve <- caret::lift(yTest ~ modelscore + randomscore,
                   class = "1", 

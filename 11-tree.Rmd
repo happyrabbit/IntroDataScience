@@ -413,7 +413,7 @@ rpartRoc <- pROC::roc(response = rpartTune1$pred$obs,
                 predictor = rpartTune1$pred$Female,
                 levels = rev(levels(rpartTune1$pred$obs)))
 
-rpartFactorRoc <- roc(response = rpartTune2$pred$obs,
+rpartFactorRoc <- pROC::roc(response = rpartTune2$pred$obs,
                       predictor = rpartTune2$pred$Female,
                       levels = rev(levels(rpartTune1$pred$obs)))
 
@@ -723,15 +723,15 @@ The results show that the tuning parameter settings that lead to the best ROC ar
 Now, let's compare the results from the three tree models.
 
 ```{r, message=FALSE}
-treebagRoc <- roc(response = bagTune$pred$obs,
+treebagRoc <- pROC::roc(response = bagTune$pred$obs,
                         predictor = bagTune$pred$Female,
                         levels = rev(levels(bagTune$pred$obs)))
 
-rfRoc <- roc(response = rfTune$pred$obs,
+rfRoc <- pROC::roc(response = rfTune$pred$obs,
              predictor = rfTune$pred$Female,
              levels = rev(levels(rfTune$pred$obs)))
 
-gbmRoc <- roc(response = gbmTune$pred$obs,
+gbmRoc <- pROC::roc(response = gbmTune$pred$obs,
               predictor = gbmTune$pred$Female,
               levels = rev(levels(gbmTune$pred$obs)))
 

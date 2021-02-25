@@ -25,7 +25,7 @@ Some key features of this book are as follows:
 |Ch5: Data Preprocessing | [Notebook](https://scientistcafe.com/ids/r/ch5) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/DataPreprocessing.ipynb) |
 |Ch6: Data Wrangling |  [Notebook](https://scientistcafe.com/ids/r/ch6) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/DataWrangling.ipynb) |
 |Ch7: Model Tuning Strategy |  [Notebook](https://scientistcafe.com/ids/r/ch7) |  [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Model_Tuning_Strategy.ipynb) |
-|Ch8: Measuring Performance | | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Measuring_Performance.ipynb) |
+|Ch8: Measuring Performance | [Notebook](https://scientistcafe.com/ids/r/ch8) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Measuring_Performance.ipynb) |
 |Ch9: Regression Models | | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Regression_Models.ipynb) |
 |Ch10: Regularization Methods |  | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Regularization_Methods.ipynb) |
 |Ch11: Tree-Based Methods | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/2153523447602836/78755435857845/latest.html) |  [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/TreeBasedModels.ipynb) |
