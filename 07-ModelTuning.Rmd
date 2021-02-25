@@ -4,6 +4,22 @@ When training a machine learning model, there are many decisions to make. For ex
 
 This chapter will illustrate the practical aspects of model tuning. We will talk about different types of model error, sources of model error, hyperparameter tuning, how to set up your data and how to make sure your model implementation is correct.  In practice applying machine learning is a highly iterative process. 
 
+Load the R packages first:
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+# install packages from CRAN
+p_needed <- c('ggplot2','tidyr', 'caret', 'dplyr', 
+              'lattice', 'proxy', 'caret')
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
+
+
 ##  Variance-Bias Trade-Off {#vbtradeoff}
 
 Assume $\mathbf{X}$ is $n \times p$ observation matrix and $\mathbf{y}$ is response variable, we have:
