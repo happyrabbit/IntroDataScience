@@ -26,13 +26,13 @@ The MLP is the basic structure for the modern deep learning applications. MLP ca
 
 **Algorithm**
 
-In addition to data and neural network structure, there were a few key algorithm breakthroughs to enable the widespread adoption of deep learning. For an entry-level neural network structure, there are hundreds of thousands of parameters to be estimated from the data. With a large amount of training data, stochastic gradience decent and mini-batch gradience decent are efficient ways to utilize a subset of training data to update the model parameters. Within the process, one of the key steps is back-propagation which was introduced in the 1980s for efficient weight update. There is a non-linear activation for each neuron in deep learning models, and **sigmoid** or **hyperbolic tangent** functions were often used. However, it has the problem of gradient vanishing when the number of layers of the network grows large (i.e. deeper network). To solve this problem, the **rectified linear unit (ReLu)** was introduced to deep learning in the 2000s and it increases the convergence speed dramatically. ReLu is so simple (i.e. y = x when x >= 0 and y = 0 otherwise), but it indeed cleverly solved one of the big headaches in deep learning. [[TODO: explain why relu solves the vanishing gradient problem]]
+In addition to data and neural network structure, there were a few key algorithm breakthroughs to enable the widespread adoption of deep learning. For an entry-level neural network structure, there are hundreds of thousands of parameters to be estimated from the data. With a large amount of training data, stochastic gradience decent and mini-batch gradience decent are efficient ways to utilize a subset of training data to update the model parameters. Within the process, one of the key steps is back-propagation which was introduced in the 1980s for efficient weight update. There is a non-linear activation for each neuron in deep learning models, and **sigmoid** or **hyperbolic tangent** functions were often used. However, it has the problem of gradient vanishing when the number of layers of the network grows large (i.e. deeper network). To solve this problem, the **rectified linear unit (ReLu)** was introduced to deep learning in the 2000s and it increases the convergence speed dramatically. ReLu is so simple (i.e. y = x when x >= 0 and y = 0 otherwise), but it indeed cleverly solved one of the big headaches in deep learning. We will talk more about activation functions in section \@ref(activationfunction).
 
 With hundreds of thousands of parameters in the model, deep learning is easy to overfit. In order to mitigate this, dropout, a form of regularization, was introduced in 2012. It randomly drops out a certain percentage of neurons in the network during the optimization process to achieve more robust model performance. It is similar to the concept of random forest where features and training data are randomly chosen. There are many other algorithm improvements to get better models such as batch normalization and using residuals from previous layers. With backpropagation in stochastic gradience decent, ReLu activation function, dropout, and other techniques, modern deep learning methods begin to outperform traditional machine learning methods.
 
 **Computation Power**
 
-With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processor (CPU). [[TODO: this part about CPU and GPU seems unrelated to the next part about cloud and frameworks, you need to link them together]]
+With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processor (CPU). 
 
 With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demonstrate deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
 
@@ -244,7 +244,7 @@ z^{[l](1)} & z^{[l](1)} & \cdots & z^{[l](m)}\\
 
 You can add layers like this to get a deeper neural network as shown in the bottom right of figure \@ref(fig:ffnn). 
 
-### Activation Function
+### Activation Function {#activationfunction}
 
 
 - Sigmoid and Softmax Function
@@ -253,12 +253,13 @@ We have used the sigmoid (or logistic) activation function. The function is S-sh
 
 ```{r activationsigmoid, fig.cap = "Sigmoid Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 z = seq(-8, 8, 0.1)
-fz = 1/(1+exp(-z))
-plot(z, fz, type = "l",
-     col="blue",
-     ylab= expression(paste (sigma, "(z)")))
-#     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ) 
-text(x = -5,y = 0.8,labels = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ))
+fz = 1/(1 + exp(-z))
+plot(z, fz, type = "l", col = "blue", 
+     ylab = expression(paste(sigma, "(z)")))
+# main = expression(paste(sigma,'(z) =
+# ',frac(1,1+e^{-z}),sep='') )
+text(x = -5, y = 0.8, labels = expression(paste(sigma, "(z) = ", 
+    frac(1, 1 + e^{-z}), sep = "")))
 ```
 
 When the output has more than 2 categories, people use softmax function as the output layer activation function. 
@@ -347,7 +348,7 @@ plot(z, leakyrz, type = "l",
 
 You may notice that all activation functions are non-linear. Since the composition of two linear functions is still linear, using a linear activation function doesn't help to capture more information.  That is why you don't see people use a linear activation function in the intermediate layer. One exception is when the output $y$ is continuous, you may use linear activation function at the output layer. To sum up, for intermediate layers:
 
-- ReLU is usually a good choice. If you don't know what to choose, then start with ReLU. Leaky ReLu usually works better than the ReLU but it is not used as much in practice. Either one works fine. Also, people usually use a=0.01 as the slope for leaky ReLU. You can try different parameters but most of the people a = 0.01.
+- ReLU is usually a good choice. If you don't know what to choose, then start with ReLU. Leaky ReLu usually works better than the ReLU but it is not used as much in practice. Either one works fine. Also, people usually use a = 0.01 as the slope for leaky ReLU. You can try different parameters but most of the people a = 0.01.
 - tanh is used sometimes especially in recurrent neural network. But you nearly never see people use sigmoid function as intermediate layer activation function.
 
 For the output layer:
