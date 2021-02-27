@@ -301,9 +301,13 @@ pcrResamples$Model <- "PCR"
 # Combine both output for plotting
 plsPlotData <- rbind(plsResamples, pcrResamples)
 # Leverage xyplot() function from lattice library
-xyplot(RMSE ~ ncomp, data = plsPlotData, xlab = "# Components", 
-    ylab = "RMSE (Cross-Validation)", auto.key = list(columns = 2), 
-    groups = Model, type = c("o", "g"))
+xyplot(RMSE ~ ncomp, 
+       data = plsPlotData, 
+       xlab = "# Components", 
+       ylab = "RMSE (Cross-Validation)", 
+       auto.key = list(columns = 2), 
+       groups = Model, 
+       type = c("o", "g"))
 ```
 
 The plot confirms our choice of using a model with three components for both PLS and PCR. 
