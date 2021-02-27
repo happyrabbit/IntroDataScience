@@ -4,6 +4,31 @@ The regularization method is also known as the shrinkage method. It is a techniq
 
 We talked about the variance bias trade-off in section \@ref(vbtradeoff). The variance of a learning model is the amount by which $\hat{f}$ would change if we estimated it using a different training data set.  In general, model variance increases as flexibility increases. The regularization technique decreases the model flexibility by shrinking the coefficient and hence significantly reduce the model variance.  
 
+Load the R packages:
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+# install packages from CRAN
+p_needed <- c('caret', 'elasticnet', 'glmnet', 'devtools',
+              'MASS', 'grplasso')
+
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+
+# install packages from GitHub
+p_needed_gh <- c('NetlifyDS')
+
+if (! p_needed_gh %in% packages) {
+    devtools::install_github("netlify/NetlifyDS")
+}
+
+library(NetlifyDS)
+```
+
 ## Ridge Regression
 
 Recall that the least square estimates minimize RSS:
@@ -20,19 +45,6 @@ Ridge regression [@Hoerl1970] is similar but it finds $\hat{\beta}^{R}$ that opt
 where  $\lambda >0$ is a tuning parameter. As with the least squares, ridge regression considers minimizing RSS. However, it adds a shrinkage penalty $\lambda\Sigma_{j=1}^{p}\beta_{j}^{2}$ that takes account of the number of parameters in the model. When $\lambda = 0$, it is identical to least squares. As $\lambda$ gets larger, the coefficients start shrinking towards 0. When $\lambda\rightarrow\infty$, the rest of the coefficients $\beta_{1},...,\beta_{p}$ are close to 0. Here, the penalty is not applied to $\beta_{0}$. The tuning parameter $\lambda$ is used to adjust the impact of the two parts in equation \@ref(eq:ridge). Every value of $\lambda$ corresponds to a set of parameter estimates. 
 
 There are many R packages for ridge regression, such as `lm.ridge()` function from `MASS`, function `enet()` from `elasticnet`. If you know the value of $\lambda$, you can use either of the function to fit ridge regression. A more convenient way is to use `train()` function from caret. Let's use the 10 survey questions to predict the total purchase amount (sum of online and store purchase).
-
-```{r, message=FALSE,results="hide"}
-# install packages from CRAN
-p_needed <- c('caret', 'elasticnet', 'glmnet', 'devtools')
-packages <- rownames(installed.packages())
-p_to_install <- p_needed[!(p_needed %in% packages)]
-if (length(p_to_install) > 0) {
-    install.packages(p_to_install)
-}
-
-lapply(p_needed, require, character.only = TRUE)
-```
-
 
 ```{r}
 dat <- read.csv("http://bit.ly/2P5gTw4")
@@ -167,8 +179,11 @@ head(lassoFit$fit)
 You need to set `type = "coefficients"` to get parameter estimates: 
 
 ```{r}
-lassoCoef <- predict(lassoModel, newx = as.matrix(trainx), 
-                     s = 0.95, mode = "fraction", type = "coefficients")
+lassoCoef <- predict(lassoModel, 
+                     newx = as.matrix(trainx), 
+                     s = 0.95, 
+                     mode = "fraction", 
+                     type = "coefficients")
 ```
 
 It also returns a list and the estimates are in the `coefficients` item:
@@ -299,7 +314,6 @@ Parameter $\alpha$ decides the penalty, i.e, between $L_2$ ($\alpha=0$) and $L_1
 The default family option in the function `glmnet()` is `gaussian`. It is the linear regression we discussed so far in this chapter. But the parameterization is a little different in the generalized linear model framework (we have $\alpha$ and $\lambda$). Let's start from our previous example, using the same training data but `glmnet()` to fit model:
 
 ```{r}
-library(glmnet)
 dat <- read.csv("http://bit.ly/2P5gTw4")
 # data cleaning: delete wrong observations with expense < 0
 dat <- subset(dat, store_exp > 0 & online_exp > 0)
@@ -307,7 +321,7 @@ dat <- subset(dat, store_exp > 0 & online_exp > 0)
 trainx <- dat[, grep("Q", names(dat))]
 # get response
 trainy <- dat$store_exp + dat$online_exp
-glmfit = glmnet(as.matrix(trainx), trainy)
+glmfit = glmnet::glmnet(as.matrix(trainx), trainy)
 ```
 
 The object `glmfit` returned by `glmnet()` has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on `glmfit`, such as `plot()`, `print()`, `coef()` and `predict()` . For example, the following code visualizes the path of coefficients as penalty increases:
