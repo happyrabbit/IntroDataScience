@@ -27,11 +27,9 @@ Some key features of this book are as follows:
 |Ch7: Model Tuning Strategy |  [Notebook](https://scientistcafe.com/ids/r/ch7) |  [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Model_Tuning_Strategy.ipynb) |
 |Ch8: Measuring Performance | [Notebook](https://scientistcafe.com/ids/r/ch8) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Measuring_Performance.ipynb) |
 |Ch9: Regression Models | | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Regression_Models.ipynb) |
-|Ch10: Regularization Methods |  | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Regularization_Methods.ipynb) |
+|Ch10: Regularization Methods | [Notebook](https://scientistcafe.com/ids/r/ch10) | [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/Regularization_Methods.ipynb) |
 |Ch11: Tree-Based Methods | [Notebook](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/2153523447602836/78755435857845/latest.html) |  [Notebook](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/TreeBasedModels.ipynb) |
 |Ch12:  Deep Learning | [DNN](https://scientistcafe.com/ids/r/ch12dnn), [CNN](https://scientistcafe.com/ids/r/ch12cnn), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html) | [DNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/FFNN.ipynb), [CNN](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/CNN.ipynb), [RNN](https://databricks-prod-cloudfront.cloud.databricks.com/public/4027ec902e239c93eaaa8714f173bcfc/3981279215211072/3137931017799475/78755435857845/latest.html), [Tokenizing and Padding](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/TokenizingPadding.ipynb), [MINST with one hidden layer: step by step](https://github.com/happyrabbit/IntroDataScience/blob/master/Python/MINST_with_one_hidden_layer.ipynb) |
-
-
 
 Short links:
 
