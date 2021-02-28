@@ -54,21 +54,46 @@ Some key features of this book are as follows:
 
 - It focuses on the skills needed to solve real-world industrial problems rather than an academic book.
 
-## Who This Book Is For {-}
-
-This book is for readers who want to explore potential data science career paths and eventually want to become a data scientist. Traditional data-related practitioners such as statisticians, business analysts, and data analysts will find this book helpful in expanding their skills for future data science careers. Undergraduate and graduate students from analytics-related areas will find this book beneficial to learn real-world data science applications. Non-mathematical readers will appreciate the reproducibility of the companion R and python codes. 
-
-The first two chapters do not have any prerequisite, and the rest of the chapters do require R or Python programming experience and undergraduate level statistics. We assume readers have experience with one of the programming languages, R or Python. If you are new to the two programming languages, you may find the code obscure. We will provide some references in the **Complementary Reading** section that can help you fill the gap. For some chapters (\@ref(datapreprocessing), \@ref(modeltuningstrategy) - \@ref(deeplearning)), readers need to know elementary linear algebra (such as matrix manipulations) and understand basic statistical concepts (such as correlation and simple linear regression). While the book is biased against complex equations, a mathematical background is good for the deep dive under the hood mechanism for advanced topics behind applications. 
-
 ## What This Book Covers {-}
+
+This book provides a comprehensive introduction to various data science fields, soft and programing skills in data science projects, and potential career paths for data scientists.
+
+There are many existing data science books, including:
+
+- _An Introduction to Data Science_ by **Saltz and Stanton**
+- _A Hands-On Introduction to Data Science_ by **Chirag Shah** 
+- _Introduction to Data Science: Data Analysis and Prediction Algorithms with R_ by 
+**Rafael Irizarry** 
+- _Build a Career in Data Science_ by **Robinson and Nolis**
+- _Data Science (The MIT Press Essential Knowledge series)_ by **Kelleher and Tierney**
+- _The Data Science Handbook_ by **Field Cady**
+- _Data Science from Scratch: First Principles with Python (2nd Edition)_ by **Joel Grus**
+
+
+As data science fields are fast-growing, we did not find a book covering all the contents we feel are essential for a data scientist. The following table compares the data science books mentioned above with this book for contents in Big Data (Spark), R Code, Python Code, Data Steps, Deep Learning, ML models, Career Path, and Project Cycles. We use 0 for not covered, 1 for minimal coverage, 2 for some coverage, and 3 for extensive coverage.
+
+| Author     | Big Data (Spark) | R Code | Python Code | Data Steps | Deep Learning | ML Models | Career Path | Project Cycle |
+|------------|------------------|--------|-------------|------------|---------------|-----------|-------------|---------------|
+| Lin and Li | 3                | 3      | 3           | 3          | 3             | 3         | 3           | 3             |
+| Saltz      | 1                | 3      | 0           | 1          | 0             | 3         | 0           | 0             |
+| Shah       | 0                | 3      | 3           | 1          | 0             | 3         | 1           | 0             |
+| Irizarry   | 0                | 3      | 0           | 3          | 0             | 3         | 0           | 0             |
+| Robinson   | 0                | 0      | 0           | 0          | 0             | 0         | 3           | 3             |
+| Kelleher   | 1                | 0      | 0           | 1          | 0             | 2         | 3           | 3             |
+| Cady       | 0                | 0      | 3           | 3          | 0             | 3         | 1           | 1             |
+| Grus       | 1                | 0      | 3           | 2          | 3             | 3         | 1           | 0             |
 
 The book is organized as the following. 
 
-- Chapters 1-3 discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
-- Chapter 4 introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
-- Chapters 5-6 cover the essential skills to prepare the data for further analysis and modeling, i.e., data preprocessing and wrangling.
-- Chapter 7 illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters'. 
-- Chapters 8 - 14 introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
+- **Chapters 1-3** discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
+- **Chapter 4** introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
+- **Chapters 5-6** cover the essential skills to prepare the data for further analysis and modeling, i.e., data preprocessing and wrangling.
+- **Chapter 7** illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters'. 
+- **Chapters 8-14** introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
+
+## Who This Book Is For {-}
+
+This book is for readers who want to explore potential data science career paths and eventually want to become a data scientist. Traditional data-related practitioners such as statisticians, business analysts, and data analysts will find this book helpful in expanding their skills for future data science careers. Undergraduate and graduate students from analytics-related areas will find this book beneficial to learn real-world data science applications. Non-mathematical readers will appreciate the reproducibility of the companion R and python codes. 
 
 ## Acknowledgements  {-}
 
