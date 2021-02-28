@@ -668,14 +668,13 @@ gbmGrid <- expand.grid(interaction.depth = c(1, 3, 5, 7, 9),
                        n.minobsinnode = c(1:10))
 
 set.seed(100)
-gbmTune <- train(x = trainx, 
+gbmTune <- caret::train(x = trainx, 
                 y = trainy,
                 method = "gbm",
                 tuneGrid = gbmGrid,
                 metric = "ROC",
                 verbose = FALSE,
                 trControl = trainControl(method = "cv",
-                           summaryFunction = twoClassSummary,
                            classProbs = TRUE,
                            savePredictions = TRUE))
 ```

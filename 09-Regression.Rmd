@@ -61,9 +61,8 @@ modeldat <- modeldat[-which(zs > 3.5), ]
 We will not perform log-transformation for the response variable at this stage. Let us first check the correlation among explanatory variables: 
 
 ```{r corplotlm, fig.cap= "Correlation Matrix Plot for Explanatory Variables", out.width="80%", fig.asp=.75, fig.align="center"}
-library(corrplot)
 correlation <- cor(modeldat[, grep("Q", names(modeldat))])
-corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", 
+corrplot::corrplot.mixed(correlation, order = "hclust", tl.pos = "lt", 
     upper = "ellipse")
 ```
 
