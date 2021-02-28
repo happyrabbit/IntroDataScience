@@ -491,7 +491,7 @@ dat <- read.csv("http://bit.ly/2P5gTw4")
 trainx <- dat[, grep("Q", names(dat))]
 # add segment as a predictor 
 # don't need to encode it to dummy variables
-trainx$segment <- dat$segment
+trainx$segment <- as.factor(dat$segment)
 # use gender as the response variable
 trainy <- as.factor(dat$gender)
 ```
