@@ -104,7 +104,7 @@ If you are new to the programming languages, you may find the code obscure. We p
 
 For some chapters (\@ref(datapreprocessing), \@ref(modeltuningstrategy) - \@ref(deeplearning)), readers need to know elementary linear algebra (such as matrix manipulations) and understand basic statistical concepts (such as correlation and simple linear regression). While the book is biased against complex equations, a mathematical background is good for the deep dive under the hood mechanism for advanced topics behind applications. 
 
-### How to use R and Python code {-}
+### How to run R and Python code {-}
 
 This book uses R in the main text and provides most of the Python codes on GitHub. 
 
