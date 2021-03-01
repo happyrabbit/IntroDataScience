@@ -110,7 +110,7 @@ This book uses R in the main text and provides most of the Python codes on GitHu
 
 **Use R code.** You should be able to repeat the R code in your local R console or RStudio in all the chapters except for Chapter \@ref(bigdatacloudplatform). The code in each chapter is self-sufficient, and you don't need to run the code in previous chapters first to run the code in the current chapter. For code within a chapter, you do need to run from the beginning.  At the beginning of each chapter, there is a code block for installing and loading all required packages. We also provide the `.rmd` notebooks that include the code to make it easier for you to repeat the code.  Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. 
 
-To repeat the code on big data and cloud platforms [chapter \@ref(bigdatacloudplatform)], you need to use Databricks, a cloud data platform. We use Databricks' because:
+To repeat the code on big data and cloud platforms [chapter \@ref(bigdatacloudplatform)], you need to use Databricks, a cloud data platform. We use Databricks because:
 
 - It provides a user-friendly web-based notebook environment that can create a Spark cluster on the fly to run R/Python/Scala/SQL scripts
 - It has a free community edition that is convenient for teaching purpose
