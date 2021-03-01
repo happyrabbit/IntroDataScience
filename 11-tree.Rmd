@@ -1,5 +1,26 @@
 # Tree-Based Methods {#treemodel}
 
+Tree-based models such as random forest and gradient boosted trees are frequent winners in data challenges and competitions which use standard numerical and categorical datasets. These methods, in general, provide a good baseline for model performance. This chapter describes the fundamentals of tree-based models and provides a set of standard modeling procedures.
+
+Load R packages:
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+# install packages from CRAN
+p_needed <- c('rpart', 'caret', 'partykit',
+              'pROC', 'dplyr', 'ipred',
+              'e1071', 'randomForest', 'gbm')
+
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
+
+## Tree Basics
+
 The tree-based models can be used for regression and classification. The goal is to stratify or segment the predictor space into a number of sub-regions. For a given observation, use the mean or the mode of the training observations in the sub-region as the prediction. Tree-based methods are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
 
 1. Do not require user to specify the form of the relationship between predictors and response
@@ -277,7 +298,6 @@ There are multiple R packages for building regression tree, such as `ctree`, `rp
 A more convenient way is to use `train()` function in `caret` package. The package can call `rpart()` function and train the model through cross-validation. In this case, the most common parameters are `cp` (complexity parameter) and `maxdepth` (the maximum depth of any node of the final tree). To  tune the complexity parameter, set `method = "rpart"`. To tune the maximum tree depth, set `method = "rpart2"` :
 
 ```{r}
-library(rpart)
 dat <- read.csv("http://bit.ly/2P5gTw4")
 # data cleaning: delete wrong observations
 dat <- subset(dat, store_exp > 0 & online_exp > 0)
@@ -307,7 +327,6 @@ print(rpartTree)
 You can see that the final model picks `Q3` and `Q5`  to predict total expenditure. To visualize the tree, you can convert `rpart` object to `party` object using `partykit` then use  `plot()` function:
 
 ```{r error=FALSE, warning=FALSE, message= FALSE}
-library(partykit)
 rpartTree2 <- as.party(rpartTree)
 plot(rpartTree2)
 ```
@@ -326,8 +345,6 @@ When fitting tree models, people need to choose the way to treat categorical pre
 Let's build a classification model to identify the gender of the customer:
 
 ```{r}
-library(caret)
-library(pROC)
 dat <- read.csv("http://bit.ly/2P5gTw4")
 # use the 10 survey questions as predictors
 trainx1 <- dat[, grep("Q", names(dat))]
@@ -580,7 +597,6 @@ In this example, since the number of predictors is small, the result of the mode
 If you have selected the values of tuning parameters, you can also use the randomForest package to fit a random forest. 
 
 ```{r}
-library(randomForest)
 rfit = randomForest(trainy ~ ., trainx, mtry = 1, ntree = 1000)
 ```
 
