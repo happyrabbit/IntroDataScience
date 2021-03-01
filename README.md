@@ -33,7 +33,7 @@ Some key features of this book are as follows:
 
 ## How to run R and Python code
 
-**Use R code.** You should be able to repeat the R code in your local R console or RStudio in all the chapters except for [Chapter 4](https://scientistcafe.com/ids/bigdatacloudplatform.html). The code in each chapter is self-sufficient, and you don't need to run the code in previous chapters first to run the code in the current chapter. For code within a chapter, you do need to run from the beginning.  At the beginning of each chapter, there is a code block for installing and loading all required packages. We also provide the `.rmd` notebooks that include the code to make it easier for you to repeat the code.  Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. 
+**Use R code.** You should be able to repeat the R code in your local R console or RStudio in all the chapters except for [Chapter 4](https://scientistcafe.com/ids/bigdatacloudplatform.html). The code in each chapter is self-sufficient, and you don't need to run the code in previous chapters first to run the code in the current chapter. For code within a chapter, you do need to run from the beginning.  At the beginning of each chapter, there is a code block for installing and loading all required packages. We also provide the `.rmd` notebooks that include the code to make it easier for you to repeat the code.  
 
 To repeat the code on [big data and cloud platforms](https://scientistcafe.com/ids/bigdatacloudplatform.html), you need to use Databricks, a cloud data platform. We use Databricks because:
 
@@ -42,7 +42,7 @@ To repeat the code on [big data and cloud platforms](https://scientistcafe.com/i
 
 Follow the instructions in [section 4.3](https://scientistcafe.com/ids/cloudenvironment) on the process of setting up and using the spark environment.
 
-**Use Python code.** We provide python notebooks for all the chapters on GitHub. Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. Like R notebooks, you should be able to repeat all notebooks in your local machine except for Chapter 4 with reasons stated above. An easy way to repeat the notebook is to import and run in Google Colab. To use Colab, you only need to log in to your Google account in Chrome Browser. To load the notebook to your colab, you can do any of the following:
+**Use Python code.** We provide python notebooks for all the chapters on GitHub. Like R notebooks, you should be able to repeat all notebooks in your local machine except for Chapter 4 with reasons stated above. An easy way to repeat the notebook is to import and run in Google Colab. To use Colab, you only need to log in to your Google account in Chrome Browser. To load the notebook to your colab, you can do any of the following:
 
 - Click the ''Open in Colab" icon on the top of each linked notebook using the Chrome Brower. It should load the notebook and open it in your Colab. 
 
