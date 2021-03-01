@@ -70,9 +70,9 @@ There are many existing data science books, including:
 - _Data Science from Scratch: First Principles with Python (2nd Edition)_ by **Joel Grus**
 
 
-As data science fields are fast-growing, we did not find a book covering all the contents we feel are essential for a data scientist. The following table compares the data science books mentioned above with this book for contents in Big Data (Spark), R Code, Python Code, Data Steps, Deep Learning, ML models, Career Path, and Project Cycles. We use 0 for not covered, 1 for minimal coverage, 2 for some coverage, and 3 for extensive coverage.
+As data science fields are fast-growing, we did not find a book covering all the contents we feel are essential for a data scientist. The following table compares the data science books mentioned above with this book for contents in Big Data (Spark), R Code, Python Code, Data Preprocessing, Deep Learning, ML models, Career Path, and Project Cycles. We use 0 for not covered, 1 for minimal coverage, 2 for some coverage, and 3 for extensive coverage.
 
-| Author     | Big Data (Spark) | R Code | Python Code | Data Steps | Deep Learning | ML Models | Career Path | Project Cycle |
+| Author     | Big Data (Spark) | R Code | Python Code | Data Preprocessing | Deep Learning | ML Models | Career Path | Project Cycle |
 |------------|------------------|--------|-------------|------------|---------------|-----------|-------------|---------------|
 | Lin and Li | 3                | 3      | 3           | 3          | 3             | 3         | 3           | 3             |
 | Saltz      | 1                | 3      | 0           | 1          | 0             | 3         | 0           | 0             |
@@ -94,6 +94,56 @@ The book is organized as the following.
 ## Who This Book Is For {-}
 
 This book is for readers who want to explore potential data science career paths and eventually want to become a data scientist. Traditional data-related practitioners such as statisticians, business analysts, and data analysts will find this book helpful in expanding their skills for future data science careers. Undergraduate and graduate students from analytics-related areas will find this book beneficial to learn real-world data science applications. Non-mathematical readers will appreciate the reproducibility of the companion R and python codes. 
+
+## How to Use This Book {-}
+
+### What the book assumes {-}
+
+The first two chapters do not have any prerequisite, and the rest of the chapters do require R or Python programming experience and undergraduate level statistics. This book does NOT try to teach the readers to program in the basic sense. It assumes that readers have experience with R or Python. 
+If you are new to the programming languages, you may find the code obscure. We provide some references in the **Complementary Reading** section that can help you fill the gap. 
+
+For some chapters (\@ref(datapreprocessing), \@ref(modeltuningstrategy) - \@ref(deeplearning)), readers need to know elementary linear algebra (such as matrix manipulations) and understand basic statistical concepts (such as correlation and simple linear regression). While the book is biased against complex equations, a mathematical background is good for the deep dive under the hood mechanism for advanced topics behind applications. 
+
+### How to use R and Python code {-}
+
+This book uses R in the main text and provides most of the Python codes on GitHub. 
+
+**Use R code.** You should be able to repeat the R code in your local R console or RStudio in all the chapters except for Chapter \@ref(bigdatacloudplatform). The code in each chapter is self-sufficient, and you don't need to run the code in previous chapters first to run the code in the current chapter. For code within a chapter, you do need to run from the beginning.  At the beginning of each chapter, there is a code block for installing and loading all required packages. We also provide the `.rmd` notebooks that include the code to make it easier for you to repeat the code.  Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. 
+
+To repeat the code on big data and cloud platforms [chapter \@ref(bigdatacloudplatform)], you need to use Databricks, a cloud data platform. We use Databricks' because:
+
+- It provides a user-friendly web-based notebook environment that can create a Spark cluster on the fly to run R/Python/Scala/SQL scripts
+- It has a free community edition that is convenient for teaching purpose
+
+Follow the instructions in section \@ref(CloudEnvironment) on the process of setting up and using the spark environment.
+
+**Use Python code.** We provide python notebooks for all the chapters on GitHub. Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. Like R notebooks, you should be able to repeat all notebooks in your local machine except for Chapter \@ref(bigdatacloudplatform) with reasons stated above. An easy way to repeat the notebook is to import and run in Google Colab. To use Colab, you only need to log in to your Google account in Chrome Browser. To load the notebook to your colab, you can do any of the following:
+
+- Click the ''Open in Colab" icon on the top of each linked notebook using the Chrome Brower. It should load the notebook and open it in your Colab. 
+
+```{r, echo=FALSE, fig.align='center', out.width="35%"}
+knitr::include_graphics("images/colabicon.png")
+```
+
+- In your Colab, choose File -> Upload notebook -> GitHub. Copy-paste the notebook's link in the box, search, and select the notebook to load it. For example, you can load the python notebook for data preprocessing like this:
+
+```{r, echo=FALSE, fig.align='center', out.width="100%"}
+knitr::include_graphics("images/loadfromgithub.png")
+```
+    
+To repeat the code for big data, like running R notebook, you need to set up Spark in Databricks. Follow the instructions in section \@ref(CloudEnvironment) on the process of setting up and using the spark environment. Then, run the "Create Spark Data" notebook to create Spark data frames. After that, you can run the pyspark notebook to learn how to use `pyspark`. 
+
+## Complementary Reading {-}
+
+**If you are new to R**, we recommend R for Marketing Research and Analytics by Chris Chapman and Elea McDonnell Feit. The book is practical and provides repeatable R code. Part I & II of the book cover basics of R programming and foundational statistics. It is an excellent book on marketing analytics. 
+
+**If you are new to Python**, we recommend the Python version of the book mentioned above, Python for Marketing Research and Analytics by Jason Schwarz,  Chris Chapman, and Elea McDonnell Feit. 
+
+If you want to dive deeper into some of the book's topics, there are many places to learn more.
+
+- For machine learning, Python Machine Learning 3rd Edition by Raschka and Mirjalili is a good book on implementing machine learning in Python. Apply Predictive Modeling by Kuhn and Johnston is an applied, practitioner-friendly text using R package `caret` . 
+
+- For statistics models in R, a recommended book is An Introduction to Statistical Learning (ISL) by James, Witten, Hastie, and Tibshirani. A more advanced treatment of the topics in ISL is The Elements of Statistical Learning by  Friedman, Tibshirani, and Hastie. 
 
 ## Acknowledgements  {-}
 
