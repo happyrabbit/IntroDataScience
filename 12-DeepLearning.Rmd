@@ -106,7 +106,7 @@ First, thanks to the digitalization where lots of human activities are now in th
 
 ## Feedforward Neural Network
 
-### Logistic Regression as Neural Network {#logistic_reg_as_neural_network}
+### Logistic Regression as Neural Network {#logisticregasneuralnetwork}
 
 Let's look at logistic regression from the lens of the neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have: 
 
@@ -363,7 +363,7 @@ So far, we have introduced the core components of deep learning architecture, la
 
 #### Batch, Mini-batch, Stochastic Gradient Descent
 
-**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logistic_reg_as_neural_network).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
+**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logisticregasneuralnetwork).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
 
 In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. **Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
 
@@ -1404,10 +1404,6 @@ The chain-like recurrent nature makes it the natural architecture for sequential
 - Voice recognition
 - Music generation
 - Sentiment analysis
-
-<center>
-![](images/rnnapplication.png){width=70%}
-</center>
 
 A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ image) and produces a fixed-sized vector as output (such as the probabilities of being one the ten digits). RNN has a much more flexible structure.  It can operate over sequences of vectors and produces sequences of outputs and they can vary in size. To understand what it means, let's look at some RNN structure examples. 
 

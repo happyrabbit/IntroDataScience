@@ -4,7 +4,24 @@ In this chapter, we will cover ordinary linear regression and a few more advance
 
 First, we will introduce multivariate linear regression (i.e. the typical least square regression) which is one of the simplest supervised learning methods. Even though it is simple, the general ideas and procedures of fitting a regression model are applied to a boarder scope. Having a solid understanding of the basic linear regression model enables us to learn more advanced models easily. For example, we will introduce two “shrinkage” versions of linear regression: ridge regression and LASSO regression. While the parameters are fitted by the least square method, the extra penalty can effectively shrink model parameters towards zero. It mediates overfitting and maintains the robustness of the model when data size is small compared to the number of explanatory variables. We first introduce basic knowledge of each model and then provide R codes to show how to fit the model. We only cover the major properties of these models and the listed reference will provide more in-depth discussion.
 
-We will use the clothing company data as an example. We want to answer business questions such as “which variables are the driving factor of total revenue (both online and in-store purchase)?” The answer to this question can help the company to decide where to invest (such as design, quality, etc.). Note that the driving factor here does not guarantee a causal relationship. Linear regression models reveal correlation rather than causation. For example, if a survey on car purchase shows a positive correlation between price and customer satisfaction, does it suggest the car dealer should increase the price? Probably not! It is more likely that the customer satisfaction is impacted by quality. And a higher quality car tends to be more expensive. Causal inference is much more difficult to establish and we have to be very careful when interpreting regression model results.
+We will use the clothing company data as an example. We want to answer business questions such as “which variables are the driving factors of total revenue (both online and in-store purchase)?” The answer to this question can help the company to decide where to invest (such as design, quality, etc). Note that the driving factor here does not guarantee a causal relationship. Linear regression models reveal correlation rather than causation. For example, if a survey on car purchase shows a positive correlation between price and customer satisfaction, does it suggest the car dealer should increase the price? Probably not! It is more likely that the customer satisfaction is impacted by quality. And a higher quality car tends to be more expensive. Causal inference is much more difficult to establish and we have to be very careful when interpreting regression model results.
+
+Load the R packages first:
+
+```{r, message = FALSE, warning=FALSE, results='hide'}
+# install packages from CRAN
+p_needed <- c('caret', 'dplyr', 'lattice',
+              'elasticnet', 'lars', 'corrplot', 
+              'pls')
+
+packages <- rownames(installed.packages())
+p_to_install <- p_needed[!(p_needed %in% packages)]
+if (length(p_to_install) > 0) {
+    install.packages(p_to_install)
+}
+
+lapply(p_needed, require, character.only = TRUE)
+```
 
 ## Ordinary Least Square
 
@@ -66,10 +83,14 @@ corrplot::corrplot.mixed(correlation, order = "hclust", tl.pos = "lt",
     upper = "ellipse")
 ```
 
-As shown in figure \@ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section \@ref(collinearity) to remove highly correlated explanatory variables with a threshold of 0.75:
+As shown in figure \@ref(fig:corplotlm), there are some highly correlated variables. Let us use the method described in section \@ref(collinearity) to find potential highly correlated explanatory variables to remove with a threshold of 0.75:
 
 ```{r}
 highcor <- findCorrelation(correlation, cutoff = 0.75)
+```
+
+
+```{r}
 modeldat <- modeldat[, -highcor]
 ```
 

@@ -33,15 +33,15 @@ CART can refer to the tree model in general, but most of the time, it represents
 
 The original CART algorithm targets binary classification, and the later algorithms can handle multi-category classification. A single tree is easy to explain but has poor accuracy. More complicated tree models, such as RF and GBM, can provide much better prediction at the cost of explainability. As the model becoming more complicated, it is more like a black-box which makes it very difficult to explain the relationship among predictors. There is always a trade-off between explainability and predictability.
 
-<center>
-![](images/treeEN.png)
-</center>
+```{r treeexample, fig.cap = "This is a classification tree trained from passenger survival data from the Titanic.  Survival probability is predicted using sex and age.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/treeEN.png")
+```
 
-The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite to the real tree, the root is on the top, and the leaf is on the bottom. From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide split into branches. The leaf node contains the final "decision," final class the sample belongs to or the sample's value has. Here are the important definitions in the tree model:
+The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite of a real tree, the root is on the top, and the leaf is on the bottom (figure \@ref(fig:treeexample)). From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide if it will split into branches. The leaf node contains the final "decision"; the class the sample belongs to or the sample's value. Here are the important definitions in the tree model:
 
 - **Classification tree**: the outcome is discrete 
 - **Regression tree**: the outcome is continuous (e.g. the price of a house, or a patient's length of stay in a hospital)
-- **Non-leaf node (or split node)**: the algorithm needs to decide a split at each non-leaf node  (eg: $age \leq 25$, $25 < age \leq 35$, $age > 35$) 
+- **Non-leaf node (or split node)**: the algorithm needs to decide a split at each non-leaf node  (eg:  age >= 9.5) 
 - **Root node**：the beginning node where the tree starts
 - **Leaf node (or Terminal node)**: the node stops splitting. It has the final decision of the model
 - **Degree of the node**: the number of subtrees of a node 
@@ -51,7 +51,11 @@ The reason why it is called "tree" is of course because the structure has simila
 - **Child**: the node directly after and connected to another node 
 - **Parent**: the converse notion of a child
 
-Single tree is easy to explain but has high variance and low accuracy, and hence is very limited. Minor changes in the training data can lead to large changes in the fitted tree. A series of rectangular decision regions defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
+Single tree is easy to explain but has high variance and low accuracy, and hence is very limited. Minor changes in the training data can lead to large changes in the fitted tree. A series of rectangular decision regions (figure \@ref(fig:decisionregion)) defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
+
+```{r decisionregion, fig.cap = "Example of decision regions for different types of flowers based on petal length and width. Three different types of flowers are classified using decisions about length and width.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/decisionregion.png")
+```
 
 ## Splitting Criteria 
 
@@ -59,7 +63,7 @@ The splitting criteria used by the regression tree and the classification tree a
 
 **Gini impurity**
 
-Gini impurity[@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree.  For a two-class problem, the Gini impurity for a given node is defined as:
+Gini impurity [@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree.  For a two-class problem, the Gini impurity for a given node is defined as:
 
 $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
@@ -92,7 +96,7 @@ A measure of the degree of disorder is entropy which is defined as:
 
 $$Entropy=-plog_{2}p-(1-p)log_{2}(1-p)$$
 
-where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50%－50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. 
+where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50% - 50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. 
 
 Similarly, the entropy of a splitting node is the weighted average of the entropy of each child. In the above tree for the students, the entropy of the root node with all 50 students is  $-\frac{25}{50}log_{2}\frac{25}{50}-\frac{25}{50}log_{2}\frac{25}{50}=1$. Here an entropy of 1 indicates that the purity of the node is the lowest, that is, each type takes up half of the samples.
 
@@ -113,7 +117,7 @@ SSE=\Sigma_{i\in S_{1}}(y_{i}-\bar{y}_{1})^{2}+\Sigma_{i\in S_{2}}(y_{i}-\bar{y}
 (\#eq:treesse)
 \end{equation}
 
-In equation \@ref(eq:treesse), $\bar{y}_{1}$ and $\bar{y}_{1}$  are the average of the sample in $S_{1}$ and $S_{2}$. The way regression tree grows is to automatically decide on the splitting variables and split points that can maximize **SSE reduction**.  Since this process  is essentially a recursive segmentation, this approach is also called recursive partitioning.
+In equation \@ref(eq:treesse), $\bar{y}_{1}$ and $\bar{y}_{2}$  are the average of the sample in $S_{1}$ and $S_{2}$. The way regression tree grows is to automatically decide on the splitting variables and split points that can maximize **SSE reduction**.  Since this process  is essentially a recursive segmentation, this approach is also called recursive partitioning.
 
 
 Take a look at this simple regression tree for the height of 10 students:
@@ -124,13 +128,13 @@ Take a look at this simple regression tree for the height of 10 students:
 
 You can calculate the SSE using the following code: 
 
-```{r,echo=FALSE}
-y1 = c(156, 167, 165, 163, 160, 170, 160)
-y2 = c(172, 180, 176)
-y = c(y1, y2)
-sse1 = sum((y1 - mean(y1))^2)
-sse2 = sum((y2 - mean(y2))^2)
-sse = sum((y - mean(y))^2)
+```{r, echo=FALSE}
+y1 <- c(156, 167, 165, 163, 160, 170, 160)
+y2 <- c(172, 180, 176)
+y <- c(y1, y2)
+sse1 <- sum((y1 - mean(y1))^2)
+sse2 <- sum((y2 - mean(y2))^2)
+sse <- sum((y - mean(y))^2)
 ```
 
 1. SSE for "Female" is 136
@@ -191,7 +195,7 @@ The idea is that the pruning minimizes the penalized error $SSE_{\lambda}$ with 
 
 $$SSE_{\lambda} = SSE+\lambda \times (complexity)$$
 
-Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the smallest tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization[@Breiman1984].
+Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the smallest tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization [@Breiman1984].
 
 To find the optimal pruning tree, you need to iterate through a series of values of $\lambda$ and calculate the corresponding SSE. For the same $\lambda$, SSE changes over different samples. Breiman et al. suggested using cross-validation [@Breiman1984] to study the variation of SSE under each $\lambda$ value. They also proposed a standard deviation criterion to give the simplest tree: within one standard deviation, find the simplest tree that minimizes the absolute error. Another method is to choose the tree size that minimizes the numerical error [@Hastie2008].
 
@@ -238,7 +242,7 @@ Based on the metrics above, the pruning process is [@Nikita2012]：
 
 - Minium error pruning
 
-Niblett and Brotko came it up in 1991[@Cestnik1991]. The process is bottom-up which seeks a single tree that minimizes the expected error rate on new samples. If we prune a splitting point $t$, all the samples under $t$ will be classified as from one category, say category $c$. If we prune the subtree, the expected error rate is:
+Niblett and Brotko came it up in 1991 [@Cestnik1991]. The process is bottom-up which seeks a single tree that minimizes the expected error rate on new samples. If we prune a splitting point $t$, all the samples under $t$ will be classified as from one category, say category $c$. If we prune the subtree, the expected error rate is:
 
 $$E(t)=\frac{n_{t}-n_{t,c}+k-1}{n_{t}+k}$$
 
@@ -248,7 +252,7 @@ $$k=number\ of\ categories$$
 $$n_{t}=sample\ size\ under\ node\ t$$
 $$n_{t,c}= number\ of\ sample\ under\ t\ that\ belong\ to\ category\ c$$
 
-Based on the above definition, the pruning process is[@Espoito1997]:  
+Based on the above definition, the pruning process is [@Espoito1997]:  
 
 - Calculate the expected error rate for each non-leave node if that subtree is pruned
 - Calculate the expected error rate for each non-leave node if that subtree is not pruned
@@ -258,7 +262,7 @@ Based on the above definition, the pruning process is[@Espoito1997]:
 
 ### Regression Tree
 
-Let's look at the process of building a regression tree[@ISLR15]. There are two steps:
+Let's look at the process of building a regression tree [@ISLR15]. There are two steps:
 
 1. Divide predictors space — that is a set of possible values of $X_1,X_2,\dots,X_p$— into $J$ distinct and non-overlapping regions: $R_1,R_2,\dots,R_J$
 2. For every observation that falls into the region $R_j$, the prediction in the mean of the response values for the training observations in $R_j$
@@ -270,8 +274,8 @@ Let's go back to the previous baby example. If we use the variable "Gender" to d
 </center>
 
 ```{r}
-y1=c(156,167,165,163,160,170,160)
-y2=c(172,180,176)
+y1 <- c(156, 167, 165, 163, 160, 170, 160)
+y2 <- c(172, 180, 176)
 ```
 
 The sample average for region $R_1$ is `r mean(y1)`, for region $R_2$ is `r mean(y2)`. For a new observation, if it is female, the model predicts the height to be `r mean(y1)`,  if it is male, the predicted height is `r mean(y2)`. Calculating the mean is easy.  Let's look at the first step in more detail which is to divide the space into $R_1, R_2, \dots, R_J$.
@@ -293,7 +297,7 @@ Next, we continue to search for the split that optimize the RSS. Note that the o
 </center>
 
 
-There are multiple R packages for building regression tree, such as `ctree`, `rpart` and `tree`. `rpart` is widely used for building single tree. The split is based on CART algorithm, using `rpart()` function from the package. There are some parameters that controls the model fitting, such as the minimum number of observations that must exist in a node in order for a split to be attempted,  the minimum number of observations in any leaf node etc. You can can set those parameter using `rpart.control`. 
+There are multiple R packages for building regression tree, such as `ctree`, `rpart` and `tree`. `rpart` is widely used for building a single tree. The split is based on CART algorithm, using `rpart()` function from the package. There are some parameters that controls the model fitting, such as the minimum number of observations that must exist in a node in order for a split to be attempted,  the minimum number of observations in any leaf node etc. You can can set those parameter using `rpart.control`. 
 
 A more convenient way is to use `train()` function in `caret` package. The package can call `rpart()` function and train the model through cross-validation. In this case, the most common parameters are `cp` (complexity parameter) and `maxdepth` (the maximum depth of any node of the final tree). To  tune the complexity parameter, set `method = "rpart"`. To tune the maximum tree depth, set `method = "rpart2"` :
 
@@ -307,7 +311,9 @@ trainx <- dat[, grep("Q", names(dat))]
 # total expenditure = store expenditure + online expenditure
 trainy <- dat$store_exp + dat$online_exp
 set.seed(100)
-rpartTune <- train(trainx, trainy, method = "rpart2", tuneLength = 10, 
+rpartTune <- train(trainx, trainy, 
+                   method = "rpart2", 
+                   tuneLength = 10, 
     trControl = trainControl(method = "cv"))
 plot(rpartTune)
 ```
@@ -354,14 +360,14 @@ trainx1 <- dat[, grep("Q", names(dat))]
 trainx1$segment <- dat$segment
 
 # trainx2: use approach 2, encode it to a set of dummy variables
-dumMod<-dummyVars(
+dumMod <- dummyVars(
   ~.,
-  data=trainx1,
+  data = trainx1,
   # Combine the previous variable and the level name
   # as the new dummy variable name
-  levelsOnly=F
+  levelsOnly = F
   )
-trainx2 <- predict(dumMod,trainx1)
+trainx2 <- predict(dumMod, trainx1)
 # the response variable is gender
 trainy <- dat$gender
 ```
@@ -425,7 +431,7 @@ rpartTune2 <- caret::train(
 
 Compare the results of the two approaches.
 
-```{r}
+```{r, message=FALSE}
 rpartRoc <- pROC::roc(response = rpartTune1$pred$obs,
                 predictor = rpartTune1$pred$Female,
                 levels = rev(levels(rpartTune1$pred$obs)))
@@ -458,7 +464,7 @@ legend(.75, .2,
        pch = c(16, 3))
 ```
 
-You can see that in this case, the two approaches lead to similar model performance. 
+In this case, the two approaches lead to similar model performance. 
 
 Single tree is straightforward and easy to interpret but it has problems:
 
@@ -484,13 +490,13 @@ Assume that there are $n$ independent random variables $Z_1,\dots,Z_n$ with vari
 
 The advantages of bagging tree are:
 
-- Bagging stabilizes the model predictions by averaging the results. If we have 10 bootstrap samples and fit a single tree on each of those, we may get 10 trees with very different structures and leading to different predictions for a new sample. But if we use the average of the 10 predictions as the final prediction, then the result should be much more stable. It means if we have another 10 samples and do it all-over again, we will get very similar averaged prediction.
+- Bagging stabilizes the model predictions by averaging the results. If we have 10 bootstrap samples and fit a single tree on each of those, we may get 10 trees with very different structures and leading to different predictions for a new sample. But if we use the average of the 10 predictions as the final prediction, then the result is much more stable. It means if we have another 10 samples and do it all-over again, we will get very similar averaged prediction.
 
 - Bagging provides more accurate predictions. If the goal is to predict rather than interpret, then the ensemble approach definitely has an advantage, especially for unstable models. However, for stable models (such as regression, MARS), bagging may bring marginal improvement for the model performance.
 
 - Bagging can use out-of-bag samples to evaluate model performance. For each model in the ensemble, we can calculate the value of the model performance metric (you can decide what metric to use). You can use the average of all the out-of-bag performance values to gauge the predictive performance of the entire ensemble. This correlates well with either cross-validation estimates or test set estimates. On average, each tree uses about 2/3 of the samples, and the rest 1/3 is used as out-of-bag. When the number of bootstrap samples is large enough, the out-of-bag performance estimate approximates that from leave one out cross-validation.
 
-You need to choose the number of bootstrap samples. The author of "Applied Predictive Modeling"  [@APM] points out that often people see an exponential decrease in predictive improvement as the number of iterations increases. Most of the predictive power is from a small portion of the trees. Based on their experience, model performance can have small improvements up to 50 bagging iterations. If it is still not satisfying,  they suggest trying other more powerfully predictive ensemble methods such as random forests and boosting which will be described in the following sections.
+You need to choose the number of bootstrap samples. The author of "Applied Predictive Modeling" [@APM] points out that often people see an exponential decrease in predictive improvement as the number of iterations increases. Most of the predictive power is from a small portion of the trees. Based on their experience, model performance can have small improvements up to 50 bagging iterations. If it is still not satisfying, they suggest trying other more powerfully predictive ensemble methods such as random forests and boosting which will be described in the following sections.
 
 The disadvantages of bagging tree are:
 
@@ -519,7 +525,7 @@ Then fit the model using train function in caret package. Here we just set the n
 set.seed(100)
 bagTune <- caret::train(trainx, trainy, 
                            method = "treebag",
-                           nbagg = 2000,
+                           nbagg = 1000,
                            metric = "ROC",
                            trControl = trainControl(method = "cv",
                            summaryFunction = twoClassSummary,
@@ -553,9 +559,9 @@ When building a tree, the algorithm randomly chooses $m$ variables to use at eac
 \State Select the number of trees, B
     \For {i=1 to B}
         \State Generate a bootstrap sample of the original data
-        \State Rrain a tree on this sample
+        \State Train a tree on this sample
             \For {each split}
-                \State Randomly select m（<p）predictors
+                \State Randomly select m (< p) predictors
                 \State Choose the best one out of the $m$ and partition the data
             \EndFor
         \State Use typical tree model stopping criteria to determine when a tree is complete without pruning
@@ -651,7 +657,7 @@ Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm 
 
 As mentioned before, Friedman [@Friedman2000] provided a statistical framework for the AdaBoost algorithm and pointed out that boosting can be considered as a forward stagewise additive model that minimizes exponential loss. The framework led to some generalized algorithms such as Real AdaBoost, Gentle AdaBoost, and LogitBoost. Those algorithms later were unified under a framework called gradient boosting machine. The last section of the chapter illustrates how boosting can be considered as an additive model. 
 
-Consider a 2-class classification problem. You have the response $y \in \{0, 1\}$ and the sample proportion of class 1 from the training set is $p$. $f(x)$ is the model prediction in the range of $[-\infty, +\infty]$ and the predicted event probability is $\hat{p}=\frac{1}{1+exp[-f(x)]}$. The gradient boosting for this problem is as follows:
+Consider a 2-class classification problem. You have the response $y \in \{-1, 1\}$ and the sample proportion of class 1 from the training set is $p$. $f(x)$ is the model prediction in the range of $[-\infty, +\infty]$ and the predicted event probability is $\hat{p}=\frac{1}{1+exp[-f(x)]}$. The gradient boosting for this problem is as follows:
 
 \begin{algorithm}
 \caption{Stochastic gradient boosting for 2-class classification}\label{gbmalgorithm} 
