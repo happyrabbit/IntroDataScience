@@ -21,7 +21,7 @@ lapply(p_needed, require, character.only = TRUE)
 
 ## Tree Basics
 
-The tree-based models can be used for regression and classification. The goal is to stratify or segment the predictor space into a number of sub-regions. For a given observation, use the mean or the mode of the training observations in the sub-region as the prediction. Tree-based methods are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
+The tree-based models can be used for regression and classification. The goal is to stratify or segment the predictor space into a number of sub-regions. For a given observation, use the mean (regression) or the mode (classification) of the training observations in the sub-region as the prediction. Tree-based methods are conceptually simple yet powerful. This type of model is often referred to as Classification And Regression Trees (CART). They are popular tools for many reasons: 
 
 1. Do not require user to specify the form of the relationship between predictors and response
 1. Do not require (or if they do, very limited) data preprocessing and can handle different types of predictors (sparse, skewed, continuous, categorical, etc.)
@@ -37,10 +37,10 @@ The original CART algorithm targets binary classification, and the later algorit
 knitr::include_graphics("images/treeEN.png")
 ```
 
-The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite of a real tree, the root is on the top, and the leaf is on the bottom (figure \@ref(fig:treeexample)). From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide if it will split into branches. The leaf node contains the final "decision"; the class the sample belongs to or the sample's value. Here are the important definitions in the tree model:
+The reason why it is called "tree" is of course because the structure has similarities. But the direction of the decision tree is opposite of a real tree, the root is on the top, and the leaf is on the bottom (figure \@ref(fig:treeexample)). From the root node, a decision tree divides to different branches and generates more nodes. The new nodes are child nodes, and the previous node is the parent node. At each child node, the algorithm will decide whether to continue dividing. If it stops, the node is called a leaf node. If it continues, then the node becomes the new parent node and splits to produce the next layer of child nodes. At each non-leaf node, the algorithm needs to decide if it will split into branches. A leaf node contains the final "decision" on the sample's value. Here are the important definitions in the tree model:
 
 - **Classification tree**: the outcome is discrete 
-- **Regression tree**: the outcome is continuous (e.g. the price of a house, or a patient's length of stay in a hospital)
+- **Regression tree**: the outcome is continuous (e.g. the price of a house)
 - **Non-leaf node (or split node)**: the algorithm needs to decide a split at each non-leaf node  (eg:  age >= 9.5) 
 - **Root node**：the beginning node where the tree starts
 - **Leaf node (or Terminal node)**: the node stops splitting. It has the final decision of the model
@@ -51,7 +51,7 @@ The reason why it is called "tree" is of course because the structure has simila
 - **Child**: the node directly after and connected to another node 
 - **Parent**: the converse notion of a child
 
-Single tree is easy to explain but has high variance and low accuracy, and hence is very limited. Minor changes in the training data can lead to large changes in the fitted tree. A series of rectangular decision regions (figure \@ref(fig:decisionregion)) defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
+A single tree is easy to explain, but it can be very non-robust, which means a slight change in the data can significantly change the fitted tree. The predictive accuracy is not as good as other regression and classification approaches in this book since a series of rectangular decision regions (figure \@ref(fig:decisionregion)) defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
 
 ```{r decisionregion, fig.cap = "Example of decision regions for different types of flowers based on petal length and width. Three different types of flowers are classified using decisions about length and width.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/decisionregion.png")
@@ -63,11 +63,14 @@ The splitting criteria used by the regression tree and the classification tree a
 
 **Gini impurity**
 
-Gini impurity [@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree.  For a two-class problem, the Gini impurity for a given node is defined as:
+Gini impurity [@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree. It is defined as:
+$$Gini\ Index = \Sigma_i p_i(1-p_i)$$
+
+where $p_i$ is the probability of class $i$ and the interval of Gini is $[0, 0.5]$. For a two-class problem, the Gini impurity for a given node is:
 
 $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
-where $p_{1}$ and $p_{2}$ are probabilities for the two classes respectively. It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
+It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
 <center>
 ![](images/giniEN.PNG)
@@ -82,7 +85,7 @@ The Gini impurity for the node "Gender" is the following weighted average of the
 
 $$\frac{3}{5}\times\frac{5}{18}+\frac{2}{5}\times 0=\frac{1}{6}$$
 
-The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is easy to calculate the Gini impurity drop from $\frac{1}{2}$ to $\frac{1}{6}$ after splitting. The split using "gender" causes a Gini impurity decrease of $\frac{1}{3}$.  The algorithm will use different variables to split the data and choose the one that causes the most substantial Gini impurity decrease.
+The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is easy to calculate the Gini impurity drop from $\frac{1}{2}$ to $\frac{1}{6}$ after splitting. The split using "gender" causes a Gini impurity decrease of $\frac{1}{3}$.  The algorithm will use different variables to split the data and choose the one that causes the most substantial Gini impurity decrease. 
 
 **Information gain**
 
@@ -94,9 +97,12 @@ Looking at the samples in the following three nodes, which one is the easiest to
 
 A measure of the degree of disorder is entropy which is defined as:
 
+$$Entropy = - \Sigma_i p_i log_2(p_i)$$
+where $p_i$ is the probability of class $i$ and the interval of entropy is $[0, 1]$. For a two-class problem:
+
 $$Entropy=-plog_{2}p-(1-p)log_{2}(1-p)$$
 
-where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50% - 50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. 
+where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50% - 50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. As an analogy, entropy in physics quantifies the level of disorder and the goal here is to have the least disorder.
 
 Similarly, the entropy of a splitting node is the weighted average of the entropy of each child. In the above tree for the students, the entropy of the root node with all 50 students is  $-\frac{25}{50}log_{2}\frac{25}{50}-\frac{25}{50}log_{2}\frac{25}{50}=1$. Here an entropy of 1 indicates that the purity of the node is the lowest, that is, each type takes up half of the samples.
 
@@ -108,7 +114,7 @@ The entropy of the split using variable "gender" can be calculated  in three ste
 
 So entropy decreases from 1 to 0.39 after the split.
 
-**Sum of Square Error (SSE)**
+**Sum of Squared Error (SSE)**
 
 The previous two metrics are for classification tree.  The SSE is the most widely used splitting metric for regression. Suppose you want to divide the data set $S$ into two groups of $S_{1}$ and $S_{2}$, where the selection of $S_{1}$ and $S_{2}$ needs to minimize the sum of squared errors:  
 
