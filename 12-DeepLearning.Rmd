@@ -402,7 +402,7 @@ For example, for $\beta=0.95$:
 
 $$\begin{array}{c} V_{0}=0 \\ V_{1}=0.05\theta_{1}  \\ V_{2}=0.0475\theta_{1}+0.05\theta_{2}   \end{array} \\ ......$$
 
-The black line in the right plot of figure \@ref(fig:weightedavgplot) is the exponentially weighted averages of simulated temperature data with $\beta = 0.95$. $V_t$ is approximately average over the previous $\frac{1}{1-\beta}$ $\theta$. So $\beta = 0.95$ approximates a 20 days' average.  The red line corresponds to $\beta = 0.8$, which approximates 5 days' average. As $\beta$ increases, it averages over a larger window of the previous values, and hence the curve gets smoother.  A larger $\beta$ also means that it gives the current value $\theta_t$ less weight ($1-\beta$), and the average adapts more slowly. It is easy to see from the plot that the averages at the beginning are more biased. The bias correction can help to achieve a better estimate:
+The black line in the right plot of figure \@ref(fig:weightedavgplot) is the exponentially weighted averages of simulated temperature data with $\beta = 0.95$. $V_t$ is approximately average over the previous $\frac{1}{1-\beta}$ days. So $\beta = 0.95$ approximates a 20 days' average.  The red line corresponds to $\beta = 0.8$, which approximates 5 days' average. As $\beta$ increases, it averages over a larger window of the previous values, and hence the curve gets smoother.  A larger $\beta$ also means that it gives the current value $\theta_t$ less weight ($1-\beta$), and the average adapts more slowly. It is easy to see from the plot that the averages at the beginning are more biased. The bias correction can help to achieve a better estimate:
 
 
 $$V_t^{corrected} = \frac{V_t}{1-\beta^t}$$
