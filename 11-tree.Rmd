@@ -138,7 +138,6 @@ $p_c$ is the proportion of samples in category $c$. For example, there are three
 
 The split information for the birth month is 3.4, and the gain ratio is 0.22, which is smaller than that of gender (0.63). The gain ratio refers to use gender as the splitting feature rather than the birth month. Gain ratio favors attributes with fewer categories and leads to better generalization (less overfitting). 
 
-
 **Sum of Squared Error (SSE)**
 
 The previous two metrics are for classification tree.  The SSE is the most widely used splitting metric for regression. Suppose you want to divide the data set $S$ into two groups of $S_{1}$ and $S_{2}$, where the selection of $S_{1}$ and $S_{2}$ needs to minimize the sum of squared errors:  
@@ -218,7 +217,7 @@ You can limit the tree size by setting some parameters.
 
 **Remove branches**
 
-Another way is to first let the tree grow as much as possible and then go back to remove insignificant branches. The process reduces the depth of the tree. The idea is to overfit the training set and then correct using the testing set. There are different implementations.
+Another way is to first let the tree grow as much as possible and then go back to remove insignificant branches. The process reduces the depth of the tree. The idea is to overfit the training set and then correct using cross-validation. There are different implementations.
 
 - cost/complexity penalty
 
@@ -226,7 +225,7 @@ The idea is that the pruning minimizes the penalized error $SSE_{\lambda}$ with 
 
 $$SSE_{\lambda} = SSE+\lambda \times (complexity)$$
 
-Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the smallest tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization [@Breiman1984].
+Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization [@Breiman1984].
 
 To find the optimal pruning tree, you need to iterate through a series of values of $\lambda$ and calculate the corresponding SSE. For the same $\lambda$, SSE changes over different samples. Breiman et al. suggested using cross-validation [@Breiman1984] to study the variation of SSE under each $\lambda$ value. They also proposed a standard deviation criterion to give the simplest tree: within one standard deviation, find the simplest tree that minimizes the absolute error. Another method is to choose the tree size that minimizes the numerical error [@Hastie2008].
 
@@ -246,9 +245,9 @@ You train a complete tree using the subset (1) and apply the tree on the subset 
 
 This method is to search for a trade-off between error and complexity.  Assume we have a splitting node $t$, and the corresponding subtree $T$. The error cost of the node is defined as:
 
-$$R(t)=r(t)\times p(t)$$
+$$R(t)=r(t)\times p(t) = \frac{misclassified\ sample\ size\ of\ the\ node}{total\ sample\ size}$$
 
-where $r(t)$ is the error rate associate with the node: 
+where $r(t)$ is the error rate associate with the node as if it is a terminal node: 
 
 $$r(t)=\frac{misclassified\ sample\ size\ of\ the\ node}{sample\ size\ of\ the\ node}$$
 
@@ -256,9 +255,9 @@ $p(t)$ is the ratio of the sample of the node to the total sample：
 
 $$p(t)=\frac{ sample\ size\ of\ the\ node}{total\ sample\ size}$$
 
-If we keep note $t$, the error cost of the subtree $T$ is:
+The multiplication $r(t)\times p(t)$ cancels out the sample size of the node. If we keep node $t$, the error cost of the subtree $T$ is:
 
-$$R(T)=\Sigma_{i = no.\ of\ leaves} R(i)$$
+$$R(T)=\Sigma_{i = no.\ of\ leaves\ in\ subtree\ T} R(i)$$
 
 The error-complexity measure of the node is:
 
@@ -296,7 +295,7 @@ Based on the above definition, the pruning process is [@Espoito1997]:
 Let's look at the process of building a regression tree [@ISLR15]. There are two steps:
 
 1. Divide predictors space — that is a set of possible values of $X_1,X_2,\dots,X_p$— into $J$ distinct and non-overlapping regions: $R_1,R_2,\dots,R_J$
-2. For every observation that falls into the region $R_j$, the prediction in the mean of the response values for the training observations in $R_j$
+2. For every observation that falls into the region $R_j$, the prediction is the mean of the response values for the training observations in $R_j$
 
 Let's go back to the previous baby example. If we use the variable "Gender" to divide the observations, we obtain two regions $R_1$ (female) and $R_2$ (male).
 
@@ -375,7 +374,7 @@ Similar to a regression tree, the goal of a classification tree is to stratifyin
 When the predictor is continuous, the splitting process is straightforward. When the predictor is categorical, the process can take different approaches:
 
 1. Keep the variable as categorical and group some categories on either side of the split. In this way, the model can make more dynamic splits but must treat the categorical predictor as an ordered set of bits.
-2. Encode the categorical variable to be a set of binary dummy variables. In this way, the information in the categorical variable is decomposed to independent bits of information. The model considers these dummy variables separately and evaluates for each of these on one split point (because there are only two possible values: 0/1).
+2. Encode the categorical variable to be a set of dummy variables. In this way, the information in the categorical variable is decomposed to independent bits of information. The model considers these dummy variables separately and evaluates for each of these on one split point (because there are only two possible values: 0/1).
 
 When fitting tree models, people need to choose the way to treat categorical predictors. If you know some of the categories have higher predictability, then the first approach may be better. In the rest of this section, we will build tree models using the above two approaches and compare them. 
 
