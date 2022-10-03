@@ -195,6 +195,7 @@ LassoCoef = lassoCoef$coefficients
 
 Many researchers applied lasso to other learning methods, such as linear discriminant analysis [@Clem2011], partial least squares regression[@chun2010]. However, since the $L_1$ norm is not differentiable, optimization for lasso regression is more complicated. People come up with different algorithms to solve the computation problem. The biggest breakthrough is Least Angle Regression (LARS) from Bradley Efron etc. This algorithm works well for lasso regression especially when the dimension is high.
 
+<!--
 ## Variable selection property of the lasso
 
 You may ask why lasso ($L_1$ penalty) has the feature selection property but not the ridge ($L_2$ penalty). To answer that question, let's look at the alternative representations of the optimization problem for lasso and ridge.  For lasso regression, it is identical to optimize the following two functions:
@@ -228,6 +229,7 @@ knitr::include_graphics("images/LassoRidge.png")
 ```
 
 Figure \@ref(fig:lassoridge) illustrates the situations for lasso (left) and ridge (right). The least square estimate is marked as $\hat{\beta}$. The restrictive regions are in grey, the diamond region is for the lasso, the circle region is for the ridge. The least square estimates lie outside the grey region, so they are different from the lasso and ridge estimates. The ellipses centered around $\hat{\beta}$ represent contours of RSS. All the points on a given ellipse share an RSS. As the ellipses expand, the RSS increases. The lasso and ridge estimates are the first points at which an ellipse contracts the grey region. Since ridge regression has a circular restrictive region that doesn't have a sharp point, the intersecting point can't drop on the axis. But it is possible for lasso since it has corners at each of the axes.   When the intersecting point is on an axis, one of the parameter estimates is 0. If p > 2, the restrictive regions become sphere or hypersphere. In that case, when the intersecting point drops on an axis, multiple coefficient estimates can equal 0 simultaneously.
+-->
 
 ## Elastic Net
 

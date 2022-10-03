@@ -1,8 +1,10 @@
 # Model Tuning Strategy {#modeltuningstrategy}
 
-When training a machine learning model, there are many decisions to make. For example, when training a random forest, you need to decide the number of trees and the number of variables at each node. For lasso method, you need to determine the penalty parameter. There may be standard settings for some of the parameters, but it's unlikely to guess the right values for all of these correctly. Other than that, making good choices on how you split the data into training and testing sets can make a huge difference in helping you find a high-performance model efficiently. 
+When training a machine learning model, there are many decisions to make. For example, when training a random forest, you need to decide the number of trees and the number of variables to use at each node. For the lasso method, you need to determine the penalty parameter. Unlike the parameters derived by training (such as the coefficients in a linear regression model), those parameters are used to control the learning process and are called hyperparameters. To train a model, you need to set the value of hyperparameters.
 
-This chapter will illustrate the practical aspects of model tuning. We will talk about different types of model error, sources of model error, hyperparameter tuning, how to set up your data and how to make sure your model implementation is correct.  In practice applying machine learning is a highly iterative process. 
+A common way to make those decisions is to split the data into training and testing sets. Use training data to fit models with different parameter values and apply the fitted models to the testing data. And then, find the hyperparameter value that gives the best testing performance. Data splitting is also used in model selection and evaluation, where you access the correctness of a model on an evaluation set and compare different models to find the best one.  
+
+In practice applying machine learning is a highly iterative process. This chapter will illustrate the practical aspects of model tuning. We will talk about different types of model error, source of model error, hyperparameter tuning, how to set up your data, and how to ensure your model implementation is correct (i.e. model selection and evalutaion). 
 
 Load the R packages first:
 
@@ -34,6 +36,7 @@ where $\symbf{\epsilon}$ is the random error with a mean of zero. The function $
 Depending on the modeling purposes, the requirement for interpretability varies. If the prediction is the only goal, then as long as the prediction is accurate enough,  the interpretability is not under consideration. In this case, people can use "black box" model, such as random forest, boosting tree, neural network and so on. These models are very flexible but nearly impossible to explain. Their accuracy is usually higher on the training set, but not necessary when it predicts. It is not surprising since those models have a huge number of parameters and high flexibility that they can "memorize" the entire training data. A paper by Chiyuan Zhang et al. in 2017 pointed out that "Deep neural networks (even just two-layer net) easily fit random labels" [@rethinkDL]. The traditional forms of regularization, such as weight decay, dropout, and data augmentation, fail to control generalization error. It poses a conceptual challenge to statistical theory and also calls our attention when we use such black-box models. 
 
 There are two kinds of application problems: complete information problem and incomplete information problem. The complete information problem has all the information you need to know the correct response. Take the famous cat recognition, for example, all the information you need to identify a cat is in the picture. In this situation, the algorithm that penetrates the data the most wins. There are some other similar problems such as the self-driving car, chess game, facial recognition and speech recognition. But in most of the data science applications, the information is incomplete. If you want to know whether a customer is going to purchase again or not, it is unlikely to have 360-degree of the customer's information. You may have their historical purchasing record, discounts and service received. But you don't know if the customer sees your advertisement, or has a friend recommends competitor's product, or encounters some unhappy purchasing experience somewhere. There could be a myriad of factors that will influence the customer's purchase decision while what you have as data is only a small part. To make things worse, in many cases, you don't even know what you don't know. Deep learning doesn't have any advantage in solving those problems. Instead, some parametric models often work better in this situation. You will comprehend this more after learning the different types of model error. 
+
 Assume we have $\hat{f}$ which is an estimator of $f$. Then we can further get  $\symbf{\hat{y}}=\hat{f}(\mathbf{X})$. The predicted error is divided into two parts, systematic error, and random error:
 
 \begin{equation}
@@ -46,9 +49,9 @@ E(\mathbf{y}-\hat{\mathbf{y}})^{2} & = & E[f(\mathbf{X})+ \symbf{\epsilon} - \ha
 
 It is also called Mean Square Error (MSE) where (1) is the systematic error. It exists because $\hat{f}$  usually does not entirely describe the "systematic relation" between X and y which refers to the stable relationship that exists across different samples or time. Model improvement can help reduce this kind of error; (2) is the random error which represents the part of y that cannot be explained by X. A more complex model does not reduce the error. There are three reasons for random error:
 
-1. the current sample is not representative, so the pattern in one sample set does not generalize to a broader scale. 
+1. The current sample is not representative, so the pattern in one sample set does not generalize to a broader scale. 
 1. The information is incomplete. In other words, you don't have all variables needed to explain the response. 
-1. Measurement error in the variables. 
+1. There is measurement error in the variables. 
 
 Deep learning has significant success solving problems with complete information and usually low measurement error. As mentioned before, in a task like image recognition, all you need are the pixels in the pictures. So in deep learning applications, increasing the sample size can improve the model performance significantly. But it may not perform well in problems with incomplete information. The biggest problem with the black-box model is that it fits random error, i.e., over-fitting. The notable feature of random error is that it varies over different samples. So one way to determine whether overfitting happens is to reserve a part of the data as the test set and then check the performance of the trained model on the test data. Note that overfitting is a general problem from which any model could suffer. However, since black-box models usually have a large number of parameters,  it is much more suspectable to over-fitting. 
 
@@ -66,11 +69,11 @@ The systematic error $E[f(\mathbf{X})-\hat{f}(\mathbf{X})]^{2}$ can be further d
 (\#eq:biasvariance)
 \end{equation}
 
-The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $Var (\hat{f}(\mathbf{X}))$. To minimize the systematic error, we need to minimize both. The bias represents the error caused by the model's approximation of the reality, i.e., systematic relation, which may be very complex. For example, linear regression assumes a linear relationship between the predictors and the response, but rarely is there a perfect linear relationship in real life. So linear regression is more likely to have a high bias. In general, the more flexible the model is, the higher the variance. However, this does not guarantee complex models will outperform a much simpler one, such as linear regression. If the real relationship $f$ is linear, then linear regression is unbiased. It is difficult for a more flexible model to compete. Good learning method requires low variance and bias. However, it is easy to find a model with extremely low bias but high variance (by fitting a tree) or a method with low variance but high bias (by fitting a straight line). That why we call it trade-off.
+The systematic error consists of two parts,  $Bias(\hat{f}(\mathbf{X}))$ and  $Var (\hat{f}(\mathbf{X}))$. To minimize the systematic error, we need to minimize both. The bias represents the error caused by the model's approximation of the reality, i.e., systematic relation, which may be very complex. For example, linear regression assumes a linear relationship between the predictors and the response, but rarely is there a perfect linear relationship in real life. So linear regression is more likely to have a high bias. Generally, the more flexible the model is, the higher the variance. However, this does not guarantee that complex models will outperform simpler ones, such as linear regression. If the real relationship $f$ is linear, then linear regression is unbiased. It is diﬀicult for a more flexible model to compete. An ideal learning method has low variance and bias. However, it is easy to find a model with a low bias but high variance (by fitting a tree) or a method with a low variance but high bias (by fitting a straight line). That is why we call it a trade-off.  
 
-To explore bias and variance, let's begin with a simple simulation. We will simulate a data with a non-linear relationship and fit different models on it. An intuitive way to show these is to compare the plots of various models. 
+To explore bias and variance, let's begin with a simple simulation. We will simulate data with a non-linear relationship and fit different models using the simulated data. An intuitive way to show these is to compare the plots of various models. 
 
-The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear. You need to load the `multiplot` function by running `source('http://bit.ly/2KeEIg9')`. The function assembles multiple plots on a canvas.  
+The code below simulates one predictor (`x`) and one response variable (`fx`). The relationship between `x` and `fx` is non-linear. You need to load the `multiplot` function by running `source('http://bit.ly/2KeEIg9')`. The function assembles multiple plots on a canvas. 
 
 ```{r}
 source('http://bit.ly/2KeEIg9')
@@ -81,7 +84,7 @@ fx <- sin(x) + e + sqrt(x)
 dat = data.frame(x, fx)
 ```
 
-Then fit a simple linear regression on these data:
+Then fit a linear regression on the data:
 
 ```{r linearbias, fig.cap= "High bias model", out.width="80%", fig.asp=.75, fig.align="center"}
 # plot fitting result
@@ -91,11 +94,11 @@ ggplot(dat, aes(x, fx)) +
     geom_smooth(method = "lm", se = FALSE)
 ```
 
-Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). People also call it underfitting. 
+Despite a large sample size, trained linear regression cannot describe the relationship very well. In other words, in this case, the model has a high bias (Fig. \@ref(fig:linearbias)). It is also called underfitting.
 
-Since the estimated parameters will be somewhat different for different samples, there is the variance of estimates. Intuitively, it gives you some sense that if we fit the same model with different samples (presumably, they are from the same population), how much will the estimates change. Ideally, the change is trivial. For high variance models, small changes in the training data result in very different estimates. In general, a model with high flexibility also has high variance., such as the CART tree, and the initial boosting method. To overcome that problem, the Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained from different samples. 
+Since the estimated parameters will be somewhat different for different samples, there is a variance in estimates. Intuitively, it gives you some sense of the extent to which the estimates would change if we fit the same model with different samples (presumably, they are from the same population). Ideally, the change is trivial. For high variance models, small changes in the training data result in very different estimates. Generally, a model with high flexibility also has high variance, such as the CART tree and the initial boosting method. To overcome that problem, the Random Forest and Gradient Boosting Model aim to reduce the variance by summarizing the results obtained from different samples. 
 
-Let's fit the above data using a smoothing method which is highly flexible and can fit the current data tightly:
+Let's fit the above data using a smoothing method that is highly flexible and can fit the current data tightly:
 
 ```{r linearvar, fig.cap= "High variance model", out.width="80%", fig.asp=.75, fig.align="center", message=FALSE}
 ggplot(dat, aes(x, fx)) + geom_smooth(span = 0.03)
@@ -163,30 +166,32 @@ In general, the variance ($Var(\hat{f}(\mathbf{X}))$) **increases** and the bias
 
 ## Data Splitting and Resampling {#datasplittingresampling}
 
-Those highly adaptable models can model complex relationships. However, they tend to overfit which leads to the poor prediction by learning too much from the data. It means that the model is susceptible to the specific sample used to fit it. When future data is not exactly like the past data, the model prediction may have big mistakes. A simple model like ordinary linear regression tends instead to underfit which leads to a bad prediction by learning too little from the data. It systematically over-predicts or under-predicts the data regardless of how well future data resemble past data. Without evaluating models, the modeler will not know about the problem before the future samples. Data splitting and resampling are fundamental techniques to build sound models for prediction. 
+Those highly adaptable models can model complex relationships. However, they tend to overfit, which leads to a poor prediction by learning too much from the current sample set. Those models are susceptible to the specific sample set used to fit them. The model prediction may be off when future data is unlike past data. Conversely, a simple model, such as ordinary linear regression, tends to underfit, leading to a poor prediction by learning too little from the data. It systematically over-predicts or under-predicts the data regardless of how well future data resemble past data. 
+
+Model evaluation is essential to assess the efficacy of a model. A modeler needs to understand how a model fits the existing data and how it would work on future data. Also, trying multiple models and comparing them is always a good practice. All these need data splitting and resampling.
 
 ### Data Splitting {#datasplitting}
 
-_Data splitting_ is to put part of the data aside as testing set (or Hold-outs, out of bag samples) and use the rest for model training. Training samples are also called in-sample. Model performance metrics evaluated using in-sample are retrodictive, not predictive. 
+_Data splitting_ is to put part of the data aside as an evaluation set (or hold-outs, out-of-bag samples) and use the rest for model tuning. Training samples are also called in-sample. Model performance metrics evaluated using in-sample are retrodictive, not predictive. 
 
-The traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
+Traditional business intelligence usually handles data description. Answer simple questions by querying and summarizing the data, such as:
 
-- What is the monthly sales of a product in 2020?
-- What is the number of visits to our site in the past month?
+- What are the monthly sales of a product in 2020?
+- What is the number of site visits in the past month?
 - What is the sales difference in 2021 for two different product designs? 
 
-There is no need to go through the tedious process of splitting the data, tuning and testing model to answer questions of this kind. Instead, people usually use as complete data as possible and then sum or average the parts of interest. 
+There is no need to go through the tedious process of splitting the data, tuning, and evaluating a model to answer questions of this kind. 
 
-Many models have parameters which cannot be directly estimated from the data, such as  $\lambda$ in the lasso (penalty parameter), the number of trees in the random forest. This type of model parameter is called tuning parameter, and there is no analytical formula available to calculate the optimized value. Tuning parameters often control the complexity of the model. A poor choice can result in over-fitting or under-fitting. A standard approach to estimate tuning parameters is through cross-validation which is a data resampling approach. 
+Some models have hyperparameters (aka. tuning parameters) not derived by training the model, such as the penalty parameter in lasso, the number of trees in a random forest, and the learning rate in deep learning. They often control the model's process, and no analytical formula is available to calculate the optimized value. A poor choice can result in over-fitting, under-fitting, or optimization failure. A standard approach to searching for the best tuning parameters is through cross-validation, which is a data resampling approach. 
 
-To get a reasonable precision of the performance based on a single test set, the size of the test set may need to be large. So a conventional approach is to use a subset of samples to fit the model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
+To get a reasonable performance precision based on a single test set, the size of the test set may need to be large. So a conventional approach is to use a subset of samples to fit the model and use the rest to evaluate model performance. This process will repeat multiple times to get a performance profile. In that sense, resampling is based on splitting. The general steps are:
 
 \begin{algorithm}
 \caption{General resampling steps}\label{resampling} 
 \begin{algorithmic}[1] 
 \State Define a set of candidate values for tuning parameter(s)
+\State Resample data
     \For {Each candidate value in the set}
-        \State Resample data
         \State Fit model
         \State Predict hold-out
         \State Calculate performance
@@ -199,15 +204,19 @@ To get a reasonable precision of the performance based on a single test set, the
 
 ![Parameter Tuning Process](images/ParameterTuningProcess.png){width=80%}
 
-The above is an outline of the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. Ideally, we should evaluate model using samples that were not used to build or fine-tune the model. So it provides an unbiased sense of model effectiveness. When the sample size is large, it is a good practice to set aside part of the samples to evaluate the final model. People use "training" data to indicate samples used to fit or fine-tune the model and "test" or "validation" data set is used to validate performance. 
+The above is an outline of the general procedure to tune parameters. Now let's focus on the critical part of the process: data splitting. Ideally, we should evaluate the model using samples not used to build or fine-tune the model. So it provides an unbiased sense of model effectiveness. When the sample size is large, it is a good practice to set aside part of the samples to evaluate the final model. People use **training data** to indicate the sample set used to fit the model. Use **testing data** to tune hyperparameters and **validation data** to evaluate performance and compare different models. 
 
-The first decision to make for data splitting is to decide the proportion of data in the test set. There are two factors to consider here: (1) sample size; (2) computation intensity. If the sample size is large enough which is the most common situation according to my experience, you can try to use 20%, 30% and 40% of the data as the test set, and see which one works the best. If the model is computationally intense, then you may consider starting from a smaller sample of data to train the model hence will have a higher portion of data in the test set.  Depending on how it performs, you may need to increase the training set. If the sample size is small, you can use cross-validation or bootstrap which is the topic in the next section.  
+Let's focus on data splitting in the model tuning process, where we split data into training and testing sets.
 
-The next decision is to decide which samples are in the test set. There is a desire to make the training and test sets as similar as possible. A simple way is to split data by random sampling which, however, does not control for any of the data attributes, such as the percentage of the retained customer in the data. So it is possible that the distribution of outcomes is substantially different between the training and test sets. There are three main ways to split the data that account for the similarity of resulted data sets. We will describe the three approaches using the clothing company customer data as examples.
+The first decision is the proportion of data in the test set. There are two factors to consider here: (1) sample size; (2) computation intensity. Suppose the sample size is large enough, which is the most common situation according to my experience. In that case, you can try using 20%, 30%, and 40% of the data as the test set and see which works best. If the model is computationally intense, you may consider starting from a smaller subset to train the model and hence have a higher portion of data in the test set. You may need to increase the training set depending on how it performs. If the sample size is small, you can use cross-validation or bootstrap, which is the topic of the next section. 
+
+The next is to decide which samples are in the test set. There is a desire to make the training and test sets as similar as possible. A simple way is to split data randomly, which does not control for any data attributes. However, sometimes we may want to ensure that training and testing data have a similar outcome distribution. For example, suppose you want to predict the likelihood of customer retention. In that case, you want two data sets with a similar percentage of retained customers. 
+
+There are three main ways to split the data that account for the similarity of resulted data sets. We will describe the three approaches using the clothing company's customer data as examples.
 
 (1) Split data according to the outcome variable 
 
-Assume the outcome variable is customer segment (column `segment`) and we decide to use 80% as training and 20% test. The goal is to make the proportions of the categories in the two sets as similar as possible. The `createDataPartition()` function in `caret` will return a balanced splitting based on assigned variable.
+Assume the outcome variable is customer segment (column `segment`), and we decide to use 80% as training and 20% as testing. The goal is to make the proportions of the categories in the two sets as similar as possible. The `createDataPartition()` function in `caret` will return a balanced splitting based on assigned variable.
 
 ```{r}
 # load data
