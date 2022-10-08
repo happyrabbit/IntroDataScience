@@ -43,7 +43,7 @@ options(
 
 # Preface{-}
 
-During the early years of our career as data scientists, we were bewildered by all kinds of data science hype. There is a lack of definition of many basic terminologies such as "big data," "artificial intelligence," and "data science." How big is big data? What is data science? What is the difference between the sexy title "Data Scientist" and the traditional "Data Analyst?" The term data science stirs so many associations such as machine learning, deep learning, data mining, pattern recognition. All those struck us as confusing and vague as real-world data scientists! However, we always feel something tangible in data science applications, and it has been developing very fast. After applying data science for many years, we now have a much better idea about data science in general. This book is our endeavor to make data science a more concrete and legitimate field. In addition to "hard" technical aspects, the book also covers soft skills and career development in data science. 
+During the early years of our career as data scientists, we were bewildered by all kinds of data science hype. There is a lack of definition of many basic terminologies such as "big data," "artificial intelligence," and "data science." How big is big data? What is data science? What is the difference between the sexy title "Data Scientist" and the traditional "Data Analyst?" The term data science stirs so many associations such as machine learning (ML), deep learning (DL), data mining, pattern recognition. All those struck us as confusing and vague as real-world data scientists! However, we always feel something tangible in data science applications, and it has been developing very fast. After applying data science for many years, we now have a much better idea about data science in general. This book is our endeavor to make data science a more concrete and legitimate field. In addition to "hard" technical aspects, the book also covers soft skills and career development in data science. 
 
 ## Goal of the Book {-}
 
@@ -77,24 +77,17 @@ There are many existing data science books, including:
 
 As data science fields are fast-growing, we did not find a book covering all the contents we feel are essential for a data scientist. The following table compares the data science books mentioned above with this book for contents in Big Data (Spark), R Code, Python Code, Data Preprocessing, Deep Learning, ML models, Career Path, and Project Cycles. We use 0 for not covered, 1 for minimal coverage, 2 for some coverage, and 3 for extensive coverage.
 
-| Author     | Big Data (Spark) | R Code | Python Code | Data Preprocessing | Deep Learning | ML Models | Career Path | Project Cycle |
-|------------|------------------|--------|-------------|------------|---------------|-----------|-------------|---------------|
-| Lin and Li | 3                | 3      | 3           | 3          | 3             | 3         | 3           | 3             |
-| Saltz      | 1                | 3      | 0           | 1          | 0             | 3         | 0           | 0             |
-| Shah       | 0                | 3      | 3           | 1          | 0             | 3         | 1           | 0             |
-| Irizarry   | 0                | 3      | 0           | 3          | 0             | 3         | 0           | 0             |
-| Robinson   | 0                | 0      | 0           | 0          | 0             | 0         | 3           | 3             |
-| Kelleher   | 1                | 0      | 0           | 1          | 0             | 2         | 3           | 3             |
-| Cady       | 0                | 0      | 3           | 3          | 0             | 3         | 1           | 1             |
-| Grus       | 1                | 0      | 3           | 2          | 3             | 3         | 1           | 0             |
+```{r bookcoverage, out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/preface_coverage.png")
+```
 
 The book is organized as the following. 
 
 - **Chapters 1-3** discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
 - **Chapter 4** introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
 - **Chapters 5-6** cover the essential skills to prepare the data for further analysis and modeling, i.e., data preprocessing and wrangling.
-- **Chapter 7** illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters'. 
-- **Chapters 8-14** introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
+- **Chapter 7** illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters. 
+- **Chapters 8-12** introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
 
 ## Who This Book Is For {-}
 
@@ -115,16 +108,16 @@ This book uses R in the main text and provides most of the Python codes on GitHu
 
 **Use R code.** You should be able to repeat the R code in your local R console or RStudio in all the chapters except for Chapter \@ref(bigdatacloudplatform). The code in each chapter is self-sufficient, and you don't need to run the code in previous chapters first to run the code in the current chapter. For code within a chapter, you do need to run from the beginning.  At the beginning of each chapter, there is a code block for installing and loading all required packages. We also provide the `.rmd` notebooks that include the code to make it easier for you to repeat the code.  Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. 
 
-To repeat the code on big data and cloud platforms [chapter \@ref(bigdatacloudplatform)], you need to use Databricks, a cloud data platform. We use Databricks because:
+To repeat the code on big data and cloud platform part in Chapter \@ref(bigdatacloudplatform), you need to use Databricks, a cloud data platform. We use Databricks because:
 
-- It provides a user-friendly web-based notebook environment that can create a Spark cluster on the fly to run R/Python/Scala/SQL scripts
-- It has a free community edition that is convenient for teaching purpose
+- It provides a user-friendly web-based notebook environment that can create a Spark cluster on the fly to run R/Python/Scala/SQL scripts.
+- It has a free community edition that is convenient for teaching purpose.
 
 Follow the instructions in section \@ref(CloudEnvironment) on the process of setting up and using the spark environment.
 
 **Use Python code.** We provide python notebooks for all the chapters on GitHub. Refer to this page http://bit.ly/3r7cV4s for a table with the links to the notebooks. Like R notebooks, you should be able to repeat all notebooks in your local machine except for Chapter \@ref(bigdatacloudplatform) with reasons stated above. An easy way to repeat the notebook is to import and run in Google Colab. To use Colab, you only need to log in to your Google account in Chrome Browser. To load the notebook to your colab, you can do any of the following:
 
-- Click the ''Open in Colab" icon on the top of each linked notebook using the Chrome Brower. It should load the notebook and open it in your Colab. 
+- Click the "Open in Colab" icon on the top of each linked notebook using the Chrome Brower. It should load the notebook and open it in your Colab. 
 
 ```{r, echo=FALSE, fig.align='center', out.width="35%"}
 knitr::include_graphics("images/colabicon.png")
@@ -146,21 +139,16 @@ To repeat the code for big data, like running R notebook, you need to set up Spa
 
 If you want to dive deeper into some of the book's topics, there are many places to learn more.
 
-- For machine learning, Python Machine Learning 3rd Edition by Raschka and Mirjalili is a good book on implementing machine learning in Python. Apply Predictive Modeling by Kuhn and Johnston is an applied, practitioner-friendly text using R package `caret` . 
+- For machine learning, Python Machine Learning 3rd Edition by Raschka and Mirjalili is a good book on implementing machine learning in Python. Apply Predictive Modeling by Kuhn and Johnston is an applied, practitioner-friendly textbook using R package `caret` . 
 
 - For statistics models in R, a recommended book is An Introduction to Statistical Learning (ISL) by James, Witten, Hastie, and Tibshirani. A more advanced treatment of the topics in ISL is The Elements of Statistical Learning by  Friedman, Tibshirani, and Hastie. 
 
+<!--
 ## Acknowledgements  {-}
+-->
 
 # About the Authors {-}
 
-**Hui Lin** is currently a Quant Researcher at Google. Before joining Google, Hui held
-different roles in data science. She was the head of data science at Netlify where she built
-and led the data science team and a Data Scientist at DuPont where she did a broad range
-of predictive analytics and market research analysis. She is the co-founder of Central
-Iowa R User Group, blogger of https://scientistcafe.com/, and 2018 Program Chair of
-ASA Statistics in Marketing Section. She enjoys making analytics accessible to a broad
-audience and teaches tutorials and workshops for practitioners on data science. She holds
-MS and Ph.D. in statistics from Iowa State University.
+**Hui Lin** is currently a Lead Quantitative Researcher at Shopify. She holds MS and Ph.D. in statistics from Iowa State University. Hui had experience across different industries (traditional and high-tech, early startups, and big corporations). She worked as a marketing data scientist at DuPont; the first data hire at Netlify to build a data science team, and a quantitative UX researcher at Google. She is the blogger of https://scientistcafe.com/ and the 2023 Chair of ASA Statistics in Marketing Section. 
 
-**Ming Li** is currently a Senior Research Scientist at Amazon and an Adjunct Instructor of University of Washington. He was the Chair of Quality & Productivity Section of American Statistical Association for 2017. He was a Data Scientist at Walmart and a Statistical Leader at General Electric Global Research Center. He obtained his Ph.D. in Statistics from Iowa State University at 2010. With deep statistics background and a few years’ experience in data science, he has trained and mentored numerous junior data scientist with different background such as statistician, programmer, software developer and business analyst. He was also an instructor of Amazon’s internal Machine Learning University and was one of the key founding members of Walmart’s Analytics Rotational Program.
+**Ming Li** is currently a Research Science Manager at Amazon and an Adjunct Instructor of University of Washington. He was the Chair of Quality & Productivity Section of American Statistical Association for 2017. He was a Data Scientist at Walmart and a Statistical Leader at General Electric Global Research Center. He obtained his Ph.D. in Statistics from Iowa State University at 2010. With deep statistics background and a few years’ experience in data science, he has trained and mentored numerous junior data scientist with different background such as statistician, programmer, software developer and business analyst. He was also an instructor of Amazon’s internal Machine Learning University and was one of the key founding members of Walmart’s Analytics Rotational Program.

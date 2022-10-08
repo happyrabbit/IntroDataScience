@@ -23,7 +23,7 @@ lapply(p_needed, require, character.only = TRUE)
 
 **MSE and RMSE**
 
-Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values and the actual value. The Root Mean Squared Error (RMSE) is the root square of the MSE. 
+Mean Squared Error (MSE) measures the average of the squares of the errors—that is, the average squared difference between the estimated values ($\hat{y}_{i}$) and the actual value ($y_i$). The Root Mean Squared Error (RMSE) is the root square of the MSE. 
 
 $$MSE=\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}$$
 $$RMSE=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}}$$
@@ -37,11 +37,18 @@ fit<- lm(formula = income ~ store_exp + online_exp + store_trans +
 summary(fit)
 ```
 
-The fitted results `fit` shows the RMSE is `r as.integer(round(summary(fit)$sigma,0))` (at the bottom of the output after `Residual standard error:`).
+You can calculate the RMSE:
+```{r}
+y <- sim.dat$income
+yhat <- predict(fit, sim.dat)
+MSE <- mean((y - yhat)^2, na.rm = T )
+RMSE <- sqrt(MSE)
+RMSE
+```
 
-Another common performance measure for the regression model is R-Squared, often denoted as $R^2$. It is the square of the correlation between the fitted value and the observed value. It is often explained as the percentage of the information in the data that can be explained by the model. The above model returns a R-squared＝`r round(summary(fit)$adj.r.squared,2)`, which indicates the model can explain `r round((summary(fit)$adj.r.squared)*100,0)`% of the variance in variable `income`.  While $R^2$ is easy to explain, it is not a direct measure of model accuracy but correlation. Here the $R^2$ value is not low but the RMSE is  `r round(summary(fit)$adj.r.squared,2)`  which means the average difference between model fitting and the observation is  `r round(summary(fit)$sigma,0)`. It is a big discrepancy from an application point of view. When the response variable has a large scale and high variance, a high $R^2$ doesn't mean the model has enough accuracy. It is also important to remember that $R^2$ is dependent on the variation of the outcome variable. If the data has a response variable with a higher variance, the model based on it tends to have a higher $R^2$.
+Another common performance measure for the regression model is R-Squared, often denoted as $R^2$. It is the square of the correlation between the fitted value and the observed value. It is often explained as the percentage of the information in the data that the model can explain. The above model returns an R-squared＝ 0.602, which indicates the model can explain 60.2% of the variance in variable `income`. While $R^2$ is easy to explain, it is not a direct measure of model accuracy but correlation. Here the $R^2$ value is not low, but the RMSE is  `r RMSE`  which means the average difference between model fitting and the observation is  `r RMSE`. It may be a significant discrepancy from an application point of view. A high $R^2$ doesn't guarantee that the model has enough accuracy. 
 
-We used $R^2$ to show the impact of the error from independent and response variables in Chapter \@ref(modeltuningstrategy) where we didn't consider the impact of the number of parameters (because the number of parameters is very small compared to the number of observations).  However, $R^2$ increases as the number of parameters increases. So people usually use Adjusted R-squared which is designed to mitigate the issue. The original $R^2$ is defined as: 
+We used $R^2$ to show the impact of the error from independent and response variables in Chapter \@ref(modeltuningstrategy) where we didn't consider the impact of the number of parameters (because the number of parameters is very small compared to the number of observations). However, $R^2$ increases as the number of parameters increases. So people usually use adjusted R-squared, which is designed to mitigate the issue. The original $R^2$ is defined as:
 
 $$R^{2}=1-\frac{RSS}{TSS}$$
 
