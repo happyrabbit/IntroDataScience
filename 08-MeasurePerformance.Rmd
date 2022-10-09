@@ -250,8 +250,8 @@ Let's plot the lift charts to compare the predicted outbreak probability (`model
 modelscore <- yhatprob[ ,2]
 # randomly sample from a uniform distribution
 randomscore <- runif(length(yTest))
-labs <- c(modelscore="Random Forest Prediction",
-        randomscore="Random Number")
+labs <- c(modelscore = "Random Forest Prediction",
+        randomscore = "Random Number")
 liftCurve <- caret::lift(yTest ~ modelscore + randomscore,
                   class = "1", 
                   labels = labs)
@@ -259,7 +259,7 @@ xyplot(liftCurve, auto.key = list(columns = 2, lines = T, points = F))
 ```
 
 
-The x-axis is the percentage of samples tested and the y-axis is the percentage of positive samples that are detected by the model. For example, the point on the curve of random forest prediction, （`r liftCurve$data$CumTestedPct[10]`, `r round(liftCurve$data$Sn[10]*100,2)`）, indicates that if you order the testing samples by the predicted probability from high to low, the top `r liftCurve$data$CumTestedPct[10]`% of the samples contain `r liftCurve$data$Sn[10]`% of the total positive outcomes. 
+The x-axis is the percentage of samples tested and the y-axis is the percentage of positive samples that are detected by the model. For example, the point on the curve of random forest prediction, （`r liftCurve$data$CumTestedPct[10]`, `r round(liftCurve$data$Sn[10]*100,2)`）, indicates that if you order the testing samples by the predicted probability from high to low, the top `r liftCurve$data$CumTestedPct[10]`% of the samples contain `r round(liftCurve$data$Sn[10]*100, 0)`% of the total positive outcomes. 
 
 Similar to the ROC curve, we can choose the model by comparing their lift charts. Some parts of the lift curves may be more interesting than the rest.  For example, if you only have a budget to clean 50% of the farms, then you should pick the model that gives the highest point when the x-axis is 50%.
 
