@@ -5,7 +5,7 @@ output:
 ---
 
 # Deep Learning {#deeplearning}
- 
+
 With everyday applications in language, voice, image, and automatic driving cars, deep learning has become a popular concept to the general public in the past few years. However, many of the concepts of deep learning started as early as the 1940s. For example, the binary perceptron classifier, invented in the late 1950s, uses a linear combination of input signals and a step activation function. This is the same as a single neuron in a modern deep learning network that uses the same linear combination of input signals from neurons at the previous layer and a more efficient nonlinear activation function. The perceptron model was further defined by minimizing the classification error and trained by using one data point at a time to update the model parameters during the optimization process. Modern neural networks are trained similarly by minimizing a loss function but with more modern optimization algorithms such as stochastic gradient descent and its variations.
 
 Even though the theoretical foundation of deep learning has been continually developed in the past few decades, real-world applications of deep learning are fairly recent due to some real world constraints: data, network structure, algorithm, and computation power.
@@ -32,7 +32,7 @@ With hundreds of thousands of parameters in the model, deep learning is easy to 
 
 **Computation Power**
 
-With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processor (CPU). 
+With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processor (CPU).
 
 With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demonstrate deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
 
@@ -43,7 +43,7 @@ In summary, deep learning has not just developed in the past few years but have 
 
 Before moving onto neural networks, let us start with a broader framework, Projection Pursuit Regression (PPR). It has a form of **additive model** of the derived features rather than the inputs themselves. Another widely used algorithm, AdaBoost, also fits an additive model in a base learner.
 
-Assume $\mathbf{X^{T}}=(X_1,X_2,\dots,X_p)$ is a vector with $p$ variables. $Y$ is the corresponding response variable. $\mathbf{\omega_{m}},m=1,2,\dots,M$ is parameter vector with $p$ elements. 
+Assume $\mathbf{X^{T}}=(X_1,X_2,\dots,X_p)$ is a vector with $p$ variables. $Y$ is the corresponding response variable. $\mathbf{\omega_{m}},m=1,2,\dots,M$ is parameter vector with $p$ elements.
 
 $$f(\mathbf{X})=\sum_{m=1}^{M}g_{m}(\mathbf{\omega_{m}^{T}X})$$
 
@@ -70,7 +70,7 @@ library(plot3D)
 # x1 are identical rows in x2 are identical mesh() is
 # funciton from plot3D package you may need to think a
 # little here
-M <- mesh(seq(-13.2, 13.2, length.out = 50), seq(-37.4, 
+M <- mesh(seq(-13.2, 13.2, length.out = 50), seq(-37.4,
     37.4, length.out = 50))
 x1 <- M$x
 x2 <- M$y
@@ -79,28 +79,28 @@ v <- (1/2) * x1 + (sqrt(3)/2) * x2
 # apply g() on v
 g1 <- 1/(1 + exp(-v))
 par(mfrow = c(2, 2), mar = c(0, 0, 1, 0))
-surf3D(x1, x2, g1, colvar = g1, border = "black", colkey = FALSE, 
+surf3D(x1, x2, g1, colvar = g1, border = "black", colkey = FALSE,
     box = FALSE, main = "Setting 1")
 ## setting 2
 v <- x1
 g2 <- (v + 5) * sin(1/(v/3 + 0.1))
-surf3D(x1, x2, g2, colvar = g2, border = "black", colkey = FALSE, 
+surf3D(x1, x2, g2, colvar = g2, border = "black", colkey = FALSE,
     box = FALSE, main = "Setting 2")
 ## setting 3
 v <- x2
 g3 <- exp(v^2/5)
-surf3D(x1, x2, g3, colvar = g3, border = "black", colkey = FALSE, 
+surf3D(x1, x2, g3, colvar = g3, border = "black", colkey = FALSE,
     box = FALSE, main = "Setting 3")
 ## setting 4
 v <- x1
 g4 <- (v + 0.1) * sin(1/(v/3 + 0.1))
-surf3D(x1, x2, g4, colvar = g4, border = "black", colkey = FALSE, 
+surf3D(x1, x2, g4, colvar = g4, border = "black", colkey = FALSE,
     box = FALSE, main = "Setting 4")
 ```
 
-You can see that this framework is very flexible. In essence, it is to do a non-linear transformation of the linear combination. You can use this way to capture varies of relationships. For example,$x_{1}x_{2}$ can be written as $\frac{(x_{1}+x_{2})^{2}-(x_{1}-x_{2})^{2}}{4}$, where $M=2$. All the higher order factors of $x_1$ and $x_2$ can be represented similarly. If $M$ is large enough, this framework can approximate any continuous function on $\mathbb{R}^{p}$. So the model family covers a board area, but with a price. That is the interpretability. Because the number of parameters increases with M and the mode is nested. 
+You can see that this framework is very flexible. In essence, it is to do a non-linear transformation of the linear combination. You can use this way to capture varies of relationships. For example,$x_{1}x_{2}$ can be written as $\frac{(x_{1}+x_{2})^{2}-(x_{1}-x_{2})^{2}}{4}$, where $M=2$. All the higher order factors of $x_1$ and $x_2$ can be represented similarly. If $M$ is large enough, this framework can approximate any continuous function on $\mathbb{R}^{p}$. So the model family covers a board area, but with a price. That is the interpretability. Because the number of parameters increases with M and the mode is nested.
 
-PPR in 1981 was a new idea then which lead to the debut of the neural network model. The basic technical idea behind deep learning has been around for decades. However, why did they take off in recent years? Here are some main drivers behind the rise. 
+PPR in 1981 was a new idea then which lead to the debut of the neural network model. The basic technical idea behind deep learning has been around for decades. However, why did they take off in recent years? Here are some main drivers behind the rise.
 
 First, thanks to the digitalization where lots of human activities are now in the digital realm and captured as data. So in the last 10 year, for many problems, we went from having a relatively small amount of data to accumulating a large amount of data. The traditional learning algorithms, like Logistic Regression, Support Vector Machine, Random Forest cannot effectively take advantage of such big data.  Second, the increasing computation power enables us to train a large neural network either on a CPU or GPU using big data. The scale of data and computation ability lead to much progress, but tremendous algorithmic innovation is also an important driver. Many of the innovations are about speeding up the optimization of neural network. One of the examples is to use ReLU as intermediate layer activation function instead of the previous sigmoid function. The change has made the optimization process much faster because the previous sigmoid function suffers from vanishing gradient. We will talk more about that in the following sections. Here we just want to show an example of the impact of algorithmic innovation.  
 
@@ -108,7 +108,7 @@ First, thanks to the digitalization where lots of human activities are now in th
 
 ### Logistic Regression as Neural Network {#logisticregasneuralnetwork}
 
-Let's look at logistic regression from the lens of the neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have: 
+Let's look at logistic regression from the lens of the neural network. For a binary classification problem, for example spam classifier, given $m$ samples $\{(x^{(1)}, y^{(1)}),(x^{(2)}, y^{(2)}),...,(x^{(m)}, y^{(m)})\}$, we need to use the input feature $x^{(i)}$ (they may be the frequency of various words such as "money", special characters like dollar signs, and the use of capital letters in the message etc.) to predict the output $y^{(i)}$ (if it is a spam email). Assume that for each sample $i$, there are $n_{x}$ input features. Then we have:
 
 \begin{equation}
 X=\left[\begin{array}{cccc}
@@ -167,7 +167,7 @@ First initialize $w_1$, $w_2$, ... , $w_{n_x}$, and $b$. Then plug in the initia
     $$w := w - \gamma \frac{\partial J}{\partial w}$$
     $$b := b - \gamma \frac{\partial J}{\partial b}$$
 
-Repeat the forward and backward process using the updated parameter until the cost $J$ stabilizes. 
+Repeat the forward and backward process using the updated parameter until the cost $J$ stabilizes.
 
 ### Deep Neural Network {#deepneuralnetwork}
 
@@ -185,7 +185,7 @@ knitr::include_graphics("images/onelayerNN.png")
 
 **From input to the first hidden layer**
 
-Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$. 
+Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$.
 
 **From the first hidden layer to the output**
 
@@ -223,7 +223,7 @@ Z^{[1]}=W^{[1]}X+b^{[1]} & \ \ \sigma^{[1]}(Z^{[1]})=A^{[1]}\\
 Z^{[2]}=W^{[2]}A^{[1]}+b^{[2]} & \ \ \ \ \ \sigma^{[2]}(Z^{[2]})=A^{[2]}=\hat{Y}
 \end{array}$$
 
-where 
+where
 $$X=\left[\begin{array}{cccc}
 | & | &  & |\\
 x^{(1)} & x^{(1)} & \cdots & x^{(m)}\\
@@ -242,7 +242,7 @@ z^{[l](1)} & z^{[l](1)} & \cdots & z^{[l](m)}\\
 | & | &  & |
 \end{array}\right]_{l=1\ or\ 2}$$
 
-You can add layers like this to get a deeper neural network as shown in the bottom right of figure \@ref(fig:ffnn). 
+You can add layers like this to get a deeper neural network as shown in the bottom right of figure \@ref(fig:ffnn).
 
 ### Activation Function {#activationfunction}
 
@@ -254,15 +254,15 @@ We have used the sigmoid (or logistic) activation function. The function is S-sh
 ```{r activationsigmoid, fig.cap = "Sigmoid Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 z = seq(-8, 8, 0.1)
 fz = 1/(1 + exp(-z))
-plot(z, fz, type = "l", col = "blue", 
+plot(z, fz, type = "l", col = "blue",
      ylab = expression(paste(sigma, "(z)")))
 # main = expression(paste(sigma,'(z) =
 # ',frac(1,1+e^{-z}),sep='') )
-text(x = -5, y = 0.8, labels = expression(paste(sigma, "(z) = ", 
+text(x = -5, y = 0.8, labels = expression(paste(sigma, "(z) = ",
     frac(1, 1 + e^{-z}), sep = "")))
 ```
 
-When the output has more than 2 categories, people use softmax function as the output layer activation function. 
+When the output has more than 2 categories, people use softmax function as the output layer activation function.
 
 \begin{equation}
 f_i(\mathbf{z}) = \frac{e^{z_i}}{\Sigma_{j=1}^{J} e^{z_j} }
@@ -288,7 +288,7 @@ fz_tanh = (exp(z) - exp(-z))/(exp(z)+exp(-z))
 plot(z, fz_tanh, type = "l",
      col="blue",
      ylab= "")
-#     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') ) 
+#     main = expression(paste(sigma,"(z) = ",frac(1,1+e^{-z}),sep='') )
 text(x = -5, y = 0.5,labels = expression(paste("tanh(z) = ",frac(e^{z} - e^{-z},e^{z} + e^{-z}),sep='') ))
 ```
 
@@ -355,15 +355,15 @@ For the output layer:
 - When there are multiple classes, use softmax function with categorical cross-entropy as loss function
 - When the response is continuous, use identity function (i.e. y = x)
 
-### Optimization 
+### Optimization
 
 So far, we have introduced the core components of deep learning architecture, layer, weight, activation function, and loss function. With the architecture in place, we need to determine how to update the network based on a loss function (a.k.a. objective function). In this section, we will look at variants of optimization algorithms that will improve the training speed.
 
 #### Batch, Mini-batch, Stochastic Gradient Descent
 
-**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logisticregasneuralnetwork).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD. 
+**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logisticregasneuralnetwork).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD.
 
-In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. **Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set. 
+In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. **Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set.
 
 $$\begin{array}{ccc} x= & [\underbrace{x^{(1)},x^{(2)},\cdots,x^{(1000)}}/ & \cdots/\cdots x^{(m)}]\\ (n_{x},m) & mini-batch\ 1 \end{array}$$
 
@@ -375,17 +375,17 @@ $$\begin{array}{ccc} y= & [\underbrace{y^{(1)},y^{(2)},\cdots,y^{(1000)}}/ & \cd
 
 #### Optimization Algorithms
 
-In the history of deep learning, researchers proposed different optimization algorithms and showed that they worked well in a specific scenario.  But the optimization algorithms didn't generalize well to a wide range of neural networks.  So you will need to try different optimizers in your application. We will introduce three commonly used optimizers here, and they are all based on something called exponentially weighted averages. To understand the intuition behind it, let's look at a hypothetical example shown in figure \@ref(fig:weightedagv). 
+In the history of deep learning, researchers proposed different optimization algorithms and showed that they worked well in a specific scenario.  But the optimization algorithms didn't generalize well to a wide range of neural networks.  So you will need to try different optimizers in your application. We will introduce three commonly used optimizers here, and they are all based on something called exponentially weighted averages. To understand the intuition behind it, let's look at a hypothetical example shown in figure \@ref(fig:weightedagv).
 
 ```{r weightedagv, fig.cap = "The intuition behind the weighted average gradient", out.width="60%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/weighted_agv.png")
 ```
 
-We have two parameters, b and w.  The blue dot represents the current parameter value, and the red point is the optimum value we want to reach.  The current value is close to the target vertically but far away horizontally. In this situation, we hope to have slower learning on b and faster learning on w. A way to adjust is to use the average of the gradients from different iterations instead of the current iteration to update the parameter. Vertically, since the current value is close to the target value of parameter b, the gradient of b is likely to jump between positive and negative values.  The average tends to cancel out the positive and negative derivatives along the vertical direction and slow down the oscillations. Horizontally, since it is still further away from the target value of parameter w, all the gradients are likely pointing in the same direction.  Using an average won't have too much impact there. That is the fundamental idea behind many different optimizers:  adjust the learning rate using a weighted average of various iterations' gradients. 
+We have two parameters, b and w.  The blue dot represents the current parameter value, and the red point is the optimum value we want to reach.  The current value is close to the target vertically but far away horizontally. In this situation, we hope to have slower learning on b and faster learning on w. A way to adjust is to use the average of the gradients from different iterations instead of the current iteration to update the parameter. Vertically, since the current value is close to the target value of parameter b, the gradient of b is likely to jump between positive and negative values.  The average tends to cancel out the positive and negative derivatives along the vertical direction and slow down the oscillations. Horizontally, since it is still further away from the target value of parameter w, all the gradients are likely pointing in the same direction.  Using an average won't have too much impact there. That is the fundamental idea behind many different optimizers:  adjust the learning rate using a weighted average of various iterations' gradients.
 
 **Exponentially Weighted Averages**
 
-Before we get to more sophisticated optimization algorithms that implement this idea, let's first introduce the basic weighted moving average framework. 
+Before we get to more sophisticated optimization algorithms that implement this idea, let's first introduce the basic weighted moving average framework.
 
 Suppose we have the following 100 days' temperature data:
 
@@ -430,7 +430,7 @@ theta = round(theta, 0)
 
 par(mfrow=c(1,2))
 plot(day, theta, cex = 0.5, pch = 3, ylim = c(0, 100),
-     main = "Without Correction", 
+     main = "Without Correction",
      xlab = "Days", ylab = "Tempreture")
 
 beta1 = 0.95
@@ -439,7 +439,7 @@ beta3 = 0.5
 
 exp_weight_avg = function(beta, theta) {
   v = rep(0, length(theta))
-  
+
   for (i in 1:length(theta)) {
     if (i == 1) {
       v[i] = (1 - beta) * theta[i]
@@ -458,13 +458,13 @@ lines(day, v1, col = 1)
 lines(day, v2, col = 2)
 lines(day, v3, col = 3)
 legend("bottomright",
-       paste0(c("beta1=","beta2=","beta3="), 
+       paste0(c("beta1=","beta2=","beta3="),
               c(beta1, beta2, beta3)), col = c(1:3),
        lty = 1)
 
 exp_weight_avg_correct = function(beta, theta) {
   v = rep(0, length(theta))
-  
+
   for (i in 1:length(theta)) {
     if (i == 1) {
       v[i] = (1 - beta) * theta[i]
@@ -489,7 +489,7 @@ lines(day, v2_correct, col = 5)
 lines(day, v3_correct, col = 6)
 legend("bottomright",
        paste0(c("beta1=","beta2=","beta3="),
-              c(beta1, beta2, beta3)), 
+              c(beta1, beta2, beta3)),
        col = c(4:6), lty = 1)
 ```
 
@@ -498,33 +498,33 @@ How do we apply the exponentially weighted average to optimization? Instead of u
 **Momentum**
 
 The momentum algorithm uses the exponentially weighted average of gradients to update the parameters. On iteration t, compute dw, db using samples in one mini-batch and update the parameters as follows:
- 
+
 $$V_{dw} = \beta V_{dw}+(1-\beta)dw$$
 
 $$V_{db} = \beta V_{db}+(1-\beta)db$$
 
 $$w=w-\alpha V_{dw};\ \ b=b-\alpha V_{db}$$
 
-The learning rate $\alpha$ and weighted average parameter $\beta$ are hyperparameters. The most common and robust choice is $\beta = 0.9$. This algorithm does not use the bias correction because the average will warm up after a dozen iterations and no longer be biased.  The momentum algorithm, in general, works better than the original gradient descent without any average. 
+The learning rate $\alpha$ and weighted average parameter $\beta$ are hyperparameters. The most common and robust choice is $\beta = 0.9$. This algorithm does not use the bias correction because the average will warm up after a dozen iterations and no longer be biased.  The momentum algorithm, in general, works better than the original gradient descent without any average.
 
 **Root Mean Square Propagation (RMSprop)**
 
-The Root Mean Square Propagation (RMSprop) is another algorithm that applies the idea of exponentially weighted average. On iteration t, compute dw and db using the current mini-batch. Instead of V, it calculates the weighted average of the squared gradient descents. When dw and db are vectors, the squaring is an element-wise operation. 
+The Root Mean Square Propagation (RMSprop) is another algorithm that applies the idea of exponentially weighted average. On iteration t, compute dw and db using the current mini-batch. Instead of V, it calculates the weighted average of the squared gradient descents. When dw and db are vectors, the squaring is an element-wise operation.
 
 
 $$S_{dw}=\beta S_{dw} + (1-\beta)dw^2$$
 
 $$S_{db}=\beta S_{db} + (1-\beta)db^2$$
 
-Then, update the parameters as follows: 
+Then, update the parameters as follows:
 
 $$w = w - \alpha \frac{dw}{\sqrt{S_{dw}}};\ b=b-\alpha \frac{db}{\sqrt{S_{db}}}$$
 
-The RMSprop algorithm divides the learning rate for a parameter by a weighted average of recent gradients' magnitudes for that parameter. The goal is still to adjust the learning speed. Recall the example that illustrates the intuition behind it. When parameter b is close to its target value, we want to decrease the oscillations along the vertical direction. 
+The RMSprop algorithm divides the learning rate for a parameter by a weighted average of recent gradients' magnitudes for that parameter. The goal is still to adjust the learning speed. Recall the example that illustrates the intuition behind it. When parameter b is close to its target value, we want to decrease the oscillations along the vertical direction.
 
 **Adaptive Moment Estimation (Adam)**
 
-The Adaptive Moment Estimation (Adam) algorithm is, in some way, a combination of momentum and RMSprop. On iteration t, compute dw, db using the current mini-batch. Then calculate both V and S using the gradient descents. 
+The Adaptive Moment Estimation (Adam) algorithm is, in some way, a combination of momentum and RMSprop. On iteration t, compute dw, db using the current mini-batch. Then calculate both V and S using the gradient descents.
 
 $$\begin{cases} \begin{array}{c} V_{dw}=\beta_{1}V_{dw}+(1-\beta_{1})dw\\ V_{db}=\beta_{1}V_{db}+(1-\beta_{1})db \end{array} & momantum\ update\ \beta_{1}\end{cases}$$
 
@@ -541,7 +541,7 @@ $$w=w-\alpha \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected}} +\epsilon};\ b=
 
 ### Deal with Overfitting
 
-The biggest problem for deep learning is overfitting. It happens when the model learns too much from the data. We discussed this in more detail in section \@ref(vbtradeoff). A common way to diagnose the problem is to use cross-validation (section \@ref(datasplittingresampling)). You can recognize the problem when the model fits great on the training data but gives poor predictions on the testing data. One way to prevent the model from over learning the data is to limit model complexity. There are several approaches to that. 
+The biggest problem for deep learning is overfitting. It happens when the model learns too much from the data. We discussed this in more detail in section \@ref(vbtradeoff). A common way to diagnose the problem is to use cross-validation (section \@ref(datasplittingresampling)). You can recognize the problem when the model fits great on the training data but gives poor predictions on the testing data. One way to prevent the model from over learning the data is to limit model complexity. There are several approaches to that.
 
 
 
@@ -569,7 +569,7 @@ Many people call it "Frobenius Norm" instead of L2-norm.
 
 #### Dropout
 
-Another powerful regularization technique is "dropout."  In chapter \@ref(tree model), we mentioned that the random forest model de-correlates the trees by randomly choosing a subset of features. Dropout uses a similar idea in the parameter estimation process. 
+Another powerful regularization technique is "dropout."  In chapter \@ref(tree model), we mentioned that the random forest model de-correlates the trees by randomly choosing a subset of features. Dropout uses a similar idea in the parameter estimation process.
 
 It temporally freezes a randomly selected subset of nodes at a specific layer in the neural network during the optimization process to reduce overfitting. When applying dropout to a particular layer and mini-batch, we pre-set a percentage, for example, 30%, and randomly remove 30% of the layer's nodes. The output from the 30% removed nodes will be zero. During backpropagation, we update the remaining parameters for a much-diminished network. We need to do the random drop out again for the next mini-batch.
 
@@ -577,7 +577,7 @@ To normalize the output with all nodes in this layer, we need to scale up the ou
 
 ### Image Recognition Using FFNN {#ffnnexample}
 
-In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development. 
+In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development.
 
 What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. Each each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network(CNN). Or, you can vectorize the array as the input for FFNN as shown in the figure.
 
@@ -585,19 +585,19 @@ What is an image as data? You can consider a digital image as a set of points on
 knitr::include_graphics("images/grayscaleimage.png")
 ```
 
-A color image is a set of pixels on 3-d space and each pixel has a value between 0 to 255. There are three 2-d panels which represent the color red, blue and green accordingly. Similarly, You can process the image as a 3-d array. Or you can vectorize the array as shown in figure \@ref(fig:colorimage). 
+A color image is a set of pixels on 3-d space and each pixel has a value between 0 to 255. There are three 2-d panels which represent the color red, blue and green accordingly. Similarly, You can process the image as a 3-d array. Or you can vectorize the array as shown in figure \@ref(fig:colorimage).
 
 ```{r colorimage, fig.cap = "Color image is a set of pixels on 3-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/colorimage.png")
 ```
 
-Let's look at how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left. 
+Let's look at how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left.
 
 ```r
 install.packages("keras")
 ```
 
-As `keras` is just an interface to popular deep learning frameworks, we have to install the deep learning backend. The default and recommended backend is TensorFlow. By calling `install_keras()`, it will install all the needed dependencies for TensorFlow. 
+As `keras` is just an interface to popular deep learning frameworks, we have to install the deep learning backend. The default and recommended backend is TensorFlow. By calling `install_keras()`, it will install all the needed dependencies for TensorFlow.
 
 ```r
 library(keras)
@@ -612,9 +612,9 @@ You can run the code in this section in the Databrick community edition with R a
 
 You can also run the code on your local machine with R and the required Python packages (`keras`  uses the Python TensorFlow backend engine). Different versions of Python may cause some errors when running `install_keras()`.  Here are the things you could do when you encounter the Python backend issue in your local machine:
 
-- Run `reticulate::py_config()` to check the current Python configuration to see if anything needs to be changed. 
+- Run `reticulate::py_config()` to check the current Python configuration to see if anything needs to be changed.
 - By default, `install_keras()` uses virtual environment `~/.virtualenvs/r-reticulate`. If you don't know how to set the right environment, try to set the installation method as conda (`install_keras(method = "conda")`)
-- Refer to this document for more details on how to [install `keras` and the TensorFlow backend](https://tensorflow.rstudio.com/reference/keras/install_keras/). 
+- Refer to this document for more details on how to [install `keras` and the TensorFlow backend](https://tensorflow.rstudio.com/reference/keras/install_keras/).
 
 Now we are all set to explore deep learning! As simple as three lines of R code, but there are quite a lot going on behind the scene. If you are using a cloud environment, you do not need to worry about these behind scene setup and maintenance.
 
@@ -626,9 +626,9 @@ This dataset is already included in the keras/TensorFlow installation and we can
 mnist <- dataset_mnist()
 ```
 
-The data structure of the MNIST dataset is straight forward and well prepared for R, which has two pieces: 
+The data structure of the MNIST dataset is straight forward and well prepared for R, which has two pieces:
 
-(1) training set: x (i.e. features): 60000x28x28 tensor which corresponds to 60000 28x28 pixel greyscale images (i.e. all the values are integers between 0 and 255 in each 28x28 matrix), and y (i.e. responses): a length 60000 vector which contains the corresponding digits with integer values between 0 and 9. 
+(1) training set: x (i.e. features): 60000x28x28 tensor which corresponds to 60000 28x28 pixel greyscale images (i.e. all the values are integers between 0 and 255 in each 28x28 matrix), and y (i.e. responses): a length 60000 vector which contains the corresponding digits with integer values between 0 and 9.
 
 (2) testing set: same as the training set, but with only 10000 images and responses. The detailed structure for the dataset can be seen with `str(mnist)` below.
 
@@ -670,8 +670,8 @@ index_image = 28  ## change this index to see different image.
 input_matrix <- x_train[index_image, 1:28, 1:28]
 output_matrix <- apply(input_matrix, 2, rev)
 output_matrix <- t(output_matrix)
-image(1:28, 1:28, output_matrix, col = gray.colors(256), 
-    xlab = paste("Image for digit of: ", y_train[index_image]), 
+image(1:28, 1:28, output_matrix, col = gray.colors(256),
+    xlab = paste("Image for digit of: ", y_train[index_image]),
     ylab = "")
 ```
 
@@ -720,9 +720,9 @@ We first reshape the 28x28 image for each digit (i.e each row) into 784 columns 
 
 ```r
 # step 1: reshape
-x_train <- array_reshape(x_train, 
+x_train <- array_reshape(x_train,
                          c(nrow(x_train), 784))
-x_test <- array_reshape(x_test, 
+x_test <- array_reshape(x_test,
                         c(nrow(x_test), 784))
 
 # step 2: rescale
@@ -761,10 +761,10 @@ Now we are ready to fit the model. It is straight forward to build a deep neural
 In keras, it is easy to define a DNN model: (1) use `keras_model_sequential()` to initiate a model placeholder and all model structures are attached to this model object, (2) layers are added in sequence by calling the `layer_dense()` function, (3) add arbitrary layers to the model based on the sequence of calling `layer_dense()`. For a dense layer, all the nodes from the previous layer are connected with each and every node to the next layer. In `layer_dense()` function, we can define how many nodes in that layer through the `units` parameter. The activation function can be defined through the `activation` parameter. For the first layer, we also need to define the input features' dimension through `input_shape` parameter. For our preprocessed MNIST dataset, there are 784 columns in the input data. A common way to reduce overfitting is to use the dropout method, which randomly drops a proportion of the nodes in a layer. We can define the dropout proportion through `layer_dropout()` function immediately after the `layer_dense()` function.
 
 ```r
-dnn_model <- keras_model_sequential() 
-dnn_model %>% 
-  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>% 
-  layer_dropout(rate = 0.4) %>% 
+dnn_model <- keras_model_sequential()
+dnn_model %>%
+  layer_dense(units = 256, activation = 'relu', input_shape = c(784)) %>%
+  layer_dropout(rate = 0.4) %>%
   layer_dense(units = 128, activation = 'relu') %>%
   layer_dropout(rate = 0.3) %>%
   layer_dense(units = 64, activation = 'relu') %>%
@@ -816,8 +816,8 @@ Now we can feed data (x and y) into the neural network that we just built to est
 
 ```r
 dnn_history <- dnn_model %>% fit(
-  x_train, y_train, 
-  epochs = 15, batch_size = 128, 
+  x_train, y_train,
+  epochs = 15, batch_size = 128,
   validation_split = 0.2
 )
 ```
@@ -895,7 +895,7 @@ $acc
 ```
 
 ```r
-dnn_pred <- dnn_model %>% 
+dnn_pred <- dnn_model %>%
               predict_classes(x_test)
 head(dnn_pred)
 ```
@@ -904,7 +904,7 @@ head(dnn_pred)
  [1] 7 2 1 0 4 1
 ```
 
-Let's check a few misclassified images. A number of misclassified images can be found using the following code. And we can plot these misclassified images to see whether a human can correctly read it out. 
+Let's check a few misclassified images. A number of misclassified images can be found using the following code. And we can plot these misclassified images to see whether a human can correctly read it out.
 
 ```r
 ## total number of mis-classcified images
@@ -920,16 +920,16 @@ missed_image = mnist$test$x[dnn_pred != mnist$test$y,,]
 missed_digit = mnist$test$y[dnn_pred != mnist$test$y]
 missed_pred = dnn_pred[dnn_pred != mnist$test$y]
 
-index_image = 34 
+index_image = 34
 
 ## change this index to see different image.
 input_matrix <- missed_image[index_image,1:28,1:28]
 output_matrix <- apply(input_matrix, 2, rev)
 output_matrix <- t(output_matrix)
 
-image(1:28, 1:28, output_matrix, col = gray.colors(256), 
-    xlab = paste("Image for digit ", missed_digit[index_image], 
-        ", wrongly predicted as ", missed_pred[index_image]), 
+image(1:28, 1:28, output_matrix, col = gray.colors(256),
+    xlab = paste("Image for digit ", missed_digit[index_image],
+        ", wrongly predicted as ", missed_pred[index_image]),
     ylab = "")
 ```
 
@@ -939,11 +939,11 @@ image(1:28, 1:28, output_matrix, col = gray.colors(256),
 
 Now we finish this simple tutorial of using deep neural networks for handwritten digit recognition using the MNIST dataset. We illustrate how to reshape the original data into the right format and scaling; how to define a deep neural network with arbitrary number of layers; how to choose activation function, optimizer, and loss function; how to use dropout to limit overfitting; how to setup hyperparameters; and how to fit the model and using a fitted model to predict. Finally, we illustrate how to plot the accuracy/loss as functions of the epoch. It shows the end-to-end cycle of how to fit a deep neural network model.
 
-On the other hand, the image can be better dealt with Convolutional Neural Network (CNN) and we are going to walk through the exact same problem using CNN in the next section. 
+On the other hand, the image can be better dealt with Convolutional Neural Network (CNN) and we are going to walk through the exact same problem using CNN in the next section.
 
 ## Convolutional Neural Network
 
-There are some challenges using a feedforward neural network to solve computer vision problems.  One of the challenges is that the inputs can get really big after you vectorize the image array. A 64 x 64 x 3 image gives you an input vector of 12288! And that is a very small image. So you can expect the number of parameters grows fast and it is difficult to get enough data to fit the model. Also as the input image size grows, the computational requirements to train a feedforward neural network will soon become infeasible. Also, after vectorization, you lose most of the spacial information of the image. To overcome these, people instead use the convolutional neural network for computer vision problems. 
+There are some challenges using a feedforward neural network to solve computer vision problems.  One of the challenges is that the inputs can get really big after you vectorize the image array. A 64 x 64 x 3 image gives you an input vector of 12288! And that is a very small image. So you can expect the number of parameters grows fast and it is difficult to get enough data to fit the model. Also as the input image size grows, the computational requirements to train a feedforward neural network will soon become infeasible. Also, after vectorization, you lose most of the spacial information of the image. To overcome these, people instead use the convolutional neural network for computer vision problems.
 
 This section introduces the Convolutional Neural Network (CNN), the deep learning model that is almost universally used in computer vision applications. Computer vision has been advancing rapidly which enables many new applications such as self-driving cars and unlocking a phone using face. The application is not limited to the tech industry but some traditional industries such as agriculture and healthcare. Precision agriculture utilizes advanced hardware and computer vision algorithms to increase efficiency and reduce costs for farmers. For example, analyze images from cameras in the greenhouse to track plant growth state. Use sensory data from drones, satellites, and tractors to track soil conditions, detect herbs and pests, automate irrigation, etc. In health care, computer vision helps clinicians to diagnose disease, identify cancer sites with high accuracy [@gloria2019]. Even if you don't work on computer vision, you may find some of the ideas inspiring and borrow them into your area.
 
@@ -955,7 +955,7 @@ Some popular computer vision problems are:
 
 ### Convolution Layer
 
-A fundamental building block of the convolution neural network is, as the name indicates, the convolution operation. In this chapter, we illustrate the fundamentals of CNN using the example of image classification. 
+A fundamental building block of the convolution neural network is, as the name indicates, the convolution operation. In this chapter, we illustrate the fundamentals of CNN using the example of image classification.
 
 How do you do convolution? For example, you have a 5 x 5 2-d image (figure \@ref(fig:convolution1). You apply a 3 x 3 filter and convolute over the image. The output of this convolution operator will be a 3 x 3 matrix, which you can consider as a 3 x 3 image and visualize it (top right of figure \@ref(fig:convolution1)).
 
@@ -970,7 +970,7 @@ You start from the top left corner of the image and put the filter on the top le
 knitr::include_graphics("images/convolutionsbs.png")
 ```
 
-Let's use edge detection as an example to see how convolution operation works. Given a picture as the left of figure \@ref(fig:edgedetection), you want to detect the vertical lines. For example, there are vertical lines along with the hair and the edges of the bookcase. How do you do that? There are standard filters for operations like blurring, sharpening, and edge detection.  To get the edge, you can use the following 3 x 3 filter to convolute over the image. 
+Let's use edge detection as an example to see how convolution operation works. Given a picture as the left of figure \@ref(fig:edgedetection), you want to detect the vertical lines. For example, there are vertical lines along with the hair and the edges of the bookcase. How do you do that? There are standard filters for operations like blurring, sharpening, and edge detection.  To get the edge, you can use the following 3 x 3 filter to convolute over the image.
 
 ```{r}
 kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1),
@@ -983,10 +983,10 @@ The following code implements the convolution process. The result is shown as th
 
 ```r
 image = magick::image_read("http://bit.ly/2Nh5ANX")
-kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
+kernel_vertical = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1),
                        nrow = 3, ncol = 3)
 
-kernel_horizontal = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1), 
+kernel_horizontal = matrix(c(1, 1, 1, 0, 0, 0, -1, -1, -1),
                        nrow = 3, ncol = 3, byrow = T)
 
 image_edge_vertical = magick::image_convolve(image, kernel_vertical)
@@ -1003,10 +1003,10 @@ plot(image_edge_horizontal)
 knitr::include_graphics("images/edgedet5.png")
 ```
 
-Why can `kernel_vertical` detect vertical edge? Let's look at a simpler example. The following 8 x 8 matrix where half of the matrix is 10 and the other half is 0. The corresponding image is shown as the left of the figure \@ref(fig:simpleedge). 
+Why can `kernel_vertical` detect vertical edge? Let's look at a simpler example. The following 8 x 8 matrix where half of the matrix is 10 and the other half is 0. The corresponding image is shown as the left of the figure \@ref(fig:simpleedge).
 
 ```{r}
-input_image = matrix(rep(c(200, 200, 200, 200, 0, 0, 0, 0), 8), 
+input_image = matrix(rep(c(200, 200, 200, 200, 0, 0, 0, 0), 8),
                      nrow = 8, byrow = T)
 input_image
 ```
@@ -1014,22 +1014,22 @@ input_image
 If we use the above filter kernel_vertical , the output matrix is shown below and the corresponding image is shown as the right of the figure \@ref(fig:simpleedge).
 
 ```{r}
-output_image = matrix(rep(c(0, 0, 200, 200, 0, 0), 6), 
+output_image = matrix(rep(c(0, 0, 200, 200, 0, 0), 6),
                       nrow = 6, byrow = T)
 output_image
 ```
 
 ```{r simpleedge, fig.cap = "Simple Edge Detection Example", out.width="80%", fig.asp=.75, fig.align="center", echo = F}
 par(mfrow = c(1, 2))
-image(t(input_image), 
+image(t(input_image),
       col = grey.colors(255, start = 0, end = 1))
-image(t(output_image), 
+image(t(output_image),
       col = grey.colors(255, start = 0, end = 1))
 ```
 
-So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 1020 x 711, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image. 
+So the output image has a lighter region in the middle that corresponds to the vertical edge of the input image. When the input image is large, such as the image in figure \@ref(fig:edgedetection) is 1020 x 711, the edge will not seem as thick as it is in this small example. To detect the horizontal edge, you only need to rotate the filter by 90 degrees. The right image in figure \@ref(fig:edgedetection) shows the horizontal edge detection result. You can see how convolution operator detects a specific feature from the image.
 
-The parameters for the convolution operation are the elements in the filter. For a 3x3 filter shown below, the parameters to estimate are $w_1$ to $w_9$. So far, we move the filter one step each time when we convolve. You can do more than 1 step as well. For example, you can hop 2 steps each time after the sum of the element-wise product. It is called strided-convolution. Use stride $s$ means the output is downsized by a factor of $s$. It is rarely used in practice but it is good to be familiar with the concept. 
+The parameters for the convolution operation are the elements in the filter. For a 3x3 filter shown below, the parameters to estimate are $w_1$ to $w_9$. So far, we move the filter one step each time when we convolve. You can do more than 1 step as well. For example, you can hop 2 steps each time after the sum of the element-wise product. It is called strided-convolution. Use stride $s$ means the output is downsized by a factor of $s$. It is rarely used in practice but it is good to be familiar with the concept.
 
 ```{r convolutionlayer, fig.cap = "Convolution Layer Parameters", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/convlayer.png")
@@ -1043,11 +1043,11 @@ Assume the stride is $s$ and we have a $n \times n$ input image to convolve with
 knitr::include_graphics("images/padding.png")
 ```
 
-If the stride is $s$ and we have a $n \times n$ input image to convolve with a $f \times f$ filter. This time we pad $p$ pixels in each side, then the output size becomes $(\frac{n + 2p -f}{s} + 1) \times (\frac{n + 2p -f}{s} + 1)$. You can specify the value for p and also the pixel value used. Or you can just use 0 to pad and make the output the same size with input. 
+If the stride is $s$ and we have a $n \times n$ input image to convolve with a $f \times f$ filter. This time we pad $p$ pixels in each side, then the output size becomes $(\frac{n + 2p -f}{s} + 1) \times (\frac{n + 2p -f}{s} + 1)$. You can specify the value for p and also the pixel value used. Or you can just use 0 to pad and make the output the same size with input.
 
 ### Pooling Layer
 
-People sometimes use the pooling layer to reduce the size of the representation and make some of the feature detection more robust. If you have a $4 \times 4$ input, the max and mean pooling operation are shown in the figure \@ref(fig:poolinglayer). The process is quite simple. In the example, the filter is $2 \times 2$ and stride is 2, so break the input into four $2 \times 2$  regions (shown in the figure with different shaded colors). For max pooling, each of the outputs is the maximum from the corresponding shaded sub-region. Mean pooling layer works in the same way except for getting the mean instead of maximum of the sub-region. The pooling layer has hyperparameters ($f$ and $s$) but it has no parameter for gradient descent to learn. 
+People sometimes use the pooling layer to reduce the size of the representation and make some of the feature detection more robust. If you have a $4 \times 4$ input, the max and mean pooling operation are shown in the figure \@ref(fig:poolinglayer). The process is quite simple. In the example, the filter is $2 \times 2$ and stride is 2, so break the input into four $2 \times 2$  regions (shown in the figure with different shaded colors). For max pooling, each of the outputs is the maximum from the corresponding shaded sub-region. Mean pooling layer works in the same way except for getting the mean instead of maximum of the sub-region. The pooling layer has hyperparameters ($f$ and $s$) but it has no parameter for gradient descent to learn.
 
 ```{r poolinglayer, fig.cap = "Pooling Layer", out.width="100%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/poolinglayer.png")
@@ -1069,13 +1069,13 @@ eggshell <- readImage("https://scientistcafe.com/images/eggshell.jpeg") %>%
 gray_eggshell = apply(eggshell, c(1,2), mean)
 ```
 
-The following function takes an image matrix or array, and apply pooling operation. 
+The following function takes an image matrix or array, and apply pooling operation.
 
 ```r
 pooling <- function(type = "max", image, filter, stride) {
     f <- filter
     s <- stride
-    
+
     if (length(dim(image)) == 3) {
         # get image dimensions
         col <- dim(image[, , 1])[2]
@@ -1090,11 +1090,11 @@ pooling <- function(type = "max", image, filter, stride) {
             m <- image[, , rgb]
             m3 <- matrix(0, ncol = c, nrow = r)
             i <- 1
-            if (type == "mean") 
+            if (type == "mean")
                 for (ii in 1:r) {
                   j <- 1
                   for (jj in 1:c) {
-                    m3[ii, jj] <- mean(as.numeric(m[i:(i + 
+                    m3[ii, jj] <- mean(as.numeric(m[i:(i +
                       (f - 1)), j:(j + (f - 1))]))
                     j <- j + s
                   }
@@ -1102,7 +1102,7 @@ pooling <- function(type = "max", image, filter, stride) {
                 } else for (ii in 1:r) {
                 j = 1
                 for (jj in 1:c) {
-                  m3[ii, jj] <- max(as.numeric(m[i:(i + 
+                  m3[ii, jj] <- max(as.numeric(m[i:(i +
                     (f - 1)), j:(j + (f - 1))]))
                   j <- j + s
                 }
@@ -1119,11 +1119,11 @@ pooling <- function(type = "max", image, filter, stride) {
         r <- (row - f)/s + 1
         m3 <- matrix(0, ncol = c, nrow = r)
         i <- 1
-        if (type == "mean") 
+        if (type == "mean")
             for (ii in 1:r) {
                 j <- 1
                 for (jj in 1:c) {
-                  m3[ii, jj] <- mean(as.numeric(image[i:(i + 
+                  m3[ii, jj] <- mean(as.numeric(image[i:(i +
                     (f - 1)), j:(j + (f - 1))]))
                   j <- j + s
                 }
@@ -1131,7 +1131,7 @@ pooling <- function(type = "max", image, filter, stride) {
             } else for (ii in 1:r) {
             j = 1
             for (jj in 1:c) {
-                m3[ii, jj] <- max(as.numeric(image[i:(i + 
+                m3[ii, jj] <- max(as.numeric(image[i:(i +
                   (f - 1)), j:(j + (f - 1))]))
                 j <- j + s
             }
@@ -1171,7 +1171,7 @@ knitr::include_graphics("images/eggshellconv.png")
 
 ### Convolution Over Volume
 
-So far, we have shown different types of layers on 2D inputs. If you have a 3D input (such as a color image), then the filters will have 3 channels too. For example, if you have a $6 \times 6$ color image, the input dimension is $6 \times 6 \times 3$. We call them the height, width, and the number of channels. The filter itself has 3 channels corresponding to the red, green, and blue channels of the input. You can consider it as a 3D cube with 27 parameters. Apply each channel of the filter to the corresponding channel of the input.  Multiply each of the 27 numbers with the corresponding numbers from the top left region of the color input image and add them up. Add a bias parameter and apply an activation function which gives you the first number of the output image. Then slide it over to calculate the next one. The final output is 2D $4 \times 4$. If you want to detect features in the red channel only, you can use a filter with the second and third channels to be all 0s. With different choices of the parameters, you can get different feature detectors. You can use more than one filter and each filter has multiple channels. For example, you can use one $3 \times 3 \times 3$ filter to detect the horizontal edge and another to detect the vertical edge. Figure \@ref(fig:eggshellconv) shows an example of one layer with two filters. Each filter has a dimension of $3 \times 3 \times 3$. The output dimension is $4 \times 4 \times 2$. The output has two channels because we have two filters on the layer. The total number of parameters is 58 (each filter has one bias parameter $b$). 
+So far, we have shown different types of layers on 2D inputs. If you have a 3D input (such as a color image), then the filters will have 3 channels too. For example, if you have a $6 \times 6$ color image, the input dimension is $6 \times 6 \times 3$. We call them the height, width, and the number of channels. The filter itself has 3 channels corresponding to the red, green, and blue channels of the input. You can consider it as a 3D cube with 27 parameters. Apply each channel of the filter to the corresponding channel of the input.  Multiply each of the 27 numbers with the corresponding numbers from the top left region of the color input image and add them up. Add a bias parameter and apply an activation function which gives you the first number of the output image. Then slide it over to calculate the next one. The final output is 2D $4 \times 4$. If you want to detect features in the red channel only, you can use a filter with the second and third channels to be all 0s. With different choices of the parameters, you can get different feature detectors. You can use more than one filter and each filter has multiple channels. For example, you can use one $3 \times 3 \times 3$ filter to detect the horizontal edge and another to detect the vertical edge. Figure \@ref(fig:eggshellconv) shows an example of one layer with two filters. Each filter has a dimension of $3 \times 3 \times 3$. The output dimension is $4 \times 4 \times 2$. The output has two channels because we have two filters on the layer. The total number of parameters is 58 (each filter has one bias parameter $b$).
 
 ```{r ConvOverVolume, fig.cap = "Example of convolution over volume", out.width="70%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/ConvOverVolume.png")
@@ -1267,25 +1267,25 @@ CNN model contains a series of 3D convolutional layers which contains a few para
 
 For the first layer, there is also an input_shape parameter which is the input image size and channel. To prevent overfitting and speed up computation, a pooling layer is usually applied after one or a few convolutional layers. A maximum pooling layer with pool_size = 2x2 reduces the size to half. Dropout can be used as well in addition to pooling neighbor values. After a few 3D convolutional layers, we also need to 'flatten' the 3D tensor output into 1D tensor, and then add one or a couple of dense layers to connect the output to the target response classes.
 
-Let's define the CNN model structure. Now we define a CNN model with two convolutional layers, two max-pooling layers, and two dropout layers to mediate overfitting. There are three dense layers after flattening the 3D tensor. The last layer is a dense layer that connects to the response. 
+Let's define the CNN model structure. Now we define a CNN model with two convolutional layers, two max-pooling layers, and two dropout layers to mediate overfitting. There are three dense layers after flattening the 3D tensor. The last layer is a dense layer that connects to the response.
 
 ```r
-# define model structure 
+# define model structure
 cnn_model <- keras_model_sequential() %>%
-  layer_conv_2d(filters = 32, 
-                kernel_size = c(5,5), 
-                activation = 'relu', 
-                input_shape = input_shape) %>% 
-  layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
-  layer_conv_2d(filters = 64, 
-                kernel_size = c(5,5), 
-                activation = 'relu') %>% 
-  layer_max_pooling_2d(pool_size = c(2, 2)) %>% 
-  layer_dropout(rate = 0.2) %>% 
-  layer_flatten() %>% 
-  layer_dense(units = 120, activation = 'relu') %>% 
-  layer_dropout(rate = 0.5) %>% 
-  layer_dense(units = 84, activation = 'relu') %>% 
+  layer_conv_2d(filters = 32,
+                kernel_size = c(5,5),
+                activation = 'relu',
+                input_shape = input_shape) %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_conv_2d(filters = 64,
+                kernel_size = c(5,5),
+                activation = 'relu') %>%
+  layer_max_pooling_2d(pool_size = c(2, 2)) %>%
+  layer_dropout(rate = 0.2) %>%
+  layer_flatten() %>%
+  layer_dense(units = 120, activation = 'relu') %>%
+  layer_dropout(rate = 0.5) %>%
+  layer_dense(units = 84, activation = 'relu') %>%
   layer_dense(units = num_classes, activation = 'softmax')
 ```
 
@@ -1330,7 +1330,7 @@ cnn_model %>% evaluate(x_test, y_test)
 ```
 
 ```html
-##       loss   accuracy 
+##       loss   accuracy
 ## 0.02153786 0.99290001
 ```
 
@@ -1340,7 +1340,7 @@ We can apply the trained model to predict new image.
 
 ```r
 # model prediction
-cnn_pred <- cnn_model %>% 
+cnn_pred <- cnn_model %>%
               predict_classes(x_test)
 head(cnn_pred)
 ```
@@ -1371,8 +1371,8 @@ index_image = 10 ## change this index to see different image.
 input_matrix <- missed_image[index_image,1:28,1:28]
 output_matrix <- apply(input_matrix, 2, rev)
 output_matrix <- t(output_matrix)
-image(1:28, 1:28, output_matrix, col=gray.colors(256), 
-xlab=paste('Image for digit ', missed_digit[index_image], ', 
+image(1:28, 1:28, output_matrix, col=gray.colors(256),
+xlab=paste('Image for digit ', missed_digit[index_image], ',
 wrongly predicted as ', missed_pred[index_image]), ylab="")
 ```
 
@@ -1384,7 +1384,7 @@ wrongly predicted as ', missed_pred[index_image]), ylab="")
 
 Traditional neural networks don't have a framework that can handle sequential events where the later events are based on the previous ones. For example, map an input audio clip to a text transcript where the input is voice over time, and the output is the corresponding sequence of words over time. Recurrent Neural Network is a deep-learning model that can process this type of sequential data.  
 
-The recurrent neural network allows information to flow from one step to the next with a repetitive structure. Figure \@ref(fig:rnnunit) shows the basic chunk of an RNN network. You combine the activated neuro from the previous step with the current input $x^{<t>}$ to produce an output $\hat{y}^{<t>}$ and an updated activated neuro to support the next input at $t+1$. 
+The recurrent neural network allows information to flow from one step to the next with a repetitive structure. Figure \@ref(fig:rnnunit) shows the basic chunk of an RNN network. You combine the activated neuro from the previous step with the current input $x^{<t>}$ to produce an output $\hat{y}^{<t>}$ and an updated activated neuro to support the next input at $t+1$.
 
 ```{r rnnunit, fig.cap = "Recurrent Neural Network Unit", out.width="40%", fig.align="center", echo = F}
 knitr::include_graphics("images/rnnunit.png")
@@ -1403,7 +1403,7 @@ The chain-like recurrent nature makes it the natural architecture for sequential
 - Music generation
 - Sentiment analysis
 
-A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ image) and produces a fixed-sized vector as output (such as the probabilities of being one the ten digits). RNN has a much more flexible structure.  It can operate over sequences of vectors and produces sequences of outputs and they can vary in size. To understand what it means, let's look at some RNN structure examples. 
+A trained CNN accepts a fixed-sized vector as input (such as $28 \times 28$ image) and produces a fixed-sized vector as output (such as the probabilities of being one the ten digits). RNN has a much more flexible structure.  It can operate over sequences of vectors and produces sequences of outputs and they can vary in size. To understand what it means, let's look at some RNN structure examples.
 
 <center>
 ![](images/rnnstrs.png){width=100%}
@@ -1418,7 +1418,7 @@ The rectangle represents a vector and the arrow represents matrix multiplication
 
 ### RNN Model
 
-To further understand the RNN model, let's look at an entity recognition example. Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo". It is a name recognition problem which is used by the research company to index different company names in the articles. For tasks like this, we need a model that can learn and share the learning across different texts. The position of the word has important information about the word. For example, the word before "to" is more likely to be a verb than a noun. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic. 
+To further understand the RNN model, let's look at an entity recognition example. Assume you want to build a sequence model to recognize the company or computer language names in a sentence like this: "Use Netlify and Hugo". It is a name recognition problem which is used by the research company to index different company names in the articles. For tasks like this, we need a model that can learn and share the learning across different texts. The position of the word has important information about the word. For example, the word before "to" is more likely to be a verb than a noun. It is also used in material science to tag chemicals mentioned in the most recent journals to find any indication of the next research topic.
 
 Given input sentence x, you want a model to produce one output for each word in x that tells you if that word is the name for something. So in this example, the input is a sequence of 5 words including the period in the end. The output is a sequence of 0/1 with the same length that indicates whether the input word is a name (1) or not (0). We use superscript $<t>$ to denote the element position of input and output; use superscript $(i)$ to denote the $i^{th}$ sample (you will have different sentences in the training data); Use $T_x^{(i)}$ to denote the length of $i^{th}$ input, $T_y^{(i)}$ for output. In this case, $T_x^{(i)}$ is equal to $T_y^{(i)}$.
 
@@ -1426,17 +1426,17 @@ Given input sentence x, you want a model to produce one output for each word in 
 ![](images/rnn_notation.png){width=70%}
 </center>
 
-Before we build a neural network, we need to decide a way to represent individual words in numbers. What should $x^{<1>}$ be?  In practice, people use word embedding which we will discuss in the later section. Here, for illustration, we use the one-hot encoding word representation. Assume we have a dictionary of 10,000 unique words. You can build the dictionary by finding the top  10,000 occurring words in your training set. Each word in your training set will have a position in the dictionary sequence. For example, "use" is the 8320th element of the dictionary sequence. So $x^{<1>}$ is a vector with all zeros except for a one on position 8320. Using this one-hot representation, each input $x^{<t>}$ is a vector with all zeros except for one element. 
+Before we build a neural network, we need to decide a way to represent individual words in numbers. What should $x^{<1>}$ be?  In practice, people use word embedding which we will discuss in the later section. Here, for illustration, we use the one-hot encoding word representation. Assume we have a dictionary of 10,000 unique words. You can build the dictionary by finding the top  10,000 occurring words in your training set. Each word in your training set will have a position in the dictionary sequence. For example, "use" is the 8320th element of the dictionary sequence. So $x^{<1>}$ is a vector with all zeros except for a one on position 8320. Using this one-hot representation, each input $x^{<t>}$ is a vector with all zeros except for one element.
 
 <center>
 ![](images/nn_ohe.png){width=70%}
 </center>
 
-Given this representation of input words, the goal is to learn a sequence model that maps the input words to output y, indicating if the word is an entity (1) or not (0). Let us build a one-layer recurrent neural network. The model starts from the first word "use" ($x^{<1>}$) and build a neural network to predict the output. To start the process, we also need to initialize the activation at time 0, $a_0$. The most common choice is to use a vector of zeros. The common activation function for the intermediate layer is the Hyperbolic Tangent Function (tanh). RNN uses other methods to prevent the vanishing gradient problem discussed in section \@ref(lstm). Similar to FFNN, The output layer activation function depends on the output type. The current example is a binary classification, so we use the sigmoid function ($\sigma$). 
+Given this representation of input words, the goal is to learn a sequence model that maps the input words to output y, indicating if the word is an entity (1) or not (0). Let us build a one-layer recurrent neural network. The model starts from the first word "use" ($x^{<1>}$) and build a neural network to predict the output. To start the process, we also need to initialize the activation at time 0, $a_0$. The most common choice is to use a vector of zeros. The common activation function for the intermediate layer is the Hyperbolic Tangent Function (tanh). RNN uses other methods to prevent the vanishing gradient problem discussed in section \@ref(lstm). Similar to FFNN, The output layer activation function depends on the output type. The current example is a binary classification, so we use the sigmoid function ($\sigma$).
 
 $$a^{<0>} = \mathbf{0};\ a^{<1>} = tanh(W_{aa}a^{<0>} + W_{ax}x^{<1>}+b_a)$$
 $$\hat{y}^{<1>} = \sigma(W_{ya}a^{<1>}+b_y)$$
-And when it takes the second word $x^{<2>}$, it also gets information from the previous step using the non-activated neurons. 
+And when it takes the second word $x^{<2>}$, it also gets information from the previous step using the non-activated neurons.
 
 $$a^{<2>} = tanh(W_{aa}a^{<1>}+W_{ax}x^{<2>}+b_a)$$
 $$\hat{y}^{<2>} = \sigma(W_{ya}a^{<2>}+b_y)$$
@@ -1446,7 +1446,7 @@ For the $t^{th}$ word:
 $$a^{<t>} = tanh(W_{aa}a^{<t-1>}+W_{ax}x^{<t>}+b_a)$$
 $$\hat{y}^{<t>} = \sigma(W_{ya}a^{<t>}+b_y)$$
 
-The information flows from one step to the next with a repetitive structure until the last time step input $x^{<T_x>}$  and then it outputs $\hat{y}^{<T_y>}$. In this example, $T_x = T_y$. The architecture changes when $T_x$ and $T_y$ are not the same. The model shares parameters, $W_{ya}, W_{aa}, W_{ax},b_a, b_y$, for all time steps of the input. 
+The information flows from one step to the next with a repetitive structure until the last time step input $x^{<T_x>}$  and then it outputs $\hat{y}^{<T_y>}$. In this example, $T_x = T_y$. The architecture changes when $T_x$ and $T_y$ are not the same. The model shares parameters, $W_{ya}, W_{aa}, W_{ax},b_a, b_y$, for all time steps of the input.
 
 <center>
 ![](images/RNN_pro.png){width=80%}
@@ -1461,33 +1461,9 @@ The above defines the forward process. Same as before, the backward propagation 
 In this RNN structure, the information only flows from the left to the right. So at any position, it only uses data from earlier in the sequence to make a prediction. It does not work when predicting the current word needs information from later words. For example, consider the following two sentences:
 
 1. Do you like April Kepner in Grey's Anatomy?
-2. Do you like April in Los Angeles? It is not too hot. 
+2. Do you like April in Los Angeles? It is not too hot.
 
-Given just the first three words is not enough to know if the word "April" is part of a person's name. It is a person's name in 1 but not 2. The two sentences have the same first three words. In this case, we need a model that allows the information to flow in both directions. A bidirectional RNN takes data from both earlier and later in the sequence. The disadvantage is that it needs the entire word sequence to predict at any position. For a speech recognition application that requires capturing the speech in real-time, we need a more complex method called the attention model. We will not get into those models here. Deep Learning with R [@deeplearningr18] provides a high-level introduction of bidirectional RNN with applicable codes. It teaches both intuition and practical, computational usage of deep learning models. For python users, refer to Deep Learning with Python [@deeplearningpy17]. A standard text with heavy mathematics is Deep Learning [@Goodfellow-et-al-2016]. 
-
-### Word Embedding {#embedding}
-
-So far, we have been using one-hot encoding to represent the words. This representation is sparse and doesn't capture the relationship between the words. For example, if your model learns from the training data that the word after "pumpkin" in the first sentence is "pie," can it fill the second sentence's blank with "pie"? 
-
-1. [training data] My favorite Christmas dessert is pumpkin pie.
-2. [testing data] My favorite Christmas dessert is apple ____.
-
-The algorithm can not learn the relationship between "pumpkin" and "apple" by the distance between the one-hot encoding for the two words.  If we can find a way to create features to represent the words, we may teach the model to learn that pumpkin and apple is food. And the distance between the feature representations of these two words is closer than, for example, "apple" and "nurse." So when the model sees "apple" in a new sentence and needs to predict the word after, it is more likely to choose "pie" since it sees "pumpkin pie" in the training data. The idea of word embedding is to learn a set of features to represent words. For example, you can score each word in the dictionary according to a group of features like this:
-
-<center>
-![](images/rnn_embedding1.png){width=90%}
-</center>
-
-The word "male" has a score of -1 for the "gender" feature, "female" has a score of 1.  Both "Apple" and "pumpkin" have a high score for the "food" feature and much lower scores for the rest. You can set the number of features to learn, usually more than what we list in the above figure. If you use 200 features to represent the words, then the learned embedding for each word is a vector with a length of 200. 
-
-For language-related applications, text embedding is the most critical step. It converts raw text into a meaningful vector representation. Once we have a vector representation, it is easy to calculate typical numerical metrics such as cosine similarity. There are many pre-trained text embeddings available for us to use. We will briefly introduce some of these popular embeddings. 
-
-The first widely used embedding is word2vec. It was first introduced in 2013 and was trained by a large collection of text in an unsupervised way. Training the word2vec embedding vector uses bag-of-words or skip-gram. In the bag-of-words architecture, the model predicts the current word based on a window of surrounding context words. In skip-gram architecture, the model uses the current word to predict the surrounding window of context words. There are pre-trained word2vec embeddings based on a large amount of text (such as wiki pages, news reports, etc.) for general applications. 
-
-GloVe (Global Vectors) embedding is an extension of word2vec and performs better. It uses a unique version of the square loss function. However, words are composite of meaningful components such as radicals.  
-"eat" and "eaten" are different forms of the same word.   Both word2vec and GloVe use word-level information, and they treat each word uniquely based on its context. 
-
-The fastText embedding is introduced to use the word's internal structure to make the process more efficient. It uses morphological information to extend the skip-gram model. New words that are not in the training data can be repressed well. It also supports 150+ different languages. The above-mentioned embeddings (word2vec, GloVe, and fastText) do not consider the words' context (i.e., the same word has the same embedding vector). However, the same word may have different meanings in a different context. BERT (Bidirectional Encoder Representations from Transformers) is introduced to add context-level information in text-related applications. As of early 2021, BERT is generally considered the best language model for common application tasks.
+Given just the first three words is not enough to know if the word "April" is part of a person's name. It is a person's name in 1 but not 2. The two sentences have the same first three words. In this case, we need a model that allows the information to flow in both directions. A bidirectional RNN takes data from both earlier and later in the sequence. The disadvantage is that it needs the entire word sequence to predict at any position. For a speech recognition application that requires capturing the speech in real-time, we need a more complex method called the attention model. We will not get into those models here. Deep Learning with R [@deeplearningr18] provides a high-level introduction of bidirectional RNN with applicable codes. It teaches both intuition and practical, computational usage of deep learning models. For python users, refer to Deep Learning with Python [@deeplearningpy17]. A standard text with heavy mathematics is Deep Learning [@Goodfellow-et-al-2016].  
 
 ### Long Short Term Memory {#lstm}
 
@@ -1498,7 +1474,7 @@ The sequence in RNN can be very long, which leads to the vanishing gradient prob
 
 For sentence 1, you need to use "she" in the adjective clause after "which" because it is a girl. For sentence 2, you need to use "he" because it is a boy. This is a long-term dependency example where the information at the beginning can affect what needs to come much later in the sentence. RNN needs to forward propagate information from left to right and then backpropagate from right to left. It can be difficult for the error associated with the later sequence to affect the optimization earlier. So in practice, it means the model might fail to do the task mentioned above.  People came up with different methods to mitigate this issue, such as the Greater Recurrent Units (GRU) [@chung2014empirical] and  Long Short Term Memory Units (LSTM) [@lstm1997]. The goal is to help the model memorize information in the earlier sequence. We are going to walk through LSTM step by step.
 
-The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state". 
+The first step of LSTM is to decide what information to **forget**.  This decision is made by "forget gate", a sigmoid function ($\Gamma_{f}$).  It looks at $a^{<t-1>}$ and $x^{t}$ and outputs a number between 0 and 1 for each number in the cell state $c^{t-1}$. A value 1 means "completely remember the state", while 0 means "completely forget the state".
 
 <center>
 ![](images/lstm1.png){width=80%}
@@ -1520,15 +1496,41 @@ The multiplication of the above two parts $\Gamma_{u}*\tilde{c}^{<t>}$ is the ne
 ![](images/lstm3.png){width=80%}
 </center>
 
-Finally, we need to decide what we are going to output. The output is a filtered version of the new cell state $c^{<t>}$. 
+Finally, we need to decide what we are going to output. The output is a filtered version of the new cell state $c^{<t>}$.
 
 <center>
 ![](images/lstm4.png){width=80%}
 </center>
 
+### Word Embedding {#embedding}
+
+So far, we have been using one-hot encoding to represent the words. This representation is sparse and doesn't capture the relationship between the words. For example, if your model learns from the training data that the word after "pumpkin" in the first sentence is "pie," can it fill the second sentence's blank with "pie"?
+
+1. [training data] My favorite Christmas dessert is pumpkin pie.
+2. [testing data] My favorite Christmas dessert is apple ____.
+
+The algorithm can not learn the relationship between "pumpkin" and "apple" by the distance between the one-hot encoding for the two words.  If we can find a way to create features to represent the words, we may teach the model to learn that pumpkin and apple is food. And the distance between the feature representations of these two words is closer than, for example, "apple" and "nurse." So when the model sees "apple" in a new sentence and needs to predict the word after, it is more likely to choose "pie" since it sees "pumpkin pie" in the training data. The idea of word embedding is to learn a set of features to represent words. For example, you can score each word in the dictionary according to a group of features like this:
+
+<center>
+![](images/rnn_embedding1.png){width=90%}
+</center>
+
+The word "male" has a score of -1 for the "gender" feature, "female" has a score of 1.  Both "Apple" and "pumpkin" have a high score for the "food" feature and much lower scores for the rest. You can set the number of features to learn, usually more than what we list in the above figure. If you use 200 features to represent the words, then the learned embedding for each word is a vector with a length of 200.
+
+For language-related applications, text embedding is the most critical step. It converts raw text into a meaningful vector representation. Once we have a vector representation, it is easy to calculate typical numerical metrics such as cosine similarity. There are many pre-trained text embeddings available for us to use. We will briefly introduce some of these popular embeddings.
+
+The first widely used embedding is word2vec. It was first introduced in 2013 and was trained by a large collection of text in an unsupervised way. Training the word2vec embedding vector uses bag-of-words or skip-gram. In the bag-of-words architecture, the model predicts the current word based on a window of surrounding context words. In skip-gram architecture, the model uses the current word to predict the surrounding window of context words. There are pre-trained word2vec embeddings based on a large amount of text (such as wiki pages, news reports, etc.) for general applications.
+
+GloVe (Global Vectors) embedding is an extension of word2vec and performs better. It uses a unique version of the square loss function. However, words are composite of meaningful components such as radicals.  
+"eat" and "eaten" are different forms of the same word.   Both word2vec and GloVe use word-level information, and they treat each word uniquely based on its context.
+
+The fastText embedding is introduced to use the word's internal structure to make the process more efficient. It uses morphological information to extend the skip-gram model. New words that are not in the training data can be repressed well. It also supports 150+ different languages. The above-mentioned embeddings (word2vec, GloVe, and fastText) do not consider the words' context (i.e., the same word has the same embedding vector). However, the same word may have different meanings in a different context.
+
+More recently transformer based networks, such as BERT (Bidirectional Encoder Representations from Transformers), were introduced to add context-level information in text-related applications.  These models use a new mechanism, attention, to read a sequence simultaneously instead of the one-input-at-a-time process of RNNs.  These networks combine positional embeddings along with embeddings for each token in the sequence giving it the ability to differentiate different uses of the same word based on surrounding words.
+
 ### Sentiment Analysis Using RNN {#rnnexample}
 
-In this section, we will walk through an example of text sentiment analysis using RNN. Refer to section \@ref(CloudEnvironment) to set up an account, create a notebook (R or Python) and start a cluster. Refer to section \@ref(ffnnexample) for package installation. 
+In this section, we will walk through an example of text sentiment analysis using RNN. Refer to section \@ref(CloudEnvironment) to set up an account, create a notebook (R or Python) and start a cluster. Refer to section \@ref(ffnnexample) for package installation.
 
 We will use the IMDB movie review data. It is one of the most used datasets for text-related machine learning methods. The datasets' inputs are movie reviews published at IMDB in its raw text format, and the output is a binary sentiment indicator( "1" for positive and "0" for negative) created through human evaluation. The training and testing data have 25,000 records each. Each review varies in length.
 
@@ -1578,7 +1580,7 @@ List of 2
   ..$ x:List of 25000
   .. ..$ : int [1:218] 1 14 22 16 43 530 973 1622 1385 65 ...
   .. ..$ : int [1:189] 1 194 1153 194 2 78 228 5 6 1463 ...
-  
+
 *** skipped some output ***
 ```
 
@@ -1598,16 +1600,16 @@ x_test <- pad_sequences(x_test, maxlen = max_review_len)
 
 The `x_train` and `x_test` are numerical data frames ready to be used for recurrent neural network models.
 
-**Simple Recurrent Neurel Network**
+**Simple Recurrent Neural Network**
 
 Like DNN and CNN models we trained in the past, RNN models are relatively easy to train using `keras` after the pre-processing stage. In the following example, we use `layer_embedding()` to fit an embedding layer based on the training dataset, which has two parameters: `input_dim` (the number of unique words) and `output_dim` (the length of dense vectors). Then, we add a simple RNN layer by calling `layer_simple_rnn()` and followed by a dense layer `layer_dense()` to connect to the response binary variable.
 
 ```r
 rnn_model <- keras_model_sequential()
 rnn_model %>%
-  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>% 
-  layer_simple_rnn(units = 64, dropout = 0.2, 
-                   recurrent_dropout = 0.2) %>% 
+  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>%
+  layer_simple_rnn(units = 64, dropout = 0.2,
+                   recurrent_dropout = 0.2) %>%
   layer_dense(units = 1, activation = 'sigmoid')
 ```
 
@@ -1648,7 +1650,7 @@ Epoch 1/5
 154/157 [=============>.] - ETA: 0s - loss: 0.4456 - accuracy: 0.7991
 155/157 [=============>.] - ETA: 0s - loss: 0.4460 - accuracy: 0.7991
 156/157 [=============>.] - ETA: 0s - loss: 0.4457 - accuracy: 0.7995
-157/157 [===============] - 17s 109ms/step 
+157/157 [===============] - 17s 109ms/step
 loss: 0.4457 - accuracy: 0.7995 - val_loss: 0.4444 - val_accuracy: 0.7908
 
 ```
@@ -1662,7 +1664,7 @@ plot(rnn_history)
 </center>
 
 ```r
-rnn_model %>% 
+rnn_model %>%
    evaluate(x_test, y_test)
 ```
 
@@ -1677,8 +1679,8 @@ rnn_model %>%
 775/782 [=============>.] - ETA: 0s - loss: 0.4371 - accuracy: 0.8007
 782/782 [===============] - ETA: 0s - loss: 0.4365 - accuracy: 0.8010
 782/782 [===============] - 6s 8ms/step - loss: 0.4365 - accuracy: 0.8010
-     loss  accuracy 
-0.4365373 0.8010000 
+     loss  accuracy
+0.4365373 0.8010000
 ```
 
 **LSTM RNN Model**
@@ -1689,8 +1691,8 @@ A simple RNN layer is a good starting point for learning RNN, but the performanc
 lstm_model <- keras_model_sequential()
 
 lstm_model %>%
-  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>% 
-  layer_lstm(units = 64, dropout = 0.2, recurrent_dropout = 0.2) %>% 
+  layer_embedding(input_dim = max_unique_word, output_dim = 128) %>%
+  layer_lstm(units = 64, dropout = 0.2, recurrent_dropout = 0.2) %>%
   layer_dense(units = 1, activation = 'sigmoid')
 
 lstm_model %>% compile(
@@ -1723,7 +1725,7 @@ Epoch 1/5
 155/157 [=======>.] - ETA: 0s - loss: 0.2610 - accuracy: 0.8918
 156/157 [=======>.] - ETA: 0s - loss: 0.2607 - accuracy: 0.8920
 157/157 [=========] - ETA: 0s - loss: 0.2609 - accuracy: 0.8917
-157/157 [=========] - 67s 424ms/step 
+157/157 [=========] - 67s 424ms/step
 loss: 0.2609 accuracy: 0.8917 val_loss: 0.3754 val_accuracy: 0.8328
 ```
 
@@ -1736,7 +1738,7 @@ plot(lstm_history)
 </center>
 
 ```r
-lstm_model %>% 
+lstm_model %>%
    evaluate(x_test, y_test)
 ```
 
@@ -1753,8 +1755,8 @@ lstm_model %>%
 780/782 [=======>.] - ETA: 0s - loss: 0.3632 - accuracy: 0.8419
 782/782 [=========] - ETA: 0s - loss: 0.3631 - accuracy: 0.8420
 782/782 [=========] - 18s 22ms/step - loss: 0.3631 - accuracy: 0.8420
-     loss  accuracy 
-0.3631141 0.8420000 
+     loss  accuracy
+0.3631141 0.8420000
 ```
 
 This simple example shows that LSTM's performance has improved dramatically from the simple RNN model. The computation time for LSTM is roughly doubled when compared with the simple RNN model for this small dataset.
