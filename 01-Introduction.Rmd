@@ -12,15 +12,11 @@ Media has been hyping about "Data Science," "Big Data" and "Artificial Intellige
 
 > “When you’re fundraising, it’s AI. When you’re hiring, it’s ML. When you’re implementing, it’s logistic regression.”
 
-<<<<<<< HEAD
-For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with big data sets. What are those skills? These may include Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or Spark, a system that builds atop Hadoop for speeding up the same by loading massive datasets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. The new skills are for dealing with organizational artifacts of large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing but not for better solving the real problem. A lot of data means more sophisticated tinkering with computers, especially a cluster of computers. The computing and programming skills to handle big data were the biggest hurdle for traditional analysis practitioners to be a successful data scientist. However, this hurdle is significantly reduced with the cloud computing revolution, as described in Chapter 2. After all, it isn't the size of the data that's important, it's what you do with it. Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this upfront that: we had that exact reaction.
-=======
-For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with such big data sets. What are those skills? You may hear about: Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers, or hear about Spark, a system built atop Hadoop for speeding up the same by loading massive datasets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. The new skills are for dealing with organizational artifacts of large data sets beyond a single computer’s memory or hard disk and large-scale cluster computing. These new skills do not necessarily lead to a better solution to the real problem. 
+For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with big data sets. What are those skills? These may include Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or Spark, a system that builds atop Hadoop for speeding up the same by loading massive datasets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. The new skills are for dealing with organizational artifacts of large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing but not for better solving the real problem.
 
-A lot of data means more sophisticated tinkering with computers, especially a cluster of computers. The computing and programming skills to handle big data were the biggest hurdle for traditional analysis practitioners to be a successful data scientist. However, this hurdle is significantly reduced with the cloud computing revolution, as described in Chapter 2. After all, it isn't the size of the data that's important. It's what you do with it. Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this upfront that: we had that exact reaction.
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
+A lot of data means more sophisticated tinkering with computers, especially a cluster of computers. The computing and programming skills to handle big data were the biggest hurdle for traditional analysis practitioners to be a successful data scientist. However, this hurdle is significantly reduced with the cloud computing revolution, as described in Chapter 2. After all, it isn't the size of the data that's important, it's what you do with it. Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this upfront that: we had that exact reaction.
 
-To declutter, let's start with a brief history of data science. If you search on the Google Trends, which shows search keyword information over time, the term "data science" back a little further than 2004. The way media describes it, you may feel that machine learning algorithms are new, and there was never "big" data before Google. That is not true. There are new and exciting developments in data science. But many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians, and scientists of many other fields.
+To declutter, let's start with a brief history of data science. If you search on Google Trends, which shows search keyword information over time, the term "data science" goes back a little further than 2004. The way media describes it you may feel that machine learning algorithms are new and there was never "big" data before Google. That is not true. There are new and exciting developments in data science, but many of the techniques we are using are based on decades of work by statisticians, computer scientists, mathematicians, and scientists of many other fields.
 
 In the early 19th century, when Legendre and Gauss came up with the least-squares method for linear regression \index{linear regression}, probably only physicists would use it to fit linear regression for their data. Now, nearly anyone can build linear regression using spreadsheet with just a little bit of self-guided online training. In 1936, Fisher came up with linear discriminant analysis. In the 1940s, we had another widely used model – logistic regression \index{logistic regression}. In the 1970s, Nelder and Wedderburn formulated a "generalized linear mode (GLM) \index{generalized linear model} \index{GLM}" which:
 
@@ -35,28 +31,16 @@ After that, Ross Quinlan came up with more tree algorithms such as ID3, C4.5, an
 (1)  Data is from a given stochastic data model
 (2)  Data mechanism is unknown and people approach the data using algorithmic model
 
-<<<<<<< HEAD
 Most of the classical statistical models are the first type of stochastic data model. Black-box models, such as random forest, GBM, and deep learning \index{random forest} \index{GBM} \index{deep learning}, are algorithmic models. As Breiman pointed out, algorithmic models can be used on large complex data as a more accurate and informative alternative to stochastic data modeling on smaller data sets. Those algorithms have developed rapidly with much-expanded applications in fields outside traditional statistics. That is one of the most important reasons that statisticians are not in the mainstream of today's data science, both in theory and practice. We observe that Python is passing R as the most commonly used language in data science, mainly due to many data scientists' background. Since 2000, the approaches to getting information out of data have shifted from traditional statistical models to a more diverse toolbox that includes machine learning and deep learning models. To help readers who are traditional data practitioners, we provide both R and Python codes.
-=======
-Most of the classical statistical models are the first type of stochastic data model. Black-box models, such as random forest, GMB, and deep learning \index{random forest} \index{GMB} \index{deep learning} are algorithmic modeling. As Breiman pointed out, algorithmic models can be used on large complex data as a more accurate and informative alternative to stochastic data modeling on smaller data sets. Those algorithms have developed rapidly with much-expanded applications in fields outside traditional statistics. That is one of the most important reasons that statisticians are not the mainstream of today's data science, both in theory and practice. We observe that Python is passing R as the most commonly used language in data science, mainly due to many data scientists' background. Since 2000, the approaches to getting information out of data have shifted from traditional statistical models to a more diverse toolbox that includes machine learning and deep learning models. To help readers who are traditional data practitioners, we provide both R and Python codes.
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
 
 What is the driving force behind the shifting trend? John Tukey identified four forces driving data analysis (there was no “data science” when this was written in 1962):
 
 1. The formal theories of math and statistics
-<<<<<<< HEAD
 1. Acceleration of developments in computers and display devices
 1. The challenge, in many fields, of more and ever larger bodies of data
 1. The emphasis on quantification in an ever-wider variety of disciplines
 
 Tukey's 1962 list is surprisingly modern. Let's inspect those points in today's context. People usually develop theories way before they find potential applications. In the past 50 years, statisticians, mathematicians, and computer scientists have laid the theoretical groundwork for constructing "data science" today. The development of computers enables us to apply the algorithmic models (which can be very computationally expensive) and deliver results in a friendly and intuitive way. The transition to the internet and the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems sure to be a significant preoccupation of commercial life in the coming decades. All the four forces John identified exist today and have been driving data science.
-=======
-1. Acceleration of developments in computers and display devices 
-1. The challenge, in many fields, of more and ever larger bodies of data 
-1. The emphasis on quantification in an ever-wider variety of disciplines 
-
-Tukey's 1962 list is surprisingly modern. Let's inspect those points in today's context. People usually develop theories way before they find potential applications. In the past 50 years, statisticians, mathematicians, and computer scientists have laid the theoretical groundwork for constructing "data science" today. The development of computers enables us to apply the algorithmic models (which can be very computationally expensive) and deliver results in a friendly and intuitive way. The striking transition to the internet and the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems sure to be a significant preoccupation of commercial life in the coming decades. All the four forces John Tukey identified exist today and have been driving data science.
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
 
 The applications have been expanding fast, benefiting from the increasing availability of digitized information and the possibility of distributing it through the internet. Today, people apply data science in many areas, including business, health, biology, social science, politics, etc. Now data science is everywhere. But what is today's data science?
 
@@ -70,23 +54,13 @@ Data science is the elephant. With the data science hype picking upstream, many 
 
 So, the answer to the question "what is data science?" depends on who you are talking to.  Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!).
 
-<<<<<<< HEAD
-There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. [^1]
-
-[^1]: This is based on [Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory](https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.
-=======
-There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. ^[This is based on "Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory" (https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.] 
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
+There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. ^[This is based on "Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory" (https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.]
 
 When people talk about all the machine learning and AI algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are not ready for a data scientist if you don't have a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you may be able to get by with plain text files such as CSV (i.e., comma-separated values) or even spreadsheet. As the data increasing in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
 
 ### Engineering
 
-<<<<<<< HEAD
 Data engineering is the foundation that makes everything else possible. It mainly involves in building the data pipeline infrastructure. In the (not that) old days, when data was stored on local servers, computers, or other devices, building the data infrastructure as a massive IT project. It involved the software, hardware for servers to store the data and the ETL \index{ETL} (i.e., extract, transform, and load \index{extract, transform, and load}) process. With cloud development, the new norm to store and compute data is on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
-=======
-Data engineering is the foundation that makes everything else possible. It mainly involves in building the data pipeline infrastructure. In the (not that) old day, when data is stored on local servers, computers, or other devices, building the data infrastructure can be a massive IT project. It involves the software and the hardware used to store the data and perform data ETL \index{ETL}(i.e., extract, transform, and load \index{extract, transform, and load}) process. As cloud service development, it becomes the new norm to store and compute data on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
 
 (1) Data environment
 
@@ -94,11 +68,7 @@ Designing and setting up the entire environment to support data science workflow
 
 (2) Data management  
 
-<<<<<<< HEAD
 Automated data collection is a common task that includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. Data management includes constructing data schema to support analytical and modeling needs, and ensuring data is correct, standardized, and documented.
-=======
-Automated data collection is a common task that includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. Determine and construct data schema to support analytics and modeling needs. Use tools, processes, guidelines to ensure data is correct, standardized, and documented.
->>>>>>> 37ca0c40c5e389495872489975c09611331391d1
 
 (3) Production
 
