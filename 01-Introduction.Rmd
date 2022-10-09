@@ -68,7 +68,7 @@ Designing and setting up the entire environment to support data science workflow
 
 (2) Data management  
 
-Automated data collection is a common task that includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. Data management includes constructing data schema to support analytical and modeling needs, and ensuring data is correct, standardized, and documented.
+Automated data collection is a common task that includes parsing the logs (depending on the stage of the company and the type of industry you are in), web scraping, API queries, and interrogating data streams. Data management includes constructing data schema to support analytics and modeling needs, and ensuring data is correct, standardized, and documented.
 
 (3) Production
 
@@ -223,8 +223,7 @@ One cannot make a silk purse out of a sow's ear. Data scientists relevant and ac
 
 The data has to be helpful for the question. If we want to predict which product consumers are most likely to buy in the next three months, we need to have historical purchasing data: the last buying time, the amount of invoice, coupons, etc. Information about customers' credit card numbers, ID numbers, and email addresses will not help much.
 
-Often, the data quality is more important than the quantity, but you can not completely overlook quantity.  
-Suppose you can guarantee data quality, even then the more data, the better. If we have a specific and reasonable question with sound and relevant data, then congratulations, we can start playing data science!
+Often, the data quality is more important than the quantity, but you can not completely overlook quantity. Suppose you can guarantee data quality, even then the more data, the better. If we have a specific and reasonable question with sound and relevant data, then congratulations, we can start playing data science!
 
 ### Problem type
 
@@ -335,8 +334,7 @@ Data science has its skillset, workflow, tooling, integration process, and cultu
 
 ## List of potential data science careers
 
-As companies learn about using data to help with the business, there is a continuous specialization of different data science roles.
-As a result, the old "data scientist" title is fading, and some other data science job titles are emerging. The misunderstanding of data science's fundamental work leads to confusing job postings and frustrations for both stakeholders and data scientists. Stakeholders are frustrated that they aren't getting what they expect, and data scientists are frustrated that their talent is not appreciated. We are glad to see that the change is underway. Here is a list of today's data science job titles. Some of them are relatively new, and the others have been around for some time but now are better defined.
+As companies learn about using data to help with the business, there is a continuous specialization of different data science roles. As a result, the old "data scientist" title is fading, and some other data science job titles are emerging. The misunderstanding of data science's fundamental work leads to confusing job postings and frustrations for both stakeholders and data scientists. Stakeholders are frustrated that they aren't getting what they expect, and data scientists are frustrated that their talent is not appreciated. We are glad to see that the change is underway. Here is a list of today's data science job titles. Some of them are relatively new, and the others have been around for some time but now are better defined.
 
 | Role  |Skills  |
 |---|---|
@@ -344,8 +342,8 @@ As a result, the old "data scientist" title is fading, and some other data scien
 | Data engineer  |  spark/scala, python, SQL, AWS/Google Cloud/Azure, Data modeling |
 | BI engineer  | Tableau/looker/Mode, etc., data visualization, SQL, Python  |
 | Data analyst | SQL, basic statistics, data visualization |
-| Data scientist |  R/Python, SQL, basic + applied statistics, data visualization, experimental design |
-| Research scientist | R/Python, advanced statistics + experimental design, ML, research background, publications, conference contributions, algorithms |
+| Data scientist |  R/Python, SQL, basic applied statistics, data visualization, experimental design |
+| Research scientist | R/Python, advanced statistics, experimental design, ML, research background, publications, conference contributions, algorithms |
 | Applied scientist | ML algorithm design, often with an expectation of fundamental software engineering skills |
 | Machine Learning Engineer | More advanced software engineering skillset, algorithms, machine learning algorithm design, system design |
 
