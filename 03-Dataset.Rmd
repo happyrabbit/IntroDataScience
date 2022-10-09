@@ -105,24 +105,24 @@ Refer to Appendix for the simulation code.
 
 The swine disease data includes simulated 120 survey questions from 800 farms. There are three choices for each question. The outbreak status for the $i^{th}$ farm is generated from a $Bernoulli(1, p_i)$ distribution with $p_i$ being a function of the question answers: 
 
-$$ln(\frac{p_i}{1-p_i})=\beta_0 + \Sigma_{g=1}^G\mathbf{x_{i,g}^T\beta_{g}}$$
+$$ln(\frac{p_i}{1-p_i})=\beta_0 + \Sigma_{g=1}^G\symbf{x_{i,g}^T\beta_{g}}$$
 
-where $\beta_0$ is the intercept, $\mathbf{x_{i,g}}$ is a three-dimensional indication vector for question answer and $\mathbf(\beta_g)$ is the parameter vector corresponding to the $g^{th}$ predictor. Three types of questions are considered regarding their effects on the outcome. The first forty survey questions are important questions such that the coefficients of the three answers to these
+where $\beta_0$ is the intercept, $\mathbf{x_{i,g}}$ is a three-dimensional indication vector for question answer and $\symbf{\beta_g}$ is the parameter vector corresponding to the $g^{th}$ predictor. Three types of questions are considered regarding their effects on the outcome. The first forty survey questions are important questions such that the coefficients of the three answers to these
 questions are all different:
 
-$$\mathbf{\beta_g}=(1,0,-1)\times \gamma,\ g=1,\dots,40$$
+$$\symbf{\beta_g}=(1,0,-1)\times \gamma,\ g=1,\dots,40$$
 
 The second forty survey questions are also important questions but only one answer has a coefficient that is different from the other two answers:
 
-$$\mathbf{\beta_g}=(1,0,0)\times \gamma,\ g=41,\dots,80$$
+$$\symbf{\beta_g}=(1,0,0)\times \gamma,\ g=41,\dots,80$$
 
 The last forty survey questions are also unimportant questions such that all three answers have the same coefficients:
 
-$$\mathbf{\beta_g}=(0,0,0)\times \gamma,\ g=81,\dots,120$$
+$$\symbf{\beta_g}=(0,0,0)\times \gamma,\ g=81,\dots,120$$
 
 The baseline coefficient $\beta_0$ is set to be $-\frac{40}{3}\gamma$ so that on average a farm have 50% of chance to have an outbreak. The parameter $\gamma$ in the above simulation is set to control the strength of the questions' effect on the outcome. In this simulation study, we consider the situations where $\gamma = 0.1, 0.25, 0.5, 1, 2$. So the parameter settings are:
 
-$$\mathbf{\beta^{T}} = \left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-1}},...,\underset{question\ 41}{\underbrace{1,0,0}},...,\underset{question\ 81}{\underbrace{0,0,0}},...,\underset{question\ 120}{\underbrace{0,0,0}}\right)*\gamma$$
+$$\symbf{\beta^{T}} = \left(\underset{question\ 1}{\frac{40}{3},\underbrace{1,0,-1}},...,\underset{question\ 41}{\underbrace{1,0,0}},...,\underset{question\ 81}{\underbrace{0,0,0}},...,\underset{question\ 120}{\underbrace{0,0,0}}\right)*\gamma$$
 
 For each value of $\gamma$, 20 data sets are simulated. The bigger $\gamma$ is, the larger the corresponding parameter. We provided the data sets with $\gamma = 2$. Let's check the data:
 
