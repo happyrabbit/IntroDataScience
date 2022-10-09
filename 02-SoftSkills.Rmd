@@ -1,6 +1,6 @@
-# Soft Skills for Data Scientists
+# Soft Skills for Data Scientists {#SoftSkillsforDataScientists}
 
-We want to start the book with soft skills for data scientists. There are many university courses, online self-learning modules, and excellent books that teach technical skills. However, there are much fewer resources discussing the soft skills for data scientists in detail. However, soft skills are essential for data scientists to succeed in their career, especially in the early stage. This chapter also introduces the project cycle and some common pitfalls of data science projects in real life.
+There are many university courses, online self-learning modules, and excellent books that teach technical skills. However, there are much fewer resources discussing the soft skills for data scientists in detail. However, soft skills are essential for data scientists to succeed in their career, especially in the early stage. We want to introduce soft skills for data scientists before discussing technical components. This chapter also introduces the project cycle and some common pitfalls of data science projects in real life.
 
 ## Comparison between Statistician and Data Scientist
 
@@ -51,7 +51,7 @@ A successful data scientist needs to have a strong technical background in data 
 
 (2) Domain knowledge and collaboration
 
-A successful data scientist needs in-depth domain knowledge to understand the business problem well. For any data science project, the data scientist needs to collaborate with other team members. Communication and leadership skills are critical for data scientists during the entire project cycle, especially when there is only one scientist. The scientist needs to decide the timeline and impact with uncertainty.
+A successful data scientist needs in-depth domain knowledge to understand the business problem well. For any data science project, the data scientist needs to collaborate with other team members. Communication and leadership skills are critical for data scientists during the entire project cycle, especially when there is only one scientist in the project. The scientist needs to decide the timeline and impact with uncertainty.
 
 (3) (Big) data management and (new) IT skills
 
@@ -82,15 +82,15 @@ This type of data science project is for a specific business problem that needs 
 
 #### Offline Training and Online Application
 
-Another type of data science project uses offline data for training and applies the trained model to real-time online data in the production environment. For example, we can use historical data to train a personalized advertisement recommendation model that provides a real-time ad recommendation. The model training uses historical offline data. The trained model then takes customers' online real-time data as input features and run the model in real-time to provide an automatic action. The model training is very similar to the "offline training, offline application" project. But to put the trained model into production, there are specific requirements. For example, as features used in the offline training have to be available online in real-time, the model's online run-time has to be short enough without impacting user experience. In most cases, data science projects in this category create continuous and scalable business value as the model could run millions of times a day. We will use this type of data science project to describe the project cycle.
+Another type of data science project uses offline data for training and applies the trained model to real-time online data in the production environment. For example, we can use historical data to train a personalized advertisement recommendation model that provides a real-time ad recommendation. The model training uses historical offline data. The trained model then takes customers' online real-time data as input features and run the model in real-time to provide an automatic action. The model training is very similar to the "offline training, offline application" project. But to put the trained model into production, there are specific requirements. For example, as features used in the offline training have to be available online in real-time, the model's online run-time has to be short enough without impacting user experience. In most cases, data science projects in this category create continuous and scalable business value as the model could run millions of times a day. We will use this type of data science project to describe the typical data science project cycle from section \@ref(ProblemFormulationandProjectPlanningStage) to section \@ref(ProjectCycleSummary).
 
 #### Online Training and Online Application
 
 For some business problems, it is so dynamic that even yesterday's data is out of date. In this case, we can use online data to train the model and apply it in real-time. We call this type of data science project "online training, online application." This type of data science project requires high automation and low latency.
 
-### Problem Formulation and Project Planning Stage
+### Problem Formulation and Project Planning Stage {#ProblemFormulationandProjectPlanningStage}
 
-A data-driven and fact-based planning stage is essential to ensure a successful data science project. With the recent big data and data science hype, there is a high demand for data science projects to create business value across different business sectors. Usually, the leaders of an organization are those who initiate the data science project proposals. This top-down style of data science projects typically has high visibility with some human and computation resources pre-allocated. However, it is crucial to understand the business problem first and align the goal across different teams, including:
+A data-driven and fact-based planning stage is essential to ensure a successful data science project. With the recent big data and data science hype, there is a high demand for data science projects to create business value across different business sectors. Usually, the leaders of an organization are those who initiate the data science project proposals. This top-down style of data science projects typically have high visibility with some human and computation resources pre-allocated. However, it is crucial to understand the business problem first and align the goal across different teams, including:
 
 (1) the business team, which may include members from the business operation team, business analytics, insight, and metrics reporting team;
 
@@ -126,7 +126,7 @@ Data cleaning, data preprocessing, and feature engineering are related procedure
 
 There are different types of statistical and machine learning models, such as supervised learning, unsupervised learning, and causal inference. For each type, there are various algorithms, libraries, or packages readily available. To solve a business problem, we sometimes need to piece together a few methods at the model exploring and developing stage. This stage also includes model training, validation, and testing to ensure the model works well in the production environment (i.e., it can be generalized well and not causing overfitting). The model selection follows Occam's razor, choosing the simplest among a set of compatible models. Before we try complicated models, it is good to get some benchmarks by additional business rules, common-sense decisions, or standard models (such as random forest for classification and regression problems).
 
-### Model Implementation and Post Production Stage
+### Model Implementation and Post Production Stage {#ModelImplementationandPostProductionStage}
 
 For offline application data science projects, the end product is often a detailed report with model results and output. However, for online application projects, a trained model is just halfway from the finish line. The offline data is stored and processed in a different environment from the online production environment. Building the online data pipeline and implementing machine learning models in a production environment requires lots of additional work. Even though recent advance in cloud infrastructure lowers the barrier dramatically, it still takes effort to implement an offline model in the online production system. Before we promote the model to production, there are two more steps to go:
 
@@ -139,7 +139,7 @@ Once the online model passes the shadow mode, A/B testing is the next stage. Dur
 
 Once the A/B testing shows that the model provides significant business value, we can put it into full production. It is ideal that the model runs as expected and continues to offer scalable values. However, the business can change, and a machine learning model that works now can break tomorrow, and features available now may not be available tomorrow. We need a monitoring system to notify us when one or multiple features change. When the model performance degrades below a pre-defined level, we need to fine-tune the parameters and thresholds, re-train the model with more recent data, add or remove features to improve model performance. Eventually, any model will fail or retire at some time with a pre-defined model retirement plan.
 
-### Project Cycle Summary
+### Project Cycle Summary {#ProjectCycleSummary}
 
 Data science end-to-end project cycle is a complicated process that requires close collaboration among many teams. The data scientist, maybe the only scientist in the team, has to lead the planning discussion and model development based on data available and communicate key assumptions and uncertainties. A data science project may fail at any stage, and a clear end-to-end cycle view of the project helps avoid some mistakes.
 
