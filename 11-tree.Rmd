@@ -70,7 +70,7 @@ where $p_i$ is the probability of class $i$ and the interval of Gini is $[0, 0.5
 
 $$p_{1}(1-p_{1})+p_{2}(1-p_{2})$$
 
-It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1}=p_{2}=0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
+It is easy to see that when the sample set is pure, one of the probability is 0  and the Gini score is the smallest. Conversely, when $p_{1} = p_{2} = 0.5$, the Gini score is the largest, in which case the purity of the node is the smallest. Let's look at an example. Suppose we want to determine which students are computer science (CS) majors. Here is the simple hypothetical classification tree result obtained with the gender variable.
 
 <center>
 ![](images/giniEN.PNG)
@@ -225,7 +225,7 @@ The idea is that the pruning minimizes the penalized error $SSE_{\lambda}$ with 
 
 $$SSE_{\lambda} = SSE+\lambda \times (complexity)$$
 
-Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the tree that minimizes this penalized error.  Breiman presents the algorithm to solve the optimization [@Breiman1984].
+Here complexity is a function of the number of leaves. For every given $\lambda$, we want to find the tree that minimizes this penalized error. Breiman presents the algorithm to solve the optimization [@Breiman1984].
 
 To find the optimal pruning tree, you need to iterate through a series of values of $\lambda$ and calculate the corresponding SSE. For the same $\lambda$, SSE changes over different samples. Breiman et al. suggested using cross-validation [@Breiman1984] to study the variation of SSE under each $\lambda$ value. They also proposed a standard deviation criterion to give the simplest tree: within one standard deviation, find the simplest tree that minimizes the absolute error. Another method is to choose the tree size that minimizes the numerical error [@Hastie2008].
 
@@ -374,7 +374,13 @@ Similar to a regression tree, the goal of a classification tree is to stratifyin
 When the predictor is continuous, the splitting process is straightforward. When the predictor is categorical, the process can take different approaches:
 
 1. Keep the variable as categorical and group some categories on either side of the split. In this way, the model can make more dynamic splits but must treat the categorical predictor as an ordered set of bits.
-2. Encode the categorical variable to be a set of dummy variables. In this way, the information in the categorical variable is decomposed to independent bits of information. The model considers these dummy variables separately and evaluates for each of these on one split point (because there are only two possible values: 0/1).
+2. Use one-hot encoding (figure \@ref(fig:onehotencoding)). Encode the categorical variable as a set of dummy (binary) variables. The model considers these dummy variables separately and evaluates each of these on one split point (because there are only two possible values: 0/1). This way, the information in the categorical variable is decomposed into independent bits of information. 
+
+```{r onehotencoding, fig.cap = "One-hot encoding", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/one_hot_encoding.png")
+```
+
+
 
 When fitting tree models, people need to choose the way to treat categorical predictors. If you know some of the categories have higher predictability, then the first approach may be better. In the rest of this section, we will build tree models using the above two approaches and compare them. 
 
@@ -400,9 +406,12 @@ dumMod <- dummyVars(
 trainx2 <- predict(dumMod, trainx1)
 # the response variable is gender
 trainy <- dat$gender
+
+# check outcome balance
+table(dat$gender) %>% prop.table()
 ```
 
-Here we use `train()` function in `caret` package to call `rpart` to build the model. We can compare the model results from the two approaches:
+The outcome is pretty balanced, with 55% female and 45% male. We use `train()` function in `caret` package to call `rpart` to build the model. We can compare the model results from the two approaches:
 
 ```{r, echo=FALSE, results=FALSE}
 set.seed(100)
@@ -628,7 +637,7 @@ load("../../../Dropbox/Book_DS/Data/rfTune.RData")
 rfTune
 ```
 
-In this example, since the number of predictors is small, the result of the model indicates that the optimal number of candidate variables at each node is 1.  The optimal AUC is not too much higher than that from bagging tree: 
+In this example, since the number of predictors is small, the result of the model indicates that the optimal number of candidate variables at each node is 1.  The optimal AUC is not too much higher than that from bagging tree. 
 
 If you have selected the values of tuning parameters, you can also use the randomForest package to fit a random forest. 
 
@@ -672,9 +681,9 @@ where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations
 \State Response variables have two values: +1 and -1
 \State Initialize the observation to have the same weights:  $w_i=\frac{1}{N},i=1,...,N$
 \For {m = 1 to M}
-    \State Fit a classifier $G_m(x)$ to the training data using weights $w_i$
-    \State Compute the error rate for the $m^th$ classifier: $err_m=\frac{\Sigma_{i=1}^Nw_i I(y_i\neq G_m(x_i))}{\Sigma_{i=1}^Nw_i}$
-    \State Compute the stage weight for $m^{th}$ iteration: $\alpha_m=log\frac{1-err_m}{err_m}$
+    \State Fit a classifier $G_m(x)$ using weights $w_i$
+    \State Compute the error rate: $err_m=\frac{\Sigma_{i=1}^Nw_i I(y_i\neq G_m(x_i))}{\Sigma_{i=1}^Nw_i}$
+    \State Compute the stage weight: $\alpha_m=log\frac{1-err_m}{err_m}$
     \State Update $w_i = w_i\cdot exp[\alpha_m\cdot I(y_i \neq G_m(x_i))],\ i=1,2,\dots,N$
 \EndFor
 \State Calculate the prediction：$G(x)=sign[\Sigma_{m=1}^M\alpha_mG_m(x)]$, where $sign(\cdot)$ means if $\cdot$ is positive, then the sample is classified as +1, -1 otherwise.
@@ -932,7 +941,7 @@ w_i^{m+1} & = & exp[-y_if_m (x_i)]\\
 (\#eq:explossadaboost3)
 \end{equation}
 
-Since $-y_i G_m(x_i)=2\cdot I(y_i \neq G_m(x_i))-1$,  equation \@ref(eq:explossadaboost2) can be written as:
+Since $-y_i G_m(x_i)=2\cdot I(y_i \neq G_m(x_i))-1$, equation \@ref(eq:explossadaboost3) can be written as:
 
 $$w_i^{m+1}=w_i^m \cdot exp[\alpha_mI(y_i\neq G_m(x_i))] \cdot exp[-\beta_m]$$
 
