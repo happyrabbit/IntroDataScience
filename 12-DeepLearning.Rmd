@@ -38,7 +38,7 @@ With the vast potential application of deep learning, major tech companies contr
 
 In summary, deep learning has not just developed in the past few years but have in fact been ongoing research for the past few decades. The accumulation of data, the advancement of new optimization algorithms and the improvement of computation power has finally enabled every day deep learning applications. In the foreseeable future, deep learning will continue to revolutionize machine learning methods across many more areas.
 
-
+<!--
 ## Projection Pursuit Regression
 
 Before moving onto neural networks, let us start with a broader framework, Projection Pursuit Regression (PPR). It has a form of **additive model** of the derived features rather than the inputs themselves. Another widely used algorithm, AdaBoost, also fits an additive model in a base learner.
@@ -103,6 +103,7 @@ You can see that this framework is very flexible. In essence, it is to do a non-
 PPR in 1981 was a new idea then which lead to the debut of the neural network model. The basic technical idea behind deep learning has been around for decades. However, why did they take off in recent years? Here are some main drivers behind the rise.
 
 First, thanks to the digitalization where lots of human activities are now in the digital realm and captured as data. So in the last 10 year, for many problems, we went from having a relatively small amount of data to accumulating a large amount of data. The traditional learning algorithms, like Logistic Regression, Support Vector Machine, Random Forest cannot effectively take advantage of such big data.  Second, the increasing computation power enables us to train a large neural network either on a CPU or GPU using big data. The scale of data and computation ability lead to much progress, but tremendous algorithmic innovation is also an important driver. Many of the innovations are about speeding up the optimization of neural network. One of the examples is to use ReLU as intermediate layer activation function instead of the previous sigmoid function. The change has made the optimization process much faster because the previous sigmoid function suffers from vanishing gradient. We will talk more about that in the following sections. Here we just want to show an example of the impact of algorithmic innovation.  
+-->
 
 ## Feedforward Neural Network
 
