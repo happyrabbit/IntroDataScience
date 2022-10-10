@@ -52,15 +52,24 @@ Data science is the elephant. With the data science hype picking upstream, many 
 
 > "We don’t see things as they are, we see them as we are. [by Anais Nin]"
 
-So, the answer to the question "what is data science?" depends on who you are talking to.  Data science has three main skill tracks: engineering, analysis, and modeling (and yes, the order matters!).
+So, the answer to the question "what is data science?" depends on who you are talking to.  Data science has three main skill tracks (figure \@ref(fig:threetracks)): engineering, analysis, and modeling/inference (and yes, the order matters!).
+
+```{r threetracks, fig.cap = "Three tracks of data science", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/threetracks.png")
+```
 
 There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. ^[This is based on "Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory" (https://github.com/brohrer/academic_advisory) with modifications. It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.]
 
 When people talk about all the machine learning and AI algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are not ready for a data scientist if you don't have a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you may be able to get by with plain text files such as CSV (i.e., comma-separated values) or even spreadsheet. As the data increasing in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
 
+
 ### Engineering
 
-Data engineering is the foundation that makes everything else possible. It mainly involves in building the data pipeline infrastructure. In the (not that) old days, when data was stored on local servers, computers, or other devices, building the data infrastructure as a massive IT project. It involved the software, hardware for servers to store the data and the ETL \index{ETL} (i.e., extract, transform, and load \index{extract, transform, and load}) process. With cloud development, the new norm to store and compute data is on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
+Data engineering is the foundation that makes everything else possible (figure \@ref(fig:track1engineering)). It mainly involves in building the data pipeline infrastructure. In the (not that) old days, when data was stored on local servers, computers, or other devices, building the data infrastructure as a massive IT project. It involved the software, hardware for servers to store the data and the ETL \index{ETL} (i.e., extract, transform, and load \index{extract, transform, and load}) process. With cloud development, the new norm to store and compute data is on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
+
+```{r track1engineering, fig.cap = "Engineering track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/track1_engineering.png")
+```
 
 (1) Data environment
 
@@ -76,7 +85,11 @@ If you want to integrate the model or analysis into the production system, you h
 
 ### Analysis
 
-Analysis turns raw information into insights in a fast and often exploratory way. In general, an analyst needs to have decent domain knowledge, do exploratory analysis efficiently, and present the results using storytelling.
+Analysis turns raw information into insights in a fast and often exploratory way. In general, an analyst needs to have decent domain knowledge, do exploratory analysis efficiently, and present the results using storytelling (figure \@ref(fig:track2analysis)).
+
+```{r track2analysis, fig.cap = "Analysis track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/track2_analysis.png")
+```
 
 (1) Domain knowledge
 
@@ -108,9 +121,20 @@ Storytelling with data is critical to deliver insights and drive better decision
 
 A business-friendly report or an interactive dashboard is the typical outcome of the analysis.   
 
-### Modeling
+### Modeling/inference
 
-Modeling is a process that dives deeper into the data to discover the patterns not easily sees. A fancy machine learning model is the first thing that comes to people’s minds when the general public thinks about data science. Unfortunately, fancy models only occupy a small part of a typical data scientist’s day-to-day time. Nevertheless, many of those models are powerful tools.
+Modeling/inference is a process that dives deeper into the data to discover patterns that are not easily seen. It may be the most misunderstood track. When the general public thinks about data science, the first thing that comes to mind might be fancy machine learning models. Despite the overrepresentation of machine learning in the public's mind, the truth is that you don't have to use machine learning to be a data scientist. Even data scientists who use machine learning in their work spend less than 20% of their time working on machine learning. They spend most of their time communicating with different stakeholders and collecting and cleaning data.
+
+This track mainly focuses on three problems: 1) prediction, 2) explanation, and 3) causal inference. 
+
+ (figure \@ref(fig:track3modeling))).
+
+
+```{r track3modeling, fig.cap = "Modeling/inference track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/track3_modeling.png")
+```
+
+If we look at this track through the lens of the technical methods used, there are three types.
 
 (1) Supervised learning
 
@@ -139,7 +163,6 @@ Here is a list of questions that can help you decide the type of technique to us
 - Is your data easy to collect? One of the major sources of cost in deploying machine learning is collecting, preparing, and cleaning the data. Because model maintenance includes continuously collecting data to keep the model updated. If the data collection process requires too much human labor, the maintenance cost can be too high.
 
 - Does your problem have a unique context? If so, you may not be able to find any off-the-shelf method that can directly apply to your question and need to customize the model.
-
 
 **What others?**
 
