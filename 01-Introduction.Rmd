@@ -125,10 +125,11 @@ A business-friendly report or an interactive dashboard is the typical outcome of
 
 Modeling/inference is a process that dives deeper into the data to discover patterns that are not easily seen. It may be the most misunderstood track. When the general public thinks about data science, the first thing that comes to mind might be fancy machine learning models. Despite the overrepresentation of machine learning in the public's mind, the truth is that you don't have to use machine learning to be a data scientist. Even data scientists who use machine learning in their work spend less than 20% of their time working on machine learning. They spend most of their time communicating with different stakeholders and collecting and cleaning data.
 
-This track mainly focuses on three problems: 1) prediction, 2) explanation, and 3) causal inference. 
+This track mainly focuses on three problems: 1) prediction, 2) explanation, and 3) causal inference (figure \@ref(fig:track3modeling))).
 
- (figure \@ref(fig:track3modeling))).
+Prediction focuses on predicting and understanding the role each variable plays is not a concern. Many black-box models, such as ensemble methods and deep learning, are often used to make a prediction. Examples of problems are image recognition, machine translation, and recommendation.
 
+The focus of modeling is to explain if you want to understand the drivers of an outcome of interest or relationship among variables. Explainability is critical when you need to find a way to intervene to achieve the desired result. For example, product managers often need to do feature prioritization where they want to order a list of features by user preference. A standard method for this problem is choice modeling, and you need to explain the drivers behind users' decisions on using/purchasing a product. 
 
 ```{r track3modeling, fig.cap = "Modeling/inference track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/track3_modeling.png")
@@ -355,7 +356,7 @@ There is no universal answer to the best way to organize the data science team. 
 
 Data science has its skillset, workflow, tooling, integration process, and culture. If it is critical to your organization, it is best not to bury it under any part of the organization. Otherwise, data science will only serve the need for a specific branch. No matter which way you choose, be aware of both sides of the coin. If you are looking for a data science position, it is crucial to know where the data science team fits.
 
-## List of potential data science careers
+## Data science roles
 
 As companies learn about using data to help with the business, there is a continuous specialization of different data science roles. As a result, the old "data scientist" title is fading, and some other data science job titles are emerging. In the past, misunderstanding data science's fundamental work led to confusing job postings and frustrations for stakeholders and data scientists. Stakeholders were frustrated that they weren't getting what they expected, and data scientists were frustrated that the company didn't appreciate their talent. 
 
@@ -390,9 +391,13 @@ The above table shows some data science roles and common technical keywords in j
 
 Data infrastructure engineers work at the beginning of the data pipeline. They are software engineers who work in the production system and usually handle high-frequency data. They are responsible for bringing data of different forms and formats and ensuring data comes in smoothly and correctly. They work directly with other engineers (for example, data engineers and backend engineers). They typically don't need to know the data's business context or how data scientists will use it. For example, integrate the company's services with AWS/GCP/Azure services and set up an Apache Kafka environment to stream the events. 
 
-People call a storage repository with vast raw data in its native format a **data lake**. As the number of data sources multiplies, having data scattered in various formats prevents the organization from using the data to help with business decisions or building products. That is when data engineers come to help.
+People call a storage repository with vast raw data in its native format (XML, JSON, CSV, Parquet, etc.) a **data lake** (figure \@ref(fig:databases)). As the number of data sources multiplies, having data scattered in various formats prevents the organization from using the data to help with business decisions or building products. That is when data engineers come to help.
 
-Data engineers transform, clean, and organize the data from the data lake. They commonly design schemas, store data in query-able forms, and build and maintain data warehouses. Since the database is for non-engineers, data engineers need to know more about the business and how analytical personnel uses the data. Some may have a basic understanding of machine learning to deploy models developed by data/research scientists. They use technologies like Hadoop/Spark. 
+Data engineers transform, clean, and organize the data from the data lake. They commonly design schemas, store data in query-able forms, and build and maintain data warehouses. People call this cleaner and better-organized database **data mart** (figure \@ref(fig:databases)) which contains a subset of data for business needs. They use technologies like Hadoop/Spark and SQL. Since the database is for non-engineers, data engineers need to know more about the business and how analytical personnel uses the data. Some may have a basic understanding of machine learning to deploy models developed by data/research scientists.
+
+```{r databases, fig.cap = "Data lake (a focused version of a data warehouse that contains a subset of data for business needs) and data mart (a storage repository that cheaply stores a vast amount of raw data in its native format (XML, JSON, CSV, Parquet, etc))", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+knitr::include_graphics("images/databases.png")
+```
 
 Business intelligence (BI) engineers and data analysts are close to the business, so they need to know the business context well. The critical difference is that BI engineers build automated dashboards, so they are engineers. They are usually experts in SQL and have the engineering skill to write production-level code to construct the later steam data pipeline and automate their work. Data analysts are technical but not engineers. They analyze ad hoc data and deliver the results through presentations. The data is, most of the time, structured. They need to know coding basics (SQL or R/Python), but they rarely need to write production-level code. This role was mixed with "data scientist" by many companies but is now much better refined in mature companies.
 
