@@ -12,7 +12,7 @@ In real life, depending on the stage of data cleanup, data has the following typ
 4. Summarized data
 5. Data with fixed format
 
-The raw data is the first-hand data that analysts pull from the database, market survey responds from your clients,  the experimental results collected by the R & D department, and so on. These data may be very rough, and R sometimes can't read them directly. The table title could be multi-line, or the format does not meet the requirements:
+The raw data is the first-hand data that analysts pull from the database, market survey responds from your clients,  the experimental results collected by the research and development department, and so on. These data may be very rough, and R sometimes can't read them directly. The table title could be multi-line, or the format does not meet the requirements:
 
 - Use 50% to represent the percentage rather than 0.5, so R will read it as a character;
 - The missing value of the sales is represented by "-" instead of space so that R will treat the variable as character or factor type;
@@ -247,7 +247,7 @@ summary(demo_imp[, 1:5])
 
 ## Centering and Scaling
 
-It is the most straightforward data transformation. It centers and scales a variable to mean 0 and standard deviation 1. It ensures that the criterion for finding linear combinations of the predictors is based on how much variation they explain and therefore improves the numerical stability. Models involving finding linear combinations of the predictors to explain response/predictors variation need data centering and scaling, such as PCA [@pca1], PLS [@PLS1] and EFA [@EFA1]. You can quickly write code yourself to conduct this transformation.  
+It is the most straightforward data transformation. It centers and scales a variable to mean 0 and standard deviation 1. It ensures that the criterion for finding linear combinations of the predictors is based on how much variation they explain and therefore improves the numerical stability. Models involving finding linear combinations of the predictors to explain response/predictors variation need data centering and scaling, such as principle component analysis (PCA) [@pca1], partial least squares (PLS) [@PLS1] and factor analysis [@EFA1]. You can quickly write code yourself to conduct this transformation.  
 
 Let's standardize the variable `income` from `sim.dat`:
 
@@ -277,12 +277,11 @@ Now the two variables are in the same scale. You can check the result using `sum
 
 ## Resolve Skewness
 
-[Skewness](https://en.wikipedia.org/wiki/Skewness)  is defined to be the third standardized central moment. The formula for the sample skewness statistics is:
+Skewness is defined to be the third standardized central moment. The formula for the sample skewness statistics is:
+
 $$ skewness=\frac{\sum(x_{i}-\bar{x})^{3}}{(n-1)v^{3/2}}$$
 $$v=\frac{\sum(x_{i}-\bar{x})^{2}}{(n-1)}$$
-Skewness=0 means that the destribution is symmetric, i.e. the probability of falling on either side of the distribution's  mean is equal. 
-
-
+A zero skewness means that the distribution is symmetric, i.e. the probability of falling on either side of the distribution's  mean is equal. 
 
 ```{r preprocessskew, fig.cap = "Example of skewed distributions", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 
@@ -302,7 +301,7 @@ plot(density(x1), main = paste("right skew, skewness =",
 
 <!--You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). -->
 
-There are different ways may help to remove skewness such as log, square root or inverse. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$[@BOXCOX1]. 
+There are different ways to remove skewness such as log, square root or inverse transformation. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$ [@BOXCOX1]. 
 
 $$
 x^{*}=\begin{cases}
@@ -355,9 +354,7 @@ hist(transformed$store_trans, main = "After Transformation",
     xlab = "store_trans")
 ```
 
-Before the transformation, the `stroe_trans` is skewed right. 
-<!--The situation is significantly improved after (figure\@ref(fig:bc)). -->
-`BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
+Before the transformation, the `stroe_trans` is skewed right. `BoxCoxTrans ()` can also conduct Box-Cox transform. But note that `BoxCoxTrans ()` can only be applied to a single variable, and it is not possible to transform difference columns in a data frame at the same time.
 
 ```{r}
 (trans <- BoxCoxTrans(dat_bc$store_trans))
@@ -390,7 +387,7 @@ In addition to visualization, there are some statistical methods to define outli
 
 $$Z_{i}=\frac{Y_{i}-\bar{Y}}{s}$$
 
-where $\bar{Y}$ and $s$ are mean and standard deviation for $Y$. Z-score is a measurement of the distance between each observation and the mean. This method may be misleading, especially when the sample size is small. Iglewicz and Hoaglin proposed to use the modified Z-score to determine the outlier[@mad1]：
+where $\bar{Y}$ and $s$ are mean and standard deviation for $Y$. Z-score is a measurement of the distance between each observation and the mean. This method may be misleading, especially when the sample size is small. Iglewicz and Hoaglin proposed to use the modified Z-score to determine the outlier [@mad1]：
 
 $$M_{i}=\frac{0.6745(Y_{i}-\bar{Y})}{MAD}$$
 
@@ -417,7 +414,7 @@ where $x_{ij}$ represents the $i^{th}$ observation and $j^{th}$ variable.  As sh
 1.  Unlike centering or scaling, this manipulation of the predictors transforms them as a group
 1.  If there are some variables to remove (for example, highly correlated variables), do it before the transformation
 
-Function `spatialSign()` `caret` package can conduct the transformation. Take `income` and `age` as an example:
+Function `spatialSign()` in `caret` package can conduct the transformation. Take `income` and `age` as an example:
 
 ```{r} 
 # KNN imputation
@@ -455,7 +452,7 @@ corrplot.mixed(correlation, order = "hclust", tl.pos = "lt",
 <!--Here use `corrplot.mixed()` function to visualize the correlation matrix (figure \@ref(fig:corp)).-->
 The closer the correlation is to 0, the lighter the color is and the closer the shape is to a circle. The elliptical means the correlation is not equal to 0 (because we set the `upper = "ellipse"`), the greater the correlation, the narrower the ellipse. Blue represents a positive correlation; red represents a negative correlation. The direction of the ellipse also changes with the correlation. The correlation coefficient is shown in the lower triangle of the matrix. 
 
-The variables relationship from previous scatter matrix are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong ( such as the correlation between `online_trans` and`age` is `r correlation['online_trans','age']`) which means the two variables contain duplicate information. 
+The variables relationship from previous scatter matrix are clear here: the negative correlation between age and online shopping, the positive correlation between income and amount of purchasing. Some correlation is very strong (such as the correlation between `online_trans` and `age` is `r correlation['online_trans','age']`) which means the two variables contain duplicate information. 
 
 Section 3.5 of “Applied Predictive Modeling” [@APM] presents a heuristic algorithm to remove a minimum number of predictors to ensure all pairwise correlations are below a certain threshold:
 
@@ -472,7 +469,7 @@ The `findCorrelation()` function in package `caret` will apply the above algorit
 (highCorr <- findCorrelation(cor(sdat), cutoff = 0.7))
 ```
 
-It returns the index of columns need to be deleted. It tells us that we need to remove the first column to make sure the correlations are all below 0.7.
+It returns the index of columns need to be deleted. It tells us that we need to remove the $2^{nd}$ and $6^{th}$ columns to make sure the correlations are all below 0.7.
 
 ```r
 # delete highly correlated columns

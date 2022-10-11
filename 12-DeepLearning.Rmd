@@ -544,8 +544,6 @@ $$w=w-\alpha \frac{V_{dw}^{corrected}}{\sqrt{S_{dw}^{corrected}} +\epsilon};\ b=
 
 The biggest problem for deep learning is overfitting. It happens when the model learns too much from the data. We discussed this in more detail in section \@ref(vbtradeoff). A common way to diagnose the problem is to use cross-validation (section \@ref(datasplittingresampling)). You can recognize the problem when the model fits great on the training data but gives poor predictions on the testing data. One way to prevent the model from over learning the data is to limit model complexity. There are several approaches to that.
 
-
-
 #### Regularization
 
 For logistic regression,

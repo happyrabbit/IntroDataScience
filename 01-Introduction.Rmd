@@ -62,7 +62,6 @@ There are some representative skills in each track. Different tracks and combina
 
 When people talk about all the machine learning and AI algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are not ready for a data scientist if you don't have a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you may be able to get by with plain text files such as CSV (i.e., comma-separated values) or even spreadsheet. As the data increasing in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
 
-
 ### Engineering
 
 Data engineering is the foundation that makes everything else possible (figure \@ref(fig:track1engineering)). It mainly involves in building the data pipeline infrastructure. In the (not that) old days, when data was stored on local servers, computers, or other devices, building the data infrastructure as a massive IT project. It involved the software, hardware for servers to store the data and the ETL \index{ETL} (i.e., extract, transform, and load \index{extract, transform, and load}) process. With cloud development, the new norm to store and compute data is on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
@@ -129,7 +128,7 @@ This track mainly focuses on three problems: 1) prediction, 2) explanation, and 
 
 Prediction focuses on predicting and understanding the role each variable plays is not a concern. Many black-box models, such as ensemble methods and deep learning, are often used to make a prediction. Examples of problems are image recognition, machine translation, and recommendation.
 
-The focus of modeling is to explain if you want to understand the drivers of an outcome of interest or relationship among variables. Explainability is critical when you need to find a way to intervene to achieve the desired result. For example, product managers often need to do feature prioritization where they want to order a list of features by user preference. A standard method for this problem is choice modeling, and you need to explain the drivers behind users' decisions on using/purchasing a product. 
+Model interpretability is critical if you want to understand the drivers of an outcome of interest or relationship among variables. For example, product managers often need to prioritize a list of features by user preference. Choice modeling is a common method for this problem which allows you to explain the drivers behind users' decisions on using/purchasing a product. 
 
 ```{r track3modeling, fig.cap = "Modeling/inference track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/track3_modeling.png")

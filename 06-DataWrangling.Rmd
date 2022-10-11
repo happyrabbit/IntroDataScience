@@ -2,7 +2,7 @@
 
 This chapter focuses on some of the most frequently used data manipulations and shows how to implement them in R and Python. It is critical to explore the data with descriptive statistics (mean, standard deviation, etc.) and data visualization before analysis. Transform data so that the data structure is in line with the requirements of the model. You also need to summarize the results after analysis.
 
-When the data is too large to fit in a computer's memory, we can use some big data analytics engine like Spark on a cloud platform (see Chapter \@ref(bigdatacloudplatform)). Even the user interface of many data platforms is much more friendly now; it is still easier to manipulate the data as a local data frame. Spark's R and Python interfaces aim to keep the data manipulation syntax consistent with popular packages for local data frames. As shown in Section \@ref(leveragesparkr), we can run nearly all of the `dplyr` functions on a spark data frame once setting up the Spark environment. And the Python interface `pyspark` uses a similar syntax as `pandas`. This chapter focuses on data manipulations on standard data frames, which is also the foundation of big data manipulation. 
+When the data is too large to fit in a computer's memory, we can use some big data analytics engine like Spark on a cloud platform (see Chapter \@ref(bigdatacloudplatform)). Even the user interface of many data platforms is much more friendly now, it is still easier to manipulate the data as a local data frame. Spark's R and Python interfaces aim to keep the data manipulation syntax consistent with popular packages for local data frames. As shown in Section \@ref(leveragesparkr), we can run nearly all of the `dplyr` functions on a spark data frame once setting up the Spark environment. And the Python interface `pyspark` uses a similar syntax as `pandas`. This chapter focuses on data manipulations on standard data frames, which is also the foundation of big data manipulation. 
 
 Even when the data can fit in the memory, there may be a situation where it is slow to read and manipulate due to a relatively large size. Some R packages can make the process faster with the cost of familiarity, especially for data wrangling. But it avoids the hurdle of setting up Spark cluster and working in an unfamiliar environment. It is not a topic in this chapter but Appendix \@ref(largelocaldata) briefly introduces some of the alternative R packages to read, write and wrangle a data set that is relatively large but not too big to fit in the memory.  
 
@@ -36,8 +36,8 @@ lapply(p_needed, require, character.only = TRUE)
 
 `dplyr` provides a flexible grammar of data manipulation focusing on tools for working with data frames (hence the `d` in the name). It is faster and more friendly:
 
-- It identifies the most important data manipulations and make they easy to use from R
-- It performs faster for in-memory data by writing key pieces in C++ using `Rcpp`
+- It identifies the most important data manipulations and make them easy to use from R.
+- It performs faster for in-memory data by writing key pieces in C++ using `Rcpp`.
 - The interface is the same for data frame, data table or database.
 
 We will illustrate the following functions in order using the clothing company data: 
@@ -53,7 +53,7 @@ We will illustrate the following functions in order using the clothing company d
 sim.dat <- read.csv("http://bit.ly/2P5gTw4")
 ```
 
-**Display**
+#### Display
 
 - `tbl_df()`: Convert the data to `tibble` which offers better checking and printing capabilities than traditional data frames. It will adjust output width according to fit the current window.
 
@@ -68,7 +68,7 @@ tbl_df(sim.dat)
 glimpse(sim.dat)
 ```
 
-**Subset**
+#### Subset
 
 Get rows with `income` more than 300000:
 
@@ -84,7 +84,7 @@ x %>% f(y) = f(x, y)
 y %>% f(x, ., z) = f(x, y, z )
 ```
 
-It is an operator from `magrittr` which can be really beneficial. Look at the following code. Can you tell me what it does?
+It is an operator from `magrittr` which can be really beneficial. The following R code is difficulty to read and understand without using the pipe operator.
 
 ```r
 ave_exp <- filter( 
@@ -103,7 +103,7 @@ ave_exp <- filter(
 ) 
 ```
 
-Now look at the identical code using "`%>%`":
+The same function with pipe operator "`%>%`":
 
 ```r
 ave_exp <- sim.dat %>% 
@@ -115,7 +115,7 @@ ave_exp <- sim.dat %>%
   filter(n > 200)
 ```
 
-Isn't it much more straightforward now? Let's read it:
+It is much easier to read:
 
 1.    Delete observations from `sim.dat` with missing income values 
 2.    Group the data from step 1 by variable `segment`
@@ -176,9 +176,9 @@ dplyr::select(sim.dat, age:online_exp)
 dplyr::select(sim.dat, -age)
 ```
 
-**Summarize**
+#### Summarize
 
-A standard marketing problem is customer segmentation. It usually starts with designing survey and collecting data. Then run a cluster analysis on the data to get customer segments. Once we have different segments, the next is to understand how each group of customer look like by summarizing some key metrics. For example, we can do the following data aggregation for different segments of clothes customers.   
+Let us use a standard marketing problem, customer segmentation, to illustrate how to summarize data. It usually starts with designing survey and collecting data. Then run a cluster analysis on the data to get customer segments. Once we have different segments, the next is to understand how each group of customer look like by summarizing some key metrics. For example, we can do the following data aggregation for different segments of clothes customers.   
 
 ```{r, message = FALSE}
 dat_summary <- sim.dat %>% 
@@ -201,9 +201,9 @@ names(tdat_summary) <- cnames
 tdat_summary
 ```
 
-Now, let's peel the onion.
+Now, let's look at the code in more details.
 
-The first line `sim.dat` is easy. It is the data you want to work on.  The second line `group_by(segment)` tells R that in the following steps you want to summarise by variable `segment`. Here we only summarize data by one categorical variable, but you can group by multiple variables, such as `group_by(segment, house)`.  The third argument `summarise` tells R the manipulation(s) to do. Then list the exact actions inside `summarise()` . For example,  ` Age=round(mean(na.omit(age)),0)` tell R the following things:
+The first line `sim.dat` is easy. It is the data you want to work on.  The second line `group_by(segment)` tells R that in the following steps you want to summarise by variable `segment`. Here we only summarize data by one categorical variable, but you can group by multiple variables, such as `group_by(segment, house)`.  The third argument `summarise` tells R the manipulation(s) to do. Then list the exact actions inside `summarise()`. For example,  ` Age = round(mean(na.omit(age)),0)` tell R the following things:
 
 1.    Calculate the mean of column `age` ignoring missing value for each customer segment
 2.    Round the result to the specified number of decimal places 
@@ -221,9 +221,9 @@ The rest of the command above is similar. In the end, we calculate the following
 
 There is a lot of information you can extract from those simple averages.
 
-- Conspicuous: average age is about 40.  It is a group of middle-age wealthy people. 1/3 of them are female, and 2/3 are male. They buy regardless the price. Almost all of them own house (0.86).  It makes us wonder what is wrong with the rest 14%? 
+- Conspicuous: average age is about 40.  It is a group of middle-age wealthy people. 1/3 of them are female, and 2/3 are male. They buy regardless the price. Almost all of them own house (0.86).
 
-- Price: They are older people with average age 60. Nearly all of them own a house(0.94). They are less likely to purchase online (`store_trans = 6` while `online_trans = 3`). It is the only group that is less likely to buy online.
+- Price: They are older people with average age 60. Nearly all of them own a house (0.94). They are less likely to purchase online (`store_trans = 6` while `online_trans = 3`). It is the only group that is less likely to buy online.
 
 - Quality: The average age is 35. They are not way different with Conspicuous regarding age. But they spend much less. The percentages of male and female are similar. They prefer online shopping. More than half of them don't own a house (0.66).
 
@@ -253,9 +253,9 @@ dplyr::summarise_all(sim.dat, funs_(c("anyNA")))
 
 The above code returns a vector indicating if there is any value missing in each column. 
 
-**Create new variable**
+#### Create new variable
 
-There are often situations where you need to create new variables. For example, adding online and store expense to get total expense. In this case, you will apply **window function** to the columns and return a column with the same length. `mutate()` can do it for you and append one or more new columns:
+There are often situations where you need to create new variables. For example, adding online and store expense to get total expense. In this case, you will apply a function to the columns and return a column with the same length. `mutate()` can do it for you and append one or more new columns:
 
 ```r
 dplyr::mutate(sim.dat, total_exp = store_exp + online_exp)
@@ -267,7 +267,7 @@ The above code sums up two columns and appends the result (`total_exp`) to `sim.
 dplyr::transmute(sim.dat, total_exp = store_exp + online_exp)
 ```
 
-**Merge**
+#### Merge
 
 Similar to SQL, there are different joins in `dplyr`. We create two baby data sets to show how the functions work.
 
@@ -305,7 +305,7 @@ semi_join(x, y, by = "ID")
 anti_join(x, y, by = "ID")
 ```
 
-There are other functions(`intersect()`, `union()` and `setdiff()`). Also the data frame version of `rbind` and `cbind` which are `bind_rows()` and `bind_col()`. We are not going to go through them all. You can try them yourself. If you understand the functions we introduced so far. It should be easy for you to figure out the rest.
+There are other functions (`intersect()`, `union()` and `setdiff()`). Also the data frame version of `rbind` and `cbind` which are `bind_rows()` and `bind_col()`. We are not going to go through them all. You can try them yourself. If you understand the functions we introduced so far. It should be easy for you to figure out the rest.
 
 ### `apply()`, `lapply()` and `sapply()` in base R {#applyfamilyinbaser}
 
@@ -394,9 +394,10 @@ sapply(sdat, function(x) sd(na.omit(x)), simplify = FALSE)
 
 ## Tidy and Reshape Data 
 
-"Tidy data" represent the information from a dataset as data frames where each row is an observation, and each column contains the values of a variable (i.e., an attribute of what we are observing). Depending on the situation, the requirements on what to present as rows and columns may change. To make data easy to work with for the problem at hand, in practice, we often need to convert data between the "wide" and the "long" format. The process feels like kneading the dough. 
+"Tidy data" represents the information from a dataset as data frames where each row is an observation, and each column contains the values of a variable (i.e., an attribute of what we are observing). Depending on the situation, the requirements on what to present as rows and columns may change. To make data easy to work with the problem at hand. In practice, we often need to convert data between the "wide" and the "long" format. The process feels like kneading the dough. 
 
 In this section, we will show how to tidy and reshape data using `tidyr` packages. It is built to simplify the process of creating tidy data. We will go through four fundamental functions:
+
 - `gather()`: reshape data from wide to long
 - `spread()`: reshape data from long to wide
 - `separate()`: split a column into multiple columns
@@ -432,7 +433,7 @@ fit <- lm(Expense ~ gender + house + income + Channel + age,
 summary(fit)
 ```
 
-Sometimes we want to reshape the data from "long" to "wide". For example, **you want to compare the online and in-store expense between male and female based on house ownership.** 
+Sometimes we want to reshape the data from "long" to "wide". For example, you want to compare the online and in-store expense between male and female based on house ownership. 
 
 We need to reshape the wide data frame `dat_wide` to a long format by spreading the key-value pairs across multiple columns.  And then summarize the long data frame `dat_long`,  grouping  by`house` and `gender`.
 

@@ -233,16 +233,16 @@ Figure \@ref(fig:lassoridge) illustrates the situations for lasso (left) and rid
 
 ## Elastic Net
 
-Elastic Net is a generalization of lasso and ridge regression[@zou2005]. It combines the two penalties. The estimates of coefficients optimize the following function:
+Elastic Net is a generalization of lasso and ridge regression [@zou2005]. It combines the two penalties. The estimates of coefficients optimize the following function:
 
 \begin{equation}
 \Sigma_{i=1}^{n}(y_{i}-\hat{y}_{i})^{2}+\lambda_{1}\Sigma_{j=1}^{p}\beta_{j}^{2}+\lambda_{2}\Sigma_{j=1}^{p}|\beta_{j}|
 (\#eq:elasticnet)
 \end{equation}
 
-Ridge penalty shrinks the coefficients of correlated predictors towards each other while the lasso tends to pick one and discard the others. So lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property. The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty.  [@zou2005] suggest that it deals with highly correlated variables more effectively.
+Ridge penalty shrinks the coefficients of correlated predictors towards each other while the lasso tends to pick one and discard the others. So lasso estimates have a higher variance. However, ridge regression doesn't have a variable selection property. The advantage of the elastic net is that it keeps the feature selection quality from the lasso penalty as well as the effectiveness of the ridge penalty. And it deals with highly correlated variables more effectively.
 
-We can still use train() function to tune the parameters in the elastic net. As before, set the cross-validation and parameter range. Standardize the predictors: 
+We can still use `train()` function to tune the parameters in the elastic net. As before, set the cross-validation and parameter range, and standardize the predictors: 
 
 ```{r, results= FALSE}
 enetGrid <- expand.grid(.lambda = seq(0,0.2,length=20), 
@@ -293,7 +293,7 @@ RMSE was used to select the optimal model using the smallest value.
 The final values used for the model were fraction = 0.9579 and lambda = 0.
 ```
 
-The results show that the best values of the tuning parameters are fraction = `r res$fraction` and lambda = `r res$lambda` It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
+The results show that the best values of the tuning parameters are fraction = `r res$fraction` and lambda = `r res$lambda`. It also indicates that the final model is lasso only (the ridge penalty parameter lambda is 0).  The RMSE and $R^{2}$ are `r res$RMSE` and `r res$Rsquared` correspondingly. 
 
 ## Penalized Generalized Linear Model
 
@@ -326,7 +326,7 @@ trainy <- dat$store_exp + dat$online_exp
 glmfit = glmnet::glmnet(as.matrix(trainx), trainy)
 ```
 
-The object `glmfit` returned by `glmnet()` has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on `glmfit`, such as `plot()`, `print()`, `coef()` and `predict()` . For example, the following code visualizes the path of coefficients as penalty increases:
+The object `glmfit` returned by `glmnet()` has the information of the fitted model for the later operations. An easy way to extract the components is through various functions on `glmfit`, such as `plot()`, `print()`, `coef()` and `predict()`. For example, the following code visualizes the path of coefficients as penalty increases:
 
 ```{r}
 plot(glmfit, label = T)
@@ -423,8 +423,7 @@ l(\symbf{\beta})&=&log[\prod_{i=1}^{n}\theta_{i}^{y_{i}}(1-\theta_{i})^{1-y_{i}}
 (\#eq:logisticlikelihood)
 \end{eqnarray*}
 
-For logistic regression analysis with a large number of explanatory variables, complete- or quasi-complete-separation may result which makes
-the maximum likelihood estimation unstable [@Wed1976], [@albert1984]. For example: 
+For logistic regression analysis with a large number of explanatory variables, complete- or quasi-complete-separation may lead to unstable maximum likelihood estimates as described in [@Wed1976] and [@albert1984]. For example: 
 
 ```{r}
 library(MASS)
@@ -432,14 +431,14 @@ dat <- read.csv("http://bit.ly/2KXb1Qi")
 fit <- glm(y~., dat, family = "binomial")
 ```
 
-There is an error saying "`algorithm did not converge`". It is because there is complete separation. It happens when there are a large number of explanatory variables which makes the estimation of the coefficients unstable. To stabilize the estimation of parameter coefficients, one popular approach is the lasso algorithm with $L_1$ norm penalty proposed by Tibshirani[@Tibshirani1996]. Because the lasso algorithm can estimate some variable coefficients to be 0, it can also be used as a variable selection tool. 
+There is an error saying "`algorithm did not converge`." It is because there is complete separation. It happens when there are a large number of explanatory variables which makes the estimation of the coefficients unstable. To stabilize the estimation of parameter coefficients, one popular approach is the lasso algorithm with $L_1$ norm penalty proposed by Tibshirani [@Tibshirani1996]. Because the lasso algorithm can estimate some variable coefficients to be 0, it can also be used as a variable selection tool. 
 
 #### Penalized logistic regression
 
 Penalized logistic regression adds penalty to the likelihood function:
 
 $$
-\sum_{i=1}^{n}\{\ y_{i}\eta_{\symbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\symbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda [(1-\alpha) \frac{\parallel \symbf{\beta}\parallel_{2}^{2}}{2}] + \alpha \parallel \symbf{\beta}\parallel _{1} ]
+\sum_{i=1}^{n}\{\ y_{i}\eta_{\symbf{\beta}}(\mathbf{x_{i}})-log[1+exp(\eta_{\symbf{\beta}}(\mathbf{x_{i}}))]\ \}+\lambda (1-\alpha) \frac{\parallel \symbf{\beta}\parallel_{2}^{2}}{2} + \alpha \parallel \symbf{\beta}\parallel _{1} ]
 $$
 
 ```{r}
@@ -457,22 +456,25 @@ The error message is gone when we use penalized regression. We can visualize the
 - `coefficients`: return the coefficient estimates
 - `nonzero`: return an indicator for non-zero estimates (i.e. which variables are selected)
 
-The default setting is to predict the probability of the second level of the response variable. For example, the second level of the response variable for `trainy` here is: 
+The default setting is to predict the probability of the second level of the response variable. For example, the second level of the response variable for `trainy` here is "1": 
 
 ```{r}
 levels(as.factor(trainy))
 ```
 
-The first column of the above output is the predicted link function value when $\lambda=0.02833$. The second column of the output is the predicted link function when $\lambda=0.0311$. Similarly, you can change the setting for `type` to produce different outputs. You can use the `cv.glmnet()` function to tune parameters. The parameter setting is nearly the same as before, the only difference is the setting of `type.measure`. Since the response is categorical, not continuous, we have different performance measurements.  The most common settings of  `type.measure` for classification are:
-
-- `class`: error rate
-- `auc`: it is the area under the ROC for the dichotomous problem
-So the model is to predict the probability of outcome "1".  Take a baby example of 3 observations and 2 values of $\lambda$ to show the usage of `predict()` function:
+So the model is to predict the probability of outcome "1". Take a baby example of 3 observations and 2 values of $\lambda$ to show the usage of `predict()` function:
 
 ```{r}
 newdat = as.matrix(trainx[1:3, ])
 predict(fit, newdat, type = "link", s = c(2.833e-02, 3.110e-02))
 ```
+
+The first column of the above output is the predicted link function value when $\lambda = 0.02833$. The second column of the output is the predicted link function when $\lambda = 0.0311$. 
+
+Similarly, you can change the setting for `type` to produce different outputs. You can use the `cv.glmnet()` function to tune parameters. The parameter setting is nearly the same as before, the only difference is the setting of `type.measure`. Since the response is categorical, not continuous, we have different performance measurements.  The most common settings of  `type.measure` for classification are:
+
+- `class`: error rate
+- `auc`: it is the area under the ROC for the dichotomous problem
 
 For example:
 
@@ -482,7 +484,7 @@ cvfit = cv.glmnet(as.matrix(trainx), trainy,
 plot(cvfit)
 ```
 
-The above uses error rate as performance criteria and use 10-fold cross-validation. Similarly, you can get the $\lambda$ value for the minimum error rate and the error rate that is 1 standard error from the minimum: 
+The code above uses error rate as performance criteria and use 10-fold cross-validation. Similarly, you can get the $\lambda$ value for the minimum error rate and the error rate that is 1 standard error from the minimum: 
 
 ```{r}
 cvfit$lambda.min
@@ -513,7 +515,7 @@ such that when $\lambda=\lambda_{max}$, only the intercept is
 in the model. When $\lambda$ goes to $0$, the model is equivalent to ordinary
 logistic regression.
 
-Three criteria may be used to select the optimal value of $\lambda$. One is AUC which you should have seem many times in this book by now. The log-likelihood score used in Meier et al. [@Meier2008] is taken as the average of log-likelihood of the validation data overall cross-validation sets. Another one is the maximum correlation coefficient in Yeo and Burge [@Yeo2004] that is defined as:
+Three criteria may be used to select the optimal value of $\lambda$. One is AUC which you should have seem many times in this book by now. The log-likelihood score used in Meier et al. [@Meier2008] is taken as the average of log-likelihood of the validation data over all cross-validation sets. Another one is the maximum correlation coefficient in Yeo and Burge [@Yeo2004] that is defined as:
 
 $$
 \rho_{max}=max\{\rho_{\tau}|\tau\in(0,1)\},
