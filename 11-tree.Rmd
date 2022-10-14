@@ -42,16 +42,23 @@ The reason why it is called "tree" is of course because the structure has simila
 - **Classification tree**: the outcome is discrete 
 - **Regression tree**: the outcome is continuous (e.g. the price of a house)
 - **Non-leaf node (or split node)**: the algorithm needs to decide a split at each non-leaf node  (eg:  age >= 9.5) 
-- **Root node**：the beginning node where the tree starts
+- **Root node**: the beginning node where the tree starts
 - **Leaf node (or Terminal node)**: the node stops splitting. It has the final decision of the model
 - **Degree of the node**: the number of subtrees of a node 
 - **Degree of the tree**: the maximum degree of a node in the tree
 - **Pruning**: remove parts of the tree that do not provide power to classify instances
 - **Branch (or Subtree)**: the whole part under a non-leaf node
-- **Child**: the node directly after and connected to another node 
-- **Parent**: the converse notion of a child
+- **Child node**: the node directly after and connected to another node 
+- **Parent node**: the converse notion of a child
 
-A single tree is easy to explain, but it can be very non-robust, which means a slight change in the data can significantly change the fitted tree. The predictive accuracy is not as good as other regression and classification approaches in this book since a series of rectangular decision regions (figure \@ref(fig:decisionregion)) defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
+A single tree is easy to explain, but it can be very non-robust, which means a slight change in the data can significantly change the fitted tree. The predictive accuracy is not as good as other regression and classification approaches in this book since a series of rectangular decision regions defined by a single tree is often too naive to represent the relationship between the dependent variable and the predictors. Figure \@ref(fig:decisionregion) shows an example of decision regions based on the `iris` data in R where we use petal length (`Petal.Length`) and width (`Petal.Width`) to decide the type of flowers (`Species`). You can get the data frame using the following code:
+
+```{r}
+data("iris")
+head(iris)
+```
+
+To overcome these shortcomings, researchers have proposed ensemble methods which combine many trees. Ensemble tree models typically have much better predictive performance than a single tree. We will introduce those models in later sections.
 
 ```{r decisionregion, fig.cap = "Example of decision regions for different types of flowers based on petal length and width. Three different types of flowers are classified using decisions about length and width.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/decisionregion.png")
@@ -61,7 +68,7 @@ knitr::include_graphics("images/decisionregion.png")
 
 The splitting criteria used by the regression tree and the classification tree are different. Like the regression tree, the goal of the classification tree is to divide the data into smaller, more homogeneous groups. Homogeneity means that most of the samples at each node are from one class. The original CART algorithm uses Gini impurity as the splitting criterion;  The later ID3, C4.5, and C5.0 use entropy. We will look at three most common splitting criteria.
 
-**Gini impurity**
+### Gini impurity
 
 Gini impurity [@Breiman1984] is a measure of non-homogeneity. It is widely used in classification tree. It is defined as:
 $$Gini\ Index = \Sigma_i p_i(1-p_i)$$
@@ -87,7 +94,7 @@ $$\frac{3}{5}\times\frac{5}{18}+\frac{2}{5}\times 0=\frac{1}{6}$$
 
 The Gini impurity for the 50 samples in the parent node is $\frac{1}{2}$. It is easy to calculate the Gini impurity drop from $\frac{1}{2}$ to $\frac{1}{6}$ after splitting. The split using "gender" causes a Gini impurity decrease of $\frac{1}{3}$.  The algorithm will use different variables to split the data and choose the one that causes the most substantial Gini impurity decrease. 
 
-**Information Gain (IG)**
+### Information Gain (IG)
 
 Looking at the samples in the following three nodes, which one is the easiest to describe? It is obviously C. Because all the samples in C are of the same type, so the description requires the least amount of information. On the contrary, B needs more information, and A needs the most information. In other words, C has the highest purity, B is the second, and A has the lowest purity. We need less information to describe nodes with higher purity. 
 
@@ -102,7 +109,7 @@ where $p_i$ is the probability of class $i$ and the interval of entropy is $[0, 
 
 $$Entropy=-plog_{2}p-(1-p)log_{2}(1-p)$$
 
-where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50% - 50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. As an analogy, entropy in physics quantifies the level of disorder and the goal here is to have the least disorder.
+where p is the percentage of one type of samples. If all the samples in one node are of one type (such as C), the entropy is 0. If the proportion of each type in a node is 50%, the entropy is 1. We can use entropy as splitting criteria. The goal is to decrease entropy as the tree grows. As an analogy, entropy in physics quantifies the level of disorder and the goal here is to have the least disorder.
 
 Similarly, the entropy of a splitting node is the weighted average of the entropy of each child. In the above tree for the students, the entropy of the root node with all 50 students is  $-\frac{25}{50}log_{2}\frac{25}{50}-\frac{25}{50}log_{2}\frac{25}{50}=1$. Here an entropy of 1 indicates that the purity of the node is the lowest, that is, each type takes up half of the samples.
 
@@ -114,11 +121,11 @@ The entropy of the split using variable "gender" can be calculated  in three ste
 
 So entropy decreases from 1 to 0.39 after the split and the IG for "Gender" is 0.61.
 
-**Information Gain Ratio (IGR)**
+### Information Gain Ratio (IGR)
 
 ID3 uses information gain as the splitting criterion to train the classification tree.  A drawback of information gain is that it is biased towards choosing attributes with many values, resulting in overfitting (selecting a feature that is non-optimal for prediction) [@HSSINA2014]. 
 
-To understand why let's look at another hypothetical scenario. Assume that the training set has students' birth month as a feature. You might say that the birth month should not be considered in this case because it intuitively doesn't help tell the student's major. Yes, you're right. However, practically, we may have a much more complicated dataset, and we may not have such intuition for all the features. So, we may not always be able to determine whether a feature makes sense or not. If we use the birth month to split the data, the corresponding entropy of the mode "Birth Month" is 0.24 (the sum of column "Weighted Entropy" in the table), and the information gain is 0.76, which is larger than the IG of "Gender" (0.61). So between the two features, IG would choose "Birth Month" to split the data. 
+To understand why let's look at another hypothetical scenario. Assume that the training set has students' birth month as a feature. You might say that the birth month should not be considered in this case because it intuitively doesn't help tell the student's major. Yes, you're right. However, practically, we may have a much more complicated dataset, and we may not have such intuition for all the features. So, we may not always be able to determine whether a feature makes sense or not. If we use the birth month to split the data, the corresponding entropy of the node "Birth Month" is 0.24 (the sum of column "Weighted Entropy" in the table), and the information gain is 0.76, which is larger than the IG of "Gender" (0.61). So between the two features, IG would choose "Birth Month" to split the data. 
 
 <center>
 ![](images/infogainratioexp.png)
@@ -138,7 +145,7 @@ $p_c$ is the proportion of samples in category $c$. For example, there are three
 
 The split information for the birth month is 3.4, and the gain ratio is 0.22, which is smaller than that of gender (0.63). The gain ratio refers to use gender as the splitting feature rather than the birth month. Gain ratio favors attributes with fewer categories and leads to better generalization (less overfitting). 
 
-**Sum of Squared Error (SSE)**
+### Sum of Squared Error (SSE)
 
 The previous two metrics are for classification tree.  The SSE is the most widely used splitting metric for regression. Suppose you want to divide the data set $S$ into two groups of $S_{1}$ and $S_{2}$, where the selection of $S_{1}$ and $S_{2}$ needs to minimize the sum of squared errors:  
 
@@ -233,11 +240,11 @@ To find the optimal pruning tree, you need to iterate through a series of values
 
 This method was first proposed by Quinlan [@Quinlan1999]. The idea behind is intuitive. All split nodes of the tree are included in the initial candidate pool. Pruning a split node means removing the entire subtree under the node and setting the node as a terminal node. The data is divided into 3 subsets for:
 
-(1) training a complete tree;
+(1) training a complete tree
 
-(2) pruning;
+(2) pruning
 
-(3) testing the final model.
+(3) testing the final model
 
 You train a complete tree using the subset (1) and apply the tree on the subset (2) to calculate the accuracy.  Then prune the tree based on a node and apply that on the subset (2) to calculate another accuracy. If the accuracy after pruning is higher or equal to that from the complete tree,  then we set the node as a terminal node. Otherwise, keep the subtree under the node. The advantage of this method is that it is easy to compute. However, when the size of the subset (2) is much smaller than that of the subset (1), there is a risk of over-pruning. Some researchers found that this method results in more accurate trees than pruning process based on tree size [@Espoito1997].
 
@@ -263,16 +270,16 @@ The error-complexity measure of the node is:
 
 $$a(t)=\frac{R(t)-R(T)_{t}}{no.\ of\ leaves - 1}$$
 
-Based on the metrics above, the pruning process is [@Nikita2012]：
+Based on the metrics above, the pruning process is [@Nikita2012]:
 
-1. Calculate $a$ for every node $t$
-2. Prune the node with the lowest value
+1. Calculate $a$ for every node $t$.
+2. Prune the node with the lowest value.
 3. Repeat 1 and 2. It produces a pruned tree each time and they form a forest. 
-4. Select the tree with the best overall accuracy
+4. Select the tree with the best overall accuracy.
 
-- Minium error pruning
+- Minimum error pruning
 
-Niblett and Brotko came it up in 1991 [@Cestnik1991]. The process is bottom-up which seeks a single tree that minimizes the expected error rate on new samples. If we prune a splitting point $t$, all the samples under $t$ will be classified as from one category, say category $c$. If we prune the subtree, the expected error rate is:
+Niblett and Brotko introduced this pruning method in 1991 [@Cestnik1991]. The process is a bottom-up approach which seeks a single tree that minimizes the expected error rate on new samples. If we prune a splitting point $t$, all the samples under $t$ will be classified as from one category, say category $c$. If we prune the subtree, the expected error rate is:
 
 $$E(t)=\frac{n_{t}-n_{t,c}+k-1}{n_{t}+k}$$
 
@@ -297,7 +304,7 @@ Let's look at the process of building a regression tree [@ISLR15]. There are two
 1. Divide predictors space — that is a set of possible values of $X_1,X_2,\dots,X_p$— into $J$ distinct and non-overlapping regions: $R_1,R_2,\dots,R_J$
 2. For every observation that falls into the region $R_j$, the prediction is the mean of the response values for the training observations in $R_j$
 
-Let's go back to the previous baby example. If we use the variable "Gender" to divide the observations, we obtain two regions $R_1$ (female) and $R_2$ (male).
+Let's go back to the previous simple example. If we use the variable "Gender" to divide the observations, we obtain two regions $R_1$ (female) and $R_2$ (male).
 
 <center>
 ![](images/varEN.png)
@@ -310,7 +317,7 @@ y2 <- c(172, 180, 176)
 
 The sample average for region $R_1$ is `r mean(y1)`, for region $R_2$ is `r mean(y2)`. For a new observation, if it is female, the model predicts the height to be `r mean(y1)`,  if it is male, the predicted height is `r mean(y2)`. Calculating the mean is easy.  Let's look at the first step in more detail which is to divide the space into $R_1, R_2, \dots, R_J$.
 
-In theory,  the region can be any shape. However, to simplify the problem, we divide the predictor space into high-dimensional rectangles. The goal is to divide the space in a way that minimize RSS. Practically, it is nearly impossible to consider all possible partitions of the feature space.  So we use an approach named recursive binary splitting, a top-down , greedy algorithm.  The process starts from the top of the tree (root node) and then successively splits the predictor space. Each split produces two branches (hence binary). At each step of the process, it chooses the best split at that particular step, rather than looking ahead and picking a split that leads to a better tree in general (hence greedy).
+In theory,  the region can be any shape. However, to simplify the problem, we divide the predictor space into high-dimensional rectangles. The goal is to divide the space in a way that minimize RSS. Practically, it is nearly impossible to consider all possible partitions of the feature space.  So we use an approach named recursive binary splitting, a top-down, greedy algorithm. The process starts from the top of the tree (root node) and then successively splits the predictor space. Each split produces two branches (hence binary). At each step of the process, it chooses the best split at that particular step, rather than looking ahead and picking a split that leads to a better tree in general (hence greedy).
 
 $$R_{1}(j, s)=\{X|X_j<s\}\ and\ R_{2}(j, s)=\{X|X_j\geq s\}$$
 
@@ -327,9 +334,9 @@ Next, we continue to search for the split that optimize the RSS. Note that the o
 </center>
 
 
-There are multiple R packages for building regression tree, such as `ctree`, `rpart` and `tree`. `rpart` is widely used for building a single tree. The split is based on CART algorithm, using `rpart()` function from the package. There are some parameters that controls the model fitting, such as the minimum number of observations that must exist in a node in order for a split to be attempted,  the minimum number of observations in any leaf node etc. You can can set those parameter using `rpart.control`. 
+There are multiple R packages for building regression tree, such as `ctree`, `rpart` and `tree`. `rpart` is widely used for building a single tree. The split is based on CART algorithm, using `rpart()` function from the package. There are some parameters that controls the model fitting, such as the minimum number of observations that must exist in a node in order for a split to be attempted,  the minimum number of observations in any leaf node etc. You can set those parameter using `rpart.control`. 
 
-A more convenient way is to use `train()` function in `caret` package. The package can call `rpart()` function and train the model through cross-validation. In this case, the most common parameters are `cp` (complexity parameter) and `maxdepth` (the maximum depth of any node of the final tree). To  tune the complexity parameter, set `method = "rpart"`. To tune the maximum tree depth, set `method = "rpart2"` :
+A more convenient way is to use `train()` function in `caret` package. The package can call `rpart()` function and train the model through cross-validation. In this case, the most common parameters are `cp` (complexity parameter) and `maxdepth` (the maximum depth of any node of the final tree). To  tune the complexity parameter, set `method = "rpart"`. To tune the maximum tree depth, set `method = "rpart2"`. Now let us use the customer expenditure regression example to illustrate: 
 
 ```{r}
 dat <- read.csv("http://bit.ly/2P5gTw4")
@@ -539,13 +546,13 @@ You need to choose the number of bootstrap samples. The author of "Applied Predi
 
 The disadvantages of bagging tree are:
 
-- As the number of bootstrap samples increases, the computation and memory requirements increase as well. You can mitigate this disadvantage by parallel computing. Since each bootstrap sample and modeling is independent of any other sample and model, you can easily parallelize the bagging process by building those models separately and bring back the results in the ed to generate the prediction.
+- As the number of bootstrap samples increases, the computation and memory requirements increase as well. You can mitigate this disadvantage by parallel computing. Since each bootstrap sample and modeling is independent of any other sample and model, you can easily parallelize the bagging process by building those models separately and bring back the results in the end to generate the prediction.
 
 - The bagged model is difficult to explain which is common for all ensemble approaches. However, you can still get variable importance by combining measures of importance across the ensemble. For example, we can calculate the RSS decrease for each variable across all trees and use the average as the measurement of the importance.
 
 - Since the bagging tree uses all of the original predictors as everey split of every tree, those trees are related with each other.  The tree correlation prevents bagging from optimally reducing the variance of the predicted values. See [@Hastie2008] for a mathematical illustration of the tree correlation phenomenon.
 
-Let's look at how to use R to build bagging tree. Get the predictors and response variable first:
+Let's look at how to use R to build bagging tree using survey question to predict customer gender based on the customer dataset. Get the predictors and response variable first:
 
 ```{r}
 dat <- read.csv("http://bit.ly/2P5gTw4")
@@ -588,9 +595,9 @@ Since we only have a handful of variables in this example, the maximum AUC doesn
 
 Since the tree correlation prevents bagging from optimally reducing the variance of the predicted values, a natural way to improve the model performance is to reduce the correlation among trees. That is what random forest aims to do: improve the performance of bagging by de-correlating trees.
 
-From a statistical perspective, you can de-correlate trees by introducing randomness when you build each tree. One approach [@Ho1998; @amit1997] is to randomly choose $m$ variables to use each time you build a tree.  Dietterich[@Dietterich2000] came up with the idea of random split selection which is to randomly choose $m$ variables to use at each splitting node. Based on the different generalizations to the original bagging algorithm, Breiman [@Breiman2001] came up with a unified algorithm called *random forest.* 
+From a statistical perspective, you can de-correlate trees by introducing randomness when you build each tree. One approach [@Ho1998; @amit1997] is to randomly choose $m$ variables to use each time you build a tree. Dietterich [@Dietterich2000] came up with the idea of random split selection which is to randomly choose $m$ variables to use at each splitting node. Based on the different generalizations to the original bagging algorithm, Breiman [@Breiman2001] came up with a unified algorithm called *random forest.* 
 
-When building a tree, the algorithm randomly chooses $m$ variables to use at each splitting node. Then choose the best one out of the $m$ to use at that node. In general, people use $m=\sqrt{p}$. For example, if we use 10 questions from the questionnaire as predictors, then at each node, the algorithm will randomly choose 4 candidate variables. Since those trees in the forest don't always use the same variables, tree correlation is less than that in bagging. It tends to work better when there are more predictors. Since we only have 10 predictors here, the improvement from the random forest is marginal. The number of randomly selected predictors is a tuning parameter in the random forest.  Since random forest is computationally intensive, we suggest starting with 5 value around $m=\sqrt{p}$. Another tuning parameter is the number of trees in the forest. You can start with 1000 trees and then increase the number until performance levels off. The basic random forest is shown in Algorithm \@ref(randomforestalgorithm).
+When building a tree, the algorithm randomly chooses $m$ variables to use at each splitting node. Then choose the best one out of the $m$ to use at that node. In general, people use $m=\sqrt{p}$. For example, if we use 10 questions from the questionnaire as predictors, then at each node, the algorithm will randomly choose 4 candidate variables. Since those trees in the forest don't always use the same variables, tree correlation is less than that in bagging. It tends to work better when there are more predictors. Since we only have 10 predictors here, the improvement from the random forest is marginal. The number of randomly selected predictors is a tuning parameter in the random forest.  Since random forest is computationally intensive, we suggest starting with value around $m=\sqrt{p}$. Another tuning parameter is the number of trees in the forest. You can start with 1000 trees and then increase the number until performance levels off. The basic random forest is shown in Algorithm \@ref(randomforestalgorithm).
  
 \begin{algorithm}
 \caption{Random forest}\label{randomforestalgorithm} 
@@ -690,7 +697,7 @@ where $\alpha_1,\alpha_2,...,\alpha_M$ are the weights from different iterations
 \end{algorithmic}
 \end{algorithm}
 
-Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm is known as  “Discrete AdaBoost” [@Friedman2000]. You can revise the above algorithm if it returns continuousf value, for example, a probability [@Friedman2000].  As mentioned before, boosting is a general approach that can be applied to different learners. Since you can easily create weak learners by limiting the depth of the tree, the boosting tree is a common method. Since the classification tree is a low bias/high variance technique, ensemble decreases model variance and lead to low bias/low variance model. See Breinman [@Breiman1998] for more explanation about why the boosting tree performs well in general. However, boosting can not significantly improve the low variance model. So applying boosting to Latent Dirichlet Allocation (LDA) or K-Nearest Neighbor (KNN) doesn't lead to as good improvement as applying boosting to statistical learning methods like naive Bayes [@Bauer1999]. 
+Since the classifier $G_m(x)$ returns discrete value, the AdaBoost.M1 algorithm is known as  “Discrete AdaBoost” [@Friedman2000]. You can revise the above algorithm if it returns continuousf value, for example, a probability [@Friedman2000].  As mentioned before, boosting is a general approach that can be applied to different learners. Since you can easily create weak learners by limiting the depth of the tree, the boosting tree is a common method. Since the classification tree is a low bias/high variance technique, ensemble decreases model variance and lead to low bias/low variance model. See Breinman [@Breiman1998] for more explanation about why the boosting tree performs well in general. However, boosting can not significantly improve the low variance model. So applying boosting to K-Nearest Neighbor (KNN) doesn't lead to as good improvement as applying boosting to statistical learning methods like naive Bayes [@Bauer1999]. 
 
 ### Stochastic Gradient Boosting
 
@@ -714,7 +721,7 @@ Consider a 2-class classification problem. You have the response $y \in \{-1, 1\
 \end{algorithmic}
 \end{algorithm}
 
-When using the tree as the base learner, basic gradient boosting has two tuning parameters: tree depth and the number of iterations. You can further customize the algorithm by selecting a different loss function and gradient[@Hastie2008].  The final line of the loop includes a regularization strategy. Instead of adding $f_i^{(j)}$ to the previous iteration's $f_i$, only a fraction of the value is added. This fraction is called learning rate which is $\lambda$ in the algorithm. It can take values between 0 and 1 which is another tuning parameter of the model.
+When using the tree as the base learner, basic gradient boosting has two tuning parameters: tree depth and the number of iterations. You can further customize the algorithm by selecting a different loss function and gradient [@Hastie2008].  The final line of the loop includes a regularization strategy. Instead of adding $f_i^{(j)}$ to the previous iteration's $f_i$, only a fraction of the value is added. This fraction is called learning rate which is $\lambda$ in the algorithm. It can take values between 0 and 1 which is another tuning parameter of the model.
 
 The way to calculate variable importance in boosting is similar to a bagging model. You get variable importance by combining measures of importance across the ensemble. For example, we can calculate the Gini index improvement for each variable across all trees and use the average as the measurement of the importance.
 
@@ -836,6 +843,7 @@ legend(0.2, 0.5, cex = 0.8,
 
 Since the data here doesn't have many variables, we don't see a significant difference among the models. But you can still see those ensemble methods are better than a single tree. In most of the real applications, ensemble methods perform much better.  Random forest and boosting trees can be a baseline model. Before exploring different models, you can quickly run a random forest to see the performance and then try to improve that performance. If the performance you got from the random forest is not too much better than guessing, you should consider collecting more data or reviewing the problem to frame it a different way instead of trying other models. Because it usually means the current data is not enough to solve the problem.
 
+<!--
 ### Boosting as Additive Model
 
 This section illustrates how boosting is a forward stagewise additive model that minimizes exponential loss [@Friedman2000]. Many seemingly different models can be represented as a **basis expansion model**. Recall the classifier  obtained by the AdaBoost.M1 algorithm:
@@ -849,7 +857,7 @@ f(x)=\Sigma_{m=1}^M \beta_m b(x,\gamma_m)
 (\#eq:basisexp)
 \end{equation}
 
-where $\beta_m,\ m=1,\dots,M$ is expansion coefficient and $b(x,\gamma)\in \mathbb{R}$ is basis function.  Many of the learning methods fit into this additive framework. Hastie et al discuss basis expansion in detail in Chapter 5 of @Hastie2008 and cover the additive expansion for different learning techniques, such as single-hidden-layer neural networks (Chapter 11) and MARS (Section 9.4). These models are fit by minimizing a designated loss function averaged over the training data:
+where $\beta_m,\ m=1,\dots,M$ is expansion coefficient and $b(x,\gamma)\in \mathbb{R}$ is basis function.  Many of the learning methods fit into this additive framework. Hastie et al discuss basis expansion in detail in Chapter 5 of @Hastie2008 and cover the additive expansion for different learning techniques, such as single-hidden-layer neural networks (Chapter 11) and MARS (Section 9.4). These models are fitted by minimizing a designated loss function averaged over the training data:
 
 \begin{equation}
 \underset{\{\beta_m,\gamma_m\}_i^M}{min}\Sigma_{i=1}^N L\left(y_i,\Sigma_{m=1}^M\beta_{m}b(x_i;\gamma_m)\right)
@@ -886,7 +894,7 @@ where $y_i-f_{m-1}(x_i)$ is the residual for sample i based on the previous mode
 
 However, the squared-error loss is generally not a good choice. For a regression problem, it is susceptible to outliers. It doesn't fit the classification problem since the response is categorical. Hence we often consider other loss functions.
 
-Now let is go back to the AdaBoost.M1 algorithm. It is actually a special case of the above forward stagewise model when the loss function is: 
+Now let us go back to the AdaBoost.M1 algorithm. It is actually a special case of the above forward stagewise model when the loss function is: 
 
 $$L(y,f(x))=exp(-yf(x))$$
 
@@ -946,3 +954,4 @@ Since $-y_i G_m(x_i)=2\cdot I(y_i \neq G_m(x_i))-1$, equation \@ref(eq:explossad
 $$w_i^{m+1}=w_i^m \cdot exp[\alpha_mI(y_i\neq G_m(x_i))] \cdot exp[-\beta_m]$$
 
 where  $\alpha_m=2\beta_m=log\frac{1-err_m}{err_m}$ is the same with the $\alpha_m$ in AdaBoost.M1 algorithm we showed before. So AdaBoost.M1 is a special case of a forward stagewise additive model using exponential loss. For comparing and selecting different loss functions, you can refer to section 10.5 and 10.6 in [@Hastie2008].
+-->
