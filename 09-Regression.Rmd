@@ -161,7 +161,7 @@ In linear regression \index{linear regression}, we would like the Ordinary Least
 
 2. The expected value of random error is zero: $E(\symbf{\epsilon|X})=0$
 
-3. Random errors are independent with each other, and the variance of random error is consistent: $Var(\symbf{\epsilon})=\sigma^{2}I$, where $\sigma$ is positive and $I$ is a $n \times n$ identical matrix.
+3. Random errors are uncorrelated with each other, and the variance of random error is consistent: $Var(\symbf{\epsilon})=\sigma^{2}I$, where $\sigma$ is positive and $I$ is a $n \times n$ identical matrix.
 
 We will introduce four graphic diagnostics for the above assumptions.
 
@@ -178,6 +178,8 @@ Please note that even if the variance is not consistent, the regression paramete
 (2) Normal quantile-quantile Plot (Q-Q Plot) \index{Q-Q Plot}
 
 Q-Q Plot is used to check the normality assumption for the residual. For normally distributed residuals, the data points should follow a straight line along the Q-Q plot. The more departure from a straight line, the more departure from a normal distribution for the residual.
+
+
 
 (3) Standardized residuals plot \index{Standardized residuals plot}
 
@@ -202,6 +204,8 @@ The above diagnostic plot examples show:
 - Residual plot: residuals are generally distributed around $y=0$ horizontal line. There are no significant trends or patterns in this residual plot (there are two bumps but does not seem too severe). So the linear relationship assumption between the response variable and explanatory variables is reasonable. 
 
 - Q-Q plot: data points are pretty much along the diagonal line of Y=X, indicating no significant normality assumption departure for the residuals. Because we simulate the data, we know the response variable before log transformation follows a normal distribution. The shape of the distribution does not deviate from a normal distribution too much after log transformation. 
+
+Note that the Gauss-Markov theorem does not require normality. We need the normal assumption to look for significant factors or define a confidence interval. However, as Andrew Gelman pointed out in section 3.6 of his book [@linear2006], normality and equal variance are typically minor concerns.
 
 - Standardized residual plot: if the constant variance assumption is valid, then the plot's data points should be randomly distributed around the horizontal line. We can see there are three outliers on the plot.  Let us check those points:
 

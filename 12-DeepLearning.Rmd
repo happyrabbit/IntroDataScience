@@ -32,7 +32,7 @@ With hundreds of thousands of parameters in the model, deep learning is easy to 
 
 **Computation Power**
 
-With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processor (CPU).
+With data, network structure and algorithms ready, modern deep learning still requires a certain amount of computation power for training. The entire framework involves heavy linear algebra operations with large matrices and tensors. These types of operations are much faster on modern graphical processing units (GPUs) than the computer's central processing units (CPU).
 
 With the vast potential application of deep learning, major tech companies contribute heavily to open-source deep learning frameworks. For example, Google has open-sourced its TensorFlow framework; Facebook has open-sourced its PyTorch framework, and Amazon has significantly contributed to the MXNet open-source framework. With thousands of software developers and scientists behind these deep learning frameworks, users can confidently pick one framework and start training their deep learning models right away in popular cloud environments. Much of the heavy lifting to train a deep learning model has been embedded in these open-source frameworks and there are also many pre-trained models available for users to adopt. Users can now enjoy the relatively easy access to software and hardware to develop their own deep learning applications. In this book, we will demonstrate deep learning examples using Keras, a high-level abstraction of TensorFlow, using the Databricks Community Edition platform.
 
@@ -186,7 +186,7 @@ knitr::include_graphics("images/onelayerNN.png")
 
 **From input to the first hidden layer**
 
-Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ us a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$.
+Each inactivated neuron on the first layer is a linear transformation of the input vector $x$. For example, $z^{[1]}_1 = w^{[1]T}_1x^{(i)} + b_1^{[1]}$ is the first inactivated neuron for hidden layer one. **We use superscript `[l]` to denote a quantity associated with the $l^{th}$ layer and the subscript `i` to denote the $i^{th}$ entry of a vector (a neuron or feature).** Here $w^{[1]}$ and $b_1^{[1]}$ are the weight and bias parameters for layer 1. $w^{[1]}$ is a $4 \times 1$ vector and hence $w^{[1]T}_1x^{(i)}$ is a linear combination of the four input features. Then use a sigmoid function $\sigma(\cdot)$ to activate the neuron $z^{[1]}_1$ to get $a^{[1]}_1$.
 
 **From the first hidden layer to the output**
 
@@ -250,7 +250,7 @@ You can add layers like this to get a deeper neural network as shown in the bott
 
 - Sigmoid and Softmax Function
 
-We have used the sigmoid (or logistic) activation function. The function is S-shape with an output value between 0 to 1. Therefore it is used as the output layer activation function to predict the probability **when the response $y$ is binary**. However, it is rarely used as an intermediate layer activation function. One of the main reasons is that when $z$ is away from 0, then the derivative of the function drops fast which slows down the optimization process through gradient descent. Even the fact that it is differentiable provides some convenience, the decreasing slope can cause a neural network to get stuck at the training time.
+We have used the sigmoid (or logistic) activation function. The function is S-shape with an output value between 0 to 1. Therefore it is used as the output layer activation function to predict the probability **when the response $y$ is binary**. However, it is rarely used as an intermediate layer activation function. One of the main reasons is that when $z$ is away from 0, then the derivative of the function drops fast which slows down the optimization process through gradient descent. Even with the fact that it is differentiable provides some convenience, the decreasing slope can cause a neural network to get stuck at the training time.
 
 ```{r activationsigmoid, fig.cap = "Sigmoid Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 z = seq(-8, 8, 0.1)
@@ -305,7 +305,7 @@ R(z) = max(0, z)
 (\#eq:relu)
 \end{equation}
 
-The derivative is 1 when z is positive and 0 when z is negative. You can define the derivative as either 0 or 1 when z is 0. When you implement this, it is unlikely that z equals to exactly 0 even it can be very close to 0.
+The derivative is 1 when z is positive and 0 when z is negative. You can define the derivative as either 0 or 1 when z is 0.
 
 ```{r activationrelu, fig.cap = "Rectified Linear Unit Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 z = seq(-8, 8, 0.1)
@@ -330,7 +330,7 @@ z\geq0\\
 z<0
 \end{array}\end{cases}$$
 
-Instead of being 0 when z is negative, it adds a slight slope such as $a=0.01$ as shown in figure \@ref(fig:activationleakyrelu) (can you see the leaky part there? : ).
+Instead of being 0 when z is negative, it adds a slight slope such as $a=0.01$ as shown in figure \@ref(fig:activationleakyrelu).
 
 ```{r activationleakyrelu, fig.cap = "Rectified Linear Unit Function", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 z = seq(-8, 8, 0.1)
@@ -352,9 +352,9 @@ You may notice that all activation functions are non-linear. Since the compositi
 
 For the output layer:
 
-- When it is binary classification, use sigmoid with binary cross-entropy as loss function
-- When there are multiple classes, use softmax function with categorical cross-entropy as loss function
-- When the response is continuous, use identity function (i.e. y = x)
+- When it is binary classification, use sigmoid with binary cross-entropy as loss function.
+- When there are multiple classes, use softmax function with categorical cross-entropy as loss function.
+- When the response is continuous, use identity function (i.e. y = x).
 
 ### Optimization
 
@@ -362,7 +362,7 @@ So far, we have introduced the core components of deep learning architecture, la
 
 #### Batch, Mini-batch, Stochastic Gradient Descent
 
-**Stochastic Gradient Descent (SGD)** updates one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logisticregasneuralnetwork).  If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD.
+**Stochastic Gradient Descent (SGD)** updates model parameters one sample each time. We showed the SGD for logistic regression across $m$ samples in section \@ref(logisticregasneuralnetwork). If you process the entire training set each time to calculate the gradient, it is **Batch Gradient Descent (BGD)**. The vector representation section \@ref(deepneuralnetwork) using all $m$  is an example of BGD.
 
 In deep learning applications, the training set is often huge, with hundreds of thousands or millions of samples. If processing all the samples can only lead to one step of gradient descent, it could be slow. An intuitive way to improve the algorithm is to make some progress before finishing the entire data set. In particular, split up the training set into smaller subsets and fit the model using one subset each time. The subsets are mini-batches. **Mini-batch Gradient Descent (MGD)** is to split the training set to be smaller mini-batches. For example, if the mini-batch size is 1000, the algorithm will process 1000 samples each time, calculate the gradient and update the parameters. Then it moves on to the next mini-batch set until it goes through the whole training set. We call it one pass through training set using mini-batch gradient descent or one epoch. **Epoch** is a common keyword in deep learning, which means a single pass through the training set. If the training set has 60,000 samples, one epoch leads to 60 gradient descent steps. Then it will start over and take another pass through the training set. It means one more decision to make, the optimal number of epochs. It is decided by looking at the trends of performance metrics on a holdout set of training data. We discussed the data splitting and sampling in section \@ref(datasplittingresampling). People often use a single holdout set to tune the model in deep learning. But it is important to use a big enough holdout set to give high confidence in your model's overall performance. Then you can evaluate the chosen model on your test set that is not used in the training process. MGD is what everyone in deep learning uses when training on a large data set.
 
@@ -372,7 +372,7 @@ $$\begin{array}{ccc} y= & [\underbrace{y^{(1)},y^{(2)},\cdots,y^{(1000)}}/ & \cd
 
 - Mini-batch size = m: batch gradient descent, too long per iteration
 - Mini-batch size = 1: stochastic gradient descent, lose speed from vectorization
-- Mini-batch size in between: mini-batch gradient descent, make progress without processing all training set, typical batch sizes are $2^6=64$, $2^7=128$, $2^7=256$, $2^8=512$
+- Mini-batch size in between: mini-batch gradient descent, make progress without processing all training set, typical batch sizes are $2^6=64$, $2^7=128$, $2^8=256$, $2^9=512$
 
 #### Optimization Algorithms
 
@@ -403,7 +403,7 @@ For example, for $\beta=0.95$:
 
 $$\begin{array}{c} V_{0}=0 \\ V_{1}=0.05\theta_{1}  \\ V_{2}=0.0475\theta_{1}+0.05\theta_{2}   \end{array} \\ ......$$
 
-The black line in the right plot of figure \@ref(fig:weightedavgplot) is the exponentially weighted averages of simulated temperature data with $\beta = 0.95$. $V_t$ is approximately average over the previous $\frac{1}{1-\beta}$ days. So $\beta = 0.95$ approximates a 20 days' average.  The red line corresponds to $\beta = 0.8$, which approximates 5 days' average. As $\beta$ increases, it averages over a larger window of the previous values, and hence the curve gets smoother.  A larger $\beta$ also means that it gives the current value $\theta_t$ less weight ($1-\beta$), and the average adapts more slowly. It is easy to see from the plot that the averages at the beginning are more biased. The bias correction can help to achieve a better estimate:
+The black line in the left plot of figure \@ref(fig:weightedavgplot) is the exponentially weighted averages of simulated temperature data with $\beta = 0.95$. $V_t$ is approximately average over the previous $\frac{1}{1-\beta}$ days. So $\beta = 0.95$ approximates a 20 days' average.  The red line corresponds to $\beta = 0.8$, which approximates 5 days' average. As $\beta$ increases, it averages over a larger window of the previous values, and hence the curve gets smoother.  A larger $\beta$ also means that it gives the current value $\theta_t$ less weight ($1-\beta$), and the average adapts more slowly. It is easy to see from the plot that the averages at the beginning are more biased. The bias correction can help to achieve a better estimate:
 
 
 $$V_t^{corrected} = \frac{V_t}{1-\beta^t}$$
@@ -510,7 +510,7 @@ The learning rate $\alpha$ and weighted average parameter $\beta$ are hyperparam
 
 **Root Mean Square Propagation (RMSprop)**
 
-The Root Mean Square Propagation (RMSprop) is another algorithm that applies the idea of exponentially weighted average. On iteration t, compute dw and db using the current mini-batch. Instead of V, it calculates the weighted average of the squared gradient descents. When dw and db are vectors, the squaring is an element-wise operation.
+The Root Mean Square Propagation (RMSprop) is another algorithm that applies the idea of exponentially weighted average. On iteration t, compute $dw$ and $db$ using the current mini-batch. Instead of $V$, it calculates the weighted average of the squared gradient descents. When $dw$ and $db$ are vectors, the squaring is an element-wise operation.
 
 
 $$S_{dw}=\beta S_{dw} + (1-\beta)dw^2$$
@@ -546,7 +546,7 @@ The biggest problem for deep learning is overfitting. It happens when the model 
 
 #### Regularization
 
-For logistic regression,
+For logistic regression, we can add a penalty term:
 
 $$\underset{w,b}{min}J(w,b)= \frac{1}{m} \Sigma_{i=1}^{m}L(\hat{y}^{(i)}, y^{(i)}) + penalty$$
 
@@ -568,7 +568,7 @@ Many people call it "Frobenius Norm" instead of L2-norm.
 
 #### Dropout
 
-Another powerful regularization technique is "dropout."  In chapter \@ref(tree model), we mentioned that the random forest model de-correlates the trees by randomly choosing a subset of features. Dropout uses a similar idea in the parameter estimation process.
+Another powerful regularization technique is "dropout."  In chapter \@ref(treemodel), we mentioned that the random forest model de-correlates the trees by randomly choosing a subset of features. Dropout uses a similar idea in the parameter estimation process.
 
 It temporally freezes a randomly selected subset of nodes at a specific layer in the neural network during the optimization process to reduce overfitting. When applying dropout to a particular layer and mini-batch, we pre-set a percentage, for example, 30%, and randomly remove 30% of the layer's nodes. The output from the 30% removed nodes will be zero. During backpropagation, we update the remaining parameters for a much-diminished network. We need to do the random drop out again for the next mini-batch.
 
@@ -578,19 +578,19 @@ To normalize the output with all nodes in this layer, we need to scale up the ou
 
 In this section, we will walk through a toy example of image classification problem using **`keras`** package. We use R in the section to illustrate the process and also provide the python notebook on the book website. Please check the [`keras` R package website](https://keras.rstudio.com/) for the most recent development.
 
-What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. Each each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network(CNN). Or, you can vectorize the array as the input for FFNN as shown in the figure.
+What is an image as data? You can consider a digital image as a set of points on 2-d or 3-d space. For a grey scale image, each point has a value between 0 to 255 which is considered as a pixel. Figure \@ref(fig:grayscaleimage) shows an example of grayscale image. It is a set of pixels on 2-d space and each pixel has a value between 0 to 255. You can process the image as a 2-d array input if you use a Convolutional Neural Network (CNN). Or, you can vectorize the 2D array into 1D vector as the input for FFNN as shown in the figure.
 
 ```{r grayscaleimage, fig.cap = "Grayscale image is a set of pixels on 2-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/grayscaleimage.png")
 ```
 
-A color image is a set of pixels on 3-d space and each pixel has a value between 0 to 255. There are three 2-d panels which represent the color red, blue and green accordingly. Similarly, You can process the image as a 3-d array. Or you can vectorize the array as shown in figure \@ref(fig:colorimage).
+A color image is a set of pixels on 3-d space and each pixel has a value between 0 to 255 for a specfic color format. There are three 2-d panels which represent the color red, blue and green accordingly. Similarly, You can process the image as a 3-d array. Or you can vectorize the array as shown in figure \@ref(fig:colorimage).
 
 ```{r colorimage, fig.cap = "Color image is a set of pixels on 3-d space. Each pixel has a value range from 0 to 255.", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/colorimage.png")
 ```
 
-Let's look at how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  `keras` has many dependent packages, so it takes a few minutes to install. Be patient! In a production cloud environment such as the paid version of Databricks, you can save what you have and resume from where you left.
+Let's look at how to use the `keras` R package for a toy example in deep learning with the handwritten digits image dataset (i.e. MNIST).  `keras` has many dependent packages, so it takes a few minutes to install.
 
 ```r
 install.packages("keras")
@@ -681,27 +681,20 @@ image(1:28, 1:28, output_matrix, col = gray.colors(256),
 Here is the original 28x28 matrix for the above image:
 
 ```r
-input_matrix
+dplyr::tibble(input_matrix)
 ```
 
 ```html
-     [,1] [,2] [,3] [,4] [,5] [,6] [,7] [,8] [,9] [,10] [,11] [,12] [,13]
- [1,]    0    0    0    0    0    0    0    0    0     0     0     0     0
- [2,]    0    0    0    0    0    0    0    0    0     0     0     0     0
- [3,]    0    0    0    0    0    0    0    0    0     0     0     0     0
- [4,]    0    0    0    0    0    0    0    0    0     0     0     0     0
- [5,]    0    0    0    0    0    0    0    0    0     0     0     0     0
- [6,]    0    0    0    0    0    0    0    0    0     0     9    80   207
- [7,]    0    0    0    0    0    0   39  158  158   158   168   253   253
- [8,]    0    0    0    0    0    0  226  253  253   253   253   253   253
- [9,]    0    0    0    0    0    0  139  253  253   253   238   113   215
-[10,]    0    0    0    0    0    0   39   34   34    34    30     0    31
-[11,]    0    0    0    0    0    0   91    0    0     0     0     0     0
-[12,]    0    0    0    0    0    0    0    0    0     0     0    11    33
-[13,]    0    0    0    0    0    0    0    0    0     0    11   167   253
-[14,]    0    0    0    0    0    0    0    0    0     0    27   253   253
-[15,]    0    0    0    0    0    0    0    0    0     0    18   201   253
-[16,]    0    0    0    0    0    0    0    0    0     0     0    36    87
+## # A tibble: 28 × 1
+##   input_matrix[,1]  [,2]  [,3]  [,4]  [,5]  [,6]  [,7]  [,8]  [,9] [,10] [,11]
+##              <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+## 1                0     0     0     0     0     0     0     0     0     0     0
+## 2                0     0     0     0     0     0     0     0     0     0     0
+## 3                0     0     0     0     0     0     0     0     0     0     0
+## 4                0     0     0     0     0     0     0     0     0     0     0
+## 5                0     0     0     0     0     0     0     0     0     0     0
+## 6                0     0     0     0     0     0     0     0     0     0     9
+## # … with 22 more rows, and 1 more variable: input_matrix[12:28] <int>
 ...
 ```
 
@@ -861,51 +854,26 @@ dnn_model %>% evaluate(x_test, y_test)
 ```
 
 ```html
-   32/10000 [..............................] - ETA: 3s
-  416/10000 [>.............................] - ETA: 1s
-  800/10000 [=>............................] - ETA: 1s
- 1184/10000 [==>...........................] - ETA: 1s
- 1472/10000 [===>..........................] - ETA: 1s
- 1728/10000 [====>.........................] - ETA: 1s
- 2016/10000 [=====>........................] - ETA: 1s
- 2464/10000 [======>.......................] - ETA: 1s
- 2912/10000 [=======>......................] - ETA: 1s
- 3360/10000 [=========>....................] - ETA: 0s
- 3744/10000 [==========>...................] - ETA: 0s
- 4192/10000 [===========>..................] - ETA: 0s
- 4704/10000 [=============>................] - ETA: 0s
- 5088/10000 [==============>...............] - ETA: 0s
- 5568/10000 [===============>..............] - ETA: 0s
- 6080/10000 [=================>............] - ETA: 0s
- 6592/10000 [==================>...........] - ETA: 0s
- 7008/10000 [====================>.........] - ETA: 0s
- 7488/10000 [=====================>........] - ETA: 0s
- 7968/10000 [======================>.......] - ETA: 0s
- 8288/10000 [=======================>......] - ETA: 0s
- 8704/10000 [=========================>....] - ETA: 0s
- 9120/10000 [==========================>...] - ETA: 0s
- 9600/10000 [===========================>..] - ETA: 0s
-10000/10000 [==============================] - 1s 128us/step
-$loss
-[1] 0.093325
-
-$acc
-[1] 0.981
+##       loss   accuracy 
+## 0.09035096 0.98100007
 ```
 
 ```r
 dnn_pred <- dnn_model %>%
-              predict_classes(x_test)
+  predict(x_test) %>%
+  k_argmax()
 head(dnn_pred)
 ```
 
 ```html
- [1] 7 2 1 0 4 1
+tf.Tensor([7 2 1 0 4 1], shape=(6,), dtype=int64)
 ```
 
 Let's check a few misclassified images. A number of misclassified images can be found using the following code. And we can plot these misclassified images to see whether a human can correctly read it out.
 
 ```r
+## Convert tf.tensor to array
+dnn_pred <- as.array(dnn_pred)
 ## total number of mis-classcified images
 sum(dnn_pred != mnist$test$y)
 ```
@@ -1307,7 +1275,7 @@ cnn_model %>% compile(
 )
 ```
 
-Train the model and save each epochs's history. Please note, as we are not using GPU, it takes a few minutes to finish. Please be patient while waiting for the results. The training time can be significantly reduced if running on GPU.
+We then train the model and save each epochs’s history using `fit()` function. Please note, as we are not using GPU, it takes a few minutes to finish. Please be patient while waiting for the results. The training time can be significantly reduced if running on GPU.
 
 ```r
 cnn_history <- cnn_model %>% fit(
@@ -1318,10 +1286,6 @@ cnn_history <- cnn_model %>% fit(
 )
 ```
 
-<center>
-![](images/cnn_history.png){width=90%}
-</center>
-
 The trained model accuracy can be evaluated on the testing dataset which is pretty good.
 
 ```r
@@ -1329,9 +1293,39 @@ cnn_model %>% evaluate(x_test, y_test)
 ```
 
 ```html
-##       loss   accuracy
-## 0.02153786 0.99290001
+##       loss   accuracy 
+## 0.02301287 0.99300003
 ```
+
+There is some useful information stored in the output object `cnn_history` and the details can be shown by using `str()`. We can plot the training and validation accuracy and loss as function of epoch by simply calling `plot(cnn_history)`.
+
+```r
+str(cnn_history)
+```
+
+```html
+## List of 2
+##  $ params :List of 3
+##   ..$ verbose: int 1
+##   ..$ epochs : int 10
+##   ..$ steps  : int 375
+##  $ metrics:List of 4
+##   ..$ loss        : num [1:10] 0.3415 0.0911 0.0648 0.0504 0.0428 ...
+##   ..$ accuracy    : num [1:10] 0.891 0.973 0.981 0.985 0.987 ...
+##   ..$ val_loss    : num [1:10] 0.071 0.0515 0.0417 0.0377 0.0412 ...
+##   ..$ val_accuracy: num [1:10] 0.978 0.985 0.988 0.99 0.988 ...
+##  - attr(*, "class")= chr "keras_training_history"
+```
+
+```r
+plot(cnn_history)
+```
+
+<center>
+![](images/cnn_history.png){width=90%}
+</center>
+
+
 
 #### Prediction
 
@@ -1340,23 +1334,27 @@ We can apply the trained model to predict new image.
 ```r
 # model prediction
 cnn_pred <- cnn_model %>%
-              predict_classes(x_test)
+  predict(x_test) %>%
+  k_argmax()
+
 head(cnn_pred)
 ```
 
 ```html
-[1] 7 2 1 0 4 1
+## tf.Tensor([7 2 1 0 4 1], shape=(6,), dtype=int64)
 ```
 
 Now let's check a few misclassified images to see whether a human can do a better job than this simple CNN model.
 
 ```r
+## Convert tf.tensor to array
+cnn_pred <- as.array(cnn_pred)
 ## number of mis-classcified images
 sum(cnn_pred != mnist$test$y)
 ```
 
 ```html
-[1] 72
+## [1] 70
 ```
 
 ```r
@@ -1389,13 +1387,13 @@ The recurrent neural network allows information to flow from one step to the nex
 knitr::include_graphics("images/rnnunit.png")
 ```
 
-So the whole process repeats a similar pattern. If we unroll the loop:
+So the whole process repeats a similar pattern. If we unroll the loop (figure \@ref(fig:unrolledrnn), the chain-like recurrent nature makes it the natural architecture for sequential data.
 
 ```{r unrolledrnn, fig.cap = "An Unrolled Recurrent Neural Network",out.width="90%", fig.asp=.75, fig.align="center", echo = F}
 knitr::include_graphics("images/rnnrollout.png")
 ```
 
-The chain-like recurrent nature makes it the natural architecture for sequential data. There is incredible success applying RNNs to this type of problems:
+There is incredible success applying RNNs to this type of problems:
 
 - Machine translation
 - Voice recognition
@@ -1637,23 +1635,6 @@ rnn_history <- rnn_model %>% fit(
 )
 ```
 
-```html
-Epoch 1/5
-
-  1/157 [...............] - ETA: 0s - loss: 0.7348 - accuracy: 0.4766
-  2/157 [...............] - ETA: 7s - loss: 0.7279 - accuracy: 0.4961
-  3/157 [...............] - ETA: 10s - loss: 0.7290 - accuracy: 0.4896
-
-*** skipped some output ***
-
-154/157 [=============>.] - ETA: 0s - loss: 0.4456 - accuracy: 0.7991
-155/157 [=============>.] - ETA: 0s - loss: 0.4460 - accuracy: 0.7991
-156/157 [=============>.] - ETA: 0s - loss: 0.4457 - accuracy: 0.7995
-157/157 [===============] - 17s 109ms/step
-loss: 0.4457 - accuracy: 0.7995 - val_loss: 0.4444 - val_accuracy: 0.7908
-
-```
-
 ```r
 plot(rnn_history)
 ```
@@ -1668,18 +1649,8 @@ rnn_model %>%
 ```
 
 ```html
-  1/782 [...............] - ETA: 0s - loss: 0.3019 - accuracy: 0.8438
-  8/782 [...............] - ETA: 5s - loss: 0.4328 - accuracy: 0.8008
- 15/782 [...............] - ETA: 5s - loss: 0.4415 - accuracy: 0.7937
- 23/782 [...............] - ETA: 5s - loss: 0.4247 - accuracy: 0.8043
-
-*** skipped some output ***
-
-775/782 [=============>.] - ETA: 0s - loss: 0.4371 - accuracy: 0.8007
-782/782 [===============] - ETA: 0s - loss: 0.4365 - accuracy: 0.8010
-782/782 [===============] - 6s 8ms/step - loss: 0.4365 - accuracy: 0.8010
-     loss  accuracy
-0.4365373 0.8010000
+##      loss  accuracy 
+## 0.5441073 0.7216800 
 ```
 
 **LSTM RNN Model**
@@ -1712,22 +1683,6 @@ lstm_history <- lstm_model %>% fit(
 )
 ```
 
-```html
-Epoch 1/5
-
-  1/157 [.........] - ETA: 0s - loss: 0.6939 - accuracy: 0.4766
-  2/157 [.........] - ETA: 31s - loss: 0.6940 - accuracy: 0.4766
-  3/157 [.........] - ETA: 43s - loss: 0.6937 - accuracy: 0.4896
-
-*** skipped some output ***
-
-155/157 [=======>.] - ETA: 0s - loss: 0.2610 - accuracy: 0.8918
-156/157 [=======>.] - ETA: 0s - loss: 0.2607 - accuracy: 0.8920
-157/157 [=========] - ETA: 0s - loss: 0.2609 - accuracy: 0.8917
-157/157 [=========] - 67s 424ms/step
-loss: 0.2609 accuracy: 0.8917 val_loss: 0.3754 val_accuracy: 0.8328
-```
-
 ```r
 plot(lstm_history)
 ```
@@ -1742,20 +1697,8 @@ lstm_model %>%
 ```
 
 ```html
-  1/782 [.........] - ETA: 0s  - loss: 0.2332 - accuracy: 0.9062
-  4/782 [.........] - ETA: 12s - loss: 0.3536 - accuracy: 0.8750
-  7/782 [.........] - ETA: 14s - loss: 0.3409 - accuracy: 0.8705
- 10/782 [.........] - ETA: 14s - loss: 0.3508 - accuracy: 0.8625
-
-*** skipped some output ***
-
-775/782 [=======>.] - ETA: 0s - loss: 0.3640 - accuracy: 0.8415
-778/782 [=======>.] - ETA: 0s - loss: 0.3637 - accuracy: 0.8417
-780/782 [=======>.] - ETA: 0s - loss: 0.3632 - accuracy: 0.8419
-782/782 [=========] - ETA: 0s - loss: 0.3631 - accuracy: 0.8420
-782/782 [=========] - 18s 22ms/step - loss: 0.3631 - accuracy: 0.8420
-     loss  accuracy
-0.3631141 0.8420000
+##     loss accuracy 
+## 0.361364 0.844080
 ```
 
 This simple example shows that LSTM's performance has improved dramatically from the simple RNN model. The computation time for LSTM is roughly doubled when compared with the simple RNN model for this small dataset.

@@ -532,7 +532,7 @@ As mentioned before, a single tree is unstable. If you randomly separate the sam
 \end{algorithmic}
 \end{algorithm}
 
-Assume that there are $n$ independent random variables $Z_1,\dots,Z_n$ with variance $\sigma^2$. Then the variance of the mean $\bar{Z}$ is $\frac{\sigma^2}{n}$. It is easy to see why bagged models have less variance. Since bootstrapping is to sample with replacement, it means some samples are selected multiple times and some not at all. Those left out samples are called out-of-bag. You can use the out-of-bag sample to access the model performance. For regression, the prediction is a simple average. For classification, the prediction is the category with the most "votes". Here, the number of trees, $B$ is a parameter you need to decide, i.e. tuning parameter. **Bagging is a general approach that can be applied to different learners. Here we only discuss in the context of decision trees.**
+Assume that there are $n$ independent random variables $Z_1,\dots,Z_n$ with variance $\sigma^2$. Then the variance of the mean $\bar{Z}$ is $\frac{\sigma^2}{n}$. It is easy to see why bagged models have less variance. Since bootstrapping is to sample with replacement, it means some samples are selected multiple times and some not at all. Those left out samples are called out-of-bag. You can use the out-of-bag sample to access the model performance. For regression, the prediction is a simple average. For classification, the prediction is the category with the most "votes." Here, the number of trees, $B$ is a parameter you need to decide, i.e. tuning parameter. **Bagging is a general approach that can be applied to different learners. Here we only discuss in the context of decision trees.**
 
 The advantages of bagging tree are:
 
