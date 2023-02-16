@@ -1,10 +1,16 @@
-This is a draft of the book [**Introduction to Data Science**](http://scientistcafe.com/IDS/)
+This is a draft of the book [**Pratitioner's Guide to Data Science**](http://scientistcafe.com/IDS/) (The previous name was "Introduction to Data Science")
 
-Please note that this work is being written under a [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under a [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project (for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits) you agree to abide by its terms. 
+<center>
+<img 
+      style="width: 50%;"
+     src="https://scientistcafe.com/ids/cover.png" />
+</center>
+
+Please note that this work is written under the [Contributor Code of Conduct]((https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under the [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project, for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits, you agree to abide by its terms.
 
 ## Goal of the Book
 
-This is a book on data science with a specific focus on industrial experience. Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books on data science are about the modeling techniques and the implementation of models using R or Python. However, many of these books lack the context of the industrial environment. Moreover, a crucial part, the art of data science in practice, is often missing. This book intends to fill the gap.
+This book focuses on data science with an emphasis on industrial experience. It covers a cross-disciplinary subject, combining hands-on experience and problem-solving in a business context. Most introductory books on data science discuss modeling techniques and implementation using R or Python but lack the industrial context. This book seeks to fill that gap by exploring the art of data science in practice.
 
 Some key features of this book are as follows:
 
