@@ -153,7 +153,9 @@ Now, `iris_summary` is a local R object to the R notebook and we can use any R p
 
 ```r
 library(ggplot2)
-ggplot(iris_summary, aes(Sepal_Width_round, Sepal_Length_avg, color = Species)) +
+ggplot(iris_summary, aes(Sepal_Width_round, 
+                         Sepal_Length_avg, 
+                         color = Species)) +
     geom_line(size = 1.2) +
     geom_errorbar(aes(ymin = Sepal_Length_avg - Sepal_Length_stdev, 
                       ymax = Sepal_Length_avg + Sepal_Length_stdev),
@@ -172,8 +174,9 @@ In most cases, the heavy-duty data preprocessing and aggregation is done in Spar
 One of the advantages of the Spark system is the parallel machine learning algorithm. There are many statistical and machine learning algorithms developed to run in parallel across many CPUs with data across many memory units for SDF. In this example, we have already uploaded the `iris` data to the Spark system, and the data in the SDF can be referred through `iris_tbl` as in the last section. The linear regression algorithm implemented in the Spark system can be called through `ml_linear_regression()` function. The syntax to call the function is to define the local R object that representing the SDF (i.e. `iris_tbl` (local R object) for `iris` (SDF)), response variable (i.e. the y variable in linear regression in the SDF) and features (i.e. the x variables in linear regression in the SDF). Now, we can easily fit a linear regression for large dataset far beyond the memory limit of one single computer, and it is truly scalable and only constrained by the resource of the Spark cluster. Below is an illustration of how to fit a linear regression to SDF using R notebook:
 
 ```r
-fit1 <- ml_linear_regression(x = iris_tbl, response = "Sepal_Length",
-        features = c("Sepal_Width", "Petal_Length", "Petal_Width"))
+fit1 <- ml_linear_regression(x = iris_tbl, 
+                response = "Sepal_Length",
+                features = c("Sepal_Width", "Petal_Length", "Petal_Width"))
 summary(fit1)
 ```
 

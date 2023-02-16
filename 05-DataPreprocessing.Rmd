@@ -299,7 +299,6 @@ plot(density(x1), main = paste("right skew, skewness =",
     round(skewness(x1), 2)), xlab = "X1")
 ```
 
-<!--You can easily tell if a distribution is skewed by simple visualization(Figure\@ref(fig:skew)). -->
 
 There are different ways to remove skewness such as log, square root or inverse transformation. However, it is often difficult to determine from plots which transformation is most appropriate for correcting skewness. The Box-Cox procedure automatically identified a transformation from the family of power transformations that are indexed by a parameter $\lambda$ [@BOXCOX1]. 
 

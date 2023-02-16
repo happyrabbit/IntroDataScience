@@ -43,11 +43,13 @@ options(
 
 # Preface{-}
 
-During the early years of our career as data scientists, we were bewildered by all kinds of data science hype. There is a lack of definition of many basic terminologies such as "big data," "artificial intelligence," and "data science." How big is big data? What is data science? What is the difference between the sexy title "Data Scientist" and the traditional "Data Analyst?" The term data science stirs so many associations such as machine learning (ML), deep learning (DL), data mining, pattern recognition. All those struck us as confusing and vague as real-world data scientists! However, we always feel something tangible in data science applications, and it has been developing very fast. After applying data science for many years, we now have a much better idea about data science in general. This book is our endeavor to make data science a more concrete and legitimate field. In addition to "hard" technical aspects, the book also covers soft skills and career development in data science. 
+In the early years of our data science career, we were bewildered by all the hype surrounding the field. There was – and still is – a lack of definition of many basic terminologies such as "big data," "artificial intelligence," and "data science." How big is big data? What is data science? What is the difference between the sexy title "Data Scientist" and the traditional "Data Analyst?" The term data science stirs so many associations such as machine learning (ML), deep learning (DL), data mining, pattern recognition. All those struck us as confusing and vague as real-world data scientists! 
+
+However, we could always sense something tangible in data science applications, and it has been developing very fast. After applying data science for many years, we now have a much better idea about data science in general. This book is our endeavor to make data science a more concrete and legitimate field. In addition to the "hard" technical aspects, the book also covers soft skills and career development in data science. 
 
 ## Goal of the Book {-}
 
-This is a book on data science with a specific focus on industrial experience. Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books on data science are about the modeling techniques and the implementation of models using R or Python. However, many of these books lack the context of the industrial environment. Moreover, a crucial part, the art of data science in practice, is often missing. This book intends to fill the gap.
+This is a book on data science with a specific focus on industrial experience. Data Science is a cross-disciplinary subject involving hands-on experience and business problem-solving exposures. The majority of existing introduction books on data science are about modeling techniques and the implementation of models using R or Python. However, many of these books lack the context of the industrial environment. Moreover, a crucial part, the art of data science in practice, is often missing. This book intends to fill the gap.
 
 Some key features of this book are as follows:
 
@@ -61,27 +63,7 @@ Some key features of this book are as follows:
 
 ## What This Book Covers {-}
 
-This book provides a comprehensive introduction to various data science fields, soft and programing skills in data science projects, and potential career paths for data scientists.
-
-There are many existing data science books, including:
-
-- _An Introduction to Data Science_ by **Saltz and Stanton**
-- _A Hands-On Introduction to Data Science_ by **Chirag Shah** 
-- _Introduction to Data Science: Data Analysis and Prediction Algorithms with R_ by 
-**Rafael Irizarry** 
-- _Build a Career in Data Science_ by **Robinson and Nolis**
-- _Data Science (The MIT Press Essential Knowledge series)_ by **Kelleher and Tierney**
-- _The Data Science Handbook_ by **Field Cady**
-- _Data Science from Scratch: First Principles with Python (2nd Edition)_ by **Joel Grus**
-
-
-As data science fields are fast-growing, we did not find a book covering all the contents we feel are essential for a data scientist. The following table compares the data science books mentioned above with this book for contents in Big Data (Spark), R Code, Python Code, Data Preprocessing, Deep Learning, ML models, Career Path, and Project Cycles. We use 0 for not covered, 1 for minimal coverage, 2 for some coverage, and 3 for extensive coverage.
-
-```{r bookcoverage, out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
-knitr::include_graphics("images/preface_coverage.png")
-```
-
-The book is organized as the following. 
+Numerous books on data science exist, yet few provide a comprehensive overview of both the technical and practical aspects. This book provides a comprehensive introduction to various data science fields, soft and programming skills needed for data science projects, and potential career paths. It is organized as follows:
 
 - **Chapters 1-3** discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
 - **Chapter 4** introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
@@ -95,14 +77,14 @@ This book is for readers who want to explore potential data science career paths
 
 ## How to Use This Book {-}
 
-### What the book assumes {-}
+### What the Book Assumes {-}
 
 The first two chapters do not have any prerequisite, and the rest of the chapters do require R or Python programming experience and undergraduate level statistics. This book does NOT try to teach the readers to program in the basic sense. It assumes that readers have experience with R or Python. 
 If you are new to the programming languages, you may find the code obscure. We provide some references in the **Complementary Reading** section that can help you fill the gap. 
 
 For some chapters (\@ref(datapreprocessing), \@ref(modeltuningstrategy) - \@ref(deeplearning)), readers need to know elementary linear algebra (such as matrix manipulations) and understand basic statistical concepts (such as correlation and simple linear regression). While the book is biased against complex equations, a mathematical background is good for the deep dive under the hood mechanism for advanced topics behind applications. 
 
-### How to run R and Python code {-}
+### How to Run R and Python Code {-}
 
 This book uses R in the main text and provides most of the Python codes on GitHub. 
 
@@ -149,6 +131,6 @@ If you want to dive deeper into some of the book's topics, there are many places
 
 # About the Authors {-}
 
-**Hui Lin** is currently a Lead Quantitative Researcher at Shopify. She holds MS and Ph.D. in statistics from Iowa State University. Hui had experience across different industries (traditional and high-tech, early startups, and big corporations). She worked as a marketing data scientist at DuPont; the first data hire at Netlify to build a data science team, and a quantitative UX researcher at Google. She is the blogger of https://scientistcafe.com/ and the 2023 Chair of ASA Statistics in Marketing Section. 
+**Hui Lin** is currently a Lead Quantitative Researcher at Shopify. She holds an MS and Ph.D. in statistics from Iowa State University. Hui had experience across industries. She worked as a Marketing Data Scientist at DuPont; the first data hire at Netlify to build a data science team, and a Quantitative UX Researcher at Google. She is the blogger of https://scientistcafe.com/ and the 2023 Chair of the American Statistical Association's Statistics in Marketing Section. 
 
-**Ming Li** is currently a Research Science Manager at Amazon and an Adjunct Instructor of University of Washington. He was the Chair of Quality & Productivity Section of American Statistical Association for 2017. He was a Data Scientist at Walmart and a Statistical Leader at General Electric Global Research Center. He obtained his Ph.D. in Statistics from Iowa State University at 2010. With deep statistics background and a few years’ experience in data science, he has trained and mentored numerous junior data scientist with different background such as statistician, programmer, software developer and business analyst. He was also an instructor of Amazon’s internal Machine Learning University and was one of the key founding members of Walmart’s Analytics Rotational Program.
+**Ming Li** is currently a Research Science Manager at Amazon and an Adjunct Instructor of the University of Washington. He was the Chair of Quality & Productivity Section of the American Statistical Association for 2017. He was a Data Scientist at Walmart and a Statistical Leader at General Electric Global Research Center. He obtained his Ph.D. in Statistics from Iowa State University at 2010. With deep statistics background and a few years’ experience in data science, he has trained and mentored numerous junior data scientists with different backgrounds such as statisticians, programmers, software developers and business analysts. He was also an instructor of Amazon’s internal Machine Learning University and was one of the key founding members of Walmart’s Analytics Rotational Program.
