@@ -2,17 +2,17 @@
 
 # Introduction
 
-Data science is a fast-developing area. This chapter discusses various aspects of data science. What are the different career tracks and skills required in data science? How is a data science team structured?  We focus on the demand side of data science from business and industry requirements and application points of view. We hope this chapter will provide a complementary perspective to other data sciences books.
+Data science is a rapidly evolving field. This chapter will explore various aspects of data science. We will discuss the various career paths and skills needed for data science, as well as the structure of a data science team. We will focus on the demand of data science from a business and industrial perspective. We hope this chapter will provide a complementary perspective to other data sciences books.
 
-## A brief history of data science
+## A Brief History of Data Science
 
-Interest in data science-related careers is at an all-time high and has exploded in popularity in the last a few years. Data scientists today are from various backgrounds. If someone ran into you ask what data science is all about, what would you tell them? It is not an easy question to answer. Data science is one of the areas that everyone is talking about, but no one can define it well.
+Interest in data science-related careers is witnessing unprecedented growth and has seen a surge in popularity over the last few years. Data scientists come from a variety of backgrounds and disciplines, making it difficult to provide a concise answer when asked what data science is all about. Data science is a widely discussed topic, yet few can accurately define it.
 
-Media has been hyping about "Data Science," "Big Data" and "Artificial Intelligence" over the past a few years. There is an amusing statement from the internet:
+Media has been hyping about "Data Science," "Big Data", and "Artificial Intelligence" over the past few years. There is an amusing statement from the internet:
 
 > “When you’re fundraising, it’s AI. When you’re hiring, it’s ML. When you’re implementing, it’s logistic regression.”
 
-For outsiders, data science is whatever magic that can get useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with big data sets. What are those skills? These may include Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or Spark, a system that builds atop Hadoop for speeding up the same by loading massive datasets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. The new skills are for dealing with organizational artifacts of large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing but not for better solving the real problem.
+For outsiders, data science is the magic that can extract useful information out of data. Everyone should have heard about big data. Data science trainees now need the skills to cope with big data sets. What are those skills? These may include Hadoop, a system using Map/Reduce to process large data sets distributed across a cluster of computers or Spark, a system that builds atop Hadoop for speeding up the same by loading massive datasets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. The new skills are for dealing with organizational artifacts of large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing but not for better solving the real problem.
 
 A lot of data means more sophisticated tinkering with computers, especially a cluster of computers. The computing and programming skills to handle big data were the biggest hurdle for traditional analysis practitioners to be a successful data scientist. However, this hurdle is significantly reduced with the cloud computing revolution, as described in Chapter 2. After all, it isn't the size of the data that's important, it's what you do with it. Your first reaction to all of this might be some combination of skepticism and confusion. We want to address this upfront that: we had that exact reaction.
 

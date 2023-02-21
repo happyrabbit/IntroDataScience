@@ -1,5 +1,5 @@
 --- 
-title: "Introduction to Data Science"
+title: "Practitioner's Guide to Data Science"
 header-includes:
   - \usepackage{algpseudocode}
   - \usepackage{algorithm}
@@ -131,6 +131,6 @@ If you want to dive deeper into some of the book's topics, there are many places
 
 # About the Authors {-}
 
-**Hui Lin** is currently a Lead Quantitative Researcher at Shopify. She holds an MS and Ph.D. in statistics from Iowa State University. Hui had experience across industries. She worked as a Marketing Data Scientist at DuPont; the first data hire at Netlify to build a data science team, and a Quantitative UX Researcher at Google. She is the blogger of https://scientistcafe.com/ and the 2023 Chair of the American Statistical Association's Statistics in Marketing Section. 
+**Hui Lin** is a Lead Quantitative Researcher at Shopify. She holds an MS and Ph.D. in Statistics from Iowa State University. Hui has experience in a variety of industries, including DuPont (Marketing Data Scientist), Netlify (first data hire to build a data science team), and Google (Quantitative UX Researcher). She is the blogger of https://scientistcafe.com/ and the 2023 Chair of the American Statistical Association's Statistics in Marketing Section.
 
 **Ming Li** is currently a Research Science Manager at Amazon and an Adjunct Instructor of the University of Washington. He was the Chair of Quality & Productivity Section of the American Statistical Association for 2017. He was a Data Scientist at Walmart and a Statistical Leader at General Electric Global Research Center. He obtained his Ph.D. in Statistics from Iowa State University at 2010. With deep statistics background and a few years’ experience in data science, he has trained and mentored numerous junior data scientists with different backgrounds such as statisticians, programmers, software developers and business analysts. He was also an instructor of Amazon’s internal Machine Learning University and was one of the key founding members of Walmart’s Analytics Rotational Program.
