@@ -26,17 +26,18 @@ In 1936, Fisher came up with linear discriminant analysis. In the 1940s, logisti
 
 > "generalized linear regression by allowing the linear model to be related to the response variable via a link function and by allowing the magnitude of the variance of each measurement to be a function of its predicted value." [from Wikipedia]
 
-<!-- 2023-02-24 -->
 By the end of the 1970s, a variety of models existed, most of them were linear due to the limited computing power available at the time. Non-linear models weren't able to be fitted until the 1980s.
 
 In 1984, Breiman introduced the Classification and Regression Tree (CART) \index{classification and regression tree}\index{CART}, one of the oldest and most widely used classification and regression techniques [@Breiman1984].
 
-After that, Ross Quinlan developed tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques, which combine the predictions of many models, began to emerge. Bagging is a general approach that uses bootstrapping in conjunction with regression or classification models to construct an ensemble. Based on the ensemble idea, Breiman came up with the random forest \index{random forest} model in 2001 [@Breiman2001]. In the same year, Leo Breiman published a paper “Statistical Modeling: The Two Cultures” [@Breiman2001TwoCulture], in which he identified two cultures in the use of statistical modeling to get information from data:
+After that, Ross Quinlan developed tree algorithms such as ID3, C4.5, and C5.0. In the 1990s, ensemble techniques, which combine the predictions of many models, began to emerge. Bagging is a general approach that uses bootstrapping in conjunction with regression or classification models to construct an ensemble. Based on the ensemble idea, Breiman came up with the random forest \index{random forest} model in 2001 [@Breiman2001]. In the same year, Leo Breiman published a paper “Statistical Modeling: The Two Cultures” [@Breiman2001TwoCulture], in which he identified two cultures in the use of statistical modeling to extract information from data:
 
 (1)  Data is from a given stochastic data model
 (2)  Data mechanism is unknown and people approach the data using algorithmic model
 
-Most of the classical statistical models are the first type of stochastic data model. Black-box models, such as random forest, GBM, and deep learning \index{random forest} \index{GBM} \index{deep learning}, are algorithmic models. As Breiman pointed out, algorithmic models can be used on large complex data as a more accurate and informative alternative to stochastic data modeling on smaller data sets. Those algorithms have developed rapidly with much-expanded applications in fields outside traditional statistics. That is one of the most important reasons that statisticians are not in the mainstream of today's data science, both in theory and practice. We observe that Python is passing R as the most commonly used language in data science, mainly due to many data scientists' background. Since 2000, the approaches to getting information out of data have shifted from traditional statistical models to a more diverse toolbox that includes machine learning and deep learning models. To help readers who are traditional data practitioners, we provide both R and Python codes.
+Most of the classical statistical models are the first type of stochastic data model. Black-box models, such as random forest, Gradient Boosting Machine (GBM), and deep learning \index{random forest}\index{GBM}\index{deep learning}, are algorithmic models. As Breiman pointed out, algorithmic models can be used on large, complex data as a more accurate and informative alternative to stochastic modeling on smaller datasets. These algorithms have developed rapidly with much-expanded applications in fields outside of traditional statistics which is one of the most important reasons why statisticians are not in the mainstream of today's data science, both in theory and practice. 
+
+Python is overtaking R as the most popular language in data science, mainly due to the backgrounds of many data scientists. Since 2000, the approaches to getting information out of data have shifted from traditional statistical models to a more diverse toolbox that includes machine learning and deep learning models. To help readers who are traditional data practitioners, we provide both R and Python codes.
 
 What is the driving force behind the shifting trend? John Tukey identified four forces driving data analysis (there was no “data science” when this was written in 1962):
 
@@ -45,19 +46,21 @@ What is the driving force behind the shifting trend? John Tukey identified four 
 1. The challenge, in many fields, of more and ever larger bodies of data
 1. The emphasis on quantification in an ever-wider variety of disciplines
 
-Tukey's 1962 list is surprisingly modern. Let's inspect those points in today's context. People usually develop theories way before they find potential applications. In the past 50 years, statisticians, mathematicians, and computer scientists have laid the theoretical groundwork for constructing "data science" today. The development of computers enables us to apply the algorithmic models (which can be very computationally expensive) and deliver results in a friendly and intuitive way. The transition to the internet and the internet of things generates vast amounts of commercial data. Industries have also sensed the value of exploiting that data. Data science seems sure to be a significant preoccupation of commercial life in the coming decades. All the four forces John identified exist today and have been driving data science.
+Tukey's 1962 list is surprisingly modern, even when viewed in today's context. People often develop theories way before they find potential applications. Over the past 50 years, statisticians, mathematicians, and computer scientists have laid the theoretical groundwork for the construction of "data science" as we know it today. 
 
-The applications have been expanding fast, benefiting from the increasing availability of digitized information and the possibility of distributing it through the internet. Today, people apply data science in many areas, including business, health, biology, social science, politics, etc. Now data science is everywhere. But what is today's data science?
+The development of computers has enabled us to apply the algorithmic models (which can be very computationally expensive) and deliver results in a friendly and intuitive way. The transition to the internet and the internet of things has generated vast amounts of commercial data. Industries have also recognized the value of exploiting this data. Data science seems sure to be a significant preoccupation of commercial life in the coming decades. All the four forces John identified exist today and have been driving data science.
 
-## Data science role and skill tracks
+The applications have been expanding fast, benefiting from the increasing availability of digitized information and the ability to distribute it through the internet. Today, people apply data science in a variety of fields, such as business, health, biology, social science, politics, etc. But what is today's data science today?
 
-There is a widely diffused Chinese parable about a group of blind men conceptualizing what the elephant is like by touching it. The first person, whose hand landed on the trunk, said: "This being is like a thick snake." For another one whose hand reached its ear, it seemed like a fan. Another person whose hand was upon its leg said the elephant is a pillar-like tree trunk. The blind man who placed his hand upon its side said: "elephant is a wall." Another who felt its tail described it as a rope. The last felt its tusk, stating the elephant is hard, smooth like a spear.
+## Data Science Role and Skill Tracks
 
-Data science is the elephant. With the data science hype picking upstream, many professionals changed their titles to be "Data Scientist" without any necessary qualifications. Today's data scientists have vastly different backgrounds, yet each conceptualizes the elephant based on his/her professional training and application area. And to make matters worse, most of us are not even fully aware of our conceptualizations, much less the uniqueness of the experience from which they are derived.
+A well-known Chinese parable tells the story of a group of blind men who attempt to conceptualize an elephant by touching it. The first person, whose touches the trunk, describes the being as a "thick snake."  The second, who touches the ear, perceives the elephant as a fan. The third, who touches the leg, likens it to a pillar-like tree trunk. The fourth, who touches the side, describes it as a wall. The fifth, who touches the tail, describes it as a rope. And the last, who touches the tusk, describes it as hard and smooth, like a spear.
+
+Data science is the elephant. With the increasing popularity of data science, many professionals changed their titles to be "Data Scientist" without any necessary qualifications.  Today's data scientists come from vastly different backgrounds, each with their own unique perspective on what data science is and how it should be approached. And to make matters worse, most of us are not even fully aware of our conceptualizations, much less the uniqueness of the experience from which they are derived.
 
 > "We don’t see things as they are, we see them as we are. [by Anais Nin]"
 
-So, the answer to the question "what is data science?" depends on who you are talking to.  Data science has three main skill tracks (figure \@ref(fig:threetracks)): engineering, analysis, and modeling/inference (and yes, the order matters!).
+So, the answer to the question "what is data science?" depends on who you are talking to. Data science has three main skill tracks (figure \@ref(fig:threetracks)): engineering, analysis, and modeling/inference (and yes, the order matters!).
 
 ```{r threetracks, fig.cap = "Three tracks of data science", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/threetracks.png")
@@ -65,11 +68,13 @@ knitr::include_graphics("images/threetracks.png")
 
 There are some representative skills in each track. Different tracks and combinations of tracks will define different roles in data science. ^[This is based on "Industry recommendations for academic data science programs: https://github.com/brohrer/academic_advisory". It is a collection of thoughts of different data scientist across industries about what a data scientist does, and what differentiates an exceptional data scientist.]
 
-When people talk about all the machine learning and AI algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are not ready for a data scientist if you don't have a data engineer yet. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you may be able to get by with plain text files such as CSV (i.e., comma-separated values) or even spreadsheet. As the data increasing in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
+When people talk about all the machine learning and artificial intelligence algorithms, they often overlook the critical data engineering part that makes everything possible. Data engineering is the unseen iceberg under the water surface. Does your company need a data scientist? You are only ready for a data scientist if you have a data engineer. You need to have the ability to get data before making sense of it. If you only deal with small datasets with formatted data, you can get by with plain text files such as CSV (i.e., comma-separated values) or spreadsheets. As the data increases in volume, variety, and velocity, data engineering becomes a sophisticated discipline in its own right.
 
 ### Engineering
 
-Data engineering is the foundation that makes everything else possible (figure \@ref(fig:track1engineering)). It mainly involves in building the data pipeline infrastructure. In the (not that) old days, when data was stored on local servers, computers, or other devices, building the data infrastructure as a massive IT project. It involved the software, hardware for servers to store the data and the ETL \index{ETL} (i.e., extract, transform, and load \index{extract, transform, and load}) process. With cloud development, the new norm to store and compute data is on the cloud. Data engineering today, at its core, is software engineering with data flow as the focus. The fundamental building block for automation is maintaining the data pipeline through modular, well-commented code and version control.
+Data engineering is the foundation that makes everything else possible (figure \@ref(fig:track1engineering)). It mainly involves building data infrastructures and pipelines. In the past, when data was stored on local servers, computers, or other devices, constructing the data infrastructure was a major IT project. This included software, hardware for servers to store the data, and the ETL \index{ETL} (extract, transform, and load\index{extract, transform, and load}) process. 
+
+With the advent of cloud computing, the new standard for storing and computing data is on the cloud. Data engineering today is essentially software engineering with data flow as the primary focus. The fundamental element for automation is maintaining the data pipeline through modular, well-commented code, and version control.
 
 ```{r track1engineering, fig.cap = "Engineering track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/track1_engineering.png")
@@ -77,7 +82,7 @@ knitr::include_graphics("images/track1_engineering.png")
 
 (1) Data environment
 
-Designing and setting up the entire environment to support data science workflow is the prerequisite for data science projects. It may include setting up storage in the cloud, Kafka \index{Kafka} platform, Hadoop \index{Hadoop} and Spark \index{Spark} clusters, etc. Each company has a unique data condition and need. The data environment will be different depending on the size of the data, update frequency, the complexity of analytics, compatibility with the back-end infrastructure, and (of course) budget.
+Designing and setting up the entire environment to support data science workflow is the prerequisite for data science projects. It includes setting up storage in the cloud, Kafka \index{Kafka} platform, Hadoop \index{Hadoop} and Spark \index{Spark} clusters, etc. Each company has a unique data condition and need. The data environment will be different depending on the size of the data, update frequency, the complexity of analytics, compatibility with the back-end infrastructure, and (of course) budget.
 
 (2) Data management  
 
@@ -89,7 +94,7 @@ If you want to integrate the model or analysis into the production system, you h
 
 ### Analysis
 
-Analysis turns raw information into insights in a fast and often exploratory way. In general, an analyst needs to have decent domain knowledge, do exploratory analysis efficiently, and present the results using storytelling (figure \@ref(fig:track2analysis)).
+Analysis turns raw data into meaningful insights through a fast and often exploratory approach. To excel as an analyst, one must possess a solid understanding of the relevant domain, perform exploratory analysis efficiently, and be able to communicate findings through compelling storytelling (figure \@ref(fig:track2analysis)).
 
 ```{r track2analysis, fig.cap = "Analysis track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/track2_analysis.png")
@@ -97,7 +102,7 @@ knitr::include_graphics("images/track2_analysis.png")
 
 (1) Domain knowledge
 
-Domain knowledge is the understanding of the organization or industry where you apply data science. You can’t make sense of data without context. Some questions about the context are:
+Domain knowledge is the understanding of the organization or industry where you apply data science. You can’t make sense of data without context. Some questions about the context are
 
 - What are the critical metrics for this kind of business?
 - What are the business questions?
@@ -125,17 +130,18 @@ Storytelling with data is critical to deliver insights and drive better decision
 
 A business-friendly report or an interactive dashboard is the typical outcome of the analysis.   
 
-### Modeling/inference
 
-Modeling/inference is a process that dives deeper into the data to discover patterns that are not easily seen. It may be the most misunderstood track. When the general public thinks about data science, the first thing that comes to mind might be fancy machine learning models. Despite the overrepresentation of machine learning in the public's mind, the truth is that you don't have to use machine learning to be a data scientist. Even data scientists who use machine learning in their work spend less than 20% of their time working on machine learning. They spend most of their time communicating with different stakeholders and collecting and cleaning data.
+### Modeling/Inference
 
-This track mainly focuses on three problems: 1) prediction, 2) explanation, and 3) causal inference (figure \@ref(fig:track3modeling))).
+Modeling/inference is a process that dives deeper into the data to discover patterns that are not easily seen. It is often misunderstood. When people think of data science, they may immediately think of complex machine learning models. Despite the overrepresentation of machine learning in the public's mind, the truth is that you don't have to use machine learning to be a data scientist. Even data scientists who use machine learning in their work spend less than 20% of their time working on machine learning. They spend most of their time communicating with different stakeholders and collecting and cleaning data.
+
+This track mainly focuses on three problems: (1) prediction, (2) explanation, and (3) causal inference (figure \@ref(fig:track3modeling))).
 
 Prediction focuses on predicting based on what has happened, and understanding each variable's role is not a concern. Many black-box models, such as ensemble methods and deep learning, are often used to make a prediction. Examples of problems are image recognition, machine translation, and recommendation. Despite the remarkable success of many deep-learning models, they operate almost entirely in an associational mode. As Judea Pearl pointed out in his book "The book of why" [@Judea2019], complex black-box algorithms like AlphaGo "do not really know why it works, only that it does." Judea Pearl came up with a Ladder of Causation [@Judea2019] with three levels: 1) association, 2) intervention, and 3) counterfactuals. According to this framework, prediction problems are on the first level.
 
 The next level of the ladder, intervention, requires model interpretability. Questions on this level involve not just seeing but changing. The question pattern is like, "what happens if I do ...?" For example, product managers often need to prioritize a list of features by user preference. They need to know what happens if we build feature a instead of feature b. Choice modeling is a standard method for this problem which allows you to explain the drivers behind users' decisions on using/purchasing a product. Another way to directly study the result of an intervention is through experiments. Tech companies constantly perform A/B tests to examine what happens if they make some product change. 
 
-Causal inference is on the third level, which is counterfactual. When an experiment is not possible, and the cost of a wrong decision is too high, you need to use the existing data to answer a counterfactual question: "what would have happened if I went back in time and took a different approach?" For example, if you are a policymaker who wants to find a way to reduce the divorce rate in the United States, you see from the data the southern states have a higher divorce rate and a lower median age at marriage. You may assume that getting married when you are young leads to a higher chance of divorce. But it is impossible to experiment by randomly selecting a group of people and asking them to get married earlier and the other group to get married later as a control. In this case, you must find a way to match samples or create a balanced pseudo-population. This type of problem is out of the scope of this book. An excellent non-technical introduction to causal inference is “The book of why” [@Judea2019].
+Causal inference is on the third level, which is counterfactual. When an experiment is not possible, and the cost of a wrong decision is too high, you need to use the existing data to answer a counterfactual question: "what would have happened if I had taken a different approach?" For example, if you are a policymaker who wants to find a way to reduce the divorce rate in the United States, you see from the data the southern states have a higher divorce rate and a lower median age at marriage. You may assume that getting married when you are young leads to a higher chance of divorce. But it is impossible to experiment by randomly selecting a group of people and asking them to get married earlier and the other group to get married later as a control. In this case, you must find a way to match samples or create a balanced pseudo-population. This type of problem is out of the scope of this book. For a  non-technical introduction to causal inference, readers can refer to “The book of why” [@Judea2019].
 
 
 ```{r track3modeling, fig.cap = "Modeling/inference track", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
@@ -176,13 +182,13 @@ Here is a list of questions that can help you decide the type of technique to us
 
 There are some common skills to have, regardless of the role people have in data science.
 
-- **Data Preprocessing: the process nobody wants to go through yet nobody can avoid**
+- **Data preprocessing: the process nobody wants to go through yet nobody can avoid**
 
 No matter what role you hold in the data science team, you will have to do some data cleaning, which tends to be the least enjoyable part of anyone’s job. Data preprocessing is the process of converting raw data into clean data.
 
 (1) Data preprocessing for data engineer
 
-Getting data from different sources and dumping them into a data lake.  A data lake is a storage repository that stores a vast amount of raw data in its native format, including XML, JSON, CSV, Parquet, etc. It is a data cesspool rather than a data lake. The data engineer’s job is to get a clean schema out of the data lake by transforming and formatting the data. Some common problems to resolve are:
+Getting data from different sources and dumping them into a data lake.  A data lake is a storage repository that stores a vast amount of raw data in its native format, including XML, JSON, CSV, Parquet, etc. It is a data cesspool rather than a data lake. The data engineer’s job is to get a clean schema out of the data lake by transforming and formatting the data. Some common problems to resolve are
 
 * Enforce new tables' schema to be the desired one
 * Repair broken records in newly inserted data
@@ -198,40 +204,11 @@ Even the data is in the right format. There are other issues to solve before or 
 
 Most of the people in data science today focus on one of the tracks. A small number of people are experts on two tracks.
 
-<!--
-## What should data science do?
-
-### Let's dream big
-
-Here is my two points for the question:
-
-* Make human better human by alleviating bounded rationality and minimize politics/emotion (rather than make machine more like human)
-* Strive for the “democratization” of data as legally possible: empower everyone in the organization to acquire, process, and leverage data in a timely and efficient fashion
-
-I know it is vague. Behold, I am going to explain more.  
-
-It’s easy to pretend that you are data driven. But if you get into the mindset to collect and measure everything you can, and think about what the data you’ve collected means, you’ll be ahead of most of the organizations that claim to be data driven. If you know the difference between "data driven" and "data confirmed", you'll be sailing at the right direction. What on earth is the difference?
-
-Imagine that you are buying something online and you need to decide whether or not to trust the product without seeing it physically. You see the  average rating is 4.1 out of 5.0. Is this a good score? It depends on your subconscious decision. If you really need the thing, you may happily cheer "It is more than 4.0!". If you are still not sure whether you need it, you can't help to check the few low rating reviews and tell yourself "look at those 1-star reviews". Sounds familiar? Psychologists call it confirmation bias.
-
-> Confirmation bias is the tendency to search for, interpret, favor, and recall information in a way that confirms one's preexisting beliefs or hypotheses [Wikipedia]
-
-So if you use data to feel better (confirm) decisions/assumptions that are already made before you analyze the data, that is "data confirmed". A clear sign of confirmation bias is when you go back to tinker the definition of your metic because the current result is not impressive. However, this bias is not always easy to see. It is not only misleading but also expensive. Because it could take data science team days of toil to boil everything down to that magic number and put the result on the report.  Data scientists are not totally immune to the bias either. Good news is that there is antidote to confirmation bias.
-
-Antidote 1: Do the brainstorming of data definition and set the goal in advance and resist temptation to move them later. In other words, the decision makers have to set decision criteria and the boundary up front in your data science project.  
-
-Antidote 2: Data democratization. Keep in mind that data isn’t just for the professionals or a small group of people in the organization that are "key decision makers". Everyone should be able to get access to and look at the data (as much as legally possible). In that way, there will be more eyes on the decision.
-
-The way data science can help is to provide a sound data framework and necessary training for the organization to access data with least amount of pain. Also be clear about the data definition and documentation. Data science holds the responsibility for data stewardship in the organization with high integrity. (there is data science for social good which is data science's responsibility for outside the organization but we are not going to discuss that here)
-
-That is still very abstract, I hear you. Now, Let's be more specific...
--->
-
-## What kind of questions can data science solve?
+## What Kind of Questions Can Data Science Solve?
 
 ### Prerequisites
 
-Data science is not a panacea, and there are problems data science can't help. It is best to make a judgment as early in the analytical cycle as possible. First and foremost, we need to tell customers, clients, and stakeholders honestly and clearly when we think data analytics can't answer their question after careful evaluation of the request, data availability, computation resources, and modeling details. Often, we can tell them what we can do as an alternative. It is essential to "negotiate" with others what data science can do specifically; simply answering "we cannot do what you want" will end the collaboration. Now let's see what kind of questions data science can solve:
+Data science is not a cure-all, and there are issues it cannot address. It is best to make a decision as soon as possible in the analytical process. Above all, we must be honest and transparent with customers, clients, and stakeholders when we believe data analytics cannot answer their questions after a thorough evaluation of the request, data availability, computing resources, and modeling details. Frequently, we can suggest an alternative. It is essential to "negotiate" with others what data science can do specifically; simply answering "we cannot do what you want" will end the collaboration. Now let's see what kind of questions data science can solve:
 
 1. The question needs to be specific enough
 
@@ -242,21 +219,21 @@ Let us look at the two examples below:
 
 It is easy to see the difference between the two questions. Question 1 is grammatically correct, but it is not proper for data analysis to answer. Why? It is too general. What is the response variable here? Product sales? Which product? Is it annual sales or monthly sales? What are the candidate predictors? We nearly can't get any useful information from the questions.
 
-In contrast, question 2 is much more specific. From the analysis point of view, the response variable is clearly "annual sales of P1197 in Iowa and Wisconsin". Even if we don't know all the predictors, the variable of interest is "the new promotional tool introduced early this year." We want to study the impact of the promotion on sales. We can start there and figure out other variables that need to be included in the model.
+In contrast, question 2 is much more specific. From the analysis point of view, the response variable is clearly "annual sales of P1197 in Iowa and Wisconsin." Even if we don't know all the predictors, the variable of interest is "the new promotional tool introduced early this year." We want to study the impact of the promotion on sales. We can start there and figure out other variables that need to be included in the model.
 
 As a data scientist, we may start with general questions from customers, clients, or stakeholders and eventually get to more specific and data science solvable questions with a series of communication, evaluation, and negotiation. Effective communication and in-depth knowledge about the business problems are essential to converting a general business question into a solvable analytical problem. Domain knowledge helps data scientists communicate using the language other people can understand and obtain the required context.
 
-Defining the question and variables involved won't guarantee that we can answer it. For example, we could encounter this situation with a well-defined supply chain problem. The client may ask us to estimate the stock needed for a product in a particular area. Why can't this question be answered? We can try to fit various models such as a Multivariate Adaptive Regression Spline (MARS) model and find a reasonable solution from a modeling perspective. But it can turn out later that the client's data is an estimated value, not the actual observation. There is no good way for data science to solve the problem with the desired accuracy with inaccurate data.
+Defining the question and variables involved won't guarantee that we can answer it. For example, we could encounter this situation with a well-defined supply chain problem. The client may ask us to estimate the stock needed for a product in a particular area. Why can't this question be answered? We can try to fit various models such as a multivariate adaptive regression spline (MARS) model and find a reasonable solution from a modeling perspective. But it can turn out later that the client's data is an estimated value, not the actual observation. There is no good way for data science to solve the problem with the desired accuracy with inaccurate data.
 
 2.  You need to have accurate and relevant data
 
-One cannot make a silk purse out of a sow's ear. Data scientists relevant and accurate data. The supply problem mentioned above is a case in point. There was relevant data, but not sound. All the later analytics based on that data was a building on sand. Of course, data nearly almost have noise, but it has to be in a certain range. Generally speaking, the accuracy requirement for the independent variables of interest and response variable is higher than others. For the above question 2, it is variables related to the "new promotion" and "sales of P1197".
+One cannot make a silk purse out of a sow's ear. Data scientists relevant and accurate data. The supply problem mentioned above is a case in point. There was relevant data, but not sound. All the later analytics based on that data was a building on sand. Of course, data nearly almost have noise, but it has to be in a certain range. Generally speaking, the accuracy requirement for the independent variables of interest and response variable is higher than others. For the above question 2, it is variables related to the "new promotion" and "sales of P1197."
 
 The data has to be helpful for the question. If we want to predict which product consumers are most likely to buy in the next three months, we need to have historical purchasing data: the last buying time, the amount of invoice, coupons, etc. Information about customers' credit card numbers, ID numbers, and email addresses will not help much.
 
 Often, the data quality is more important than the quantity, but you can not completely overlook quantity. Suppose you can guarantee data quality, even then the more data, the better. If we have a specific and reasonable question with sound and relevant data, then congratulations, we can start playing data science!
 
-### Problem type
+### Problem Type
 
 Many of the data science books classify various models from a technical point of view. Such as supervised vs. unsupervised models, linear vs. nonlinear models, parametric models vs. non-parametric models, and so on. Here we will continue on a "problem-oriented" track. We first introduce different groups of real-world problems and then present which models can answer the corresponding category of questions.
 
@@ -314,7 +291,7 @@ Optimization is another common type of problems in data science to find an optim
 * What is the best route to deliver the packages?
 * What is the optimal advertisement strategy to promote a new product?
 
-## Structure of data science team
+## Structure of Data Science Team
 
 A vast amount of data has become available and readily accessible for analysis in many companies across different business sectors during the past decade. The size, complexity, and speed of increment of data suddenly beyond the traditional scope of statistical analysis or business intelligence (i.e., BI) reporting. To leverage the big data collected, do you need an internal data science team to be a core competency, or can you outsource it? The answer depends on the problems you want to solve using data. If they are critical to the business, you can't afford to outsource it. Also, each company has its business context, and it needs new kinds of data as the business grows and uses the results in novel ways. Being a data-driven organization requires cross-organization commitments to identify what data each department needs to collect, establish the infrastructure and process for collecting and maintaining that data, and standardize how to deliver analytical results. Unfortunately, it is unlikely that an off-the-shelf solution will be flexible enough to adapt to the specific business context. In general, most of the companies establish their data science team.
 
@@ -322,7 +299,7 @@ Where should the data science team fit? In general, the data science team is org
 
 (1) A standalone team
 
-Data science is an autonomous unit parallel to the other organizations (such as engineering, product, etc.). The head of data science reports directly to senior leadership, ideally to the CEO or at least someone who understands data strategy and is willing to invest and give it what it needs. The advantages of this type of data organization are:
+Data science is an autonomous unit parallel to the other organizations (such as engineering, product, etc.). The head of data science reports directly to senior leadership, ideally to the CEO or at least someone who understands data strategy and is willing to invest and give it what it needs. The advantages of this type of data organization are
 
 - The data science team has autonomy and is well-positioned to tackle whatever problems it deems important to the company.
 - It is advantageous for people in the data science team to share knowledge and grow professionally.
@@ -363,7 +340,7 @@ There is no universal answer to the best way to organize the data science team. 
 
 Data science has its skillset, workflow, tooling, integration process, and culture. If it is critical to your organization, it is best not to bury it under any part of the organization. Otherwise, data science will only serve the need for a specific branch. No matter which way you choose, be aware of both sides of the coin. If you are looking for a data science position, it is crucial to know where the data science team fits.
 
-## Data science roles
+## Data Science Roles
 
 As companies learn about using data to help with the business, there is a continuous specialization of different data science roles. As a result, the old "data scientist" title is fading, and some other data science job titles are emerging. In the past, misunderstanding data science's fundamental work led to confusing job postings and frustrations for stakeholders and data scientists. Stakeholders were frustrated that they weren't getting what they expected, and data scientists were frustrated that the company didn't appreciate their talent. 
 
@@ -383,7 +360,7 @@ The following table shows a list of data science job titles. Some are relatively
 | Data scientist |  R/Python, SQL, basic applied statistics, data visualization, experimental design |
 | Research scientist | R/Python, advanced statistics, experimental design, ML, research background, publications, conference contributions, algorithms |
 | Applied scientist | ML algorithm design, often with an expectation of fundamental software engineering skills |
-| Machine Learning Engineer | More advanced software engineering skillset, algorithms, machine learning algorithm design, system design |
+| Machine learning engineer | More advanced software engineering skillset, algorithms, machine learning algorithm design, system design |
 
 The above table shows some data science roles and common technical keywords in job descriptions. Those roles are different in the following key aspects:
 
@@ -402,7 +379,7 @@ People call a storage repository with vast raw data in its native format (XML, J
 
 Data engineers transform, clean, and organize the data from the data lake. They commonly design schemas, store data in query-able forms, and build and maintain data warehouses. People call this cleaner and better-organized database **data mart** (figure \@ref(fig:databases)) which contains a subset of data for business needs. They use technologies like Hadoop/Spark and SQL. Since the database is for non-engineers, data engineers need to know more about the business and how analytical personnel uses the data. Some may have a basic understanding of machine learning to deploy models developed by data/research scientists.
 
-```{r databases, fig.cap = "Data lake (a focused version of a data warehouse that contains a subset of data for business needs) and data mart (a storage repository that cheaply stores a vast amount of raw data in its native format (XML, JSON, CSV, Parquet, etc))", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r databases, fig.cap = "Data lake (a focused version of a data warehouse that contains a subset of data for business needs) and data mart (a storage repository that cheaply stores a vast amount of raw data in its native format (XML, JSON, CSV, Parquet, etc.))", out.width="100%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/databases.png")
 ```
 

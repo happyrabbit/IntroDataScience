@@ -1,13 +1,14 @@
 # Soft Skills for Data Scientists {#SoftSkillsforDataScientists}
 
-There are many university courses, online self-learning modules, and excellent books that teach technical skills. However, there are much fewer resources discussing the soft skills for data scientists in detail. However, soft skills are essential for data scientists to succeed in their career, especially in the early stage. We want to introduce soft skills for data scientists before discussing technical components. This chapter also introduces the project cycle and some common pitfalls of data science projects in real life.
+There are many university courses, online self-learning modules, and excellent books that teach technical skills. However, there are much fewer resources that discuss the soft skills necessary for data scientists. These soft skills are essential for data scientists to succeed in their career, especially in the early stage. We want to introduce soft skills for data scientists before discussing technical components. In this chapter, we will also cover the project cycle and common pitfalls encountered in real-life data science projects.
+
 
 ## Comparison between Statistician and Data Scientist
 
-Statistics as a scientific area can be traced back to 1749, and statistician as a career has been around for hundreds of years with well-established theory and application. Data scientist becomes an attractive career for only a few years, along with the fact that data size and variety beyond the traditional statistician’s toolbox and the fast-growing of computation power. Statistician and data scientist have a lot in common, but there are also significant differences, as highlighted in figure \@ref(fig:softskill1) below:
+Statistics as a scientific area can be traced back to 1749, and statistician as a career has been around for hundreds of years with well-established theory and application. Data scientist becomes an attractive career for only a few years, along with the fact that data size and variety beyond the traditional statistician’s toolbox and the fast-growing of computation power. Statistician and data scientist have a lot in common, but there are also significant differences, as highlighted in figure \@ref(fig:softskill1).
 
 
-```{r softskill1, fig.cap = "Comparison of Statistician and Data Scientist", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r softskill1, fig.cap = "Comparison of statistician and data scientist", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/softskill1.png")
 ```
 
@@ -58,7 +59,7 @@ A successful data scientist needs in-depth domain knowledge to understand the bu
 The last pillar is about computation environment and model implementation in a big data platform. It used to be the most difficult one for a data scientist with a statistics background (i.e., lack computer science knowledge or programming skills). The good news is that with the rise of the big data platform in the cloud, it is easier for a statistician to overcome this barrier. The "Big Data Cloud Platform" chapter of this book will describe this pillar in detail.
 
 
-```{r threepillars, fig.cap = "Three Pillars of Knowledge", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
+```{r threepillars, fig.cap = "Three pillars of knowledge", out.width="80%", fig.asp=.75, fig.align="center", echo = FALSE}
 knitr::include_graphics("images/softskill2.png")
 ```
 
