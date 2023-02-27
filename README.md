@@ -6,7 +6,7 @@ This is a draft of the book [**Pratitioner's Guide to Data Science**](http://sci
      src="https://scientistcafe.com/ids/cover.png" />
 </center>
 
-Please note that this work is written under the [Contributor Code of Conduct]((https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under the [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project, for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits, you agree to abide by its terms.
+Please note that this work is written under the [Contributor Code of Conduct](https://github.com/happyrabbit/IntroDataScience/blob/master/CONDUCT.md) and released under the [CC-BY-NC-SA license](https://creativecommons.org/licenses/by-nc-sa/3.0/us/). By participating in this project, for example, by submitting a [pull request](https://github.com/happyrabbit/IntroDataScience/issues) with suggestions or edits, you agree to abide by its terms.
 
 ## Goal of the Book
 
