@@ -65,11 +65,11 @@ Some key features of this book are as follows:
 
 Numerous books on data science exist, yet few provide a comprehensive overview of both the technical and practical aspects. This book provides a comprehensive introduction to various data science fields, soft and programming skills needed for data science projects, and potential career paths. It is organized as follows:
 
-- **Chapters 1-3** discuss various aspects of data science: difference tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
+- **Chapters 1-3** discuss various aspects of data science: different tracks, career paths, project cycles, soft skills, and common pitfalls. Chapter 3 is an overview of the data sets used in the book.
 - **Chapter 4** introduces typical big data cloud platforms and uses R library `sparklyr` \index{sparklyr} as an interface to the big data analytics engine Spark.
 - **Chapters 5-6** cover the essential skills to prepare the data for further analysis and modeling, i.e., data preprocessing and wrangling.
 - **Chapter 7** illustrates the practical aspects of model tuning. It covers different types of model error, sources of model error, hyperparameter tuning, how to set up your data, and how to make sure your model implementation is correct. In practice, applying machine learning is a highly iterative process. We discuss this before introducing the machine learning algorithm because it applies to nearly all models. You will use cross-validation or training/developing/testing split to tune the models presented in later chapters. 
-- **Chapters 8-12** introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  
+- **Chapters 8-12** introduce different types of models. There is a myriad of learning algorithms to learn the data patterns. This book doesn't cover all of them but presents the most common ones or the foundational methods.  In chapter 8, we delve into how to measure model performance. In chapter 9, we focus on regression models, while chapter 10 explores regularization methods. In chapter 11, we introduce tree-based models, and chapter 12 is dedicated to deep learning models. By the end of this book, you will have a comprehensive understanding of a variety of models and techniques for machine learning.
 
 ## Who This Book Is For {-}
 

@@ -14,7 +14,7 @@ Media has been hyping about "Data Science," "Big Data", and "Artificial Intellig
 
 For outsiders, data science is the magic that can extract useful information from data. Everyone is familiar with the concept of big data. Data science trainees must now possess the skills to manage large data sets. These skills may include Hadoop, a system that uses Map/Reduce to process large data sets distributed across a cluster of computers or Spark, a system that builds on top of Hadoop to speed up the process by loading massive data sets into shared memory (RAM) across clusters with an additional suite of machine learning functions for big data. 
 
-The new skills are essential for dealing with large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing. However, they are not necessary for deriving meaningful insights from data.. However, they are not necessary for deriving meaningful insights from data.
+The new skills are essential for dealing with large data sets beyond a single computer's memory or hard disk and the large-scale cluster computing. However, they are not necessary for deriving meaningful insights from data.
 
 A lot of data means more sophisticated tinkering with computers, especially a cluster of computers. The computing and programming skills to handle big data were the biggest hurdle for traditional analysis practitioners to be a successful data scientist. However, this barrier has been significantly lowered thanks to the cloud computing revolution, as discussed in Chapter 2. After all, it isn't the size of the data that's important, but what you do with it. You may be feeling a mix of skepticism and confusion. We understand; we had the same reaction.
 
