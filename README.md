@@ -1,4 +1,4 @@
-This is a draft of the book **Pratitioner's Guide to Data Science** (The previous name was "Introduction to Data Science")
+This is for the book **Pratitioner's Guide to Data Science** (The previous name was "Introduction to Data Science")
 - You can access the free online version [here](http://scientistcafe.com/IDS/). Alternatively, you can purchase physical copies from [Amazon](https://www.amazon.com/Practitioners-Guide-Data-Science-Chapman/dp/0815354398/ref=tmm_pap_swatch_0?_encoding=UTF8&qid=&sr=) or [Routledge](https://www.routledge.com/Practitioners-Guide-to-Data-Science/Lin-Li/p/book/9780815354390).
 
 <center>
